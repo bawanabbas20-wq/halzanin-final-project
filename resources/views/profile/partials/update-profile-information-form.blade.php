@@ -50,16 +50,6 @@
             <button type="submit" class="px-6 h-[48px] bg-brand text-white rounded-[10px] font-semibold font-outfit shadow-brand-btn hover:shadow-brand-btn-hover hover:-translate-y-[1px] transition-all">
                 {{ __('Save Changes') }}
             </button>
-
-            @if (session('status') === 'profile-updated')
-                <p
-                    x-data="{ show: true }"
-                    x-show="show"
-                    x-transition
-                    x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm font-semibold text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/30 px-3 py-1 rounded-md"
-                >{{ __('Saved successfully.') }}</p>
-            @endif
         </div>
     </form>
 </section>

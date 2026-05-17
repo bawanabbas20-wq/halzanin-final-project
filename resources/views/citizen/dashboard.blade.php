@@ -9,18 +9,6 @@
 
     <div class="space-y-6 lg:space-y-8">
         
-        <!-- Alerts -->
-        @if (session('success'))
-            <div class="bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-400 px-4 py-3 rounded-[10px] animate-fade-in">
-                {{ session('success') }}
-            </div>
-        @endif
-
-        @if (session('info'))
-            <div class="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-400 px-4 py-3 rounded-[10px] animate-fade-in">
-                {{ session('info') }}
-            </div>
-        @endif
 
         <!-- Top Section: Greeting -->
         <div>

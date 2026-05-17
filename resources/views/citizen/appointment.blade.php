@@ -310,13 +310,11 @@
                 axios.post('{{ route('citizen.appointment.save-draft') }}', data)
                     .then(response => {
                         if (response.data.success) {
-                            statusIndicator.textContent = 'Draft saved.';
-                            setTimeout(() => statusIndicator.textContent = '', 2000);
+                            showToast('info', '', 'Draft saved', 2000);
                         }
                     })
                     .catch(error => {
                         console.error('Error saving draft:', error);
-                        statusIndicator.textContent = '';
                     });
             }
         });
