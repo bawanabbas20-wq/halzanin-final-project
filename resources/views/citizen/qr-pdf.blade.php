@@ -70,7 +70,7 @@
 
     <div class="qr-container">
         <!-- Embed Base64 QR Image -->
-        <img src="data:image/png;base64,{{ $qrBase64 }}" alt="QR Code">
+        <img src="data:image/svg+xml;base64,{{ $qrBase64 }}" alt="QR Code" width="200" height="200">
     </div>
 
     <div class="footer">

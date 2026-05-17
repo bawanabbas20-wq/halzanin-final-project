@@ -30,7 +30,8 @@ class ApplicationController extends Controller
         }
 
         $url = url('/track/' . $application->tracking_code);
-        $qrBase64 = base64_encode(QrCode::format('png')->size(200)->generate($url));
+        $qrSvg = QrCode::format('svg')->size(200)->generate($url);
+        $qrBase64 = base64_encode($qrSvg);
 
         $pdf = Pdf::loadView('citizen.qr-pdf', compact('application', 'qrBase64'));
         return $pdf->download('Receipt-' . $application->tracking_code . '.pdf');

@@ -15,29 +15,40 @@ class ChatbotController extends Controller
 
         $apiKey = config('services.gemini.key');
 
-        $response = Http::post(
-            "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={$apiKey}",
-            [
-                'system_instruction' => [
-                    'parts' => [['text' => $systemPrompt]],
-                ],
-                'contents' => [
-                    [
-                        'role'  => 'user',
-                        'parts' => [['text' => $request->message]],
+        try {
+            $response = Http::post(
+                "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={$apiKey}",
+                [
+                    'system_instruction' => [
+                        'parts' => [['text' => $systemPrompt]],
                     ],
-                ],
-                'generationConfig' => [
-                    'maxOutputTokens' => 300,
-                    'temperature'     => 0.7,
-                ],
-            ]
-        );
+                    'contents' => [
+                        [
+                            'role'  => 'user',
+                            'parts' => [['text' => $request->message]],
+                        ],
+                    ],
+                    'generationConfig' => [
+                        'maxOutputTokens' => 300,
+                        'temperature'     => 0.7,
+                    ],
+                ]
+            );
 
-        $data = $response->json();
-        $reply = $data['candidates'][0]['content']['parts'][0]['text']
-                 ?? 'Sorry, I could not process your request.';
+            if ($response->failed()) {
+                $error = $response->json();
+                $errorMessage = $error['error']['message'] ?? 'Unknown API error occurred.';
+                return response()->json(['reply' => 'API Error: ' . $errorMessage]);
+            }
 
-        return response()->json(['reply' => $reply]);
+            $data = $response->json();
+            $reply = $data['candidates'][0]['content']['parts'][0]['text']
+                     ?? 'Sorry, I could not process your request.';
+
+            return response()->json(['reply' => $reply]);
+
+        } catch (\Exception $e) {
+            return response()->json(['reply' => 'Connection Error: ' . $e->getMessage()]);
+        }
     }
 }

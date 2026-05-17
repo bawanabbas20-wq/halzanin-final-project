@@ -306,7 +306,6 @@
 
         {{-- Floating Button --}}
         <div id="chatbot-wrapper" style="position:fixed;bottom:88px;right:20px;z-index:10000;display:flex;flex-direction:column;align-items:flex-end;gap:12px;">
-            @media (min-width: 1024px) { #chatbot-wrapper { bottom: 24px !important; } }
 
             {{-- Chat Window (hidden by default) --}}
             <div id="chatbot-window"
