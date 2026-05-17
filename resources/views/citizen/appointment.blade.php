@@ -194,33 +194,35 @@
                         </div>
                     </div>
 
-                    <!-- Confirm Submission Modal -->
-                    <x-modal name="confirm-appointment">
-                        <div class="p-6">
-                            <h2 class="text-xl font-bold font-outfit mb-2 text-gray-900 dark:text-white">Confirm Submission</h2>
-                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-5">
-                                Please confirm your appointment details are correct. You will receive a QR tracking code after submission.
-                            </p>
-                            
-                            <div class="bg-gray-50 dark:bg-[#0f172a] p-4 rounded-[12px] mb-6 border border-gray-100 dark:border-gray-800">
-                                <p class="text-[13px] text-gray-500 dark:text-gray-400 font-semibold mb-1" id="modal-name"></p>
-                                <p class="text-[13px] text-gray-500 dark:text-gray-400 font-semibold" id="modal-datetime"></p>
-                            </div>
-
-                            <div class="flex items-center justify-end gap-3">
-                                <button type="button" x-on:click="$dispatch('close-modal', 'confirm-appointment')" class="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-gray-700 dark:text-gray-200 rounded-[10px] font-semibold transition-colors text-sm">
-                                    Go Back
-                                </button>
-                                <button type="button" x-on:click="confirmed = true; $el.closest('form').submit()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-[10px] font-semibold shadow-md transition-colors text-sm">
-                                    Submit Now
-                                </button>
-                            </div>
-                        </div>
-                    </x-modal>
-
                 </form>
             </div>
         </div>
+
+        <!-- Confirm Submission Modal (Outside transformed container) -->
+        <x-modal name="confirm-appointment">
+            <div class="p-6">
+                <h2 class="text-xl font-bold font-outfit mb-2 text-gray-900 dark:text-white">Confirm Submission</h2>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-5">
+                    Please confirm your appointment details are correct. You will receive a QR tracking code after submission.
+                </p>
+                
+                <div class="bg-gray-50 dark:bg-[#0f172a] p-4 rounded-[12px] mb-6 border border-gray-100 dark:border-gray-800">
+                    <p class="text-[13px] text-gray-500 dark:text-gray-400 font-semibold mb-1" id="modal-name"></p>
+                    <p class="text-[13px] text-gray-500 dark:text-gray-400 font-semibold" id="modal-datetime"></p>
+                </div>
+
+                <div class="flex items-center justify-end gap-3">
+                    <button type="button" x-on:click="$dispatch('close-modal', 'confirm-appointment')" class="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-gray-700 dark:text-gray-200 rounded-[10px] font-semibold transition-colors text-sm">
+                        Go Back
+                    </button>
+                    <!-- Instead of $el.closest('form'), we use document.getElementById to submit the real form directly -->
+                    <button type="button" x-on:click="document.getElementById('appointment-form').__x.$data.confirmed = true; document.getElementById('appointment-form').submit()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-[10px] font-semibold shadow-md transition-colors text-sm">
+                        Submit Now
+                    </button>
+                </div>
+            </div>
+        </x-modal>
+
     </div>
 
     <!-- JS Logic -->
