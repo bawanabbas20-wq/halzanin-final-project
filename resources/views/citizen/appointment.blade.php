@@ -41,7 +41,10 @@
 
             <!-- Form Wrapper -->
             <div class="relative overflow-hidden w-full">
-                <form method="POST" action="{{ route('citizen.appointment.store') }}" id="appointment-form" class="flex transition-transform duration-300 ease-in-out w-[300%]">
+                <form method="POST" action="{{ route('citizen.appointment.store') }}" id="appointment-form" 
+                      class="flex transition-transform duration-300 ease-in-out w-[300%]"
+                      x-data="{ confirmed: false }" 
+                      @submit.prevent="if(!confirmed) { $dispatch('open-modal', 'confirm-appointment') } else { $el.submit() }">
                     @csrf
 
                     <!-- STEP 1: Personal Info -->
@@ -191,6 +194,30 @@
                         </div>
                     </div>
 
+                    <!-- Confirm Submission Modal -->
+                    <x-modal name="confirm-appointment">
+                        <div class="p-6">
+                            <h2 class="text-xl font-bold font-outfit mb-2 text-gray-900 dark:text-white">Confirm Submission</h2>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-5">
+                                Please confirm your appointment details are correct. You will receive a QR tracking code after submission.
+                            </p>
+                            
+                            <div class="bg-gray-50 dark:bg-[#0f172a] p-4 rounded-[12px] mb-6 border border-gray-100 dark:border-gray-800">
+                                <p class="text-[13px] text-gray-500 dark:text-gray-400 font-semibold mb-1" id="modal-name"></p>
+                                <p class="text-[13px] text-gray-500 dark:text-gray-400 font-semibold" id="modal-datetime"></p>
+                            </div>
+
+                            <div class="flex items-center justify-end gap-3">
+                                <button type="button" x-on:click="$dispatch('close-modal', 'confirm-appointment')" class="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-gray-700 dark:text-gray-200 rounded-[10px] font-semibold transition-colors text-sm">
+                                    Go Back
+                                </button>
+                                <button type="button" x-on:click="confirmed = true; $el.closest('form').submit()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-[10px] font-semibold shadow-md transition-colors text-sm">
+                                    Submit Now
+                                </button>
+                            </div>
+                        </div>
+                    </x-modal>
+
                 </form>
             </div>
         </div>
@@ -222,7 +249,15 @@
             
             const date = document.getElementById('preferred_date').value;
             const time = document.getElementById('time_slot').value;
-            document.getElementById('sum-date').textContent = (date && time) ? `${date} at ${time}` : '—';
+            const datetimeStr = (date && time) ? `${date} at ${time}` : '—';
+            
+            document.getElementById('sum-date').textContent = datetimeStr;
+            
+            // Populate Modal Summary
+            const modalNameEl = document.getElementById('modal-name');
+            const modalDatetimeEl = document.getElementById('modal-datetime');
+            if (modalNameEl) modalNameEl.textContent = document.getElementById('full_name').value || '—';
+            if (modalDatetimeEl) modalDatetimeEl.textContent = datetimeStr;
         }
 
         function updateIndicators(targetStep) {

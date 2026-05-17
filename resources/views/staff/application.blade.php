@@ -236,7 +236,9 @@
                             </div>
 
                             @if(count($nextStatuses) > 0)
-                                <form method="POST" action="{{ route('staff.applications.update-status', $application->id) }}" class="w-full text-left ltr:text-left rtl:text-right">
+                                <form method="POST" action="{{ route('staff.applications.update-status', $application->id) }}" class="w-full text-left ltr:text-left rtl:text-right" 
+                                      x-data="{ status: '{{ old('new_status') }}', notes: `{{ old('notes') }}`, confirmed: false }" 
+                                      @submit.prevent="if(status === 'rejected' && !confirmed) { $dispatch('open-modal', 'confirm-rejection') } else { $el.submit() }">
                                     @csrf
                                     @method('PATCH')
 
@@ -245,27 +247,59 @@
                                         <div class="absolute inset-y-0 ltr:left-0 rtl:right-0 mt-6 flex items-center ltr:pl-3 rtl:pr-3 pointer-events-none">
                                             <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
                                         </div>
-                                        <select id="new_status" name="new_status" required
+                                        <select id="new_status" name="new_status" required x-model="status"
                                                 class="block w-full h-[48px] ltr:pl-9 rtl:pr-9 rtl:pl-3 ltr:pr-3 rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#e0e7ff] dark:focus:shadow-[0_0_0_3px_rgba(49,46,129,0.5)] transition-all font-semibold">
                                             <option value="">Choose...</option>
                                             @foreach ($nextStatuses as $value => $label)
-                                                <option value="{{ $value }}" {{ old('new_status') === $value ? 'selected' : '' }}>
+                                                <option value="{{ $value }}">
                                                     {{ $label }}
                                                 </option>
                                             @endforeach
                                         </select>
                                     </div>
 
-                                    <div class="mb-6 relative">
+                                    <div class="mb-6 relative" x-show="status !== 'rejected'">
                                         <label for="notes" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Add notes for the citizen...</label>
-                                        <textarea id="notes" name="notes" rows="3"
-                                                  class="block w-full p-3 rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#e0e7ff] dark:focus:shadow-[0_0_0_3px_rgba(49,46,129,0.5)] transition-all text-sm">{{ old('notes') }}</textarea>
+                                        <textarea id="notes" name="notes" rows="3" x-model="notes"
+                                                  class="block w-full p-3 rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#e0e7ff] dark:focus:shadow-[0_0_0_3px_rgba(49,46,129,0.5)] transition-all text-sm"></textarea>
                                         <p class="text-xs text-gray-400 mt-1">This will be visible on their public tracking page.</p>
                                     </div>
 
-                                    <button type="submit" class="w-full h-[52px] bg-brand text-white rounded-[10px] font-semibold font-outfit shadow-brand-btn hover:shadow-brand-btn-hover hover:-translate-y-[1px] transition-all">
+                                    <button type="submit" x-ref="submitBtn" class="w-full h-[52px] bg-brand text-white rounded-[10px] font-semibold font-outfit shadow-brand-btn hover:shadow-brand-btn-hover hover:-translate-y-[1px] transition-all">
                                         Update Status
                                     </button>
+
+                                    <!-- Rejection Modal -->
+                                    <x-modal name="confirm-rejection">
+                                        <div class="p-6">
+                                            <div class="flex items-center gap-3 mb-4 text-red-600 dark:text-red-500">
+                                                <div class="w-10 h-10 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center shrink-0">
+                                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                                </div>
+                                                <h2 class="text-xl font-bold font-outfit">Confirm Rejection</h2>
+                                            </div>
+                                            
+                                            <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                                                Are you sure you want to reject this application? This cannot be undone.
+                                            </p>
+
+                                            <div class="mb-6">
+                                                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Rejection reason (required)</label>
+                                                <textarea rows="4" x-model="notes" required x-ref="rejectNotes"
+                                                          placeholder="Please explain why this application is being rejected..."
+                                                          class="block w-full p-3 rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-red-500 focus:ring-0 focus:shadow-[0_0_0_3px_#fee2e2] dark:focus:shadow-[0_0_0_3px_rgba(220,38,38,0.3)] transition-all text-sm"></textarea>
+                                            </div>
+
+                                            <div class="flex items-center justify-end gap-3">
+                                                <button type="button" x-on:click="$dispatch('close-modal', 'confirm-rejection')" class="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-gray-700 dark:text-gray-200 rounded-[10px] font-semibold transition-colors text-sm">
+                                                    Cancel
+                                                </button>
+                                                <button type="button" x-on:click="if(notes.trim() !== '') { confirmed = true; $refs.submitBtn.click(); } else { $refs.rejectNotes.focus(); }" class="px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-[10px] font-semibold shadow-md transition-colors text-sm flex items-center">
+                                                    Confirm Rejection
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </x-modal>
                                 </form>
                             @else
                                 <div class="w-full bg-gray-50 dark:bg-slate-800/50 border border-gray-200 dark:border-slate-700 rounded-[12px] p-5 text-center">
