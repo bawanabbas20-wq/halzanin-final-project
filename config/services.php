@@ -35,4 +35,8 @@ return [
         'key' => env('GEMINI_API_KEY'),
     ],
 
+    'callmebot' => [
+        'key' => env('CALLMEBOT_API_KEY'),
+    ],
+
 ];

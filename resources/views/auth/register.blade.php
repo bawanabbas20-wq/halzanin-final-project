@@ -58,6 +58,17 @@
                 <x-input-error :messages="$errors->get('name')" class="mt-1" />
             </div>
 
+            <!-- Phone Number -->
+            <div class="relative">
+                <div class="absolute inset-y-0 ltr:left-0 rtl:right-0 flex items-center ltr:pl-4 rtl:pr-4 pointer-events-none text-xl">
+                    🇮🇶
+                </div>
+                <input id="phone_number" type="tel" name="phone_number" value="{{ old('phone_number') }}" autocomplete="tel"
+                       placeholder="07XX XXX XXXX"
+                       class="block w-full h-[48px] ltr:pl-11 rtl:pr-11 rtl:pl-4 ltr:pr-4 rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#e0e7ff] dark:focus:shadow-[0_0_0_3px_rgba(49,46,129,0.5)] transition-all duration-200">
+                <x-input-error :messages="$errors->get('phone_number')" class="mt-1" />
+            </div>
+
             <!-- Email Address -->
             <div class="relative">
                 <div class="absolute inset-y-0 ltr:left-0 rtl:right-0 flex items-center ltr:pl-4 rtl:pr-4 pointer-events-none">

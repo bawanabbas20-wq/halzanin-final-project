@@ -22,7 +22,11 @@ use App\Http\Controllers\CitizenController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\AdminController;
 
-Route::get('/track/{code}', function ($code) {
+Route::get('/track/{code?}', function ($code = null) {
+    if (!$code) {
+        return view('track', ['application' => null]);
+    }
+
     $application = \App\Models\Application::with(['statusLogs' => function($q) {
         $q->orderBy('created_at', 'asc');
     }])->where('tracking_code', $code)->firstOrFail();

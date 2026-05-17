@@ -12,6 +12,7 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
     <script>
         // Initialize theme
@@ -73,6 +74,29 @@
             <h1 class="text-[28px] font-bold text-brand dark:text-white font-outfit mb-2">Track Your Application</h1>
             <p class="text-sm text-gray-500 dark:text-gray-400">Real-time status updates for your document submission</p>
         </div>
+
+        @if(!$application)
+            <!-- Search & Scan Section -->
+            <div class="w-full max-w-[600px] bg-white dark:bg-[#1e293b] rounded-[16px] shadow-sm border border-gray-100 dark:border-slate-800 p-6 animate-fade-up" style="animation-delay: 200ms;">
+                <form action="javascript:void(0)" onsubmit="manualTrack()" class="flex flex-col gap-4">
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <input type="text" id="manualTrackingCode" placeholder="Enter tracking code (e.g. TRK-...)" class="flex-1 h-[48px] rounded-[10px] border-gray-300 dark:border-slate-600 bg-transparent dark:text-white focus:border-brand focus:ring-0 px-4 transition-colors">
+                        <button type="submit" class="h-[48px] px-6 bg-brand text-white font-semibold rounded-[10px] shadow-brand-btn hover:-translate-y-[1px] transition-all">Track Now</button>
+                    </div>
+                    
+                    <div class="flex items-center gap-4 my-2">
+                        <div class="flex-1 h-px bg-gray-200 dark:bg-slate-700"></div>
+                        <span class="text-sm text-gray-400 font-semibold uppercase">OR</span>
+                        <div class="flex-1 h-px bg-gray-200 dark:bg-slate-700"></div>
+                    </div>
+
+                    <button type="button" onclick="startScanner()" class="h-[48px] w-full flex items-center justify-center gap-2 bg-emerald-500 text-white font-semibold rounded-[10px] shadow-md hover:-translate-y-[1px] transition-all">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        Scan QR Code
+                    </button>
+                </form>
+            </div>
+        @else
 
         @php
             $badgeColors = [
@@ -240,10 +264,92 @@
                 </a>
             </div>
         </div>
+        @endif
 
     </main>
 
+    <!-- QR Code Scanner Modal -->
+    <div id="qrModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white dark:bg-[#1e293b] rounded-[24px] shadow-2xl p-6 w-[90%] max-w-[400px] transform scale-95 transition-transform duration-300 relative" id="qrModalContent">
+            <button type="button" onclick="stopScanner()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors z-10">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <div class="text-center mb-4 mt-2">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white font-outfit mb-1">Scan QR Code</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Point your camera at the QR code</p>
+            </div>
+            <div class="rounded-[16px] overflow-hidden border-2 border-brand/20 relative bg-black/5 dark:bg-white/5">
+                <div id="reader" style="width: 100%; min-height: 250px;"></div>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // QR Scanner Logic
+        let html5QrcodeScanner = null;
+
+        function manualTrack() {
+            const code = document.getElementById('manualTrackingCode').value.trim();
+            if (code) {
+                window.location.href = `/track/${code}`;
+            }
+        }
+
+        function startScanner() {
+            const modal = document.getElementById('qrModal');
+            const modalContent = document.getElementById('qrModalContent');
+            
+            modal.classList.remove('hidden');
+            // Trigger animation next frame
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    modal.classList.remove('opacity-0');
+                    modalContent.classList.remove('scale-95');
+                });
+            });
+
+            if (!html5QrcodeScanner) {
+                html5QrcodeScanner = new Html5Qrcode("reader");
+            }
+
+            const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+            
+            html5QrcodeScanner.start({ facingMode: "environment" }, config, onScanSuccess, onScanFailure)
+                .catch((err) => {
+                    console.error(err);
+                    alert("Unable to access camera. Please check your permissions.");
+                    stopScanner();
+                });
+        }
+
+        function stopScanner() {
+            if (html5QrcodeScanner && html5QrcodeScanner.isScanning) {
+                html5QrcodeScanner.stop().catch(err => console.error(err));
+            }
+            const modal = document.getElementById('qrModal');
+            const modalContent = document.getElementById('qrModalContent');
+            
+            modal.classList.add('opacity-0');
+            modalContent.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function onScanSuccess(decodedText, decodedResult) {
+            stopScanner();
+            if (decodedText.includes('/track/')) {
+                window.location.href = decodedText;
+            } else {
+                window.location.href = `/track/${decodedText}`;
+            }
+        }
+
+        function onScanFailure(error) {
+            // handle scan failure, usually better to ignore and keep scanning
+        }
+
         // Theme Toggle Logic
         const themeToggleBtn = document.getElementById('theme-toggle');
         const darkIcon = document.getElementById('theme-toggle-dark-icon');

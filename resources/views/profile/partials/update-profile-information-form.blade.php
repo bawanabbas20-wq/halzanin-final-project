@@ -23,6 +23,15 @@
         </div>
 
         <div>
+            <label for="phone_number" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
+                {{ __('Phone Number (WhatsApp)') }} 🇮🇶
+            </label>
+            <input id="phone_number" name="phone_number" type="tel" placeholder="07XX XXX XXXX" class="block w-full h-[48px] rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#e0e7ff] dark:focus:shadow-[0_0_0_3px_rgba(49,46,129,0.5)] transition-all" value="{{ old('phone_number', $user->phone_number) }}" autocomplete="tel" />
+            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Required to receive WhatsApp updates about your applications.</p>
+            <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
+        </div>
+
+        <div>
             <label for="email" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">{{ __('Email') }}</label>
             <input id="email" name="email" type="email" class="block w-full h-[48px] rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#e0e7ff] dark:focus:shadow-[0_0_0_3px_rgba(49,46,129,0.5)] transition-all" value="{{ old('email', $user->email) }}" required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />

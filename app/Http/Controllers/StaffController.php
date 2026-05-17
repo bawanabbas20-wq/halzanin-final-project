@@ -79,6 +79,20 @@ class StaffController extends Controller
             \Log::error('StatusUpdatedMail failed: ' . $e->getMessage());
         }
 
+        // Send WhatsApp notification
+        $citizen = $application->user;
+        if ($citizen->phone_number) {
+            $whatsapp = new \App\Services\WhatsAppService();
+            $statusEmoji = ['received'=>'📥','under_review'=>'🔍','approved'=>'✅','rejected'=>'❌'];
+            $emoji = $statusEmoji[$next] ?? '📋';
+            $message = "{$emoji} Halzanîn Update\n\nYour application {$application->tracking_code} status has been updated to: " . strtoupper($next) . "\n\nTrack your application: " . url('/track/' . $application->tracking_code);
+            try { 
+                $whatsapp->send($citizen->phone_number, $message); 
+            } catch (\Exception $e) { 
+                \Log::error('WhatsApp failed: ' . $e->getMessage()); 
+            }
+        }
+
         return redirect()
             ->route('staff.applications.show', $application->id)
             ->with('success', 'Status updated to "' . str_replace('_', ' ', $next) . '" successfully.');
