@@ -68,10 +68,14 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::patch('/admin/users/{id}/role', [AdminController::class, 'updateRole'])->name('admin.users.update-role');
 });
 
+use App\Http\Controllers\ChatbotController;
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::post('/chatbot', [ChatbotController::class, 'chat'])->name('chatbot.chat');
 });
 
 require __DIR__.'/auth.php';
