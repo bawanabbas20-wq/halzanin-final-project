@@ -81,7 +81,13 @@
                         </div>
                     </div>
                 @empty
-                    <div class="text-center py-8 text-gray-500 dark:text-gray-400 empty-msg">No applications found.</div>
+                    <div class="bg-white dark:bg-[#1e293b] rounded-[16px] shadow-sm border border-gray-100 dark:border-gray-800 empty-msg">
+                        <x-empty-state
+                            type="no-results"
+                            title="No applications found"
+                            description="Try adjusting your search or filter to find what you're looking for."
+                        />
+                    </div>
                 @endforelse
             </div>
 
@@ -135,7 +141,13 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="8" class="px-6 py-10 text-center text-gray-500 dark:text-gray-400 empty-msg">No applications found.</td>
+                                    <td colspan="8" class="empty-msg">
+                                        <x-empty-state
+                                            type="no-results"
+                                            title="No applications found"
+                                            description="Try adjusting your search or filter."
+                                        />
+                                    </td>
                                 </tr>
                             @endforelse
                         </tbody>

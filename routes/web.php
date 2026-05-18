@@ -57,11 +57,18 @@ Route::middleware(['auth', 'role:citizen'])->group(function () {
     Route::get('/citizen/applications/{id}/qr-pdf', [\App\Http\Controllers\ApplicationController::class, 'downloadPdf'])->name('citizen.applications.qr-pdf');
     Route::get('/citizen/applications/{id}/upload', [\App\Http\Controllers\DocumentController::class, 'create'])->name('citizen.documents.create');
     Route::post('/citizen/applications/{id}/upload', [\App\Http\Controllers\DocumentController::class, 'store'])->name('citizen.documents.store');
+
+    Route::get('/citizen/vault', [\App\Http\Controllers\VaultController::class, 'index'])->name('citizen.vault.index');
+    Route::get('/citizen/vault/scan', [\App\Http\Controllers\VaultController::class, 'scan'])->name('citizen.vault.scan');
+    Route::post('/citizen/vault', [\App\Http\Controllers\VaultController::class, 'store'])->name('citizen.vault.store');
+    Route::get('/citizen/vault/file/{id}/{format?}', [\App\Http\Controllers\VaultController::class, 'viewFile'])->name('citizen.vault.file');
+    Route::delete('/citizen/vault/{id}', [\App\Http\Controllers\VaultController::class, 'destroy'])->name('citizen.vault.destroy');
 });
 
 Route::middleware(['auth', 'role:staff,admin'])->group(function () {
     Route::get('/staff/dashboard', [StaffController::class, 'index'])->name('staff.dashboard');
     Route::get('/staff/queue', [StaffController::class, 'index'])->name('staff.queue');
+    Route::get('/staff/calendar', [StaffController::class, 'calendar'])->name('staff.calendar');
     Route::get('/staff/applications/{id}', [StaffController::class, 'show'])->name('staff.applications.show');
     Route::patch('/staff/applications/{id}/status', [StaffController::class, 'updateStatus'])->name('staff.applications.update-status');
 });
@@ -74,12 +81,18 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 use App\Http\Controllers\ChatbotController;
 
+use App\Http\Controllers\NotificationController;
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::post('/chatbot', [ChatbotController::class, 'chat'])->name('chatbot.chat');
+
+    Route::get('/notifications',              [NotificationController::class, 'index'])->name('notifications.index');
+    Route::patch('/notifications/{id}/read',  [NotificationController::class, 'markRead'])->name('notifications.read');
+    Route::post('/notifications/read-all',    [NotificationController::class, 'markAllRead'])->name('notifications.readAll');
 });
 
 require __DIR__.'/auth.php';

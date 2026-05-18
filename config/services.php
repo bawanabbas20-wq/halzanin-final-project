@@ -31,8 +31,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
-    'gemini' => [
-        'key' => env('GEMINI_API_KEY'),
+    'mistral' => [
+        'key' => env('MISTRAL_API_KEY'),
     ],
 
     'callmebot' => [

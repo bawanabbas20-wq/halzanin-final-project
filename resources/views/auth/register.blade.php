@@ -89,6 +89,8 @@
                        placeholder="Password"
                        class="block w-full h-[48px] ltr:pl-11 rtl:pr-11 rtl:pl-4 ltr:pr-4 rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#e0e7ff] dark:focus:shadow-[0_0_0_3px_rgba(49,46,129,0.5)] transition-all duration-200">
                 <x-input-error :messages="$errors->get('password')" class="mt-1" />
+
+                <x-password-strength inputId="password" />
             </div>
 
             <!-- Confirm Password -->
@@ -114,4 +116,6 @@
             </div>
         </form>
     </div>
+
+
 </x-halzanin-auth-layout>

@@ -82,6 +82,10 @@
                             <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                             Application Queue
                         </a>
+                        <a href="{{ route('staff.calendar') }}" class="{{ request()->routeIs('staff.calendar') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
+                            <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            Calendar
+                        </a>
                         <a href="{{ route('profile.edit') }}" class="{{ request()->routeIs('profile.edit') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
                             <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                             Profile
@@ -94,6 +98,10 @@
                         <a href="{{ route('citizen.appointment.create') }}" class="{{ request()->routeIs('*appointment*') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
                             <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                             Book Appointment
+                        </a>
+                        <a href="{{ route('citizen.vault.index') }}" class="{{ request()->routeIs('*vault*') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
+                            <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                            Document Vault
                         </a>
                         <a href="#" class="text-white/70 hover:bg-white/5 hover:text-white flex items-center px-4 py-3 rounded-xl transition-all">
                             <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
@@ -117,13 +125,15 @@
                             <p class="text-[10px] text-brand-light uppercase tracking-wider font-bold truncate">{{ auth()->user()->role }}</p>
                         </div>
                     </div>
-                    <form method="POST" action="{{ route('logout') }}" class="mt-2">
-                        @csrf
-                        <button type="submit" class="w-full text-left flex items-center px-4 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-white/5 rounded-xl transition-all">
+                    <div x-data="{}">
+                        <button type="button"
+                                x-on:click="$dispatch('open-modal', 'confirm-logout')"
+                                class="mt-2 w-full text-left flex items-center px-4 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-white/5 rounded-xl transition-all">
                             <svg class="w-4 h-4 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
                             Log Out
                         </button>
-                    </form>
+                        <form id="sidebar-logout-form" method="POST" action="{{ route('logout') }}" class="hidden">@csrf</form>
+                    </div>
                 </div>
             </aside>
 
@@ -132,6 +142,122 @@
                 
                 <!-- Header (Toggles) -->
                 <header class="h-16 flex items-center justify-end px-4 lg:px-8 shrink-0 relative z-20">
+
+                    @if(auth()->user()->role === 'citizen')
+                    {{-- ═══════════════════════════════════════════ --}}
+                    {{-- Notification Bell (citizens only)           --}}
+                    {{-- ═══════════════════════════════════════════ --}}
+                    <div class="ltr:mr-3 rtl:ml-3 relative"
+                         x-data="{
+                             open: false, count: 0, items: [],
+                             init() {
+                                 this.fetch();
+                                 setInterval(() => this.fetch(), 30000);
+                             },
+                             async fetch() {
+                                 try {
+                                     const r = await window.fetch('{{ route('notifications.index') }}', { headers: { 'Accept': 'application/json' } });
+                                     const d = await r.json();
+                                     this.count = d.count;
+                                     this.items = d.notifications;
+                                 } catch(e) {}
+                             },
+                             async markAllRead() {
+                                 await window.fetch('{{ route('notifications.readAll') }}', {
+                                     method: 'POST',
+                                     headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content, 'Accept': 'application/json' }
+                                 });
+                                 await this.fetch();
+                             },
+                             markRead(id) {
+                                 const n = this.items.find(i => i.id === id);
+                                 if (n && !n.read) { n.read = true; this.count = Math.max(0, this.count - 1); }
+                                 window.fetch('/notifications/' + id + '/read', {
+                                     method: 'PATCH',
+                                     headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content, 'Accept': 'application/json' }
+                                 });
+                             }
+                         }"
+                         x-on:click.outside="open = false">
+
+                        {{-- Bell button --}}
+                        <button type="button"
+                                x-on:click="open = !open; if(open) fetchNotifs()"
+                                class="relative p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                            </svg>
+                            {{-- Unread badge --}}
+                            <span x-show="count > 0"
+                                  x-text="count > 9 ? '9+' : count"
+                                  class="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] flex items-center justify-center bg-red-500 text-white text-[10px] font-bold rounded-full px-1 leading-none"
+                                  style="display:none">
+                            </span>
+                        </button>
+
+                        {{-- Dropdown panel --}}
+                        <div x-show="open"
+                             x-transition:enter="transition ease-out duration-150"
+                             x-transition:enter-start="opacity-0 scale-95 translate-y-1"
+                             x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                             x-transition:leave="transition ease-in duration-100"
+                             x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                             x-transition:leave-end="opacity-0 scale-95 translate-y-1"
+                             style="display:none"
+                             class="absolute ltr:right-0 rtl:left-0 top-full mt-2 w-80 bg-white dark:bg-[#1e293b] rounded-[14px] shadow-xl border border-gray-100 dark:border-slate-700 overflow-hidden z-50">
+
+                            {{-- Dropdown header --}}
+                            <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800/50">
+                                <span class="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider">Notifications</span>
+                                <button type="button"
+                                        x-on:click="markAllRead()"
+                                        x-show="count > 0"
+                                        class="text-xs font-semibold text-brand dark:text-indigo-400 hover:underline">
+                                    Mark all read
+                                </button>
+                            </div>
+
+                            {{-- Notification list --}}
+                            <div class="max-h-[340px] overflow-y-auto divide-y divide-gray-100 dark:divide-slate-700">
+                                <template x-if="items.length === 0">
+                                    <div class="px-4 py-8 text-center">
+                                        <svg class="w-8 h-8 text-gray-300 dark:text-gray-600 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                                        </svg>
+                                        <p class="text-xs text-gray-400 dark:text-gray-500">No notifications yet</p>
+                                    </div>
+                                </template>
+                                <template x-for="n in items" :key="n.id">
+                                    <div x-on:click="markRead(n.id); n.read = true"
+                                         class="flex items-start gap-3 px-4 py-3 cursor-pointer hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors"
+                                         :class="n.read ? '' : 'bg-indigo-50/40 dark:bg-indigo-900/10'">
+                                        {{-- Status dot --}}
+                                        <div class="mt-0.5 w-2 h-2 rounded-full shrink-0"
+                                             :class="{
+                                                 'bg-green-500':  n.status === 'approved',
+                                                 'bg-red-500':    n.status === 'rejected',
+                                                 'bg-yellow-400': n.status === 'under_review',
+                                                 'bg-blue-400':   n.status === 'received',
+                                                 'bg-gray-400':   !['approved','rejected','under_review','received'].includes(n.status)
+                                             }">
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-xs font-semibold text-gray-900 dark:text-white leading-snug">
+                                                Your application <span class="font-mono text-brand dark:text-indigo-400" x-text="n.tracking"></span>
+                                                status changed to <span class="capitalize" x-text="n.status.replace('_',' ')"></span>
+                                            </p>
+                                            <p class="text-[11px] text-gray-400 dark:text-gray-500 mt-0.5" x-text="n.time"></p>
+                                        </div>
+                                        <div x-show="!n.read" class="w-2 h-2 bg-brand rounded-full shrink-0 mt-1"></div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+
+                    @endif
+
                     <!-- Floating Toggles -->
                     <div class="flex items-center space-x-3 rtl:space-x-reverse bg-white/80 dark:bg-slate-800/80 backdrop-blur-md px-3 py-2 rounded-full shadow-sm border border-gray-100 dark:border-slate-700">
                         <!-- Dark Mode Toggle -->
@@ -154,6 +280,30 @@
                 <main class="flex-1 p-4 lg:p-8 pb-24 lg:pb-8 relative z-10 w-full max-w-5xl mx-auto">
                     @yield('content')
                 </main>
+
+                {{-- ═══════════════════════════════════════════════ --}}
+                {{-- Page Transition Skeleton Overlay                 --}}
+                {{-- ═══════════════════════════════════════════════ --}}
+                <div id="nav-skeleton" class="hidden absolute top-16 inset-x-0 bottom-0 z-50 bg-[#f8fafc] dark:bg-[#0f172a] overflow-y-auto" aria-hidden="true">
+                    <div class="p-4 lg:p-8 pb-24 lg:pb-8 max-w-5xl mx-auto w-full space-y-6">
+                        <div class="flex items-center justify-between">
+                            <div class="h-8 w-52 skeleton rounded-xl"></div>
+                            <div class="h-9 w-24 skeleton rounded-full"></div>
+                        </div>
+                        <div class="h-[88px] skeleton rounded-[16px]"></div>
+                        <div class="grid grid-cols-3 gap-3 lg:gap-6">
+                            <div class="h-[100px] skeleton rounded-[16px]"></div>
+                            <div class="h-[100px] skeleton rounded-[16px]"></div>
+                            <div class="h-[100px] skeleton rounded-[16px]"></div>
+                        </div>
+                        <div class="h-6 w-36 skeleton rounded-lg"></div>
+                        <div class="space-y-4">
+                            <div class="h-[100px] skeleton rounded-[16px]"></div>
+                            <div class="h-[100px] skeleton rounded-[16px]"></div>
+                            <div class="h-[100px] skeleton rounded-[16px]"></div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
 
@@ -185,6 +335,10 @@
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                         <span class="text-[10px] font-semibold">Queue</span>
                     </a>
+                    <a href="{{ route('staff.calendar') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('staff.calendar') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand' }}">
+                        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        <span class="text-[10px] font-semibold">Calendar</span>
+                    </a>
                     <a href="{{ route('profile.edit') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('profile.edit') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                         <span class="text-[10px] font-semibold">Profile</span>
@@ -197,6 +351,10 @@
                     <a href="{{ route('citizen.appointment.create') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('*appointment*') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                         <span class="text-[10px] font-semibold">Book</span>
+                    </a>
+                    <a href="{{ route('citizen.vault.index') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('*vault*') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand' }}">
+                        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                        <span class="text-[10px] font-semibold">Vault</span>
                     </a>
                     <a href="#" class="flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-brand dark:hover:text-indigo-400">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
@@ -277,7 +435,56 @@
                     updateLangUI('en');
                 }
             });
+
+            // Page transition skeleton — show shimmer overlay on internal navigation
+            (function() {
+                var sk = document.getElementById('nav-skeleton');
+                if (!sk) return;
+                document.addEventListener('click', function(e) {
+                    var a = e.target.closest('a[href]');
+                    if (!a || e.defaultPrevented || e.ctrlKey || e.metaKey || e.shiftKey) return;
+                    var href = a.getAttribute('href');
+                    if (!href || href === '#' || href[0] === '#' || href.startsWith('javascript') || href.startsWith('mailto') || href.startsWith('tel')) return;
+                    if (a.getAttribute('target') === '_blank') return;
+                    try {
+                        var u = new URL(href, location.origin);
+                        if (u.origin !== location.origin) return;
+                    } catch (err) { return; }
+                    sk.classList.remove('hidden');
+                });
+                // Reset skeleton if page is restored from bfcache
+                window.addEventListener('pageshow', function(e) {
+                    if (e.persisted) sk.classList.add('hidden');
+                });
+            })();
         </script>
+
+        {{-- ═══════════════════════════════════════════════ --}}
+        {{-- Logout Confirmation Modal                       --}}
+        {{-- ═══════════════════════════════════════════════ --}}
+        <x-modal name="confirm-logout" maxWidth="sm">
+            <div class="p-6 bg-white dark:bg-[#1e293b]">
+                <div class="flex items-center gap-4 mb-5">
+                    <div class="w-11 h-11 rounded-full bg-red-50 dark:bg-red-900/30 flex items-center justify-center shrink-0">
+                        <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                    </div>
+                    <div>
+                        <h2 class="text-base font-bold text-gray-900 dark:text-white font-outfit">Log Out</h2>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Are you sure you want to end your session?</p>
+                    </div>
+                </div>
+                <div class="flex justify-end gap-3">
+                    <button type="button" x-on:click="$dispatch('close')"
+                            class="px-5 py-2.5 text-sm font-semibold text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-[10px] transition-colors">
+                        Cancel
+                    </button>
+                    <button type="button" onclick="document.getElementById('sidebar-logout-form').submit()"
+                            class="px-5 py-2.5 text-sm font-semibold text-white bg-red-600 hover:bg-red-700 rounded-[10px] transition-all shadow-sm">
+                        Log Out
+                    </button>
+                </div>
+            </div>
+        </x-modal>
 
         {{-- ═══════════════════════════════════════════════ --}}
         {{-- Global Toast System                             --}}
@@ -298,6 +505,9 @@
         @endif
         @if(session('status') === 'profile-updated')
         <script>document.addEventListener('DOMContentLoaded',function(){showToast('success','Profile Updated','Your profile has been saved successfully.');});</script>
+        @endif
+        @if($errors->any())
+        <script>document.addEventListener('DOMContentLoaded',function(){showToast('error','Please fix the errors','Check the highlighted fields below and try again.');});</script>
         @endif
 
         {{-- ═══════════════════════════════════════════════ --}}

@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Mail\StatusUpdatedMail;
 use App\Models\Application;
+use App\Models\Appointment;
 use App\Models\StatusLog;
+use App\Notifications\ApplicationStatusChanged;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -13,11 +16,31 @@ class StaffController extends Controller
     // Valid status transition order
     protected array $statusOrder = [
         'submitted'    => 0,
-        'received'     => 1,
-        'under_review' => 2,
-        'approved'     => 3,
-        'rejected'     => 3, // same level as approved — both terminal
+        'under_review' => 1,
+        'approved'     => 2,
+        'rejected'     => 2, // same level as approved — both terminal
     ];
+
+    public function calendar(Request $request)
+    {
+        $monthInput = $request->input('month', now()->format('Y-m'));
+
+        try {
+            $start = Carbon::parse($monthInput . '-01')->startOfMonth();
+        } catch (\Exception $e) {
+            $start = now()->startOfMonth();
+        }
+
+        $end = $start->copy()->endOfMonth();
+
+        $appointments = Appointment::whereBetween('preferred_date', [$start->toDateString(), $end->toDateString()])
+            ->orderBy('preferred_date')
+            ->orderBy('time_slot')
+            ->get()
+            ->groupBy(fn($a) => Carbon::parse($a->preferred_date)->format('Y-m-d'));
+
+        return view('staff.calendar', compact('appointments', 'start'));
+    }
 
     public function index()
     {
@@ -44,7 +67,7 @@ class StaffController extends Controller
     public function updateStatus(Request $request, $id)
     {
         $request->validate([
-            'new_status' => 'required|in:received,under_review,approved,rejected',
+            'new_status' => 'required|in:under_review,approved,rejected',
             'notes'      => 'nullable|string',
         ]);
 
@@ -79,6 +102,13 @@ class StaffController extends Controller
             \Log::error('StatusUpdatedMail failed: ' . $e->getMessage());
         }
 
+        // Send in-app database notification
+        try {
+            $application->user->notify(new ApplicationStatusChanged($application));
+        } catch (\Throwable $e) {
+            \Log::error('DB notification failed: ' . $e->getMessage());
+        }
+
         // Send WhatsApp notification
         $citizen = $application->user;
         if ($citizen->phone_number) {
@@ -110,7 +140,6 @@ class StaffController extends Controller
         $currentLevel = $this->statusOrder[$current] ?? 0;
 
         $all = [
-            'received'     => 'Received',
             'under_review' => 'Under Review',
             'approved'     => 'Approved',
             'rejected'     => 'Rejected',

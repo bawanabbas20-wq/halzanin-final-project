@@ -70,16 +70,14 @@
             </div>
 
             @if($applications->isEmpty())
-                <!-- Empty State -->
-                <div class="bg-white dark:bg-[#1e293b] rounded-[16px] p-10 text-center shadow-sm border border-gray-100 dark:border-gray-800 animate-fade-up">
-                    <div class="w-24 h-24 mx-auto bg-gray-50 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4">
-                        <svg class="w-10 h-10 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-                    </div>
-                    <h4 class="text-gray-900 dark:text-white font-semibold mb-1">No applications yet</h4>
-                    <p class="text-gray-500 dark:text-gray-400 text-sm mb-6">Start tracking your documents by booking your first appointment.</p>
-                    <a href="{{ route('citizen.appointment.create') }}" class="inline-flex items-center px-4 py-2 bg-brand text-white text-sm font-semibold rounded-[10px] hover:bg-brand-light transition-colors">
-                        Book Appointment
-                    </a>
+                <div class="bg-white dark:bg-[#1e293b] rounded-[16px] shadow-sm border border-gray-100 dark:border-gray-800 animate-fade-up">
+                    <x-empty-state
+                        type="no-documents"
+                        title="No applications yet"
+                        description="Start tracking your documents by booking your first appointment with the directorate."
+                        actionLabel="Book Appointment"
+                        actionRoute="{{ route('citizen.appointment.create') }}"
+                    />
                 </div>
             @else
                 <div class="space-y-4">

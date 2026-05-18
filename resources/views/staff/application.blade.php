@@ -134,7 +134,6 @@
                         @php
                             $badgeColors = [
                                 'submitted'    => ['bg' => 'bg-gray-100 dark:bg-gray-800', 'text' => 'text-gray-700 dark:text-gray-300'],
-                                'received'     => ['bg' => 'bg-blue-100 dark:bg-blue-900/30', 'text' => 'text-blue-700 dark:text-blue-400'],
                                 'under_review' => ['bg' => 'bg-yellow-100 dark:bg-yellow-900/30', 'text' => 'text-yellow-700 dark:text-yellow-400'],
                                 'approved'     => ['bg' => 'bg-green-100 dark:bg-green-900/30', 'text' => 'text-green-700 dark:text-green-400'],
                                 'rejected'     => ['bg' => 'bg-red-100 dark:bg-red-900/30', 'text' => 'text-red-700 dark:text-red-400'],
@@ -156,11 +155,6 @@
                                             $iconSvg = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>';
                                             $iconColorClass = 'text-gray-500 dark:text-gray-400';
                                             $bgColorClass = 'bg-gray-100 dark:bg-gray-800';
-                                            break;
-                                        case 'received':
-                                            $iconSvg = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>';
-                                            $iconColorClass = 'text-blue-500 dark:text-blue-400';
-                                            $bgColorClass = 'bg-blue-100 dark:bg-blue-900/30';
                                             break;
                                         case 'under_review':
                                             $iconSvg = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>';
@@ -238,7 +232,11 @@
                             @if(count($nextStatuses) > 0)
                                 <form method="POST" action="{{ route('staff.applications.update-status', $application->id) }}" class="w-full text-left ltr:text-left rtl:text-right" 
                                       x-data="{ status: '{{ old('new_status') }}', notes: `{{ old('notes') }}`, confirmed: false }" 
-                                      @submit.prevent="if(status === 'rejected' && !confirmed) { $dispatch('open-modal', 'confirm-rejection') } else { $el.submit() }">
+                                      @submit.prevent="
+                                    if (status === 'rejected' && !confirmed) { $dispatch('open-modal', 'confirm-rejection') }
+                                    else if (status === 'approved' && !confirmed) { $dispatch('open-modal', 'confirm-approval') }
+                                    else { $el.submit() }
+                                ">
                                     @csrf
                                     @method('PATCH')
 
@@ -268,6 +266,34 @@
                                     <button type="submit" x-ref="submitBtn" class="w-full h-[52px] bg-brand text-white rounded-[10px] font-semibold font-outfit shadow-brand-btn hover:shadow-brand-btn-hover hover:-translate-y-[1px] transition-all">
                                         Update Status
                                     </button>
+
+                                    <!-- Approval Modal -->
+                                    <x-modal name="confirm-approval">
+                                        <div class="p-6">
+                                            <div class="flex items-center gap-3 mb-4 text-green-600 dark:text-green-500">
+                                                <div class="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center shrink-0">
+                                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                                </div>
+                                                <h2 class="text-xl font-bold font-outfit">Confirm Approval</h2>
+                                            </div>
+
+                                            <p class="text-sm text-gray-600 dark:text-gray-300 mb-6">
+                                                You are about to <strong>approve</strong> this application. The citizen will be notified by email. This action cannot be undone.
+                                            </p>
+
+                                            <div class="flex items-center justify-end gap-3">
+                                                <button type="button" x-on:click="$dispatch('close')"
+                                                        class="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-gray-700 dark:text-gray-200 rounded-[10px] font-semibold transition-colors text-sm">
+                                                    Cancel
+                                                </button>
+                                                <button type="button" x-on:click="confirmed = true; $refs.submitBtn.click()"
+                                                        class="px-5 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-[10px] font-semibold shadow-md transition-colors text-sm flex items-center gap-2">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                                    Confirm Approval
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </x-modal>
 
                                     <!-- Rejection Modal -->
                                     <x-modal name="confirm-rejection">

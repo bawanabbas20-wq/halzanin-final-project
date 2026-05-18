@@ -1,7 +1,8 @@
 @extends('layouts.halzanin-app')
 
 @section('content')
-    <div class="max-w-6xl mx-auto pb-10">
+    <div class="max-w-6xl mx-auto pb-10"
+         x-data="{ pendingForm: null, pendingName: '', pendingRole: '' }">
         
         <!-- Header -->
         <div class="flex items-center justify-between mb-6 animate-fade-in">
@@ -87,7 +88,9 @@
                                     @if($isSelf)
                                         <span class="text-[11px] text-gray-400 dark:text-gray-500 italic uppercase tracking-wider font-semibold">Cannot change own role</span>
                                     @else
-                                        <form method="POST" action="{{ route('admin.users.update-role', $user->id) }}" class="inline-flex items-center space-x-2 rtl:space-x-reverse">
+                                        <form method="POST" action="{{ route('admin.users.update-role', $user->id) }}"
+                                              data-user-name="{{ $user->name }}"
+                                              class="inline-flex items-center space-x-2 rtl:space-x-reverse">
                                             @csrf
                                             @method('PATCH')
                                             <div class="relative">
@@ -98,8 +101,14 @@
                                                     <option value="admin"   {{ $user->role === 'admin'   ? 'selected' : '' }}>Admin</option>
                                                 </select>
                                             </div>
-                                            <button type="submit"
-                                                class="h-[34px] px-3 bg-brand text-white text-xs font-semibold rounded-[8px] hover:bg-brand-light transition-colors shadow-sm">
+                                            <button type="button"
+                                                    x-on:click="
+                                                        pendingForm = $el.closest('form');
+                                                        pendingName = pendingForm.dataset.userName;
+                                                        pendingRole = pendingForm.querySelector('[name=role]').value;
+                                                        $dispatch('open-modal', 'confirm-role-update')
+                                                    "
+                                                    class="h-[34px] px-3 bg-brand text-white text-xs font-semibold rounded-[8px] hover:bg-brand-light transition-colors shadow-sm">
                                                 Update
                                             </button>
                                         </form>
@@ -108,7 +117,23 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="px-6 py-10 text-center text-gray-500 dark:text-gray-400">No users found.</td>
+                                <td colspan="5" class="px-6 py-14">
+                                    <div class="flex flex-col items-center justify-center">
+                                        <div class="w-36 h-36 mb-5 rounded-2xl bg-purple-50 dark:bg-purple-900/10 flex items-center justify-center p-4">
+                                            <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                                                <circle cx="75" cy="44" r="14" fill="#ede9fe" stroke="#c4b5fd" stroke-width="1.5" stroke-dasharray="4 3"/>
+                                                <path d="M52 98 C53 78 75 78 75 78 C95 78 100 90 100 98" stroke="#c4b5fd" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-dasharray="4 3"/>
+                                                <circle cx="48" cy="40" r="17" fill="white" stroke="#8b5cf6" stroke-width="2"/>
+                                                <path d="M18 98 C20 74 48 74 48 74 C74 74 78 88 78 98" stroke="#8b5cf6" stroke-width="2" fill="none" stroke-linecap="round"/>
+                                                <circle cx="98" cy="28" r="14" fill="#f5f3ff"/>
+                                                <circle cx="96" cy="26" r="7" stroke="#7c3aed" stroke-width="2" fill="none"/>
+                                                <line x1="101" y1="31" x2="106" y2="36" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round"/>
+                                            </svg>
+                                        </div>
+                                        <p class="text-base font-bold text-gray-900 dark:text-white mb-1">No users found</p>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">No registered users match the current criteria.</p>
+                                    </div>
+                                </td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -119,6 +144,37 @@
                 {{ $users->links() }}
             </div>
         </div>
+
+        {{-- Role Update Confirmation Modal --}}
+        <x-modal name="confirm-role-update" maxWidth="sm">
+            <div class="p-6 bg-white dark:bg-[#1e293b]">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-11 h-11 rounded-full bg-brand/10 dark:bg-indigo-900/30 flex items-center justify-center shrink-0">
+                        <svg class="w-5 h-5 text-brand dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                    </div>
+                    <div>
+                        <h2 class="text-base font-bold text-gray-900 dark:text-white font-outfit">Update User Role</h2>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">This will change the user's access level.</p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 dark:bg-slate-800/50 rounded-[10px] px-4 py-3 mb-5 text-sm text-gray-700 dark:text-gray-300">
+                    Change <span class="font-bold" x-text="pendingName"></span>'s role to
+                    <span class="font-bold text-brand dark:text-indigo-400 capitalize" x-text="pendingRole"></span>?
+                </div>
+
+                <div class="flex justify-end gap-3">
+                    <button type="button" x-on:click="$dispatch('close')"
+                            class="px-5 py-2.5 text-sm font-semibold text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-[10px] transition-colors">
+                        Cancel
+                    </button>
+                    <button type="button" x-on:click="$dispatch('close'); if(pendingForm) pendingForm.submit()"
+                            class="px-5 py-2.5 text-sm font-semibold text-white bg-brand hover:bg-brand-light rounded-[10px] transition-all shadow-sm">
+                        Update Role
+                    </button>
+                </div>
+            </div>
+        </x-modal>
 
     </div>
 @endsection

@@ -22,6 +22,7 @@
             <label for="update_password_password" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">{{ __('New Password') }}</label>
             <input id="update_password_password" name="password" type="password" class="block w-full h-[48px] rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#e0e7ff] dark:focus:shadow-[0_0_0_3px_rgba(49,46,129,0.5)] transition-all" autocomplete="new-password" />
             <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
+            <x-password-strength inputId="update_password_password" />
         </div>
 
         <div>

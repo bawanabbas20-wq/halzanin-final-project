@@ -1,87 +1,105 @@
-<div id="toast-container" class="fixed top-4 right-4 z-[9999] flex flex-col gap-3 pointer-events-none"></div>
+<div id="toast-container" class="fixed top-4 ltr:right-4 rtl:left-4 z-[9999] flex flex-col gap-3 pointer-events-none"></div>
 
 <style>
-    .toast-enter {
-        transform: translateX(100%);
+    .toast-item {
+        transform: translateX(110%);
         opacity: 0;
     }
-    .toast-enter-active {
+    html[dir="rtl"] .toast-item {
+        transform: translateX(-110%);
+    }
+    .toast-item.toast-in {
         transform: translateX(0);
         opacity: 1;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
     }
-    .toast-leave {
-        transform: translateX(100%);
+    .toast-item.toast-out {
+        transform: translateX(110%);
         opacity: 0;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: transform 0.28s cubic-bezier(0.4, 0, 0.8, 0.6), opacity 0.25s ease;
+    }
+    html[dir="rtl"] .toast-item.toast-out {
+        transform: translateX(-110%);
+    }
+    @keyframes toastShrink {
+        from { transform: scaleX(1); }
+        to   { transform: scaleX(0); }
+    }
+    .toast-bar {
+        height: 3px;
+        transform-origin: left;
+        flex-shrink: 0;
+    }
+    html[dir="rtl"] .toast-bar {
+        transform-origin: right;
     }
 </style>
 
 <script>
-    window.showToast = function(type, title, message, duration = 4000) {
+    window.showToast = function(type, title, message, duration) {
+        duration = duration || 4500;
         const container = document.getElementById('toast-container');
         if (!container) return;
 
+        const variants = {
+            success: {
+                icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>',
+                iconCls: 'text-green-500', bar: 'bg-green-500', side: 'bg-green-500'
+            },
+            error: {
+                icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>',
+                iconCls: 'text-red-500', bar: 'bg-red-500', side: 'bg-red-500'
+            },
+            warning: {
+                icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>',
+                iconCls: 'text-yellow-500', bar: 'bg-yellow-400', side: 'bg-yellow-400'
+            },
+            info: {
+                icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>',
+                iconCls: 'text-blue-500', bar: 'bg-blue-500', side: 'bg-blue-500'
+            },
+        };
+
+        const v = variants[type] || variants.info;
+
         const toast = document.createElement('div');
-        toast.className = 'w-80 bg-white dark:bg-[#1e293b] border border-gray-100 dark:border-gray-800 rounded-[12px] shadow-lg pointer-events-auto overflow-hidden toast-enter flex';
-        
-        let iconSvg = '';
-        let iconColor = '';
-        let bgColor = '';
+        toast.className = 'toast-item w-80 bg-white dark:bg-[#1e293b] border border-gray-100 dark:border-gray-800 rounded-[12px] shadow-xl pointer-events-auto overflow-hidden flex flex-col';
 
-        switch (type) {
-            case 'success':
-                iconSvg = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>';
-                iconColor = 'text-green-500';
-                bgColor = 'bg-green-500';
-                break;
-            case 'error':
-                iconSvg = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>';
-                iconColor = 'text-red-500';
-                bgColor = 'bg-red-500';
-                break;
-            case 'warning':
-                iconSvg = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>';
-                iconColor = 'text-yellow-500';
-                bgColor = 'bg-yellow-500';
-                break;
-            default: // info
-                iconSvg = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>';
-                iconColor = 'text-blue-500';
-                bgColor = 'bg-blue-500';
-                break;
-        }
-
-        toast.innerHTML = `
-            <div class="w-1.5 \${bgColor} shrink-0"></div>
-            <div class="p-4 flex items-start w-full">
-                <svg class="w-5 h-5 \${iconColor} mt-0.5 shrink-0 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">\${iconSvg}</svg>
-                <div class="flex-1 ltr:pr-2 rtl:pl-2">
-                    <h4 class="text-sm font-bold text-gray-900 dark:text-white mb-1">\${title}</h4>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">\${message}</p>
-                </div>
-                <button onclick="this.closest('.toast-enter-active').classList.add('toast-leave'); setTimeout(() => this.closest('.toast-enter-active').remove(), 300)" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
-            </div>
-        `;
+        toast.innerHTML = [
+            '<div class="flex items-start">',
+              '<div class="w-1.5 ' + v.side + ' self-stretch rounded-tl-[12px] rounded-bl-[12px] flex-shrink-0"></div>',
+              '<div class="flex items-start flex-1 p-4 gap-3 min-w-0">',
+                '<svg class="w-5 h-5 ' + v.iconCls + ' flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">' + v.icon + '</svg>',
+                '<div class="flex-1 min-w-0">',
+                  '<p class="text-sm font-bold text-gray-900 dark:text-white leading-tight">' + title + '</p>',
+                  '<p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5 leading-relaxed">' + message + '</p>',
+                '</div>',
+                '<button data-toast-close class="flex-shrink-0 mt-0.5 ltr:ml-1 rtl:mr-1 text-gray-300 hover:text-gray-500 dark:hover:text-gray-200 transition-colors">',
+                  '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>',
+                '</button>',
+              '</div>',
+            '</div>',
+            '<div class="toast-bar ' + v.bar + ' opacity-25 w-full" style="animation: toastShrink ' + duration + 'ms linear forwards;"></div>',
+        ].join('');
 
         container.appendChild(toast);
 
-        // Trigger animation
-        requestAnimationFrame(() => {
-            toast.classList.add('toast-enter-active');
-            toast.classList.remove('toast-enter');
+        function dismiss() {
+            if (!toast.parentElement) return;
+            toast.classList.remove('toast-in');
+            toast.classList.add('toast-out');
+            setTimeout(function() { if (toast.parentElement) toast.remove(); }, 300);
+        }
+
+        toast.querySelector('[data-toast-close]').addEventListener('click', dismiss);
+
+        // Animate in (double rAF to let browser paint initial state first)
+        requestAnimationFrame(function() {
+            requestAnimationFrame(function() {
+                toast.classList.add('toast-in');
+            });
         });
 
-        // Auto remove
-        setTimeout(() => {
-            if (toast.parentElement) {
-                toast.classList.add('toast-leave');
-                setTimeout(() => {
-                    if (toast.parentElement) toast.remove();
-                }, 300);
-            }
-        }, duration);
+        setTimeout(dismiss, duration);
     };
 </script>

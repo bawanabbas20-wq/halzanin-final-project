@@ -101,7 +101,6 @@
         @php
             $badgeColors = [
                 'submitted'    => ['bg' => 'bg-gray-100 dark:bg-gray-800', 'text' => 'text-gray-700 dark:text-gray-300'],
-                'received'     => ['bg' => 'bg-blue-100 dark:bg-blue-900/30', 'text' => 'text-blue-700 dark:text-blue-400'],
                 'under_review' => ['bg' => 'bg-yellow-100 dark:bg-yellow-900/30', 'text' => 'text-yellow-700 dark:text-yellow-400'],
                 'approved'     => ['bg' => 'bg-green-100 dark:bg-green-900/30', 'text' => 'text-green-700 dark:text-green-400'],
                 'rejected'     => ['bg' => 'bg-red-100 dark:bg-red-900/30', 'text' => 'text-red-700 dark:text-red-400'],
@@ -168,11 +167,6 @@
                                 $iconSvg = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>';
                                 $iconColorClass = 'text-gray-500 dark:text-gray-400';
                                 $bgColorClass = 'bg-gray-100 dark:bg-gray-800';
-                                break;
-                            case 'received':
-                                $iconSvg = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>';
-                                $iconColorClass = 'text-blue-500 dark:text-blue-400';
-                                $bgColorClass = 'bg-blue-100 dark:bg-blue-900/30';
                                 break;
                             case 'under_review':
                                 $iconSvg = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>';
@@ -268,6 +262,9 @@
 
     </main>
 
+    {{-- Toast Notifications --}}
+    <x-toast />
+
     <!-- QR Code Scanner Modal -->
     <div id="qrModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
         <div class="bg-white dark:bg-[#1e293b] rounded-[24px] shadow-2xl p-6 w-[90%] max-w-[400px] transform scale-95 transition-transform duration-300 relative" id="qrModalContent">
@@ -317,8 +314,8 @@
             html5QrcodeScanner.start({ facingMode: "environment" }, config, onScanSuccess, onScanFailure)
                 .catch((err) => {
                     console.error(err);
-                    alert("Unable to access camera. Please check your permissions.");
                     stopScanner();
+                    showToast('error', 'Camera Access Denied', 'Please allow camera permissions in your browser and try again.');
                 });
         }
 

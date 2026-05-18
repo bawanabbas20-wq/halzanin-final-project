@@ -156,5 +156,22 @@
                 }
             });
         </script>
+        {{-- Toast Notifications --}}
+        <x-toast />
+        @if(session('success'))
+        <script>document.addEventListener('DOMContentLoaded',function(){showToast('success','Success',@json(session('success')));});</script>
+        @endif
+        @if(session('error'))
+        <script>document.addEventListener('DOMContentLoaded',function(){showToast('error','Error',@json(session('error')));});</script>
+        @endif
+        @if(session('info'))
+        <script>document.addEventListener('DOMContentLoaded',function(){showToast('info','Info',@json(session('info')));});</script>
+        @endif
+        @if(session('warning'))
+        <script>document.addEventListener('DOMContentLoaded',function(){showToast('warning','Warning',@json(session('warning')));});</script>
+        @endif
+        @if($errors->any())
+        <script>document.addEventListener('DOMContentLoaded',function(){showToast('error','Please fix the errors','Check the highlighted fields and try again.');});</script>
+        @endif
     </body>
 </html>
