@@ -37,7 +37,7 @@ Route::middleware(['auth', 'role:citizen'])->group(function () {
     Route::get('/citizen/vault', [VaultController::class, 'index'])->name('citizen.vault.index');
     Route::get('/citizen/vault/scan', [VaultController::class, 'scan'])->name('citizen.vault.scan');
     Route::post('/citizen/vault/store', [VaultController::class, 'store'])->name('citizen.vault.store');
-    Route::get('/citizen/vault/{document}/pdf', [VaultController::class, 'generatePdf'])->name('citizen.vault.pdf');
+    Route::get('/citizen/vault/{document}/view/{format}', [VaultController::class, 'viewFile'])->name('citizen.vault.file');
     Route::delete('/citizen/vault/{document}', [VaultController::class, 'destroy'])->name('citizen.vault.destroy');
 });
 
