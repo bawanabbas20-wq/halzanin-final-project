@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Document extends Model
 {
     protected $fillable = [
-        'appointment_id',
+        'application_id',
         'document_name',
         'source',
         'vault_document_id',
@@ -17,9 +17,9 @@ class Document extends Model
         'is_verified',
     ];
 
-    public function appointment()
+    public function application()
     {
-        return $this->belongsTo(Appointment::class);
+        return $this->belongsTo(Application::class);
     }
 
     public function vaultDocument()

@@ -36,6 +36,9 @@ Route::middleware(['auth', 'role:citizen'])->group(function () {
     Route::post('/citizen/appointments', [AppointmentController::class, 'store'])->name('citizen.appointments.store');
     Route::patch('/citizen/appointments/{appointment}/cancel', [AppointmentController::class, 'cancel'])->name('citizen.appointments.cancel');
 
+    // Applications
+    Route::get('/citizen/applications/{application}/receipt', [CitizenController::class, 'qrReceipt'])->name('citizen.applications.qr-receipt');
+
     // Vault
     Route::get('/citizen/vault', [VaultController::class, 'index'])->name('citizen.vault.index');
     Route::get('/citizen/vault/scan', [VaultController::class, 'scan'])->name('citizen.vault.scan');

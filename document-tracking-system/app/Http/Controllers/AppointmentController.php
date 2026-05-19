@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Application;
 use App\Models\Appointment;
 use App\Models\Document;
 use App\Models\OffDay;
+use App\Models\StatusLog;
+use App\Models\VaultDocument;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class AppointmentController extends Controller
 {
@@ -180,21 +184,48 @@ class AppointmentController extends Controller
             'notes'              => $request->notes,
         ]);
 
+        // Generate unique tracking code
+        do {
+            $code = 'TRK-' . strtoupper(Str::random(8));
+        } while (Application::where('tracking_code', $code)->exists());
+
+        $application = Application::create([
+            'user_id'        => Auth::id(),
+            'appointment_id' => $appointment->id,
+            'tracking_code'  => $code,
+            'current_status' => 'submitted',
+            'submitted_at'   => now(),
+        ]);
+
+        StatusLog::create([
+            'application_id' => $application->id,
+            'status'         => 'submitted',
+            'changed_by'     => Auth::id(),
+            'notes'          => 'Application submitted by citizen',
+        ]);
+
+        // Store documents (vault selections and uploads from the wizard)
         $docInputs = $request->input('docs', []);
         $docFiles  = $request->file('doc_files', []);
 
         foreach ($docInputs as $i => $docInput) {
             $rec = [
-                'appointment_id' => $appointment->id,
+                'application_id' => $application->id,
                 'document_name'  => $docInput['name'],
                 'source'         => $docInput['source'],
             ];
 
             if ($docInput['source'] === 'vault' && !empty($docInput['vault_id'])) {
-                $rec['vault_document_id'] = (int) $docInput['vault_id'];
+                $vaultDoc = VaultDocument::where('id', $docInput['vault_id'])
+                    ->where('user_id', Auth::id())
+                    ->first();
+                if ($vaultDoc) {
+                    $rec['vault_document_id'] = $vaultDoc->id;
+                    $rec['file_path']         = $vaultDoc->encrypted_image_path;
+                }
             } elseif ($docInput['source'] === 'upload' && isset($docFiles[$i])) {
                 $file = $docFiles[$i];
-                $path = $file->store('appointment-docs/' . Auth::id() . '/' . $appointment->id, 'local');
+                $path = $file->store('documents/' . Auth::id(), 'local');
                 $rec['file_path']     = $path;
                 $rec['original_name'] = $file->getClientOriginalName();
                 $rec['file_size']     = $file->getSize();
@@ -203,16 +234,18 @@ class AppointmentController extends Controller
             Document::create($rec);
         }
 
+        $receiptUrl = route('citizen.applications.qr-receipt', $application->id);
+
         if ($request->ajax()) {
             return response()->json([
                 'success'  => true,
-                'redirect' => route('citizen.appointments.calendar'),
+                'redirect' => $receiptUrl,
                 'message'  => 'Appointment booked for ' . $request->date . ' at ' . $request->time_slot . '.',
             ]);
         }
 
-        return redirect()->route('citizen.appointments.calendar')
-            ->with('success', 'Appointment booked for ' . $request->date . ' at ' . $request->time_slot . '.');
+        return redirect($receiptUrl)
+            ->with('success', 'Your appointment has been booked successfully!');
     }
 
     public function cancel(Appointment $appointment)
