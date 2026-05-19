@@ -226,7 +226,9 @@
                     </div>
                 </div>
 
-                <form method="POST" :action="'/admin/sub-roles/assign/' + assignUserId">
+                <form method="POST"
+                      x-bind:action="$el.dataset.actionTemplate.replace('__USER_ID__', assignUserId)"
+                      data-action-template="{{ route('admin.sub-roles.assign', ['userId' => '__USER_ID__']) }}">
                     @csrf
 
                     <div class="space-y-2 max-h-[320px] overflow-y-auto mb-5">
