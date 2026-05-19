@@ -2,151 +2,90 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\StatusUpdatedMail;
-use App\Models\Application;
 use App\Models\Appointment;
-use App\Models\StatusLog;
-use App\Notifications\ApplicationStatusChanged;
+use App\Models\Document;
+use App\Models\OffDay;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 
 class StaffController extends Controller
 {
-    // Valid status transition order
-    protected array $statusOrder = [
-        'submitted'    => 0,
-        'under_review' => 1,
-        'approved'     => 2,
-        'rejected'     => 2, // same level as approved — both terminal
-    ];
+    public function index()
+    {
+        return view('staff.dashboard');
+    }
 
     public function calendar(Request $request)
     {
-        $monthInput = $request->input('month', now()->format('Y-m'));
+        $year  = (int) $request->get('year', now()->year);
+        $month = (int) $request->get('month', now()->month);
 
-        try {
-            $start = Carbon::parse($monthInput . '-01')->startOfMonth();
-        } catch (\Exception $e) {
-            $start = now()->startOfMonth();
-        }
+        $current = Carbon::createFromDate($year, $month, 1);
 
-        $end = $start->copy()->endOfMonth();
+        $year  = $current->year;
+        $month = $current->month;
 
-        $appointments = Appointment::whereBetween('preferred_date', [$start->toDateString(), $end->toDateString()])
-            ->orderBy('preferred_date')
+        // Per-day booking counts
+        $counts = Appointment::where('date', 'like', $current->format('Y-m') . '-%')
+            ->whereNotIn('status', ['cancelled'])
+            ->selectRaw('date, COUNT(*) as count')
+            ->groupBy('date')
+            ->pluck('count', 'date')
+            ->toArray();
+
+        $offDates = OffDay::offDatesForMonth($year, $month);
+
+        return view('staff.calendar', compact('year', 'month', 'current', 'counts', 'offDates'));
+    }
+
+    public function dayAppointments(Request $request)
+    {
+        $date = $request->get('date');
+
+        $appointments = Appointment::with(['citizen', 'documents.vaultDocument'])
+            ->where('date', $date)
+            ->whereNotIn('status', ['cancelled'])
             ->orderBy('time_slot')
             ->get()
-            ->groupBy(fn($a) => Carbon::parse($a->preferred_date)->format('Y-m-d'));
+            ->map(fn($a) => [
+                'id'            => $a->id,
+                'time_slot'     => $a->time_slot,
+                'status'        => $a->status,
+                'citizen'       => $a->citizen->name ?? 'Unknown',
+                'full_name'     => $a->full_name,
+                'document_type' => $a->document_type,
+                'national_id'   => $a->national_id_number,
+                'notes'         => $a->notes,
+                'documents'     => $a->documents->map(fn($d) => [
+                    'id'       => $d->id,
+                    'name'     => $d->document_name,
+                    'source'   => $d->source,
+                    'has_file' => !empty($d->file_path),
+                    'label'    => $d->vaultDocument?->original_name ?? $d->original_name,
+                ])->values(),
+            ]);
 
-        return view('staff.calendar', compact('appointments', 'start'));
+        return response()->json(['appointments' => $appointments]);
     }
 
-    public function index()
-    {
-        $applications = Application::with(['appointment', 'user'])
-            ->orderBy('created_at', 'desc')
-            ->paginate(15);
-
-        return view('staff.queue', compact('applications'));
-    }
-
-    public function show($id)
-    {
-        $application = Application::with([
-            'appointment',
-            'user',
-            'statusLogs' => fn($q) => $q->orderBy('created_at', 'asc'),
-        ])->findOrFail($id);
-
-        $nextStatuses = $this->getNextStatuses($application->current_status);
-
-        return view('staff.application', compact('application', 'nextStatuses'));
-    }
-
-    public function updateStatus(Request $request, $id)
+    public function updateStatus(Request $request, Appointment $appointment)
     {
         $request->validate([
-            'new_status' => 'required|in:under_review,approved,rejected',
-            'notes'      => 'nullable|string',
+            'status' => 'required|in:pending,confirmed,completed,cancelled',
         ]);
 
-        $application = Application::with('user', 'appointment')->findOrFail($id);
+        $appointment->update(['status' => $request->status]);
 
-        // Enforce forward-only transitions
-        $current  = $application->current_status;
-        $next     = $request->new_status;
-        $validNext = $this->getNextStatuses($current);
-
-        if (!in_array($next, array_keys($validNext))) {
-            return back()->withErrors(['new_status' => 'Invalid status transition.'])->withInput();
-        }
-
-        // Update status
-        $application->current_status = $next;
-        $application->save();
-
-        // Log the change
-        StatusLog::create([
-            'application_id' => $application->id,
-            'status'         => $next,
-            'changed_by'     => auth()->id(),
-            'notes'          => $request->notes,
-        ]);
-
-        // Send email notification (fail-safe)
-        try {
-            Mail::to($application->user->email)->send(new StatusUpdatedMail($application));
-        } catch (\Throwable $e) {
-            // Mail failure is non-fatal — log and continue
-            \Log::error('StatusUpdatedMail failed: ' . $e->getMessage());
-        }
-
-        // Send in-app database notification
-        try {
-            $application->user->notify(new ApplicationStatusChanged($application));
-        } catch (\Throwable $e) {
-            \Log::error('DB notification failed: ' . $e->getMessage());
-        }
-
-        // Send WhatsApp notification
-        $citizen = $application->user;
-        if ($citizen->phone_number) {
-            $whatsapp = new \App\Services\WhatsAppService();
-            $statusEmoji = ['received'=>'📥','under_review'=>'🔍','approved'=>'✅','rejected'=>'❌'];
-            $emoji = $statusEmoji[$next] ?? '📋';
-            $message = "{$emoji} Halzanîn Update\n\nYour application {$application->tracking_code} status has been updated to: " . strtoupper($next) . "\n\nTrack your application: " . url('/track/' . $application->tracking_code);
-            try { 
-                $whatsapp->send($citizen->phone_number, $message); 
-            } catch (\Exception $e) { 
-                \Log::error('WhatsApp failed: ' . $e->getMessage()); 
-            }
-        }
-
-        return redirect()
-            ->route('staff.applications.show', $application->id)
-            ->with('success', 'Status updated to "' . str_replace('_', ' ', $next) . '" successfully.');
+        return response()->json(['success' => true, 'status' => $appointment->status]);
     }
 
-    protected function getNextStatuses(string $current): array
+    public function viewDocument(Document $document)
     {
-        $terminal = ['approved', 'rejected'];
+        abort_if($document->source !== 'upload' || !$document->file_path, 404);
 
-        // If already terminal, no further moves
-        if (in_array($current, $terminal)) {
-            return [];
-        }
+        $fullPath = storage_path('app/' . $document->file_path);
+        abort_unless(file_exists($fullPath), 404);
 
-        $currentLevel = $this->statusOrder[$current] ?? 0;
-
-        $all = [
-            'under_review' => 'Under Review',
-            'approved'     => 'Approved',
-            'rejected'     => 'Rejected',
-        ];
-
-        return array_filter($all, function ($label, $key) use ($currentLevel) {
-            return ($this->statusOrder[$key] ?? 0) > $currentLevel;
-        }, ARRAY_FILTER_USE_BOTH);
+        return response()->file($fullPath);
     }
 }

@@ -47,12 +47,7 @@ class User extends Authenticatable
 
     public function appointments()
     {
-        return $this->hasMany(Appointment::class);
-    }
-
-    public function applications()
-    {
-        return $this->hasMany(Application::class);
+        return $this->hasMany(Appointment::class, 'citizen_id');
     }
 
     public function vaultDocuments()

@@ -1,217 +1,274 @@
-@extends('layouts.halzanin-app')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Appointments Calendar
+        </h2>
+    </x-slot>
 
-@section('content')
-@php
-    $calStart  = $start->copy()->startOfWeek(\Carbon\Carbon::MONDAY);
-    $calEnd    = $start->copy()->endOfMonth()->endOfWeek(\Carbon\Carbon::SUNDAY);
-    $today     = \Carbon\Carbon::today();
-    $prevMonth = $start->copy()->subMonth()->format('Y-m');
-    $nextMonth = $start->copy()->addMonth()->format('Y-m');
-    $totalAppts = $appointments->flatten()->count();
-@endphp
+    <div class="py-8">
+        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-<div class="space-y-6 max-w-6xl mx-auto pb-10"
-     x-data="{
-         open: false,
-         selectedDate: '',
-         selectedAppts: [],
-         selectDay(dateKey, dateLabel) {
-             const appts = window._calData[dateKey];
-             if (!appts || appts.length === 0) return;
-             this.selectedDate = dateLabel;
-             this.selectedAppts = appts;
-             this.open = true;
-         }
-     }">
+                {{-- Calendar --}}
+                <div class="lg:col-span-2 bg-white shadow-sm rounded-xl p-6">
 
-    {{-- Header --}}
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-fade-in">
-        <div>
-            <h2 class="text-2xl font-bold text-brand dark:text-white font-outfit">Appointment Calendar</h2>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                @if($totalAppts > 0)
-                    {{ $totalAppts }} appointment{{ $totalAppts === 1 ? '' : 's' }} in {{ $start->format('F Y') }}
-                @else
-                    {{ $start->format('F Y') }} — no appointments booked
-                @endif
-            </p>
-        </div>
-        <div class="flex items-center gap-2">
-            <a href="{{ route('staff.calendar', ['month' => $prevMonth]) }}"
-               class="inline-flex items-center justify-center w-9 h-9 rounded-full border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#1e293b] text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors shadow-sm">
-                <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-            </a>
-            <span class="text-sm font-bold text-gray-900 dark:text-white min-w-[130px] text-center">
-                {{ $start->format('F Y') }}
-            </span>
-            <a href="{{ route('staff.calendar', ['month' => $nextMonth]) }}"
-               class="inline-flex items-center justify-center w-9 h-9 rounded-full border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#1e293b] text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors shadow-sm">
-                <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
-            <a href="{{ route('staff.calendar') }}"
-               class="ltr:ml-2 rtl:mr-2 px-4 py-2 text-sm font-semibold text-brand dark:text-indigo-400 bg-brand/10 dark:bg-indigo-900/30 rounded-[8px] hover:bg-brand/20 dark:hover:bg-indigo-900/50 transition-colors">
-                Today
-            </a>
-        </div>
-    </div>
-
-    {{-- Calendar Grid --}}
-    <div class="bg-white dark:bg-[#1e293b] rounded-[16px] shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up">
-
-        {{-- Day-of-week header --}}
-        <div class="grid grid-cols-7 border-b border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-800/50">
-            @foreach(['Mon','Tue','Wed','Thu','Fri','Sat','Sun'] as $i => $dayName)
-                <div class="py-3 text-center text-xs font-bold uppercase tracking-wider
-                    {{ $i >= 5 ? 'text-indigo-400 dark:text-indigo-500' : 'text-gray-500 dark:text-gray-400' }}">
-                    {{ $dayName }}
-                </div>
-            @endforeach
-        </div>
-
-        {{-- Day cells --}}
-        <div class="grid grid-cols-7">
-            @php $current = $calStart->copy(); @endphp
-            @while($current->lte($calEnd))
-                @php
-                    $dateKey     = $current->format('Y-m-d');
-                    $dayAppts    = $appointments[$dateKey] ?? collect();
-                    $isToday     = $current->isSameDay($today);
-                    $isCurMonth  = $current->month === $start->month;
-                    $hasAppts    = $isCurMonth && $dayAppts->isNotEmpty();
-                    $dayOfWeek   = $current->dayOfWeekIso; // 1=Mon … 7=Sun
-                    $isWeekend   = $dayOfWeek >= 6;
-                    $dateLabel   = $current->format('l, F j, Y');
-                @endphp
-
-                <div
-                    class="min-h-[80px] lg:min-h-[96px] p-1.5 lg:p-2 border-r border-b border-gray-100 dark:border-slate-800
-                        {{ $isCurMonth ? 'bg-white dark:bg-[#1e293b]' : 'bg-gray-50/60 dark:bg-slate-800/30' }}
-                        {{ $hasAppts ? 'cursor-pointer select-none' : '' }}"
-                    @if($hasAppts)
-                        x-on:click="selectDay('{{ $dateKey }}', '{{ $dateLabel }}')"
-                        x-on:mouseenter="$el.classList.add('bg-indigo-50/40', 'dark:bg-indigo-900/10')"
-                        x-on:mouseleave="$el.classList.remove('bg-indigo-50/40', 'dark:bg-indigo-900/10')"
-                    @endif
-                >
-                    {{-- Day number --}}
-                    <div class="flex justify-between items-start mb-1">
-                        @if($isToday)
-                            <span class="w-6 h-6 flex items-center justify-center bg-brand text-white text-xs font-bold rounded-full">
-                                {{ $current->day }}
-                            </span>
-                        @else
-                            <span class="text-xs font-{{ $isCurMonth ? 'semibold' : 'normal' }}
-                                {{ $isCurMonth ? ($isWeekend ? 'text-indigo-400 dark:text-indigo-500' : 'text-gray-700 dark:text-gray-300') : 'text-gray-300 dark:text-gray-600' }}
-                                w-6 h-6 flex items-center justify-center">
-                                {{ $current->day }}
-                            </span>
-                        @endif
-                    </div>
-
-                    {{-- Appointment badges --}}
-                    @if($hasAppts)
-                        <div class="space-y-0.5">
-                            @foreach($dayAppts->take(2) as $appt)
-                                <div class="text-[10px] font-semibold px-1.5 py-0.5 rounded-[4px]
-                                    bg-brand/10 dark:bg-indigo-900/30 text-brand dark:text-indigo-400
-                                    truncate leading-[1.4]">
-                                    <span class="hidden sm:inline">{{ $appt->time_slot }} · {{ $appt->full_name }}</span>
-                                    <span class="sm:hidden">{{ $appt->time_slot }}</span>
-                                </div>
-                            @endforeach
-                            @if($dayAppts->count() > 2)
-                                <div class="text-[10px] font-bold text-brand/60 dark:text-indigo-500 px-1">
-                                    +{{ $dayAppts->count() - 2 }} more
-                                </div>
-                            @endif
-                        </div>
-                    @endif
-                </div>
-
-                @php $current->addDay(); @endphp
-            @endwhile
-        </div>
-    </div>
-
-    {{-- Day detail slide-in panel --}}
-    <div
-        x-show="open"
-        x-transition:enter="transition ease-out duration-250"
-        x-transition:enter-start="opacity-0 translate-y-2"
-        x-transition:enter-end="opacity-100 translate-y-0"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100 translate-y-0"
-        x-transition:leave-end="opacity-0 translate-y-2"
-        style="display:none"
-        class="bg-white dark:bg-[#1e293b] rounded-[16px] shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden"
-    >
-        {{-- Panel header --}}
-        <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-800/50">
-            <div>
-                <h3 class="text-sm font-bold text-gray-900 dark:text-white" x-text="selectedDate"></h3>
-                <p class="text-xs text-brand dark:text-indigo-400 font-semibold mt-0.5"
-                   x-text="selectedAppts.length + (selectedAppts.length === 1 ? ' appointment' : ' appointments')">
-                </p>
-            </div>
-            <button type="button"
-                    x-on:click="open = false"
-                    class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-slate-700 text-gray-500 transition-colors">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                </svg>
-            </button>
-        </div>
-
-        {{-- Appointment list --}}
-        <div class="divide-y divide-gray-100 dark:divide-slate-800">
-            <template x-for="(appt, idx) in selectedAppts" :key="appt.id">
-                <div class="flex items-center justify-between gap-4 px-6 py-4">
-                    <div class="flex items-center gap-3 min-w-0">
-                        <div class="w-9 h-9 rounded-full bg-brand/10 dark:bg-indigo-900/30 flex items-center justify-center shrink-0">
-                            <svg class="w-4 h-4 text-brand dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                    {{-- Month navigation --}}
+                    @php
+                        $prevMonth = $current->copy()->subMonth();
+                        $nextMonth = $current->copy()->addMonth();
+                    @endphp
+                    <div class="flex items-center justify-between mb-6">
+                        <a href="{{ route('staff.calendar', ['year' => $prevMonth->year, 'month' => $prevMonth->month]) }}"
+                           class="p-2 rounded-lg hover:bg-gray-100 text-gray-600 transition">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                             </svg>
+                        </a>
+                        <h3 class="text-lg font-semibold text-gray-800">{{ $current->format('F Y') }}</h3>
+                        <a href="{{ route('staff.calendar', ['year' => $nextMonth->year, 'month' => $nextMonth->month]) }}"
+                           class="p-2 rounded-lg hover:bg-gray-100 text-gray-600 transition">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
+
+                    {{-- Day labels --}}
+                    <div class="grid grid-cols-7 mb-2">
+                        @foreach(['Sun','Mon','Tue','Wed','Thu','Fri','Sat'] as $day)
+                            <div class="text-center text-xs font-semibold py-1
+                                {{ in_array($day, ['Fri','Sat']) ? 'text-gray-400' : 'text-gray-600' }}">
+                                {{ $day }}
+                            </div>
+                        @endforeach
+                    </div>
+
+                    {{-- Calendar grid --}}
+                    @php
+                        $startOfMonth = $current->copy()->startOfMonth();
+                        $endOfMonth   = $current->copy()->endOfMonth();
+                        $today        = now()->toDateString();
+                        $startPad     = $startOfMonth->dayOfWeek;
+                        $totalDays    = $endOfMonth->day;
+                        $maxSlots     = 5;
+                    @endphp
+
+                    <div class="grid grid-cols-7 gap-1" id="calendar-grid">
+                        @for($i = 0; $i < $startPad; $i++)
+                            <div></div>
+                        @endfor
+
+                        @for($day = 1; $day <= $totalDays; $day++)
+                            @php
+                                $dateStr   = $current->format('Y-m') . '-' . str_pad($day, 2, '0', STR_PAD_LEFT);
+                                $dayOfWeek = date('N', strtotime($dateStr));
+                                $isWeekend = in_array($dayOfWeek, [5, 6]);
+                                $isOffDay  = $isWeekend || in_array($dateStr, $offDates);
+                                $isToday   = $dateStr === $today;
+                                $booked    = $counts[$dateStr] ?? 0;
+                                $isFull    = $booked >= $maxSlots;
+
+                                if ($isOffDay) {
+                                    $bgClass = 'bg-gray-200 text-gray-400 cursor-default';
+                                } elseif ($isFull) {
+                                    $bgClass = 'bg-red-500 text-white cursor-pointer hover:bg-red-600';
+                                } elseif ($booked === 0) {
+                                    $bgClass = 'bg-green-500 text-white cursor-pointer hover:bg-green-600';
+                                } elseif ($booked === 1) {
+                                    $bgClass = 'bg-green-400 text-white cursor-pointer hover:bg-green-500';
+                                } elseif ($booked === 2) {
+                                    $bgClass = 'bg-yellow-400 text-white cursor-pointer hover:bg-yellow-500';
+                                } elseif ($booked === 3) {
+                                    $bgClass = 'bg-orange-400 text-white cursor-pointer hover:bg-orange-500';
+                                } else {
+                                    $bgClass = 'bg-orange-500 text-white cursor-pointer hover:bg-orange-600';
+                                }
+                            @endphp
+
+                            <div class="calendar-day rounded-lg p-1 text-center transition select-none
+                                        {{ $bgClass }}
+                                        {{ $isToday ? 'ring-2 ring-offset-1 ring-blue-500' : '' }}"
+                                 data-date="{{ $dateStr }}"
+                                 data-off="{{ $isOffDay ? '1' : '0' }}"
+                                 @if(!$isOffDay) onclick="selectDay(this)" @endif>
+                                <span class="text-sm font-medium">{{ $day }}</span>
+                                @if($isOffDay)
+                                    <div style="font-size:9px" class="opacity-70">off</div>
+                                @elseif($booked > 0)
+                                    <div style="font-size:9px" class="opacity-90">{{ $booked }}/5</div>
+                                @endif
+                            </div>
+                        @endfor
+                    </div>
+
+                    {{-- Legend --}}
+                    <div class="mt-5 flex flex-wrap gap-3 text-xs text-gray-600">
+                        <div class="flex items-center gap-1"><span class="w-4 h-4 rounded bg-green-500 inline-block"></span> Open</div>
+                        <div class="flex items-center gap-1"><span class="w-4 h-4 rounded bg-yellow-400 inline-block"></span> Filling</div>
+                        <div class="flex items-center gap-1"><span class="w-4 h-4 rounded bg-orange-500 inline-block"></span> Almost full</div>
+                        <div class="flex items-center gap-1"><span class="w-4 h-4 rounded bg-red-500 inline-block"></span> Full</div>
+                        <div class="flex items-center gap-1"><span class="w-4 h-4 rounded bg-gray-200 inline-block"></span> Off day</div>
+                    </div>
+                </div>
+
+                {{-- Day panel --}}
+                <div class="bg-white shadow-sm rounded-xl p-6">
+                    <div id="panel-empty" class="text-center py-12 text-gray-400">
+                        <svg class="w-12 h-12 mx-auto mb-3 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                        <p class="text-sm">Click a day to see appointments</p>
+                    </div>
+
+                    <div id="panel-content" class="hidden">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 id="panel-date" class="text-base font-semibold text-gray-800"></h3>
+                            <span id="panel-count" class="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full"></span>
                         </div>
-                        <div class="min-w-0">
-                            <p class="text-sm font-bold text-gray-900 dark:text-white truncate" x-text="appt.full_name"></p>
-                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5" x-text="appt.document_type"></p>
+
+                        <div id="panel-loading" class="text-center py-6 hidden">
+                            <div class="inline-block w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                        </div>
+
+                        <div id="panel-list" class="space-y-3"></div>
+
+                        <div id="panel-none" class="hidden text-center py-6 text-gray-400 text-sm">
+                            No appointments for this day.
                         </div>
                     </div>
-                    <span class="shrink-0 px-2.5 py-1 text-[11px] font-bold rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400"
-                          x-text="appt.time_slot">
-                    </span>
                 </div>
-            </template>
+
+            </div>
         </div>
     </div>
 
-    {{-- Empty month state --}}
-    @if($totalAppts === 0)
-        <div class="bg-white dark:bg-[#1e293b] rounded-[16px] shadow-sm border border-gray-100 dark:border-slate-800 animate-fade-up">
-            <x-empty-state
-                type="no-results"
-                title="No appointments this month"
-                description="No appointments have been booked for {{ $start->format('F Y') }}."
-            />
-        </div>
-    @endif
+    <script>
+    const dayUrl    = "{{ route('staff.appointments.day') }}";
+    const statusUrl = "{{ url('/staff/appointments') }}";
 
-</div>
+    const statusLabels = {
+        'pending':   { label: 'Pending',   cls: 'bg-yellow-100 text-yellow-800' },
+        'confirmed': { label: 'Confirmed', cls: 'bg-green-100 text-green-800' },
+        'completed': { label: 'Completed', cls: 'bg-blue-100 text-blue-800' },
+        'cancelled': { label: 'Cancelled', cls: 'bg-red-100 text-red-800' },
+    };
 
-<script>
-    window._calData = @json($appointments->map(function ($dayAppts) {
-        return $dayAppts->map(function ($appt) {
-            return [
-                'id'            => $appt->id,
-                'full_name'     => $appt->full_name,
-                'document_type' => $appt->document_type,
-                'time_slot'     => $appt->time_slot,
-            ];
-        })->values()->all();
-    })->toArray());
-</script>
-@endsection
+    const timeLabels = {
+        '09:00': '9:00 AM', '10:00': '10:00 AM', '11:00': '11:00 AM',
+        '12:00': '12:00 PM', '13:00': '1:00 PM'
+    };
+
+    let activeDay = null;
+
+    async function selectDay(el) {
+        const date = el.dataset.date;
+
+        // Highlight selected
+        document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('ring-2', 'ring-blue-600', 'ring-offset-1'));
+        el.classList.add('ring-2', 'ring-blue-600', 'ring-offset-1');
+
+        document.getElementById('panel-empty').classList.add('hidden');
+        document.getElementById('panel-content').classList.remove('hidden');
+        document.getElementById('panel-loading').classList.remove('hidden');
+        document.getElementById('panel-list').innerHTML = '';
+        document.getElementById('panel-none').classList.add('hidden');
+
+        const d = new Date(date + 'T00:00:00');
+        document.getElementById('panel-date').textContent =
+            d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+
+        activeDay = date;
+
+        try {
+            const res = await fetch(dayUrl + '?date=' + date);
+            const data = await res.json();
+            document.getElementById('panel-loading').classList.add('hidden');
+            renderAppointments(data.appointments);
+        } catch (e) {
+            document.getElementById('panel-loading').classList.add('hidden');
+        }
+    }
+
+    function renderAppointments(appointments) {
+        const list    = document.getElementById('panel-list');
+        const countEl = document.getElementById('panel-count');
+        countEl.textContent = appointments.length + ' appointment' + (appointments.length !== 1 ? 's' : '');
+
+        if (appointments.length === 0) {
+            document.getElementById('panel-none').classList.remove('hidden');
+            return;
+        }
+
+        list.innerHTML = '';
+        appointments.forEach(appt => {
+            const s = statusLabels[appt.status] || { label: appt.status, cls: 'bg-gray-100 text-gray-600' };
+            const card = document.createElement('div');
+            card.className = 'border border-gray-100 rounded-lg p-3';
+            card.id = 'appt-' + appt.id;
+
+            const docBadges = appt.documents && appt.documents.length > 0
+                ? `<div class="mt-2 pt-2 border-t border-gray-100">
+                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Documents</p>
+                    <div class="flex flex-wrap gap-1.5">
+                        ${appt.documents.map(d => {
+                            if (d.source === 'vault') {
+                                return `<span class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 font-medium">📦 ${d.name} · Vault</span>`;
+                            } else if (d.source === 'upload') {
+                                const viewUrl = '/staff/documents/' + d.id + '/file';
+                                return `<a href="${viewUrl}" target="_blank" class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 font-medium hover:bg-blue-200">📤 ${d.name} · View ↗</a>`;
+                            } else {
+                                return `<span class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 font-medium">📋 ${d.name} · Bringing</span>`;
+                            }
+                        }).join('')}
+                    </div>
+                   </div>` : '';
+
+            card.innerHTML = `
+                <div class="flex items-start justify-between mb-2">
+                    <div>
+                        <p class="text-sm font-semibold text-gray-800">${timeLabels[appt.time_slot] || appt.time_slot}</p>
+                        <p class="text-sm text-gray-600">${appt.full_name || appt.citizen}</p>
+                        ${appt.document_type ? `<p class="text-xs text-indigo-600 font-medium mt-0.5">${appt.document_type}</p>` : ''}
+                        ${appt.notes ? `<p class="text-xs text-gray-400 mt-0.5">${appt.notes}</p>` : ''}
+                    </div>
+                    <span id="badge-${appt.id}" class="text-xs px-2 py-0.5 rounded-full ${s.cls}">${s.label}</span>
+                </div>
+                <div class="flex gap-1 flex-wrap">
+                    ${buildStatusButtons(appt.id, appt.status)}
+                </div>
+                ${docBadges}
+            `;
+            list.appendChild(card);
+        });
+    }
+
+    function buildStatusButtons(id, current) {
+        const actions = [
+            { status: 'confirmed', label: 'Confirm',  color: 'bg-green-500 hover:bg-green-600' },
+            { status: 'completed', label: 'Complete', color: 'bg-blue-500 hover:bg-blue-600' },
+            { status: 'cancelled', label: 'Cancel',   color: 'bg-red-500 hover:bg-red-600' },
+        ].filter(a => a.status !== current);
+
+        return actions.map(a =>
+            `<button onclick="updateStatus(${id}, '${a.status}')"
+                     class="text-xs text-white px-2 py-1 rounded ${a.color} transition">${a.label}</button>`
+        ).join('');
+    }
+
+    async function updateStatus(id, status) {
+        const token = document.querySelector('meta[name="csrf-token"]').content;
+        const res = await fetch(`${statusUrl}/${id}/status`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': token },
+            body: JSON.stringify({ status }),
+        });
+        const data = await res.json();
+        if (data.success) {
+            // Refresh the panel
+            const activeEl = document.querySelector('.calendar-day[data-date="' + activeDay + '"]');
+            if (activeEl) selectDay(activeEl);
+        }
+    }
+    </script>
+</x-app-layout>

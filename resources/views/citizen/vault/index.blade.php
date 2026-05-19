@@ -48,10 +48,10 @@
                     
                     <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800 flex flex-col space-y-2">
                         <div class="flex items-center gap-2">
-                            <a href="{{ route('citizen.vault.file', ['id' => $doc->id, 'format' => 'pdf']) }}" target="_blank" class="flex-1 inline-flex justify-center items-center px-3 py-1.5 bg-gray-50 dark:bg-slate-700/50 hover:bg-gray-100 dark:hover:bg-slate-700 text-xs font-semibold text-gray-700 dark:text-gray-300 rounded-[8px] transition-colors border border-gray-200 dark:border-gray-600">
+                            <a href="{{ route('citizen.vault.file', ['document' => $doc->id, 'format' => 'pdf']) }}" target="_blank" class="flex-1 inline-flex justify-center items-center px-3 py-1.5 bg-gray-50 dark:bg-slate-700/50 hover:bg-gray-100 dark:hover:bg-slate-700 text-xs font-semibold text-gray-700 dark:text-gray-300 rounded-[8px] transition-colors border border-gray-200 dark:border-gray-600">
                                 PDF
                             </a>
-                            <a href="{{ route('citizen.vault.file', ['id' => $doc->id, 'format' => 'jpg']) }}" target="_blank" class="flex-1 inline-flex justify-center items-center px-3 py-1.5 bg-gray-50 dark:bg-slate-700/50 hover:bg-gray-100 dark:hover:bg-slate-700 text-xs font-semibold text-gray-700 dark:text-gray-300 rounded-[8px] transition-colors border border-gray-200 dark:border-gray-600">
+                            <a href="{{ route('citizen.vault.file', ['document' => $doc->id, 'format' => 'image']) }}" target="_blank" class="flex-1 inline-flex justify-center items-center px-3 py-1.5 bg-gray-50 dark:bg-slate-700/50 hover:bg-gray-100 dark:hover:bg-slate-700 text-xs font-semibold text-gray-700 dark:text-gray-300 rounded-[8px] transition-colors border border-gray-200 dark:border-gray-600">
                                 Image
                             </a>
                         </div>

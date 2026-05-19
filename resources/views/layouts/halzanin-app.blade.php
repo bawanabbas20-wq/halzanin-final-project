@@ -61,11 +61,11 @@
                             <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                             Dashboard
                         </a>
-                        <a href="{{ route('staff.queue') }}" class="{{ request()->routeIs('staff.queue') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
+                        <a href="#" class="text-white/70 hover:bg-white/5 hover:text-white flex items-center px-4 py-3 rounded-xl transition-all">
                             <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                             All Applications
                         </a>
-                        <a href="{{ route('admin.users') }}" class="{{ request()->routeIs('admin.users') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
+                        <a href="#" class="text-white/70 hover:bg-white/5 hover:text-white flex items-center px-4 py-3 rounded-xl transition-all">
                             <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                             User Management
                         </a>
@@ -78,13 +78,9 @@
                             <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                             Dashboard
                         </a>
-                        <a href="{{ route('staff.queue') }}" class="{{ request()->routeIs('staff.queue') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
+                        <a href="#" class="text-white/70 hover:bg-white/5 hover:text-white flex items-center px-4 py-3 rounded-xl transition-all">
                             <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                             Application Queue
-                        </a>
-                        <a href="{{ route('staff.calendar') }}" class="{{ request()->routeIs('staff.calendar') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
-                            <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                            Calendar
                         </a>
                         <a href="{{ route('profile.edit') }}" class="{{ request()->routeIs('profile.edit') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
                             <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
@@ -95,7 +91,7 @@
                             <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                             Home
                         </a>
-                        <a href="{{ route('citizen.appointment.create') }}" class="{{ request()->routeIs('*appointment*') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
+                        <a href="{{ route('citizen.appointments.calendar') }}" class="{{ request()->routeIs('*appointment*') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
                             <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                             Book Appointment
                         </a>
@@ -156,14 +152,14 @@
                              },
                              async fetch() {
                                  try {
-                                     const r = await window.fetch('{{ route('notifications.index') }}', { headers: { 'Accept': 'application/json' } });
+                                     const r = await window.fetch('{{ url('/notifications') }}', { headers: { 'Accept': 'application/json' } });
                                      const d = await r.json();
                                      this.count = d.count;
                                      this.items = d.notifications;
                                  } catch(e) {}
                              },
                              async markAllRead() {
-                                 await window.fetch('{{ route('notifications.readAll') }}', {
+                                 await window.fetch('{{ url('/notifications/read-all') }}', {
                                      method: 'POST',
                                      headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content, 'Accept': 'application/json' }
                                  });
@@ -314,11 +310,11 @@
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                         <span class="text-[10px] font-semibold">Dash</span>
                     </a>
-                    <a href="{{ route('staff.queue') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('staff.queue') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand dark:hover:text-indigo-400' }}">
+                    <a href="#" class="flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-brand dark:hover:text-indigo-400">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                         <span class="text-[10px] font-semibold">Apps</span>
                     </a>
-                    <a href="{{ route('admin.users') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('admin.users') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand dark:hover:text-indigo-400' }}">
+                    <a href="#" class="flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-brand dark:hover:text-indigo-400">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                         <span class="text-[10px] font-semibold">Users</span>
                     </a>
@@ -331,13 +327,9 @@
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                         <span class="text-[10px] font-semibold">Dash</span>
                     </a>
-                    <a href="{{ route('staff.queue') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('staff.queue') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand' }}">
+                    <a href="#" class="flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-brand">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                         <span class="text-[10px] font-semibold">Queue</span>
-                    </a>
-                    <a href="{{ route('staff.calendar') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('staff.calendar') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand' }}">
-                        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                        <span class="text-[10px] font-semibold">Calendar</span>
                     </a>
                     <a href="{{ route('profile.edit') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('profile.edit') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
@@ -348,7 +340,7 @@
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                         <span class="text-[10px] font-semibold">Home</span>
                     </a>
-                    <a href="{{ route('citizen.appointment.create') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('*appointment*') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand' }}">
+                    <a href="{{ route('citizen.appointments.calendar') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('*appointment*') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                         <span class="text-[10px] font-semibold">Book</span>
                     </a>
@@ -410,6 +402,10 @@
                     langEn.classList.remove('text-brand', 'dark:text-[#f1f5f9]', 'bg-transparent');
                     langKu.classList.remove('bg-brand', 'text-white', 'dark:bg-[#f1f5f9]', 'dark:text-brand');
                     langKu.classList.add('text-brand', 'dark:text-[#f1f5f9]', 'bg-transparent');
+                }
+
+                if (typeof window.updateChatQuickPrompts === 'function') {
+                    window.updateChatQuickPrompts(lang);
                 }
             }
 
@@ -542,19 +538,31 @@
                 </div>
 
                 {{-- Input Area --}}
-                <div style="padding:12px;border-top:1px solid rgba(0,0,0,0.07);background:inherit;flex-shrink:0;display:flex;gap:8px;align-items:flex-end;">
-                    <textarea id="chatbot-input"
-                              placeholder="Ask me anything..."
-                              rows="1"
-                              onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChatMessage();}"
-                              oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,88)+'px';"
-                              style="flex:1;resize:none;border:1.5px solid #e2e8f0;border-radius:10px;padding:10px 12px;font-size:13px;font-family:Outfit,sans-serif;outline:none;background:#f8fafc;color:#1e293b;max-height:88px;line-height:1.4;transition:border-color 0.2s;"
-                              onfocus="this.style.borderColor='#4338ca'" onblur="this.style.borderColor='#e2e8f0'"></textarea>
-                    <button onclick="sendChatMessage()" id="chatbot-send"
-                            style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#4338ca,#3730a3);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform 0.15s,opacity 0.15s;"
-                            onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
-                    </button>
+                <div style="padding:12px;border-top:1px solid rgba(0,0,0,0.07);background:inherit;flex-shrink:0;">
+                    @php($chatQuickQuestions = config('chatbot.quick_questions', []))
+                    <div id="chatbot-quick-questions" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
+                        @foreach($chatQuickQuestions as $question)
+                            <button type="button"
+                                    class="chat-quick-btn"
+                                    data-en="{{ $question['en'] ?? '' }}"
+                                    data-ku="{{ $question['ku'] ?? '' }}"
+                                    onclick="sendQuickQuestion(this)"></button>
+                        @endforeach
+                    </div>
+                    <div style="display:flex;gap:8px;align-items:flex-end;">
+                        <textarea id="chatbot-input"
+                                  placeholder="Ask me anything..."
+                                  rows="1"
+                                  onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChatMessage();}"
+                                  oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,88)+'px';"
+                                  style="flex:1;resize:none;border:1.5px solid #e2e8f0;border-radius:10px;padding:10px 12px;font-size:13px;font-family:Outfit,sans-serif;outline:none;background:#f8fafc;color:#1e293b;max-height:88px;line-height:1.4;transition:border-color 0.2s;"
+                                  onfocus="this.style.borderColor='#4338ca'" onblur="this.style.borderColor='#e2e8f0'"></textarea>
+                        <button onclick="sendChatMessage()" id="chatbot-send"
+                                style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#4338ca,#3730a3);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform 0.15s,opacity 0.15s;"
+                                onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -608,9 +616,36 @@
                 word-wrap: break-word;
                 font-family: Outfit, sans-serif;
             }
+            .chat-quick-btn {
+                border: 1px solid #cbd5e1;
+                background: #f8fafc;
+                color: #334155;
+                border-radius: 9999px;
+                padding: 6px 10px;
+                font-size: 11px;
+                font-weight: 600;
+                line-height: 1.2;
+                cursor: pointer;
+                transition: all 0.15s ease;
+            }
+            .chat-quick-btn:hover {
+                border-color: #818cf8;
+                color: #312e81;
+                background: #eef2ff;
+            }
             html.dark .chat-msg-ai { background:#334155; color:#f1f5f9; }
             html.dark #chatbot-window { background:#1e293b !important; }
             html.dark #chatbot-input  { background:#0f172a !important; border-color:#334155 !important; color:#f1f5f9 !important; }
+            html.dark .chat-quick-btn {
+                background: #0f172a;
+                border-color: #334155;
+                color: #cbd5e1;
+            }
+            html.dark .chat-quick-btn:hover {
+                background: #1e293b;
+                border-color: #6366f1;
+                color: #eef2ff;
+            }
 
             .typing-dot {
                 width: 7px; height: 7px;
@@ -630,6 +665,28 @@
         <script>
             let chatOpened = false;
             const WELCOME = 'سڵاو! 👋 I\'m your Halzanîn Assistant. Ask me anything about your documents or application process!';
+
+            function getCurrentUiLang() {
+                return document.documentElement.lang === 'ku' ? 'ku' : 'en';
+            }
+
+            window.updateChatQuickPrompts = function(lang = getCurrentUiLang()) {
+                const quickButtons = document.querySelectorAll('#chatbot-quick-questions .chat-quick-btn');
+                quickButtons.forEach((btn) => {
+                    btn.textContent = lang === 'ku' ? btn.dataset.ku : btn.dataset.en;
+                });
+            };
+
+            function sendQuickQuestion(button) {
+                const lang = getCurrentUiLang();
+                const question = lang === 'ku' ? button.dataset.ku : button.dataset.en;
+                if (!question) return;
+
+                const input = document.getElementById('chatbot-input');
+                input.value = question;
+                input.dispatchEvent(new Event('input'));
+                sendChatMessage();
+            }
 
             function toggleChat() {
                 const win    = document.getElementById('chatbot-window');
@@ -653,6 +710,7 @@
                         appendMsg('ai', WELCOME);
                     }
 
+                    window.updateChatQuickPrompts(getCurrentUiLang());
                     setTimeout(() => document.getElementById('chatbot-input').focus(), 100);
                 } else {
                     win.style.display = 'none';
@@ -708,7 +766,7 @@
 
                 try {
                     const csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-                    const res  = await fetch('{{ route('chatbot.chat') }}', {
+                    const res  = await fetch('{{ url('/chatbot/chat') }}', {
                         method:  'POST',
                         headers: {
                             'Content-Type':  'application/json',
@@ -734,7 +792,10 @@
                     sendBtn.style.opacity = '1';
                 }
             }
+
+            window.updateChatQuickPrompts(getCurrentUiLang());
         </script>
 
+        @stack('scripts')
     </body>
 </html>

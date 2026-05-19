@@ -2,54 +2,59 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Application;
-use App\Models\User;
+use App\Models\OffDay;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
     public function index()
     {
-        $stats = [
-            'total'        => Application::count(),
-            'submitted'    => Application::where('current_status', 'submitted')->count(),
-            'received'     => Application::where('current_status', 'received')->count(),
-            'under_review' => Application::where('current_status', 'under_review')->count(),
-            'approved'     => Application::where('current_status', 'approved')->count(),
-            'rejected'     => Application::where('current_status', 'rejected')->count(),
-            'citizens'     => User::where('role', 'citizen')->count(),
-            'today'        => Application::whereDate('created_at', today())->count(),
-        ];
+        return view('admin.dashboard');
+    }
 
-        $recent = Application::with(['appointment', 'user'])
-            ->latest()
-            ->take(5)
+    public function offDays(Request $request)
+    {
+        $year = (int) $request->get('year', now()->year);
+
+        $offDays = OffDay::whereYear('date', $year)
+            ->orderBy('date')
             ->get();
 
-        return view('admin.dashboard', compact('stats', 'recent'));
+        return view('admin.off-days.index', compact('offDays', 'year'));
     }
 
-    public function users()
+    public function addOffDay(Request $request)
     {
-        $users = User::orderBy('created_at', 'desc')->paginate(15);
-        return view('admin.users', compact('users'));
-    }
-
-    public function updateRole(Request $request, $id)
-    {
-        if ((int) $id === auth()->id()) {
-            abort(403, 'You cannot change your own role.');
-        }
-
         $request->validate([
-            'role' => 'required|in:citizen,staff,admin',
+            'dates'  => 'required|string',
+            'reason' => 'nullable|string|max:255',
         ]);
 
-        $user = User::findOrFail($id);
-        $user->role = $request->role;
-        $user->save();
+        $dates = array_filter(array_map('trim', explode(',', $request->dates)));
+        $added = 0;
 
-        return redirect()->route('admin.users')->with('success', "Role for {$user->name} updated to {$user->role}.");
+        foreach ($dates as $date) {
+            if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
+                continue;
+            }
+
+            OffDay::firstOrCreate(
+                ['date' => $date],
+                ['reason' => $request->reason, 'created_by' => Auth::id()]
+            );
+            $added++;
+        }
+
+        return redirect()->route('admin.offdays')
+            ->with('success', "$added off day(s) added successfully.");
+    }
+
+    public function removeOffDay(OffDay $offDay)
+    {
+        $offDay->delete();
+
+        return redirect()->route('admin.offdays')
+            ->with('success', 'Off day removed.');
     }
 }
-

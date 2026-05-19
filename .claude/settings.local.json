@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//d/laragon/etc/ssl/**)",
+      "Bash(php -r \"echo php_ini_loaded_file\\(\\);\")",
+      "Bash(php -r \"echo ini_get\\('curl.cainfo'\\);\")",
+      "Bash(php -r \"if\\(file_exists\\(ini_get\\('curl.cainfo'\\)\\)\\) echo 'cert file exists'; else echo 'MISSING';\")",
+      "Bash(php artisan *)",
+      "Bash(php -r 'require '\\\\''vendor/autoload.php'\\\\''; $app = require '\\\\''bootstrap/app.php'\\\\''; $app->make\\('\\\\''Illuminate\\\\Contracts\\\\Console\\\\Kernel'\\\\''\\)->bootstrap\\(\\); echo substr\\(config\\('\\\\''services.gemini.key'\\\\''\\), 0, 10\\) . '\\\\''...'\\\\'';')",
+      "Bash(npm run *)",
+      "Bash(Get-ChildItem -Path \"D:\\\\laragon\\\\www\\\\document-tracking-system\" -Recurse -File -Name)",
+      "Bash(Select-Object -First 30)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
+    ]
+  }
+}

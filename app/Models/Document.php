@@ -2,22 +2,28 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Document extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
-        'application_id',
-        'doc_type',
+        'appointment_id',
+        'document_name',
+        'source',
+        'vault_document_id',
         'file_path',
+        'original_name',
+        'file_size',
         'is_verified',
     ];
 
-    public function application()
+    public function appointment()
     {
-        return $this->belongsTo(Application::class);
+        return $this->belongsTo(Appointment::class);
+    }
+
+    public function vaultDocument()
+    {
+        return $this->belongsTo(VaultDocument::class);
     }
 }
