@@ -32,9 +32,9 @@ class Appointment extends Model
         return $this->belongsTo(User::class, 'citizen_id');
     }
 
-    public function documents()
+    public function application()
     {
-        return $this->hasMany(Document::class);
+        return $this->hasOne(Application::class);
     }
 
     public static function bookedSlotsForDate(string $date): array

@@ -2,17 +2,65 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Application;
 use App\Models\Appointment;
 use App\Models\Document;
 use App\Models\OffDay;
+use App\Models\StatusLog;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StaffController extends Controller
 {
     public function index()
     {
         return view('staff.dashboard');
+    }
+
+    public function queue()
+    {
+        $applications = Application::with(['user', 'appointment'])
+            ->latest()
+            ->paginate(20);
+
+        return view('staff.queue', compact('applications'));
+    }
+
+    public function showApplication(Application $application)
+    {
+        $application->load(['appointment', 'documents.vaultDocument', 'statusLogs']);
+
+        $transitions = [
+            'submitted'    => ['under_review' => 'Under Review'],
+            'under_review' => ['approved' => 'Approved', 'rejected' => 'Rejected'],
+            'approved'     => [],
+            'rejected'     => [],
+        ];
+
+        $nextStatuses = $transitions[$application->current_status] ?? [];
+
+        return view('staff.application', compact('application', 'nextStatuses'));
+    }
+
+    public function updateApplicationStatus(Request $request, Application $application)
+    {
+        $request->validate([
+            'new_status' => 'required|in:under_review,approved,rejected',
+            'notes'      => 'nullable|string|max:1000',
+        ]);
+
+        $application->update(['current_status' => $request->new_status]);
+
+        StatusLog::create([
+            'application_id' => $application->id,
+            'status'         => $request->new_status,
+            'changed_by'     => Auth::id(),
+            'notes'          => $request->notes ?: null,
+        ]);
+
+        return redirect()->route('staff.applications.show', $application->id)
+            ->with('success', 'Status updated to ' . str_replace('_', ' ', $request->new_status) . '.');
     }
 
     public function calendar(Request $request)
@@ -42,7 +90,7 @@ class StaffController extends Controller
     {
         $date = $request->get('date');
 
-        $appointments = Appointment::with(['citizen', 'documents.vaultDocument'])
+        $appointments = Appointment::with(['citizen', 'application.documents.vaultDocument'])
             ->where('date', $date)
             ->whereNotIn('status', ['cancelled'])
             ->orderBy('time_slot')
@@ -51,12 +99,12 @@ class StaffController extends Controller
                 'id'            => $a->id,
                 'time_slot'     => $a->time_slot,
                 'status'        => $a->status,
-                'citizen'       => $a->citizen->name ?? 'Unknown',
+                'citizen'       => $a->citizen?->name ?? 'Unknown',
                 'full_name'     => $a->full_name,
                 'document_type' => $a->document_type,
                 'national_id'   => $a->national_id_number,
                 'notes'         => $a->notes,
-                'documents'     => $a->documents->map(fn($d) => [
+                'documents'     => ($a->application?->documents ?? collect())->map(fn($d) => [
                     'id'       => $d->id,
                     'name'     => $d->document_name,
                     'source'   => $d->source,

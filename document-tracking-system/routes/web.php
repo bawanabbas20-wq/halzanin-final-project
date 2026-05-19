@@ -14,6 +14,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Public application tracking (no auth required)
+Route::get('/track', function () {
+    return view('track', ['application' => null]);
+})->name('track');
+
+Route::get('/track/{code}', function ($code) {
+    $application = \App\Models\Application::with(['appointment', 'statusLogs', 'user'])
+        ->where('tracking_code', $code)
+        ->first();
+    return view('track', ['application' => $application]);
+})->name('track.code');
+
 Route::get('/dashboard', function () {
     $role = auth()->user()->role ?? 'citizen';
     if ($role === 'admin') {
@@ -50,15 +62,20 @@ Route::middleware(['auth', 'role:citizen'])->group(function () {
 // Staff routes
 Route::middleware(['auth', 'role:staff,admin'])->group(function () {
     Route::get('/staff/dashboard', [StaffController::class, 'index'])->name('staff.dashboard');
+    Route::get('/staff/queue', [StaffController::class, 'queue'])->name('staff.queue');
     Route::get('/staff/calendar', [StaffController::class, 'calendar'])->name('staff.calendar');
     Route::get('/staff/appointments/day', [StaffController::class, 'dayAppointments'])->name('staff.appointments.day');
     Route::patch('/staff/appointments/{appointment}/status', [StaffController::class, 'updateStatus'])->name('staff.appointments.status');
+    Route::get('/staff/applications/{application}', [StaffController::class, 'showApplication'])->name('staff.applications.show');
+    Route::patch('/staff/applications/{application}/status', [StaffController::class, 'updateApplicationStatus'])->name('staff.applications.update-status');
     Route::get('/staff/documents/{document}/file', [StaffController::class, 'viewDocument'])->name('staff.documents.view');
 });
 
 // Admin routes
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
+    Route::patch('/admin/users/{user}/role', [AdminController::class, 'updateRole'])->name('admin.users.update-role');
     Route::get('/admin/off-days', [AdminController::class, 'offDays'])->name('admin.offdays');
     Route::post('/admin/off-days', [AdminController::class, 'addOffDay'])->name('admin.offdays.store');
     Route::delete('/admin/off-days/{offDay}', [AdminController::class, 'removeOffDay'])->name('admin.offdays.destroy');
