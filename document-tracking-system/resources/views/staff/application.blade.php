@@ -99,12 +99,20 @@
                                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
                                             </div>
                                             <div>
-                                                @if($doc->source === 'upload' && $doc->file_path)
-                                                    <a href="{{ route('staff.documents.view', $doc->id) }}" class="text-sm font-semibold text-brand dark:text-indigo-400 hover:underline line-clamp-1" target="_blank">{{ $doc->original_name ?? $doc->document_name }}</a>
-                                                @else
-                                                    <span class="text-sm font-semibold text-gray-700 dark:text-gray-300 line-clamp-1">{{ $doc->document_name }}</span>
-                                                @endif
-                                                <p class="text-xs text-gray-500 mt-0.5">{{ $doc->source }} @if($doc->file_size) · {{ number_format($doc->file_size / 1024, 1) }} KB @endif</p>
+                                                <a href="{{ route('staff.documents.view', $doc->id) }}"
+                                                   class="text-sm font-semibold text-brand dark:text-indigo-400 hover:underline line-clamp-1"
+                                                   target="_blank">
+                                                    {{ $doc->original_name ?? $doc->document_name }}
+                                                </a>
+                                                <p class="text-xs text-gray-500 mt-0.5 capitalize">
+                                                    @if($doc->source === 'upload')
+                                                        Uploaded file@if($doc->file_size) · {{ number_format($doc->file_size / 1024, 1) }} KB @endif
+                                                    @elseif($doc->source === 'vault')
+                                                        From vault
+                                                    @else
+                                                        Citizen will bring original
+                                                    @endif
+                                                </p>
                                             </div>
                                         </div>
                                         

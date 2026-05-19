@@ -10,6 +10,8 @@ use App\Models\StatusLog;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Storage;
 
 class StaffController extends Controller
 {
@@ -165,11 +167,56 @@ class StaffController extends Controller
 
     public function viewDocument(Document $document)
     {
-        abort_if($document->source !== 'upload' || !$document->file_path, 404);
+        // Security: document must belong to an application
+        abort_unless($document->application_id, 403);
 
-        $fullPath = storage_path('app/' . $document->file_path);
-        abort_unless(file_exists($fullPath), 404);
+        switch ($document->source) {
 
-        return response()->file($fullPath);
+            case 'upload':
+                abort_unless($document->file_path, 404);
+                $fullPath = storage_path('app/' . $document->file_path);
+                abort_unless(file_exists($fullPath), 404);
+                return response()->file($fullPath);
+
+            case 'vault':
+                $vault = $document->vaultDocument;
+                abort_unless($vault, 404);
+
+                // Prefer image; fall back to PDF
+                $path   = $vault->encrypted_image_path ?? $vault->encrypted_pdf_path;
+                $isPdf  = !$vault->encrypted_image_path && $vault->encrypted_pdf_path;
+                abort_unless($path && Storage::exists($path), 404);
+
+                try {
+                    $content = Crypt::decrypt(Storage::get($path));
+                } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                    abort(500, 'Could not decrypt vault document.');
+                }
+
+                $mime = $isPdf ? 'application/pdf' : 'image/jpeg';
+                $ext  = $isPdf ? 'pdf' : 'jpg';
+                $name = $vault->original_name ?? ($document->document_name . '.' . $ext);
+
+                return response($content, 200, [
+                    'Content-Type'        => $mime,
+                    'Content-Disposition' => 'inline; filename="' . $name . '"',
+                ]);
+
+            case 'confirmed':
+                return response(
+                    '<html><body style="font-family:sans-serif;padding:40px;color:#374151">'
+                    . '<h2 style="color:#4338ca">Document Confirmation</h2>'
+                    . '<p>The citizen confirmed they will bring <strong>'
+                    . e($document->document_name)
+                    . '</strong> physically to their appointment.</p>'
+                    . '<p style="color:#6b7280;font-size:14px">No file was uploaded — this document will be inspected in person.</p>'
+                    . '</body></html>',
+                    200,
+                    ['Content-Type' => 'text/html']
+                );
+
+            default:
+                abort(404);
+        }
     }
 }
