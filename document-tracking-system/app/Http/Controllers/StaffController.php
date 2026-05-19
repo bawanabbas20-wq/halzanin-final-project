@@ -18,13 +18,49 @@ class StaffController extends Controller
         return view('staff.dashboard');
     }
 
-    public function queue()
+    public function queue(Request $request)
     {
         $applications = Application::with(['user', 'appointment'])
             ->latest()
             ->paginate(20);
 
-        return view('staff.queue', compact('applications'));
+        $calYear  = (int) now()->year;
+        $calMonth = (int) now()->month;
+        $calCurrent = Carbon::createFromDate($calYear, $calMonth, 1);
+
+        $calCounts = Appointment::where('date', 'like', $calCurrent->format('Y-m') . '-%')
+            ->whereNotIn('status', ['cancelled'])
+            ->selectRaw('date, COUNT(*) as count')
+            ->groupBy('date')
+            ->pluck('count', 'date')
+            ->toArray();
+
+        $calOffDates = OffDay::offDatesForMonth($calYear, $calMonth);
+
+        return view('staff.queue', compact('applications', 'calYear', 'calMonth', 'calCounts', 'calOffDates'));
+    }
+
+    public function calendarMonthData(Request $request)
+    {
+        $year  = (int) $request->get('year', now()->year);
+        $month = (int) $request->get('month', now()->month);
+        $current = Carbon::createFromDate($year, $month, 1);
+
+        $counts = Appointment::where('date', 'like', $current->format('Y-m') . '-%')
+            ->whereNotIn('status', ['cancelled'])
+            ->selectRaw('date, COUNT(*) as count')
+            ->groupBy('date')
+            ->pluck('count', 'date')
+            ->toArray();
+
+        $offDates = OffDay::offDatesForMonth($year, $month);
+
+        return response()->json([
+            'year'     => $year,
+            'month'    => $month,
+            'counts'   => $counts,
+            'offDates' => $offDates,
+        ]);
     }
 
     public function showApplication(Application $application)

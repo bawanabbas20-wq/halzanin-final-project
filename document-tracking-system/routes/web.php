@@ -63,7 +63,7 @@ Route::middleware(['auth', 'role:citizen'])->group(function () {
 Route::middleware(['auth', 'role:staff,admin'])->group(function () {
     Route::get('/staff/dashboard', [StaffController::class, 'index'])->name('staff.dashboard');
     Route::get('/staff/queue', [StaffController::class, 'queue'])->name('staff.queue');
-    Route::get('/staff/calendar', [StaffController::class, 'calendar'])->name('staff.calendar');
+    Route::get('/staff/calendar/month-data', [StaffController::class, 'calendarMonthData'])->name('staff.calendar.month-data');
     Route::get('/staff/appointments/day', [StaffController::class, 'dayAppointments'])->name('staff.appointments.day');
     Route::patch('/staff/appointments/{appointment}/status', [StaffController::class, 'updateStatus'])->name('staff.appointments.status');
     Route::get('/staff/applications/{application}', [StaffController::class, 'showApplication'])->name('staff.applications.show');
