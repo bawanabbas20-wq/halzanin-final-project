@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Application;
 use App\Models\OffDay;
+use App\Models\SubRole;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,8 +34,9 @@ class AdminController extends Controller
 
     public function users()
     {
-        $users = User::orderByDesc('created_at')->paginate(20);
-        return view('admin.users', compact('users'));
+        $users     = User::with('subRoles.permissions')->orderByDesc('created_at')->paginate(20);
+        $subRoles  = SubRole::with('permissions')->orderBy('name')->get();
+        return view('admin.users', compact('users', 'subRoles'));
     }
 
     public function updateRole(Request $request, User $user)

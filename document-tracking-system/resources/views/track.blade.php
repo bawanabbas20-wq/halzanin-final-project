@@ -104,6 +104,7 @@
                 'under_review' => ['bg' => 'bg-yellow-100 dark:bg-yellow-900/30', 'text' => 'text-yellow-700 dark:text-yellow-400'],
                 'approved'     => ['bg' => 'bg-green-100 dark:bg-green-900/30', 'text' => 'text-green-700 dark:text-green-400'],
                 'rejected'     => ['bg' => 'bg-red-100 dark:bg-red-900/30', 'text' => 'text-red-700 dark:text-red-400'],
+                'checked_in'   => ['bg' => 'bg-purple-100 dark:bg-purple-900/30', 'text' => 'text-purple-700 dark:text-purple-400'],
             ];
             $currentBadge = $badgeColors[$application->current_status] ?? $badgeColors['submitted'];
             $statusLabel = str_replace('_', ' ', $application->current_status);
@@ -183,6 +184,11 @@
                                 $iconColorClass = 'text-red-500 dark:text-red-400';
                                 $bgColorClass = 'bg-red-100 dark:bg-red-900/30';
                                 break;
+                            case 'checked_in':
+                                $iconSvg = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>';
+                                $iconColorClass = 'text-purple-500 dark:text-purple-400';
+                                $bgColorClass = 'bg-purple-100 dark:bg-purple-900/30';
+                                break;
                             default:
                                 $iconSvg = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>';
                                 $iconColorClass = 'text-gray-500 dark:text-gray-400';
@@ -228,7 +234,13 @@
 
         <!-- Bottom CTA Section -->
         <div class="w-full max-w-[600px] animate-fade-up" style="animation-delay: {{ 300 + ($application->statusLogs->count() * 100) }}ms;">
-            @if($application->current_status === 'approved')
+            @if($application->current_status === 'checked_in')
+                <div class="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-[12px] p-4 text-center mb-6">
+                    <p class="text-purple-800 dark:text-purple-300 font-semibold text-sm">
+                        You have been checked in. Please take a seat and wait for your number to be called.
+                    </p>
+                </div>
+            @elseif($application->current_status === 'approved')
                 <div class="bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 rounded-[12px] p-4 text-center mb-6">
                     <p class="text-green-800 dark:text-green-300 font-semibold text-sm">
                         🎉 Your document is ready! Please visit the Passport Directorate to collect it.

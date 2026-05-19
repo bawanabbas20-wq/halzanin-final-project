@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CitizenController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\StaffScanController;
+use App\Http\Controllers\SubRoleController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\VaultController;
@@ -62,13 +64,41 @@ Route::middleware(['auth', 'role:citizen'])->group(function () {
 // Staff routes
 Route::middleware(['auth', 'role:staff,admin'])->group(function () {
     Route::get('/staff/dashboard', [StaffController::class, 'index'])->name('staff.dashboard');
-    Route::get('/staff/queue', [StaffController::class, 'queue'])->name('staff.queue');
+
+    // Queue — requires view_queue permission
+    Route::get('/staff/queue', [StaffController::class, 'queue'])
+        ->middleware('permission:view_queue')
+        ->name('staff.queue');
+
+    // Calendar month data (used by the merged queue/calendar page)
     Route::get('/staff/calendar/month-data', [StaffController::class, 'calendarMonthData'])->name('staff.calendar.month-data');
+
+    // Appointments day panel + status update
     Route::get('/staff/appointments/day', [StaffController::class, 'dayAppointments'])->name('staff.appointments.day');
-    Route::patch('/staff/appointments/{appointment}/status', [StaffController::class, 'updateStatus'])->name('staff.appointments.status');
-    Route::get('/staff/applications/{application}', [StaffController::class, 'showApplication'])->name('staff.applications.show');
-    Route::patch('/staff/applications/{application}/status', [StaffController::class, 'updateApplicationStatus'])->name('staff.applications.update-status');
-    Route::get('/staff/documents/{document}/file', [StaffController::class, 'viewDocument'])->name('staff.documents.view');
+    Route::patch('/staff/appointments/{appointment}/status', [StaffController::class, 'updateStatus'])
+        ->middleware('permission:confirm_appointments')
+        ->name('staff.appointments.status');
+
+    // Application detail + status update
+    Route::get('/staff/applications/{application}', [StaffController::class, 'showApplication'])
+        ->middleware('permission:view_queue')
+        ->name('staff.applications.show');
+    Route::patch('/staff/applications/{application}/status', [StaffController::class, 'updateApplicationStatus'])
+        ->middleware('permission:update_application_status')
+        ->name('staff.applications.update-status');
+
+    // Documents
+    Route::get('/staff/documents/{document}/file', [StaffController::class, 'viewDocument'])
+        ->middleware('permission:view_documents')
+        ->name('staff.documents.view');
+
+    // QR Check-in Scanner
+    Route::get('/staff/scan', [StaffScanController::class, 'index'])
+        ->middleware('permission:scan_qr_checkin')
+        ->name('staff.scan');
+    Route::post('/staff/scan/checkin', [StaffScanController::class, 'checkin'])
+        ->middleware('permission:scan_qr_checkin')
+        ->name('staff.scan.checkin');
 });
 
 // Admin routes
@@ -79,6 +109,18 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/off-days', [AdminController::class, 'offDays'])->name('admin.offdays');
     Route::post('/admin/off-days', [AdminController::class, 'addOffDay'])->name('admin.offdays.store');
     Route::delete('/admin/off-days/{offDay}', [AdminController::class, 'removeOffDay'])->name('admin.offdays.destroy');
+
+    // Sub-role management
+    Route::prefix('admin/sub-roles')->group(function () {
+        Route::get('/', [SubRoleController::class, 'index'])->name('admin.sub-roles.index');
+        Route::get('/create', [SubRoleController::class, 'create'])->name('admin.sub-roles.create');
+        Route::post('/', [SubRoleController::class, 'store'])->name('admin.sub-roles.store');
+        Route::get('/{id}/edit', [SubRoleController::class, 'edit'])->name('admin.sub-roles.edit');
+        Route::patch('/{id}', [SubRoleController::class, 'update'])->name('admin.sub-roles.update');
+        Route::delete('/{id}', [SubRoleController::class, 'destroy'])->name('admin.sub-roles.destroy');
+        Route::post('/assign/{userId}', [SubRoleController::class, 'assign'])->name('admin.sub-roles.assign');
+        Route::delete('/unassign/{userId}/{subRoleId}', [SubRoleController::class, 'unassign'])->name('admin.sub-roles.unassign');
+    });
 });
 
 // Profile (all authenticated)

@@ -12,45 +12,61 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
         'email',
         'password',
         'role',
+        'phone_number',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class, 'citizen_id');
+    }
 
     public function vaultDocuments()
     {
         return $this->hasMany(VaultDocument::class);
     }
 
-    public function appointments()
+    public function subRoles()
     {
-        return $this->hasMany(Appointment::class, 'citizen_id');
+        return $this->belongsToMany(SubRole::class, 'user_sub_roles')
+            ->withPivot('assigned_by')
+            ->withTimestamps();
+    }
+
+    public function hasPermission(string $permission): bool
+    {
+        // Admins always have full access
+        if ($this->role === 'admin') {
+            return true;
+        }
+
+        // Non-staff never pass permission gates
+        if ($this->role !== 'staff') {
+            return false;
+        }
+
+        // Staff with no sub-roles assigned: backward-compatible full access
+        if (!$this->subRoles()->exists()) {
+            return true;
+        }
+
+        // Staff with sub-roles: check if any assigned sub-role grants this permission
+        return $this->subRoles()
+            ->whereHas('permissions', fn($q) => $q->where('permission', $permission))
+            ->exists();
     }
 }
