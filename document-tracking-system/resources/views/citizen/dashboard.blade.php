@@ -143,37 +143,32 @@
                                     @endif
                                 </div>
 
-                                @if($appt->application)
-                                    <div class="flex gap-2 mt-3 pt-3 border-t border-gray-100 dark:border-gray-800">
-                                        <a href="{{ route('citizen.applications.qr-receipt', $appt->application->id) }}"
-                                           class="flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 text-xs font-semibold bg-brand/10 text-brand dark:bg-indigo-900/30 dark:text-indigo-300 rounded-[8px] hover:bg-brand/20 dark:hover:bg-indigo-900/50 transition">
-                                            <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
-                                            View Receipt & QR
-                                        </a>
-                                        <a href="{{ route('track', $appt->application->tracking_code) }}"
-                                           class="flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-[8px] hover:bg-gray-200 dark:hover:bg-gray-700 transition">
-                                            <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
-                                            Track Status
-                                        </a>
+                                <div class="flex items-center justify-between mt-3 pt-3 border-t border-gray-100 dark:border-gray-800 gap-3">
+                                    <span class="text-xs text-gray-400 shrink-0">
+                                        Booked {{ $appt->created_at->diffForHumans() }}
+                                    </span>
+                                    <div class="flex items-center gap-2">
+                                        @if($appt->application)
+                                            <a href="{{ route('citizen.applications.qr-receipt', $appt->application->id) }}"
+                                               class="inline-flex items-center gap-1.5 py-1.5 px-3 text-xs font-semibold bg-brand/10 text-brand dark:bg-indigo-900/30 dark:text-indigo-300 rounded-[8px] hover:bg-brand/20 dark:hover:bg-indigo-900/50 transition whitespace-nowrap">
+                                                <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
+                                                View Receipt
+                                            </a>
+                                        @endif
+                                        @if($appt->status === 'pending' || $appt->status === 'confirmed')
+                                            <form method="POST"
+                                                  action="{{ route('citizen.appointments.cancel', $appt) }}"
+                                                  onsubmit="return confirm('Cancel this appointment?')">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit"
+                                                        class="text-xs text-red-500 hover:text-red-700 font-medium transition">
+                                                    Cancel
+                                                </button>
+                                            </form>
+                                        @endif
                                     </div>
-                                @endif
-                                @if($appt->status === 'pending' || $appt->status === 'confirmed')
-                                    <div class="flex items-center justify-between {{ $appt->application ? 'mt-2' : 'mt-3 pt-3 border-t border-gray-100 dark:border-gray-800' }}">
-                                        <span class="text-xs text-gray-400">
-                                            Booked {{ $appt->created_at->diffForHumans() }}
-                                        </span>
-                                        <form method="POST"
-                                              action="{{ route('citizen.appointments.cancel', $appt) }}"
-                                              onsubmit="return confirm('Cancel this appointment?')">
-                                            @csrf
-                                            @method('PATCH')
-                                            <button type="submit"
-                                                    class="text-xs text-red-500 hover:text-red-700 font-medium transition">
-                                                Cancel
-                                            </button>
-                                        </form>
-                                    </div>
-                                @endif
+                                </div>
                             </div>
                         </div>
                     @endforeach
