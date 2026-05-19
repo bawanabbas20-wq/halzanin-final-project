@@ -11,6 +11,9 @@ class Appointment extends Model
 
     protected $fillable = [
         'citizen_id',
+        'full_name',
+        'national_id_number',
+        'document_type',
         'date',
         'time_slot',
         'status',

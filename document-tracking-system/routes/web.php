@@ -28,6 +28,7 @@ Route::middleware(['auth', 'role:citizen'])->group(function () {
 
     // Appointments / calendar
     Route::get('/citizen/appointments', [AppointmentController::class, 'calendar'])->name('citizen.appointments.calendar');
+    Route::get('/citizen/appointments/month-data', [AppointmentController::class, 'monthData'])->name('citizen.appointments.month-data');
     Route::get('/citizen/appointments/slots', [AppointmentController::class, 'slots'])->name('citizen.appointments.slots');
     Route::post('/citizen/appointments', [AppointmentController::class, 'store'])->name('citizen.appointments.store');
     Route::patch('/citizen/appointments/{appointment}/cancel', [AppointmentController::class, 'cancel'])->name('citizen.appointments.cancel');

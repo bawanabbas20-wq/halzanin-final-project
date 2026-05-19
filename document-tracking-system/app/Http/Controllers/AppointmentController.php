@@ -18,7 +18,6 @@ class AppointmentController extends Controller
         $current = Carbon::createFromDate($year, $month, 1);
         $maxDate = now()->addMonths(3)->endOfMonth();
 
-        // Clamp: don't go before current month or beyond 3 months
         if ($current->lt(now()->startOfMonth())) {
             $current = now()->startOfMonth();
         }
@@ -29,7 +28,6 @@ class AppointmentController extends Controller
         $year  = $current->year;
         $month = $current->month;
 
-        // Build per-day booking counts for this month
         $counts = Appointment::where('date', 'like', $current->format('Y-m') . '-%')
             ->whereNotIn('status', ['cancelled'])
             ->selectRaw('date, COUNT(*) as count')
@@ -37,35 +35,62 @@ class AppointmentController extends Controller
             ->pluck('count', 'date')
             ->toArray();
 
-        // Admin off days for this month
         $offDates = OffDay::offDatesForMonth($year, $month);
 
-        // Citizen's own appointments
-        $myAppointments = Auth::user()->appointments()
-            ->where('date', '>=', now()->toDateString())
-            ->whereNotIn('status', ['cancelled'])
-            ->orderBy('date')->orderBy('time_slot')
-            ->get();
+        $canPrev = $current->gt(now()->startOfMonth());
+        $canNext = $current->lt($maxDate->copy()->startOfMonth());
 
         return view('citizen.appointments.calendar', compact(
-            'year', 'month', 'current', 'counts', 'offDates', 'myAppointments', 'maxDate'
+            'year', 'month', 'current', 'counts', 'offDates', 'maxDate', 'canPrev', 'canNext'
         ));
+    }
+
+    public function monthData(Request $request)
+    {
+        $year  = (int) $request->get('year', now()->year);
+        $month = (int) $request->get('month', now()->month);
+
+        $current = Carbon::createFromDate($year, $month, 1);
+        $maxDate = now()->addMonths(3)->endOfMonth();
+
+        if ($current->lt(now()->startOfMonth())) {
+            $current = now()->startOfMonth();
+        }
+        if ($current->gt($maxDate->copy()->startOfMonth())) {
+            $current = $maxDate->copy()->startOfMonth();
+        }
+
+        $year  = $current->year;
+        $month = $current->month;
+
+        $counts = Appointment::where('date', 'like', $current->format('Y-m') . '-%')
+            ->whereNotIn('status', ['cancelled'])
+            ->selectRaw('date, COUNT(*) as count')
+            ->groupBy('date')
+            ->pluck('count', 'date')
+            ->toArray();
+
+        $offDates = OffDay::offDatesForMonth($year, $month);
+
+        return response()->json([
+            'year'     => $year,
+            'month'    => $month,
+            'label'    => $current->format('F Y'),
+            'counts'   => $counts,
+            'offDates' => $offDates,
+            'canPrev'  => $current->gt(now()->startOfMonth()),
+            'canNext'  => $current->lt($maxDate->copy()->startOfMonth()),
+        ]);
     }
 
     public function slots(Request $request)
     {
         $date = $request->get('date');
 
-        if (!$date || OffDay::isOffDay($date) || Carbon::parse($date)->isPast()) {
+        if (!$date || OffDay::isOffDay($date) || Carbon::parse($date)->lt(now()->startOfDay())) {
             return response()->json(['slots' => [], 'error' => 'Date not available']);
         }
 
-        // Check if past date (allow today)
-        if (Carbon::parse($date)->lt(now()->startOfDay())) {
-            return response()->json(['slots' => [], 'error' => 'Date is in the past']);
-        }
-
-        // Check citizen doesn't already have an appointment this day
         $existing = Appointment::where('citizen_id', Auth::id())
             ->where('date', $date)
             ->whereNotIn('status', ['cancelled'])
@@ -73,33 +98,30 @@ class AppointmentController extends Controller
 
         if ($existing) {
             return response()->json([
-                'slots'   => [],
-                'error'   => 'You already have an appointment on this day',
-                'existing' => [
-                    'time_slot' => $existing->time_slot,
-                    'status'    => $existing->status,
-                ],
+                'slots'    => [],
+                'error'    => 'You already have an appointment on this day.',
+                'existing' => ['time_slot' => $existing->time_slot, 'status' => $existing->status],
             ]);
         }
 
-        $available = Appointment::availableSlotsForDate($date);
-
-        return response()->json(['slots' => $available]);
+        return response()->json(['slots' => Appointment::availableSlotsForDate($date)]);
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'date'      => 'required|date|after_or_equal:today',
-            'time_slot' => 'required|in:09:00,10:00,11:00,12:00,13:00',
-            'notes'     => 'nullable|string|max:500',
+            'full_name'          => 'required|string|max:255',
+            'national_id_number' => 'required|string|max:255',
+            'document_type'      => 'required|string|max:255',
+            'date'               => 'required|date|after_or_equal:today',
+            'time_slot'          => 'required|in:09:00,10:00,11:00,12:00,13:00',
+            'notes'              => 'nullable|string|max:500',
         ]);
 
         if (OffDay::isOffDay($request->date)) {
             return back()->with('error', 'That date is an off day. Please choose another.');
         }
 
-        // Check slot is still available (race condition guard)
         $taken = Appointment::where('date', $request->date)
             ->where('time_slot', $request->time_slot)
             ->whereNotIn('status', ['cancelled'])
@@ -109,7 +131,6 @@ class AppointmentController extends Controller
             return back()->with('error', 'That time slot was just taken. Please choose another.');
         }
 
-        // Citizen can only have one active appointment per day
         $alreadyBooked = Appointment::where('citizen_id', Auth::id())
             ->where('date', $request->date)
             ->whereNotIn('status', ['cancelled'])
@@ -120,10 +141,13 @@ class AppointmentController extends Controller
         }
 
         Appointment::create([
-            'citizen_id' => Auth::id(),
-            'date'       => $request->date,
-            'time_slot'  => $request->time_slot,
-            'notes'      => $request->notes,
+            'citizen_id'         => Auth::id(),
+            'full_name'          => $request->full_name,
+            'national_id_number' => $request->national_id_number,
+            'document_type'      => $request->document_type,
+            'date'               => $request->date,
+            'time_slot'          => $request->time_slot,
+            'notes'              => $request->notes,
         ]);
 
         return redirect()->route('citizen.appointments.calendar')
