@@ -104,15 +104,20 @@
                                                    target="_blank">
                                                     {{ $doc->original_name ?? $doc->document_name }}
                                                 </a>
-                                                <p class="text-xs text-gray-500 mt-0.5 capitalize">
-                                                    @if($doc->source === 'upload')
-                                                        Uploaded file@if($doc->file_size) · {{ number_format($doc->file_size / 1024, 1) }} KB @endif
-                                                    @elseif($doc->source === 'vault')
-                                                        From vault
-                                                    @else
-                                                        Citizen will bring original
-                                                    @endif
-                                                </p>
+                                                @php
+                                                    $documentSourceLabel = 'Citizen will bring original';
+
+                                                    if ($doc->source === 'upload') {
+                                                        $documentSourceLabel = 'Uploaded file';
+
+                                                        if ($doc->file_size) {
+                                                            $documentSourceLabel .= ' - ' . number_format($doc->file_size / 1024, 1) . ' KB';
+                                                        }
+                                                    } elseif ($doc->source === 'vault') {
+                                                        $documentSourceLabel = 'From vault';
+                                                    }
+                                                @endphp
+                                                <p class="text-xs text-gray-500 mt-0.5 capitalize">{{ $documentSourceLabel }}</p>
                                             </div>
                                         </div>
                                         

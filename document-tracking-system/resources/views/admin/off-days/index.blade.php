@@ -1,12 +1,18 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Off Days Management
-        </h2>
-    </x-slot>
+@extends('layouts.halzanin-app')
 
-    <div class="py-8">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8 space-y-6">
+@section('content')
+    <div class="space-y-6 lg:space-y-8 max-w-5xl mx-auto pb-10">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-fade-in">
+            <div>
+                <h2 class="text-2xl font-bold text-brand dark:text-white font-outfit">Off Days Management</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Manage extra closure dates beyond the regular Friday and Saturday off days.</p>
+            </div>
+            <span class="text-sm font-semibold text-gray-500 dark:text-gray-400 bg-white dark:bg-slate-800 px-4 py-2 rounded-full border border-gray-100 dark:border-slate-700 shadow-sm">
+                {{ \Carbon\Carbon::now()->format('l, F j, Y') }}
+            </span>
+        </div>
+
+        <div class="space-y-6">
 
             {{-- Flash --}}
             @if(session('success'))
@@ -23,9 +29,9 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                 {{-- Add off days form --}}
-                <div class="bg-white shadow-sm rounded-xl p-6">
-                    <h3 class="text-base font-semibold text-gray-800 mb-1">Add Off Days</h3>
-                    <p class="text-xs text-gray-500 mb-5">
+                <div class="bg-white dark:bg-[#1e293b] shadow-sm border border-gray-100 dark:border-slate-800 rounded-[16px] p-6">
+                    <h3 class="text-base font-semibold text-gray-800 dark:text-white mb-1">Add Off Days</h3>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mb-5">
                         Select one or multiple dates. Friday &amp; Saturday are always off and don't need to be added here.
                     </p>
 
@@ -34,19 +40,19 @@
 
                         {{-- Date picker (multi-select visual calendar) --}}
                         <div class="mb-4">
-                            <label class="text-sm font-medium text-gray-700 block mb-2">
+                                <label class="text-sm font-medium text-gray-700 dark:text-gray-300 block mb-2">
                                 Selected dates: <span id="selected-count" class="text-blue-600">0</span>
                             </label>
 
                             {{-- Month navigation for picker --}}
                             <div class="flex items-center justify-between mb-3">
                                 <button type="button" onclick="pickerPrevMonth()"
-                                        class="p-1.5 rounded hover:bg-gray-100 text-gray-600 transition">
+                                         class="p-1.5 rounded hover:bg-gray-100 text-gray-600 transition">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                                     </svg>
                                 </button>
-                                <span id="picker-month-label" class="text-sm font-medium text-gray-700"></span>
+                                <span id="picker-month-label" class="text-sm font-medium text-gray-700 dark:text-gray-300"></span>
                                 <button type="button" onclick="pickerNextMonth()"
                                         class="p-1.5 rounded hover:bg-gray-100 text-gray-600 transition">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -71,11 +77,11 @@
                         <div id="selected-dates-list" class="mb-4 flex flex-wrap gap-1 min-h-6"></div>
 
                         <div class="mb-4">
-                            <label class="text-sm font-medium text-gray-700 block mb-1">
+                            <label class="text-sm font-medium text-gray-700 dark:text-gray-300 block mb-1">
                                 Reason <span class="text-gray-400 font-normal">(optional)</span>
                             </label>
                             <input type="text" name="reason" maxlength="255"
-                                   class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                                   class="w-full border border-gray-200 dark:border-slate-700 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
                                    placeholder="e.g. National Holiday, Emergency closure…">
                         </div>
 
@@ -88,17 +94,17 @@
                 </div>
 
                 {{-- Existing off days list --}}
-                <div class="bg-white shadow-sm rounded-xl p-6">
+                <div class="bg-white dark:bg-[#1e293b] shadow-sm border border-gray-100 dark:border-slate-800 rounded-[16px] p-6">
                     {{-- Year filter --}}
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-base font-semibold text-gray-800">Off Days in {{ $year }}</h3>
+                        <h3 class="text-base font-semibold text-gray-800 dark:text-white">Off Days in {{ $year }}</h3>
                         <div class="flex items-center gap-2">
-                            <a href="{{ route('admin.offdays', ['year' => $year - 1]) }}"
+                            <a href="{{ route('admin.off-days', ['year' => $year - 1]) }}"
                                class="text-xs text-gray-500 hover:text-gray-700 px-2 py-1 rounded hover:bg-gray-100 transition">
                                 {{ $year - 1 }}
                             </a>
                             <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded">{{ $year }}</span>
-                            <a href="{{ route('admin.offdays', ['year' => $year + 1]) }}"
+                            <a href="{{ route('admin.off-days', ['year' => $year + 1]) }}"
                                class="text-xs text-gray-500 hover:text-gray-700 px-2 py-1 rounded hover:bg-gray-100 transition">
                                 {{ $year + 1 }}
                             </a>
@@ -106,7 +112,7 @@
                     </div>
 
                     @if($offDays->isEmpty())
-                        <div class="text-center py-10 text-gray-400">
+                        <div class="text-center py-10 text-gray-400 dark:text-gray-500">
                             <svg class="w-10 h-10 mx-auto mb-2 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                                       d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
@@ -117,13 +123,13 @@
                     @else
                         <div class="space-y-2 max-h-96 overflow-y-auto">
                             @foreach($offDays as $offDay)
-                                <div class="flex items-center justify-between p-2.5 bg-gray-50 rounded-lg">
+                                <div class="flex items-center justify-between p-2.5 bg-gray-50 dark:bg-slate-800/70 rounded-lg">
                                     <div>
-                                        <p class="text-sm font-medium text-gray-800">
+                                        <p class="text-sm font-medium text-gray-800 dark:text-white">
                                             {{ $offDay->date->format('D, M j, Y') }}
                                         </p>
                                         @if($offDay->reason)
-                                            <p class="text-xs text-gray-500">{{ $offDay->reason }}</p>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400">{{ $offDay->reason }}</p>
                                         @endif
                                     </div>
                                     <form method="POST"
@@ -149,7 +155,7 @@
             </div>
 
             {{-- Note about weekends --}}
-            <div class="bg-blue-50 border border-blue-100 rounded-lg p-4 text-sm text-blue-700">
+            <div class="bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800/60 rounded-[14px] p-4 text-sm text-indigo-700 dark:text-indigo-300">
                 <strong>Note:</strong> Friday and Saturday are automatically marked as off days for all citizens.
                 Only add dates here for additional holidays or emergency closures.
             </div>
@@ -253,4 +259,4 @@
 
     renderPicker();
     </script>
-</x-app-layout>
+@endsection

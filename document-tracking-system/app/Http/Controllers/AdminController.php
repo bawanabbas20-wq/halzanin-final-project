@@ -84,7 +84,7 @@ class AdminController extends Controller
             $added++;
         }
 
-        return redirect()->route('admin.offdays')
+        return redirect()->route('admin.off-days')
             ->with('success', "$added off day(s) added successfully.");
     }
 
@@ -92,7 +92,7 @@ class AdminController extends Controller
     {
         $offDay->delete();
 
-        return redirect()->route('admin.offdays')
+        return redirect()->route('admin.off-days')
             ->with('success', 'Off day removed.');
     }
 }

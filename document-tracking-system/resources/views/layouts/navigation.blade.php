@@ -25,15 +25,15 @@
                         @endif
 
                         @if(Auth::user()->role === 'staff' || Auth::user()->role === 'admin')
-                            <x-nav-link :href="route('staff.calendar')"
-                                        :active="request()->routeIs('staff.calendar')">
-                                {{ __('Appointments Calendar') }}
+                            <x-nav-link :href="route('staff.queue')"
+                                        :active="request()->routeIs('staff.queue')">
+                                {{ __('Queue & Calendar') }}
                             </x-nav-link>
                         @endif
 
                         @if(Auth::user()->role === 'admin')
-                            <x-nav-link :href="route('admin.offdays')"
-                                        :active="request()->routeIs('admin.offdays*')">
+                            <x-nav-link :href="route('admin.off-days')"
+                                        :active="request()->routeIs('admin.off-days')">
                                 {{ __('Off Days') }}
                             </x-nav-link>
                         @endif
@@ -103,15 +103,15 @@
                 @endif
 
                 @if(Auth::user()->role === 'staff' || Auth::user()->role === 'admin')
-                    <x-responsive-nav-link :href="route('staff.calendar')"
-                                           :active="request()->routeIs('staff.calendar')">
-                        {{ __('Appointments Calendar') }}
+                    <x-responsive-nav-link :href="route('staff.queue')"
+                                           :active="request()->routeIs('staff.queue')">
+                        {{ __('Queue & Calendar') }}
                     </x-responsive-nav-link>
                 @endif
 
                 @if(Auth::user()->role === 'admin')
-                    <x-responsive-nav-link :href="route('admin.offdays')"
-                                           :active="request()->routeIs('admin.offdays*')">
+                    <x-responsive-nav-link :href="route('admin.off-days')"
+                                           :active="request()->routeIs('admin.off-days')">
                         {{ __('Off Days') }}
                     </x-responsive-nav-link>
                 @endif

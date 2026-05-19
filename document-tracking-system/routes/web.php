@@ -107,7 +107,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
     Route::patch('/admin/users/{user}/role', [AdminController::class, 'updateRole'])->name('admin.users.update-role');
-    Route::get('/admin/off-days', [AdminController::class, 'offDays'])->name('admin.offdays');
+    Route::get('/admin/off-days', [AdminController::class, 'offDays'])->name('admin.off-days');
     Route::post('/admin/off-days', [AdminController::class, 'addOffDay'])->name('admin.offdays.store');
     Route::delete('/admin/off-days/{offDay}', [AdminController::class, 'removeOffDay'])->name('admin.offdays.destroy');
 
