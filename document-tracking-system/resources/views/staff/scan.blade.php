@@ -1,9 +1,8 @@
-@extends('layouts.halzanin-app')
+﻿@extends('layouts.halzanin-app')
 
 @section('content')
 <div class="max-w-2xl mx-auto space-y-6">
 
-    <!-- Header -->
     <div class="flex items-center space-x-3 animate-fade-in">
         <div class="w-10 h-10 bg-emerald-100 dark:bg-emerald-900/30 rounded-[12px] flex items-center justify-center">
             <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -16,14 +15,10 @@
         </div>
     </div>
 
-    <!-- Camera Viewfinder Card -->
     <div class="bg-white dark:bg-[#1e293b] rounded-[16px] shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden animate-fade-up" style="animation-delay:100ms">
-
-        <!-- Viewfinder -->
         <div class="relative bg-black" id="scanner-container" style="min-height: 340px;">
             <div id="reader" class="w-full"></div>
 
-            <!-- Inactive overlay -->
             <div id="scanner-inactive" class="absolute inset-0 flex flex-col items-center justify-center bg-gray-900/80 text-white">
                 <div class="w-20 h-20 rounded-full bg-emerald-500/20 border-2 border-emerald-400/40 flex items-center justify-center mb-4">
                     <svg class="w-10 h-10 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -33,13 +28,11 @@
                 </div>
                 <p class="font-semibold text-lg mb-2">Camera is off</p>
                 <p class="text-sm text-gray-400 mb-5">Press Start to activate the camera</p>
-                <button onclick="startScanner()" id="btn-start"
-                        class="px-6 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-[10px] shadow-md transition-colors">
+                <button onclick="startScanner()" id="btn-start" class="px-6 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-[10px] shadow-md transition-colors">
                     Start Scanner
                 </button>
             </div>
 
-            <!-- Active scanner corner markers -->
             <div id="scan-corners" class="absolute inset-0 pointer-events-none hidden">
                 <div class="absolute top-4 left-4 w-8 h-8 border-t-4 border-l-4 border-emerald-400 rounded-tl-lg"></div>
                 <div class="absolute top-4 right-4 w-8 h-8 border-t-4 border-r-4 border-emerald-400 rounded-tr-lg"></div>
@@ -48,77 +41,136 @@
             </div>
         </div>
 
-        <!-- Controls -->
         <div class="p-4 flex items-center justify-between border-t border-gray-100 dark:border-gray-800">
             <div class="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-2">
                 <span id="scan-status-dot" class="w-2 h-2 rounded-full bg-gray-400"></span>
                 <span id="scan-status-text">Inactive</span>
             </div>
             <div class="flex gap-2">
-                <button onclick="stopScanner()" id="btn-stop"
-                        class="hidden px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-xs font-semibold rounded-[8px] transition-colors">
+                <button onclick="stopScanner()" id="btn-stop" class="hidden px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-xs font-semibold rounded-[8px] transition-colors">
                     Stop
                 </button>
-                <button onclick="resetScanner()" id="btn-reset"
-                        class="hidden px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-semibold rounded-[8px] transition-colors">
+                <button onclick="resetScanner()" id="btn-reset" class="hidden px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-semibold rounded-[8px] transition-colors">
                     Scan Next
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Manual Entry Fallback -->
     <div class="bg-white dark:bg-[#1e293b] rounded-[16px] shadow-sm border border-gray-100 dark:border-gray-800 p-5 animate-fade-up" style="animation-delay:150ms">
         <h3 class="text-sm font-bold text-gray-700 dark:text-gray-300 mb-3">Manual Tracking Code Entry</h3>
         <form onsubmit="manualCheckin(event)" class="flex gap-3">
-            <input type="text" id="manualCode" placeholder="TRK-XXXXXXXX" autocomplete="off" autocapitalize="characters"
-                   class="flex-1 h-[40px] rounded-[8px] border-gray-200 dark:border-gray-700 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 text-sm px-3 font-mono transition-colors">
-            <button type="submit"
-                    class="px-4 h-[40px] bg-brand hover:bg-indigo-700 text-white text-sm font-semibold rounded-[8px] transition-colors">
+            <input type="text" id="manualCode" placeholder="TRK-XXXXXXXX" autocomplete="off" autocapitalize="characters" class="flex-1 h-[40px] rounded-[8px] border-gray-200 dark:border-gray-700 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 text-sm px-3 font-mono transition-colors">
+            <button type="submit" class="px-4 h-[40px] bg-brand hover:bg-indigo-700 text-white text-sm font-semibold rounded-[8px] transition-colors">
                 Check In
             </button>
         </form>
     </div>
 
-    <!-- Result Card -->
-    <div id="result-card" class="hidden animate-fade-up">
-        <!-- Content injected by JS -->
-    </div>
-
+    <div id="result-card" class="hidden animate-fade-up"></div>
 </div>
 
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 <script>
 const CHECKIN_URL = "{{ route('staff.scan.checkin') }}";
-const CSRF        = document.querySelector('meta[name="csrf-token"]').content;
+const CSRF = document.querySelector('meta[name="csrf-token"]').content;
 
 let scanner = null;
 let scanning = false;
+let activeCameraConfig = null;
 
-function startScanner() {
-    const inactive = document.getElementById('scanner-inactive');
-    inactive.classList.add('hidden');
-    document.getElementById('scan-corners').classList.remove('hidden');
-    document.getElementById('btn-stop').classList.remove('hidden');
-    document.getElementById('btn-start').classList.add('hidden');
-    setStatus('scanning', 'Scanning…');
+function setScannerUi(active) {
+    document.getElementById('scanner-inactive').classList.toggle('hidden', active);
+    document.getElementById('scan-corners').classList.toggle('hidden', !active);
+    document.getElementById('btn-stop').classList.toggle('hidden', !active);
+    document.getElementById('btn-start').classList.toggle('hidden', active);
+}
+
+function setStatus(type, text) {
+    const dot = document.getElementById('scan-status-dot');
+    const label = document.getElementById('scan-status-text');
+    label.textContent = text;
+    dot.className = 'w-2 h-2 rounded-full ' + ({
+        scanning: 'bg-emerald-500 animate-pulse',
+        inactive: 'bg-gray-400',
+        success: 'bg-emerald-500',
+        error: 'bg-red-500'
+    }[type] || 'bg-gray-400');
+}
+
+function getCameraErrorMessage(err) {
+    const message = String(err && (err.message || err)).toLowerCase();
+
+    if (!window.isSecureContext) {
+        return 'Camera access requires a secure page. Use localhost or HTTPS.';
+    }
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        return 'This browser does not support camera access.';
+    }
+    if (message.includes('permission') || message.includes('denied') || message.includes('notallowed')) {
+        return 'Camera permission was denied. Allow access in the browser and try again.';
+    }
+    if (message.includes('notfound') || message.includes('device not found') || message.includes('requested device not found')) {
+        return 'No camera was found on this device.';
+    }
+    if (message.includes('notreadable') || message.includes('trackstart') || message.includes('in use')) {
+        return 'The camera is busy in another app or browser tab.';
+    }
+
+    return 'Unable to start the camera. Please try again.';
+}
+
+async function resolveCameraConfig() {
+    if (!window.Html5Qrcode) {
+        throw new Error('QR scanner library did not load.');
+    }
+
+    const cameras = await Html5Qrcode.getCameras();
+    if (!cameras || cameras.length === 0) {
+        throw new Error('No camera devices available.');
+    }
+
+    const preferredCamera = cameras.find((camera) => {
+        const label = (camera.label || '').toLowerCase();
+        return label.includes('back') || label.includes('rear') || label.includes('environment');
+    });
+
+    if (preferredCamera) {
+        return { deviceId: { exact: preferredCamera.id } };
+    }
+
+    return { deviceId: { exact: cameras[0].id } };
+}
+
+async function startScanner() {
+    setStatus('scanning', 'Starting camera...');
+    setScannerUi(true);
 
     if (!scanner) {
         scanner = new Html5Qrcode('reader');
     }
 
-    scanning = true;
-    scanner.start(
-        { facingMode: 'environment' },
-        { fps: 10, qrbox: { width: 260, height: 260 } },
-        onScanSuccess,
-        () => {}
-    ).catch(err => {
+    try {
+        if (!activeCameraConfig) {
+            activeCameraConfig = await resolveCameraConfig();
+        }
+
+        scanning = true;
+        await scanner.start(
+            activeCameraConfig,
+            { fps: 10, qrbox: { width: 260, height: 260 } },
+            onScanSuccess,
+            () => {}
+        );
+        setStatus('scanning', 'Scanning...');
+    } catch (err) {
         console.error(err);
+        scanning = false;
+        activeCameraConfig = null;
         setStatus('error', 'Camera error');
-        showResult('error', '<p class="text-sm text-red-700 dark:text-red-400 font-semibold">Camera access denied. Please allow camera permissions.</p>');
+        showResult('error', `<p class="text-sm text-red-700 dark:text-red-400 font-semibold">${getCameraErrorMessage(err)}</p>`);
         stopScanner(true);
-    });
+    }
 }
 
 function stopScanner(silent = false) {
@@ -126,10 +178,10 @@ function stopScanner(silent = false) {
     if (scanner && scanner.isScanning) {
         scanner.stop().catch(() => {});
     }
-    document.getElementById('scanner-inactive').classList.remove('hidden');
-    document.getElementById('scan-corners').classList.add('hidden');
-    document.getElementById('btn-stop').classList.add('hidden');
-    if (!silent) setStatus('inactive', 'Inactive');
+    setScannerUi(false);
+    if (!silent) {
+        setStatus('inactive', 'Inactive');
+    }
 }
 
 function resetScanner() {
@@ -138,29 +190,16 @@ function resetScanner() {
     startScanner();
 }
 
-function setStatus(type, text) {
-    const dot  = document.getElementById('scan-status-dot');
-    const label = document.getElementById('scan-status-text');
-    label.textContent = text;
-    dot.className = 'w-2 h-2 rounded-full ' + ({
-        scanning: 'bg-emerald-500 animate-pulse',
-        inactive: 'bg-gray-400',
-        success:  'bg-emerald-500',
-        error:    'bg-red-500',
-    }[type] || 'bg-gray-400');
-}
-
 async function onScanSuccess(decodedText) {
     if (!scanning) return;
     scanning = false;
     stopScanner(true);
-    setStatus('scanning', 'Processing…');
-
+    setStatus('scanning', 'Processing...');
     await doCheckin(decodedText);
 }
 
-async function manualCheckin(e) {
-    e.preventDefault();
+async function manualCheckin(event) {
+    event.preventDefault();
     const code = document.getElementById('manualCode').value.trim();
     if (!code) return;
     await doCheckin(code);
@@ -168,30 +207,36 @@ async function manualCheckin(e) {
 }
 
 async function doCheckin(raw) {
-    setStatus('scanning', 'Checking in…');
-    showResult('loading', '<div class="flex items-center gap-3 py-2"><div class="w-5 h-5 border-2 border-brand border-t-transparent rounded-full animate-spin"></div><span class="text-sm text-gray-600 dark:text-gray-300">Checking in…</span></div>');
+    setStatus('scanning', 'Checking in...');
+    showResult('loading', '<div class="flex items-center gap-3 py-2"><div class="w-5 h-5 border-2 border-brand border-t-transparent rounded-full animate-spin"></div><span class="text-sm text-gray-600 dark:text-gray-300">Checking in...</span></div>');
 
     try {
-        const res  = await fetch(CHECKIN_URL, {
+        const response = await fetch(CHECKIN_URL, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': CSRF, 'Accept': 'application/json' },
-            body: JSON.stringify({ tracking_code: raw }),
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': CSRF,
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ tracking_code: raw })
         });
-        const data = await res.json();
+        const data = await response.json();
         renderResult(data);
-    } catch {
-        showResult('error', '<p class="text-sm text-red-600 font-semibold">Network error — please try again.</p>');
+    } catch (error) {
+        showResult('error', '<p class="text-sm text-red-600 font-semibold">Network error - please try again.</p>');
         setStatus('error', 'Error');
     }
 }
 
 const timeMap = {
-    '09:00': '9:00 AM', '10:00': '10:00 AM', '11:00': '11:00 AM',
-    '12:00': '12:00 PM', '13:00': '1:00 PM'
+    '09:00': '9:00 AM',
+    '10:00': '10:00 AM',
+    '11:00': '11:00 AM',
+    '12:00': '12:00 PM',
+    '13:00': '1:00 PM'
 };
 
 function renderResult(data) {
-    const card = document.getElementById('result-card');
     document.getElementById('btn-reset').classList.remove('hidden');
 
     if (data.result === 'success') {

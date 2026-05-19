@@ -12,7 +12,16 @@ class ChatbotController extends Controller
     {
         $request->validate(['message' => 'required|string|max:500']);
 
-        $systemPrompt = 'You are Halzanin Assistant, a helpful AI for the Kurdistan Region Passport Directorate document tracking system. You help citizens understand what documents they need, how to track their applications, and answer questions about the passport process. Keep answers short, clear, and friendly. You can respond in both English and Kurdish (Sorani). If asked in Kurdish, respond in Kurdish. Common questions: passport renewal needs (original passport, national ID, 2 photos, fee receipt), new passport needs (birth certificate, national ID, 2 photos), tracking instructions (use tracking code from QR receipt at /track/YOUR-CODE). Never make up information. If unsure, say to visit the directorate.';
+        $systemPrompt = 'You are Halzanin Assistant for the Kurdistan Region Passport Directorate. Keep answers short, clear, and accurate. Respond in Kurdish (Sorani) when the user writes in Kurdish, otherwise respond in English.';
+        $krgPassportRulesPrompt = implode("\n", [
+            'KRG Passport Rules (hardcoded):',
+            '1) Passport renewal requires: original passport, national ID, 2 passport photos, and fee receipt.',
+            '2) New passport requires: birth certificate, national ID, and 2 passport photos.',
+            '3) Application tracking must use the QR receipt tracking code at /track/YOUR-CODE.',
+            '4) Never invent requirements, fees, timelines, or legal details.',
+            '5) If uncertain, advise the user to visit the directorate.',
+        ]);
+        $messageForApi = $this->appendRulesToQuery($request->message, $krgPassportRulesPrompt);
 
         $apiKey = config('services.mistral.key');
         if (blank($apiKey)) {
@@ -26,17 +35,17 @@ class ChatbotController extends Controller
                 ->timeout(15)
                 ->retry(1, 300)
                 ->post(
-                'https://api.mistral.ai/v1/chat/completions',
-                [
-                    'model' => 'mistral-small-latest',
-                    'messages' => [
-                        ['role' => 'system', 'content' => $systemPrompt],
-                        ['role' => 'user', 'content' => $request->message],
-                    ],
-                    'max_tokens' => 300,
-                    'temperature' => 0.7,
-                ]
-            );
+                    'https://api.mistral.ai/v1/chat/completions',
+                    [
+                        'model' => 'mistral-small-latest',
+                        'messages' => [
+                            ['role' => 'system', 'content' => $systemPrompt],
+                            ['role' => 'user', 'content' => $messageForApi],
+                        ],
+                        'max_tokens' => 300,
+                        'temperature' => 0.7,
+                    ]
+                );
 
             if ($response->failed()) {
                 $error = $response->json();
@@ -49,13 +58,73 @@ class ChatbotController extends Controller
                     'status' => $response->status(),
                     'error' => $errorMessage,
                 ]);
-
                 return response()->json(['reply' => $this->fallbackReply($request->message)]);
             }
 
             $data = $response->json();
             $reply = data_get($data, 'choices.0.message.content', 'Sorry, I could not process your request.');
+            return response()->json(['reply' => $reply]);
+        } catch (\Throwable $e) {
+            \Log::error('Mistral connection error', ['message' => $e->getMessage()]);
+            return response()->json(['reply' => $this->fallbackReply($request->message)]);
+        }
+    }
 
+    public function publicChat(Request $request)
+    {
+        $request->validate(['message' => 'required|string|max:500']);
+
+        $systemPrompt = 'You are Halzan�n Assistant. Help citizens understand how to register, what documents they need for passport services, and how to track their applications. Keep answers short and friendly. You can respond in English or Kurdish.';
+        $krgPassportRulesPrompt = implode("\n", [
+            'KRG Passport Rules (hardcoded):',
+            '1) Passport renewal requires: original passport, national ID, 2 passport photos, and fee receipt.',
+            '2) New passport requires: birth certificate, national ID, and 2 passport photos.',
+            '3) Application tracking must use the QR receipt tracking code at /track/YOUR-CODE.',
+            '4) Never invent requirements, fees, timelines, or legal details.',
+            '5) If uncertain, advise the user to visit the directorate.',
+        ]);
+        $messageForApi = $this->appendRulesToQuery($request->message, $krgPassportRulesPrompt);
+
+        $apiKey = config('services.mistral.key');
+        if (blank($apiKey)) {
+            \Log::error('Mistral API key is missing.');
+            return response()->json(['reply' => $this->fallbackReply($request->message)]);
+        }
+
+        try {
+            $response = Http::withToken($apiKey)
+                ->connectTimeout(8)
+                ->timeout(15)
+                ->retry(1, 300)
+                ->post(
+                    'https://api.mistral.ai/v1/chat/completions',
+                    [
+                        'model' => 'mistral-small-latest',
+                        'messages' => [
+                            ['role' => 'system', 'content' => $systemPrompt],
+                            ['role' => 'user', 'content' => $messageForApi],
+                        ],
+                        'max_tokens' => 300,
+                        'temperature' => 0.7,
+                    ]
+                );
+
+            if ($response->failed()) {
+                $error = $response->json();
+                $errorMessage = data_get($error, 'error.message')
+                    ?? data_get($error, 'message')
+                    ?? strip_tags($response->body())
+                    ?? 'Unknown API error occurred.';
+
+                \Log::error('Mistral API error', [
+                    'status' => $response->status(),
+                    'error' => $errorMessage,
+                ]);
+                return response()->json(['reply' => $this->fallbackReply($request->message)]);
+            }
+
+            $data = $response->json();
+            $reply = data_get($data, 'choices.0.message.content', 'Sorry, I could not process your request.');
             return response()->json(['reply' => $reply]);
         } catch (\Throwable $e) {
             \Log::error('Mistral connection error', ['message' => $e->getMessage()]);
@@ -94,5 +163,10 @@ class ChatbotController extends Controller
         return $isKurdish
             ? 'ئێستا پەیوەندی AI لاوازە، بەڵام دەتوانم یارمەتیت بدەم لە: نوێکردنەوەی پاسپۆرت، پاسپۆرتی نوێ، و شوێنکەوتنی داواکاری.'
             : 'The AI connection is unstable right now, but I can still help with passport renewal, new passport requirements, and application tracking.';
+    }
+
+    private function appendRulesToQuery(string $userQuery, string $rulesPrompt): string
+    {
+        return trim($rulesPrompt) . "\n\nCitizen query:\n" . trim($userQuery);
     }
 }

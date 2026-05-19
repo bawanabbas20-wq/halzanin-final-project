@@ -1,8 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="font-outfit">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Track Application{{ $application ? ' - ' . $application->tracking_code : '' }}</title>
 
     <!-- Google Fonts -->
@@ -46,7 +47,7 @@
                 <div class="w-8 h-8 bg-brand rounded-full flex items-center justify-center">
                     <span class="text-white text-sm font-bold font-outfit">H</span>
                 </div>
-                <span class="font-bold text-brand dark:text-white font-outfit text-lg">Halzanîn</span>
+                <span class="font-bold text-brand dark:text-white font-outfit text-lg">Halzanأ®n</span>
             </div>
 
             <!-- Right: Toggles -->
@@ -60,7 +61,7 @@
                 <!-- Language Toggle -->
                 <button id="lang-toggle" class="flex items-center text-xs font-semibold transition overflow-hidden">
                     <span id="lang-en" class="px-2 py-0.5 rounded-full transition-colors">EN</span>
-                    <span id="lang-ku" class="px-2 py-0.5 rounded-full transition-colors font-arabic">کوردی</span>
+                    <span id="lang-ku" class="px-2 py-0.5 rounded-full transition-colors font-arabic">ع©ظˆط±ط¯غŒ</span>
                 </button>
             </div>
         </div>
@@ -131,15 +132,15 @@
                     </div>
                     <div>
                         <p class="text-[11px] text-gray-400 uppercase tracking-wider font-semibold mb-1">Document Type</p>
-                        <p class="text-[14px] font-bold text-gray-900 dark:text-white">{{ $application->appointment->document_type ?? '—' }}</p>
+                        <p class="text-[14px] font-bold text-gray-900 dark:text-white">{{ $application->appointment->document_type ?? 'â€”' }}</p>
                     </div>
                     <div>
                         <p class="text-[11px] text-gray-400 uppercase tracking-wider font-semibold mb-1">Submitted Date</p>
-                        <p class="text-[14px] font-bold text-gray-900 dark:text-white">{{ $application->submitted_at ? $application->submitted_at->format('M d, Y h:i A') : '—' }}</p>
+                        <p class="text-[14px] font-bold text-gray-900 dark:text-white">{{ $application->submitted_at ? $application->submitted_at->format('M d, Y h:i A') : 'â€”' }}</p>
                     </div>
                     <div>
                         <p class="text-[11px] text-gray-400 uppercase tracking-wider font-semibold mb-1">Appointment Date</p>
-                        <p class="text-[14px] font-bold text-gray-900 dark:text-white">{{ $application->appointment ? \Carbon\Carbon::parse($application->appointment->date)->format('M d, Y') : '—' }}</p>
+                        <p class="text-[14px] font-bold text-gray-900 dark:text-white">{{ $application->appointment ? \Carbon\Carbon::parse($application->appointment->date)->format('M d, Y') : 'â€”' }}</p>
                     </div>
                 </div>
             </div>
@@ -243,13 +244,13 @@
             @elseif($application->current_status === 'approved')
                 <div class="bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 rounded-[12px] p-4 text-center mb-6">
                     <p class="text-green-800 dark:text-green-300 font-semibold text-sm">
-                        🎉 Your document is ready! Please visit the Passport Directorate to collect it.
+                        ًںژ‰ Your document is ready! Please visit the Passport Directorate to collect it.
                     </p>
                 </div>
             @elseif($application->current_status === 'rejected')
                 <div class="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-[12px] p-4 text-center mb-6">
                     <p class="text-red-800 dark:text-red-300 font-semibold text-sm">
-                        ⚠️ Your application was rejected. Please review the notes above and resubmit.
+                        âڑ ï¸ڈ Your application was rejected. Please review the notes above and resubmit.
                     </p>
                 </div>
             @else
@@ -423,5 +424,16 @@
             }
         });
     </script>
+
+        @if(!auth()->check() || auth()->user()->role === 'citizen')
+    <x-floating-chatbot
+        :endpoint="request()->getBaseUrl() . '/chatbot/public'"
+        :welcome="$application
+            ? 'Slaw! I can see you are tracking an application. Do you have any questions about the process or what happens next?'
+            : 'Slaw! I can answer questions about your application status or what to expect next.'"
+    />
+    @endif
 </body>
 </html>
+
+

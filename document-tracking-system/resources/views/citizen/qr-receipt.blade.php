@@ -49,7 +49,7 @@
             </svg>
         </div>
         <h2 class="text-2xl font-bold text-accent font-outfit mb-1">Application Submitted!</h2>
-        <p class="text-gray-500 dark:text-gray-400 text-sm">Your QR receipt is ready — print it or save it</p>
+        <p class="text-gray-500 dark:text-gray-400 text-sm">Your QR receipt is ready - download it and bring it to your appointment</p>
     </div>
 
     {{-- ===== PRINTABLE RECEIPT ===== --}}
@@ -144,13 +144,13 @@
 
     {{-- Action Buttons --}}
     <div class="w-full flex flex-col space-y-3 mt-8 animate-fade-up print:hidden" style="animation-delay: 500ms;">
-        <button onclick="window.print()"
+        <a href="{{ request()->getBaseUrl() . route('citizen.applications.qr-receipt.download', $application->id, false) }}"
             class="flex items-center justify-center w-full h-[52px] bg-brand text-white rounded-[10px] font-semibold font-outfit shadow-brand-btn hover:shadow-brand-btn-hover hover:-translate-y-[1px] transition-all">
             <svg class="w-5 h-5 ltr:mr-2 rtl:ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
             </svg>
-            Print Receipt
-        </button>
+            Download Receipt
+        </a>
         <a href="{{ route('citizen.dashboard') }}"
             class="flex items-center justify-center w-full h-[52px] bg-transparent border-2 border-brand dark:border-indigo-400 text-brand dark:text-indigo-400 rounded-[10px] font-semibold font-outfit hover:bg-brand/5 transition-colors">
             Back to Dashboard

@@ -471,11 +471,12 @@ function renderAppointments(appointments) {
                 <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Documents</p>
                 <div class="flex flex-wrap gap-1.5">
                     ${appt.documents.map(d => {
+                        const viewUrl = @json(request()->getBaseUrl() . route('staff.documents.view', ['id' => '__DOCUMENT_ID__'], false)).replace('__DOCUMENT_ID__', d.id);
                         if (d.source === 'vault')
-                            return `<span class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400 font-medium">📦 ${d.name} · Vault</span>`;
+                            return `<a href="${viewUrl}" target="_blank" class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400 font-medium hover:opacity-80">Vault - ${d.name} View</a>`;
                         if (d.source === 'upload')
-                            return `<a href="/staff/documents/${d.id}/file" target="_blank" class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 font-medium hover:opacity-80">📤 ${d.name} ↗</a>`;
-                        return `<span class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 font-medium">📋 ${d.name}</span>`;
+                            return `<a href="${viewUrl}" target="_blank" class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 font-medium hover:opacity-80">Upload - ${d.name} View</a>`;
+                        return `<a href="${viewUrl}" target="_blank" class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 font-medium hover:opacity-80">Confirmed - ${d.name} View</a>`;
                     }).join('')}
                 </div>
                </div>` : '';

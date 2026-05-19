@@ -1,8 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Halzanin | Passport Services</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -550,5 +551,13 @@
             <div>Built for transparent and efficient public service delivery</div>
         </div>
     </footer>
+
+    @if(!auth()->check() || auth()->user()->role === 'citizen')
+    <x-floating-chatbot
+        :endpoint="request()->getBaseUrl() . '/chatbot/public'"
+        welcome="Slaw! I can answer questions about passport services, registration, or tracking your application."
+    />
+    @endif
 </body>
 </html>
+

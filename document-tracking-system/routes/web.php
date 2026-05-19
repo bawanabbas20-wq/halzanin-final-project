@@ -16,6 +16,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::post('/chatbot/public', [ChatbotController::class, 'publicChat'])
+    ->middleware('throttle:20,1')
+    ->name('chatbot.public');
+
 // Public application tracking (no auth required)
 Route::get('/track', function () {
     return view('track', ['application' => null]);
@@ -53,6 +57,7 @@ Route::middleware(['auth', 'role:citizen'])->group(function () {
     // Applications
     Route::get('/citizen/track', [CitizenController::class, 'myApplications'])->name('citizen.applications.index');
     Route::get('/citizen/applications/{application}/receipt', [CitizenController::class, 'qrReceipt'])->name('citizen.applications.qr-receipt');
+    Route::get('/citizen/applications/{application}/receipt/download', [CitizenController::class, 'downloadReceipt'])->name('citizen.applications.qr-receipt.download');
 
     // Vault
     Route::get('/citizen/vault', [VaultController::class, 'index'])->name('citizen.vault.index');
@@ -89,7 +94,7 @@ Route::middleware(['auth', 'role:staff,admin'])->group(function () {
         ->name('staff.applications.update-status');
 
     // Documents
-    Route::get('/staff/documents/{document}/file', [StaffController::class, 'viewDocument'])
+    Route::get('/staff/documents/{id}/view', [StaffController::class, 'viewDocument'])
         ->middleware('permission:view_documents')
         ->name('staff.documents.view');
 

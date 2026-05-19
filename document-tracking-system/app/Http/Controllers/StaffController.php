@@ -165,41 +165,55 @@ class StaffController extends Controller
         return response()->json(['success' => true, 'status' => $appointment->status]);
     }
 
-    public function viewDocument(Document $document)
+    public function viewDocument($id)
     {
-        // Security: document must belong to an application
-        abort_unless($document->application_id, 403);
+        $document = Document::with(['application', 'vaultDocument'])->findOrFail($id);
+
+        // Security: staff may only view documents attached to an application.
+        abort_unless($document->application()->exists(), 403);
 
         switch ($document->source) {
 
             case 'upload':
                 abort_unless($document->file_path, 404);
-                $fullPath = storage_path('app/' . $document->file_path);
-                abort_unless(file_exists($fullPath), 404);
-                return response()->file($fullPath);
+
+                $path = $document->file_path;
+                if (!Storage::disk('local')->exists($path) && Storage::disk('local')->exists('private/' . $path)) {
+                    $path = 'private/' . $path;
+                }
+
+                abort_unless(Storage::disk('local')->exists($path), 404);
+
+                $content = Storage::disk('local')->get($path);
+                $mime = Storage::disk('local')->mimeType($path) ?: 'application/octet-stream';
+                $name = $document->original_name ?? basename($document->file_path);
+
+                return response($content, 200, [
+                    'Content-Type'        => $mime,
+                    'Content-Disposition' => 'inline; filename="' . addslashes($name) . '"',
+                ]);
 
             case 'vault':
                 $vault = $document->vaultDocument;
                 abort_unless($vault, 404);
 
-                // Prefer image; fall back to PDF
-                $path   = $vault->encrypted_image_path ?? $vault->encrypted_pdf_path;
-                $isPdf  = !$vault->encrypted_image_path && $vault->encrypted_pdf_path;
-                abort_unless($path && Storage::exists($path), 404);
+                $path = $vault->encrypted_pdf_path ?: $vault->encrypted_image_path;
+                $isPdf = (bool) $vault->encrypted_pdf_path;
+                abort_unless($path && Storage::disk('local')->exists($path), 404);
 
                 try {
-                    $content = Crypt::decrypt(Storage::get($path));
+                    $content = Crypt::decrypt(Storage::disk('local')->get($path));
                 } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
                     abort(500, 'Could not decrypt vault document.');
                 }
 
+                $extension = $isPdf ? 'pdf' : 'jpg';
                 $mime = $isPdf ? 'application/pdf' : 'image/jpeg';
-                $ext  = $isPdf ? 'pdf' : 'jpg';
-                $name = $vault->original_name ?? ($document->document_name . '.' . $ext);
+                $name = ($vault->original_name ?? $document->document_name) . '.' . $extension;
 
                 return response($content, 200, [
                     'Content-Type'        => $mime,
-                    'Content-Disposition' => 'inline; filename="' . $name . '"',
+                    'Content-Disposition' => 'inline; filename="' . addslashes($name) . '"',
                 ]);
 
             case 'confirmed':

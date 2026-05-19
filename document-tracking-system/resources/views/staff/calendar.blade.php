@@ -212,13 +212,13 @@
                     <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Documents</p>
                     <div class="flex flex-wrap gap-1.5">
                         ${appt.documents.map(d => {
+                            const viewUrl = @json(request()->getBaseUrl() . route('staff.documents.view', ['id' => '__DOCUMENT_ID__'], false)).replace('__DOCUMENT_ID__', d.id);
                             if (d.source === 'vault') {
-                                return `<span class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 font-medium">📦 ${d.name} · Vault</span>`;
+                                return `<a href="${viewUrl}" target="_blank" class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 font-medium hover:bg-indigo-200">Vault - ${d.name} View</a>`;
                             } else if (d.source === 'upload') {
-                                const viewUrl = '/staff/documents/' + d.id + '/file';
-                                return `<a href="${viewUrl}" target="_blank" class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 font-medium hover:bg-blue-200">📤 ${d.name} · View ↗</a>`;
+                                return `<a href="${viewUrl}" target="_blank" class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 font-medium hover:bg-blue-200">Upload - ${d.name} View</a>`;
                             } else {
-                                return `<span class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 font-medium">📋 ${d.name} · Bringing</span>`;
+                                return `<a href="${viewUrl}" target="_blank" class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 font-medium hover:bg-amber-200">Confirmed - ${d.name} View</a>`;
                             }
                         }).join('')}
                     </div>
