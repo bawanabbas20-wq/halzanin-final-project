@@ -177,6 +177,9 @@
         </div>
 
         {{-- Step 3 Navigation --}}
+        <div id="confirm-only-warning" class="hidden p-3.5 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 rounded-xl text-xs text-amber-800 dark:text-amber-300 leading-relaxed">
+            ⚠️ You have not uploaded any documents. You must bring all required originals to your appointment. Staff may reject your application if documents are missing.
+        </div>
         <div class="flex gap-3">
             <button type="button" onclick="goToStep(2)"
                 class="flex-1 py-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-semibold text-sm rounded-[10px] hover:bg-gray-200 dark:hover:bg-gray-700 transition flex items-center justify-center gap-2">
@@ -497,9 +500,18 @@ function buildDocCard(i, name, matchingVaultDocs) {
     card.id = `doc-card-${i}`;
     card.className = 'border border-gray-100 dark:border-gray-800 rounded-xl overflow-hidden transition-all';
 
+    const errorSection = `
+        <div id="doc-err-${i}" class="hidden px-4 pb-3">
+            <p class="text-xs text-red-500 font-semibold flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                Please fulfill this requirement.
+            </p>
+        </div>`;
+
     const vaultSection = matchingVaultDocs.length > 0 ? `
         <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-800 bg-indigo-50/40 dark:bg-indigo-900/10">
             <p class="text-[10px] font-bold text-indigo-500 dark:text-indigo-400 uppercase tracking-wider mb-2">Use from Vault</p>
+            <input type="hidden" id="vault-id-hidden-${i}" value="">
             <div class="space-y-1.5">
                 ${matchingVaultDocs.map(v => `
                     <button type="button" id="vault-btn-${i}-${v.id}"
@@ -509,7 +521,7 @@ function buildDocCard(i, name, matchingVaultDocs) {
                             <p class="text-xs font-semibold text-gray-800 dark:text-gray-200 group-hover:text-brand truncate">${v.name}</p>
                             <p class="text-[10px] text-gray-400">Expires in ${v.expires_in} days</p>
                         </div>
-                        <span class="text-xs font-bold text-brand ml-2 shrink-0">Use →</span>
+                        <span id="vault-btn-label-${i}-${v.id}" class="text-xs font-bold text-brand ml-2 shrink-0">Use →</span>
                     </button>`).join('')}
             </div>
         </div>` : '';
@@ -547,10 +559,10 @@ function buildDocCard(i, name, matchingVaultDocs) {
             <span class="text-sm font-semibold text-gray-800 dark:text-gray-100">${name}</span>
             <span id="card-badge-${i}" class="hidden text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
-                Fulfilled
+                <span id="card-badge-text-${i}">Fulfilled</span>
             </span>
         </div>
-        ${vaultSection}${uploadSection}${confirmSection}`;
+        ${vaultSection}${uploadSection}${confirmSection}${errorSection}`;
 
     return card;
 }
@@ -562,11 +574,27 @@ function selectVault(ci, vaultDocId, label) {
     card.vaultDocId = already ? null : vaultDocId;
     card.file       = null;
     card.fulfilled  = !already;
+
     if (!already) {
-        // Uncheck confirm
         const cb = document.getElementById(`confirm-cb-${ci}`);
         if (cb) cb.checked = false;
     }
+
+    // Update vault button active states
+    document.querySelectorAll(`[id^="vault-btn-${ci}-"]`).forEach(btn => {
+        const btnVaultId = parseInt(btn.id.replace(`vault-btn-${ci}-`, ''));
+        const isActive   = !already && btnVaultId === vaultDocId;
+        btn.className = isActive
+            ? 'w-full flex items-center justify-between px-3 py-2.5 rounded-lg border-2 border-brand bg-brand/10 transition text-left group'
+            : 'w-full flex items-center justify-between px-3 py-2.5 rounded-lg border border-indigo-200 dark:border-indigo-800 hover:border-brand hover:bg-brand/5 transition text-left group';
+        const labelEl = document.getElementById(`vault-btn-label-${ci}-${btnVaultId}`);
+        if (labelEl) labelEl.textContent = isActive ? '✓ Selected' : 'Use →';
+    });
+
+    // Keep hidden input in sync
+    const hidden = document.getElementById(`vault-id-hidden-${ci}`);
+    if (hidden) hidden.value = already ? '' : vaultDocId;
+
     updateCardUI(ci);
     checkSubmit();
 }
@@ -611,12 +639,26 @@ function handleConfirm(event, ci) {
 }
 
 function updateCardUI(ci) {
-    const card  = ws.docCards[ci];
-    const badge = document.getElementById(`card-badge-${ci}`);
-    const el    = document.getElementById(`doc-card-${ci}`);
+    const card      = ws.docCards[ci];
+    const badge     = document.getElementById(`card-badge-${ci}`);
+    const badgeText = document.getElementById(`card-badge-text-${ci}`);
+    const el        = document.getElementById(`doc-card-${ci}`);
+    const errEl     = document.getElementById(`doc-err-${ci}`);
+
     if (card.fulfilled) {
         badge.classList.remove('hidden');
-        el.className = 'border border-emerald-200 dark:border-emerald-800 rounded-xl overflow-hidden transition-all bg-emerald-50/20 dark:bg-emerald-900/5';
+        if (errEl) errEl.classList.add('hidden');
+
+        const confirmOnly = card.source === 'confirmed';
+        if (confirmOnly) {
+            badge.className = 'text-xs font-bold text-amber-600 dark:text-amber-400 flex items-center gap-1';
+            if (badgeText) badgeText.textContent = 'Confirmed';
+            el.className = 'border border-amber-200 dark:border-amber-700 rounded-xl overflow-hidden transition-all bg-amber-50/20 dark:bg-amber-900/5';
+        } else {
+            badge.className = 'text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1';
+            if (badgeText) badgeText.textContent = 'Fulfilled';
+            el.className = 'border border-emerald-200 dark:border-emerald-800 rounded-xl overflow-hidden transition-all bg-emerald-50/20 dark:bg-emerald-900/5';
+        }
     } else {
         badge.classList.add('hidden');
         el.className = 'border border-gray-100 dark:border-gray-800 rounded-xl overflow-hidden transition-all';
@@ -624,8 +666,11 @@ function updateCardUI(ci) {
 }
 
 function checkSubmit() {
-    const all = ws.docCards.length > 0 && ws.docCards.every(c => c.fulfilled);
-    document.getElementById('submitBtn').disabled = !all;
+    const allFulfilled  = ws.docCards.length > 0 && ws.docCards.every(c => c.fulfilled);
+    const allConfirmOnly = allFulfilled && ws.docCards.every(c => c.source === 'confirmed');
+    document.getElementById('submitBtn').disabled = !allFulfilled;
+    const warning = document.getElementById('confirm-only-warning');
+    if (warning) warning.classList.toggle('hidden', !allConfirmOnly);
 }
 
 function fmtBytes(b) {
@@ -636,6 +681,20 @@ function fmtBytes(b) {
 
 async function submitWizard() {
     const btn = document.getElementById('submitBtn');
+
+    // Final guard: highlight any unfulfilled card in red
+    let hasUnfulfilled = false;
+    ws.docCards.forEach((c, ci) => {
+        const cardEl = document.getElementById(`doc-card-${ci}`);
+        const errEl  = document.getElementById(`doc-err-${ci}`);
+        if (!c.fulfilled) {
+            hasUnfulfilled = true;
+            if (cardEl) cardEl.className = 'border border-red-300 dark:border-red-700 ring-2 ring-red-400/40 rounded-xl overflow-hidden transition-all';
+            if (errEl) errEl.classList.remove('hidden');
+        }
+    });
+    if (hasUnfulfilled) return;
+
     btn.disabled = true;
     const orig = btn.innerHTML;
     btn.innerHTML = '<svg class="w-4 h-4 animate-spin inline mr-1.5" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>Submitting...';
