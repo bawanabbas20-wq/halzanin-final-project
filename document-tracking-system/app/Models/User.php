@@ -48,4 +48,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(VaultDocument::class);
     }
+
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class, 'citizen_id');
+    }
 }

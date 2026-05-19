@@ -15,6 +15,29 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    @auth
+                        @if(Auth::user()->role === 'citizen')
+                            <x-nav-link :href="route('citizen.appointments.calendar')"
+                                        :active="request()->routeIs('citizen.appointments.*')">
+                                {{ __('Book Appointment') }}
+                            </x-nav-link>
+                        @endif
+
+                        @if(Auth::user()->role === 'staff' || Auth::user()->role === 'admin')
+                            <x-nav-link :href="route('staff.calendar')"
+                                        :active="request()->routeIs('staff.calendar')">
+                                {{ __('Appointments Calendar') }}
+                            </x-nav-link>
+                        @endif
+
+                        @if(Auth::user()->role === 'admin')
+                            <x-nav-link :href="route('admin.offdays')"
+                                        :active="request()->routeIs('admin.offdays*')">
+                                {{ __('Off Days') }}
+                            </x-nav-link>
+                        @endif
+                    @endauth
                 </div>
             </div>
 
@@ -70,6 +93,29 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            @auth
+                @if(Auth::user()->role === 'citizen')
+                    <x-responsive-nav-link :href="route('citizen.appointments.calendar')"
+                                           :active="request()->routeIs('citizen.appointments.*')">
+                        {{ __('Book Appointment') }}
+                    </x-responsive-nav-link>
+                @endif
+
+                @if(Auth::user()->role === 'staff' || Auth::user()->role === 'admin')
+                    <x-responsive-nav-link :href="route('staff.calendar')"
+                                           :active="request()->routeIs('staff.calendar')">
+                        {{ __('Appointments Calendar') }}
+                    </x-responsive-nav-link>
+                @endif
+
+                @if(Auth::user()->role === 'admin')
+                    <x-responsive-nav-link :href="route('admin.offdays')"
+                                           :active="request()->routeIs('admin.offdays*')">
+                        {{ __('Off Days') }}
+                    </x-responsive-nav-link>
+                @endif
+            @endauth
         </div>
 
         <!-- Responsive Settings Options -->
