@@ -51,6 +51,7 @@ Route::middleware(['auth', 'role:citizen'])->group(function () {
     Route::patch('/citizen/appointments/{appointment}/cancel', [AppointmentController::class, 'cancel'])->name('citizen.appointments.cancel');
 
     // Applications
+    Route::get('/citizen/track', [CitizenController::class, 'myApplications'])->name('citizen.applications.index');
     Route::get('/citizen/applications/{application}/receipt', [CitizenController::class, 'qrReceipt'])->name('citizen.applications.qr-receipt');
 
     // Vault
