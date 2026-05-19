@@ -165,11 +165,15 @@
             </dl>
         </div>
 
-        {{-- Required Documents Checklist --}}
+        {{-- Required Documents --}}
         <div class="bg-white dark:bg-[#1e293b] rounded-[16px] shadow-sm border border-gray-100 dark:border-gray-800 p-5">
             <h4 class="font-bold text-brand dark:text-white font-outfit mb-1 text-sm">Required Documents</h4>
-            <p class="text-xs text-gray-400 dark:text-gray-500 mb-4">Please confirm you have all required documents before submitting your appointment.</p>
-            <div id="req-checklist" class="space-y-2"></div>
+            <p class="text-xs text-gray-400 dark:text-gray-500 mb-4">For each document, select from your vault, upload a file, or confirm you'll bring it.</p>
+            <div id="docs-loading" class="flex items-center gap-2 text-sm text-gray-400 py-2">
+                <svg class="w-4 h-4 animate-spin shrink-0" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
+                Loading required documents...
+            </div>
+            <div id="doc-cards" class="space-y-3 hidden"></div>
         </div>
 
         {{-- Step 3 Navigation --}}
@@ -189,17 +193,6 @@
 
 </div>{{-- /max-w-xl --}}
 
-{{-- Hidden form for final POST submission --}}
-<form id="wizardForm" method="POST" action="{{ route('citizen.appointments.store') }}" class="hidden">
-    @csrf
-    <input type="hidden" id="form-full-name"   name="full_name">
-    <input type="hidden" id="form-national-id" name="national_id_number">
-    <input type="hidden" id="form-doc-type"    name="document_type">
-    <input type="hidden" id="form-date"         name="date">
-    <input type="hidden" id="form-slot"         name="time_slot">
-    <input type="hidden"                        name="notes" value="">
-</form>
-
 @push('scripts')
 <script>
 // ── Initial data from PHP ─────────────────────────
@@ -212,8 +205,11 @@ const CAL = {
     canPrev:  {{ $canPrev ? 'true' : 'false' }},
     canNext:  {{ $canNext ? 'true' : 'false' }},
 };
-const MONTH_URL = @json(route('citizen.appointments.month-data'));
-const SLOTS_URL = @json(route('citizen.appointments.slots'));
+const MONTH_URL      = @json(route('citizen.appointments.month-data'));
+const SLOTS_URL      = @json(route('citizen.appointments.slots'));
+const CSRF_TOKEN     = @json(csrf_token());
+const STORE_URL      = @json(route('citizen.appointments.store'));
+const VAULT_DOCS_URL = @json(route('citizen.appointments.vault-docs'));
 
 const TIME_LABELS = {
     '09:00':'9:00 AM','10:00':'10:00 AM','11:00':'11:00 AM',
@@ -228,11 +224,22 @@ const DOC_REQS = {
     'Other':             ['Relevant supporting documents as required'],
 };
 
+const VAULT_TYPES = {
+    'Original Passport':       ['Passport'],
+    'National ID Card':        ['National ID'],
+    '2 Passport-Size Photos':  [],
+    'Fee Payment Receipt':     [],
+    'Birth Certificate':       [],
+    'Hospital Birth Record':   [],
+    'Parent National ID Cards':['National ID'],
+};
+
 // ── Wizard state ──────────────────────────────────
 const ws = {
     fullName:'', nationalId:'', docType:'',
     date:null, slot:null,
     cal: Object.assign({}, CAL),
+    docCards: [],
 };
 
 // ── LocalStorage (Step 1 autosave) ────────────────
@@ -452,33 +459,222 @@ function renderReview() {
     document.getElementById('rev-date').textContent = dObj.toLocaleDateString('en-GB', { weekday:'short', year:'numeric', month:'short', day:'numeric' });
     document.getElementById('rev-slot').textContent = TIME_LABELS[ws.slot] || ws.slot;
 
+    loadDocCards();
+}
+
+// ── Step 3: Doc cards ─────────────────────────────
+async function loadDocCards() {
     const reqs = DOC_REQS[ws.docType] || DOC_REQS['Other'];
-    const list = document.getElementById('req-checklist');
-    list.innerHTML = '';
-    reqs.forEach((req, i) => {
-        const lbl = document.createElement('label');
-        lbl.className = 'flex items-center gap-3 p-3.5 rounded-xl cursor-pointer bg-gray-50 dark:bg-[#0f172a] hover:bg-gray-100 dark:hover:bg-gray-800/60 transition group';
-        lbl.innerHTML = `<input type="checkbox" id="rc-${i}" class="req-cb w-4 h-4 rounded accent-brand shrink-0" onchange="checkSubmit()"><span class="text-sm text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 transition leading-snug">${req}</span>`;
-        list.appendChild(lbl);
+    ws.docCards = reqs.map((name, i) => ({
+        index: i, name, source: null, vaultDocId: null, file: null, fulfilled: false,
+    }));
+
+    document.getElementById('docs-loading').classList.remove('hidden');
+    document.getElementById('doc-cards').classList.add('hidden');
+    document.getElementById('submitBtn').disabled = true;
+
+    let vaultDocs = [];
+    try {
+        const r = await fetch(VAULT_DOCS_URL, { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+        const data = await r.json();
+        vaultDocs = data.docs || [];
+    } catch(e) {}
+
+    document.getElementById('docs-loading').classList.add('hidden');
+    document.getElementById('doc-cards').classList.remove('hidden');
+    const container = document.getElementById('doc-cards');
+    container.innerHTML = '';
+
+    reqs.forEach((name, i) => {
+        const matching = vaultDocs.filter(v => (VAULT_TYPES[name] || []).includes(v.type));
+        container.appendChild(buildDocCard(i, name, matching));
     });
     checkSubmit();
 }
 
-function checkSubmit() {
-    const all = [...document.querySelectorAll('.req-cb')];
-    document.getElementById('submitBtn').disabled = !all.length || !all.every(cb => cb.checked);
+function buildDocCard(i, name, matchingVaultDocs) {
+    const card = document.createElement('div');
+    card.id = `doc-card-${i}`;
+    card.className = 'border border-gray-100 dark:border-gray-800 rounded-xl overflow-hidden transition-all';
+
+    const vaultSection = matchingVaultDocs.length > 0 ? `
+        <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-800 bg-indigo-50/40 dark:bg-indigo-900/10">
+            <p class="text-[10px] font-bold text-indigo-500 dark:text-indigo-400 uppercase tracking-wider mb-2">Use from Vault</p>
+            <div class="space-y-1.5">
+                ${matchingVaultDocs.map(v => `
+                    <button type="button" id="vault-btn-${i}-${v.id}"
+                        onclick="selectVault(${i}, ${v.id}, '${(v.name || v.type).replace(/'/g,"\\'")}' )"
+                        class="w-full flex items-center justify-between px-3 py-2.5 rounded-lg border border-indigo-200 dark:border-indigo-800 hover:border-brand hover:bg-brand/5 transition text-left group">
+                        <div class="min-w-0">
+                            <p class="text-xs font-semibold text-gray-800 dark:text-gray-200 group-hover:text-brand truncate">${v.name}</p>
+                            <p class="text-[10px] text-gray-400">Expires in ${v.expires_in} days</p>
+                        </div>
+                        <span class="text-xs font-bold text-brand ml-2 shrink-0">Use →</span>
+                    </button>`).join('')}
+            </div>
+        </div>` : '';
+
+    const uploadSection = `
+        <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-800">
+            <p class="text-[10px] font-bold text-blue-500 dark:text-blue-400 uppercase tracking-wider mb-2">Upload file</p>
+            <label id="upload-zone-${i}" class="flex flex-col items-center gap-1.5 py-4 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl cursor-pointer hover:border-brand hover:bg-brand/5 transition">
+                <input type="file" class="hidden" accept=".jpg,.jpeg,.png,.pdf" onchange="handleUpload(event,${i})">
+                <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                <p class="text-xs font-semibold text-gray-500">Upload or take photo</p>
+                <p class="text-[10px] text-gray-400">JPG, PNG, PDF · max 5 MB</p>
+            </label>
+            <div id="upload-preview-${i}" class="hidden mt-2 flex items-center gap-2 p-2.5 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg">
+                <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <div class="flex-1 min-w-0">
+                    <p id="upload-name-${i}" class="text-xs font-semibold text-emerald-700 dark:text-emerald-400 truncate"></p>
+                    <p id="upload-size-${i}" class="text-[10px] text-gray-400"></p>
+                </div>
+                <button type="button" onclick="removeUpload(${i})" class="text-xs text-red-400 hover:text-red-600 shrink-0 ml-1">✕</button>
+            </div>
+        </div>`;
+
+    const confirmSection = `
+        <div class="px-4 py-3">
+            <p class="text-[10px] font-bold text-amber-500 dark:text-amber-400 uppercase tracking-wider mb-2">Or confirm</p>
+            <label class="flex items-start gap-3 p-3 bg-amber-50 dark:bg-amber-900/10 rounded-xl cursor-pointer hover:bg-amber-100 dark:hover:bg-amber-900/20 transition">
+                <input type="checkbox" id="confirm-cb-${i}" class="mt-0.5 w-4 h-4 rounded accent-amber-500 shrink-0" onchange="handleConfirm(event,${i})">
+                <span class="text-xs text-gray-700 dark:text-gray-300 leading-relaxed">I confirm I have this document and will bring it to my appointment</span>
+            </label>
+        </div>`;
+
+    card.innerHTML = `
+        <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-[#0f172a] border-b border-gray-100 dark:border-gray-800">
+            <span class="text-sm font-semibold text-gray-800 dark:text-gray-100">${name}</span>
+            <span id="card-badge-${i}" class="hidden text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                Fulfilled
+            </span>
+        </div>
+        ${vaultSection}${uploadSection}${confirmSection}`;
+
+    return card;
 }
 
-function submitWizard() {
-    document.getElementById('form-full-name').value   = ws.fullName;
-    document.getElementById('form-national-id').value = ws.nationalId;
-    document.getElementById('form-doc-type').value    = ws.docType;
-    document.getElementById('form-date').value         = ws.date;
-    document.getElementById('form-slot').value         = ws.slot;
-    localStorage.removeItem('hz_wiz_name');
-    localStorage.removeItem('hz_wiz_nid');
-    localStorage.removeItem('hz_wiz_doctype');
-    document.getElementById('wizardForm').submit();
+function selectVault(ci, vaultDocId, label) {
+    const card = ws.docCards[ci];
+    const already = card.source === 'vault' && card.vaultDocId === vaultDocId;
+    card.source     = already ? null : 'vault';
+    card.vaultDocId = already ? null : vaultDocId;
+    card.file       = null;
+    card.fulfilled  = !already;
+    if (!already) {
+        // Uncheck confirm
+        const cb = document.getElementById(`confirm-cb-${ci}`);
+        if (cb) cb.checked = false;
+    }
+    updateCardUI(ci);
+    checkSubmit();
+}
+
+function handleUpload(event, ci) {
+    const file = event.target.files[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+        alert('File must be under 5 MB.');
+        event.target.value = '';
+        return;
+    }
+    const card   = ws.docCards[ci];
+    card.source  = 'upload';
+    card.file    = file;
+    card.vaultDocId = null;
+    card.fulfilled  = true;
+    document.getElementById(`upload-zone-${ci}`).classList.add('hidden');
+    document.getElementById(`upload-preview-${ci}`).classList.remove('hidden');
+    document.getElementById(`upload-name-${ci}`).textContent = file.name;
+    document.getElementById(`upload-size-${ci}`).textContent = fmtBytes(file.size);
+    const cb = document.getElementById(`confirm-cb-${ci}`);
+    if (cb) cb.checked = false;
+    updateCardUI(ci);
+    checkSubmit();
+}
+
+function removeUpload(ci) {
+    const card  = ws.docCards[ci];
+    card.source = null; card.file = null; card.fulfilled = false;
+    document.getElementById(`upload-zone-${ci}`).classList.remove('hidden');
+    document.getElementById(`upload-preview-${ci}`).classList.add('hidden');
+    updateCardUI(ci); checkSubmit();
+}
+
+function handleConfirm(event, ci) {
+    const card  = ws.docCards[ci];
+    card.source = event.target.checked ? 'confirmed' : null;
+    card.file   = null; card.vaultDocId = null;
+    card.fulfilled = event.target.checked;
+    updateCardUI(ci); checkSubmit();
+}
+
+function updateCardUI(ci) {
+    const card  = ws.docCards[ci];
+    const badge = document.getElementById(`card-badge-${ci}`);
+    const el    = document.getElementById(`doc-card-${ci}`);
+    if (card.fulfilled) {
+        badge.classList.remove('hidden');
+        el.className = 'border border-emerald-200 dark:border-emerald-800 rounded-xl overflow-hidden transition-all bg-emerald-50/20 dark:bg-emerald-900/5';
+    } else {
+        badge.classList.add('hidden');
+        el.className = 'border border-gray-100 dark:border-gray-800 rounded-xl overflow-hidden transition-all';
+    }
+}
+
+function checkSubmit() {
+    const all = ws.docCards.length > 0 && ws.docCards.every(c => c.fulfilled);
+    document.getElementById('submitBtn').disabled = !all;
+}
+
+function fmtBytes(b) {
+    if (b < 1024) return b + ' B';
+    if (b < 1048576) return (b/1024).toFixed(1) + ' KB';
+    return (b/1048576).toFixed(1) + ' MB';
+}
+
+async function submitWizard() {
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    const orig = btn.innerHTML;
+    btn.innerHTML = '<svg class="w-4 h-4 animate-spin inline mr-1.5" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>Submitting...';
+
+    const fd = new FormData();
+    fd.append('_token', CSRF_TOKEN);
+    fd.append('full_name',          ws.fullName);
+    fd.append('national_id_number', ws.nationalId);
+    fd.append('document_type',      ws.docType);
+    fd.append('date',               ws.date);
+    fd.append('time_slot',          ws.slot);
+
+    ws.docCards.forEach((c, i) => {
+        fd.append(`docs[${i}][name]`,   c.name);
+        fd.append(`docs[${i}][source]`, c.source);
+        if (c.source === 'vault' && c.vaultDocId) fd.append(`docs[${i}][vault_id]`, c.vaultDocId);
+        if (c.source === 'upload' && c.file)      fd.append(`doc_files[${i}]`, c.file, c.file.name);
+    });
+
+    try {
+        const r = await fetch(STORE_URL, {
+            method: 'POST',
+            headers: { 'X-Requested-With': 'XMLHttpRequest' },
+            body: fd,
+        });
+        const data = await r.json().catch(() => ({}));
+        if (r.ok && data.success) {
+            localStorage.removeItem('hz_wiz_name');
+            localStorage.removeItem('hz_wiz_nid');
+            localStorage.removeItem('hz_wiz_doctype');
+            window.location.href = data.redirect;
+        } else {
+            btn.disabled = false; btn.innerHTML = orig;
+            if (window.showToast) showToast('error', 'Error', data.message || 'Failed to book. Please try again.');
+        }
+    } catch(e) {
+        btn.disabled = false; btn.innerHTML = orig;
+        if (window.showToast) showToast('error', 'Error', 'Network error. Please try again.');
+    }
 }
 
 // ── Init ──────────────────────────────────────────

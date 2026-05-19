@@ -6,6 +6,8 @@ use App\Http\Controllers\StaffController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\VaultController;
+use App\Http\Controllers\ChatbotController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -30,6 +32,7 @@ Route::middleware(['auth', 'role:citizen'])->group(function () {
     Route::get('/citizen/appointments', [AppointmentController::class, 'calendar'])->name('citizen.appointments.calendar');
     Route::get('/citizen/appointments/month-data', [AppointmentController::class, 'monthData'])->name('citizen.appointments.month-data');
     Route::get('/citizen/appointments/slots', [AppointmentController::class, 'slots'])->name('citizen.appointments.slots');
+    Route::get('/citizen/appointments/vault-docs', [AppointmentController::class, 'vaultDocs'])->name('citizen.appointments.vault-docs');
     Route::post('/citizen/appointments', [AppointmentController::class, 'store'])->name('citizen.appointments.store');
     Route::patch('/citizen/appointments/{appointment}/cancel', [AppointmentController::class, 'cancel'])->name('citizen.appointments.cancel');
 
@@ -47,6 +50,7 @@ Route::middleware(['auth', 'role:staff,admin'])->group(function () {
     Route::get('/staff/calendar', [StaffController::class, 'calendar'])->name('staff.calendar');
     Route::get('/staff/appointments/day', [StaffController::class, 'dayAppointments'])->name('staff.appointments.day');
     Route::patch('/staff/appointments/{appointment}/status', [StaffController::class, 'updateStatus'])->name('staff.appointments.status');
+    Route::get('/staff/documents/{document}/file', [StaffController::class, 'viewDocument'])->name('staff.documents.view');
 });
 
 // Admin routes
@@ -62,6 +66,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Chatbot endpoints
+    Route::post('/chatbot/chat', [ChatbotController::class, 'chat'])->name('chatbot.chat');
+    Route::post('/chat', [ChatbotController::class, 'chat'])->name('chatbot.chat.legacy');
+
+    // Notifications endpoints
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::patch('/notifications/{id}/read', [NotificationController::class, 'markRead'])->name('notifications.read');
+    Route::post('/notifications/read-all', [NotificationController::class, 'markAllRead'])->name('notifications.readAll');
 });
 
 require __DIR__.'/auth.php';

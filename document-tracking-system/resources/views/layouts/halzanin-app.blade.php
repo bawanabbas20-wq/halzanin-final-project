@@ -403,6 +403,10 @@
                     langKu.classList.remove('bg-brand', 'text-white', 'dark:bg-[#f1f5f9]', 'dark:text-brand');
                     langKu.classList.add('text-brand', 'dark:text-[#f1f5f9]', 'bg-transparent');
                 }
+
+                if (typeof window.updateChatQuickPrompts === 'function') {
+                    window.updateChatQuickPrompts(lang);
+                }
             }
 
             updateLangUI(localStorage.lang || 'en');
@@ -534,19 +538,31 @@
                 </div>
 
                 {{-- Input Area --}}
-                <div style="padding:12px;border-top:1px solid rgba(0,0,0,0.07);background:inherit;flex-shrink:0;display:flex;gap:8px;align-items:flex-end;">
-                    <textarea id="chatbot-input"
-                              placeholder="Ask me anything..."
-                              rows="1"
-                              onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChatMessage();}"
-                              oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,88)+'px';"
-                              style="flex:1;resize:none;border:1.5px solid #e2e8f0;border-radius:10px;padding:10px 12px;font-size:13px;font-family:Outfit,sans-serif;outline:none;background:#f8fafc;color:#1e293b;max-height:88px;line-height:1.4;transition:border-color 0.2s;"
-                              onfocus="this.style.borderColor='#4338ca'" onblur="this.style.borderColor='#e2e8f0'"></textarea>
-                    <button onclick="sendChatMessage()" id="chatbot-send"
-                            style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#4338ca,#3730a3);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform 0.15s,opacity 0.15s;"
-                            onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
-                    </button>
+                <div style="padding:12px;border-top:1px solid rgba(0,0,0,0.07);background:inherit;flex-shrink:0;">
+                    @php($chatQuickQuestions = config('chatbot.quick_questions', []))
+                    <div id="chatbot-quick-questions" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
+                        @foreach($chatQuickQuestions as $question)
+                            <button type="button"
+                                    class="chat-quick-btn"
+                                    data-en="{{ $question['en'] ?? '' }}"
+                                    data-ku="{{ $question['ku'] ?? '' }}"
+                                    onclick="sendQuickQuestion(this)"></button>
+                        @endforeach
+                    </div>
+                    <div style="display:flex;gap:8px;align-items:flex-end;">
+                        <textarea id="chatbot-input"
+                                  placeholder="Ask me anything..."
+                                  rows="1"
+                                  onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChatMessage();}"
+                                  oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,88)+'px';"
+                                  style="flex:1;resize:none;border:1.5px solid #e2e8f0;border-radius:10px;padding:10px 12px;font-size:13px;font-family:Outfit,sans-serif;outline:none;background:#f8fafc;color:#1e293b;max-height:88px;line-height:1.4;transition:border-color 0.2s;"
+                                  onfocus="this.style.borderColor='#4338ca'" onblur="this.style.borderColor='#e2e8f0'"></textarea>
+                        <button onclick="sendChatMessage()" id="chatbot-send"
+                                style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#4338ca,#3730a3);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform 0.15s,opacity 0.15s;"
+                                onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -600,9 +616,36 @@
                 word-wrap: break-word;
                 font-family: Outfit, sans-serif;
             }
+            .chat-quick-btn {
+                border: 1px solid #cbd5e1;
+                background: #f8fafc;
+                color: #334155;
+                border-radius: 9999px;
+                padding: 6px 10px;
+                font-size: 11px;
+                font-weight: 600;
+                line-height: 1.2;
+                cursor: pointer;
+                transition: all 0.15s ease;
+            }
+            .chat-quick-btn:hover {
+                border-color: #818cf8;
+                color: #312e81;
+                background: #eef2ff;
+            }
             html.dark .chat-msg-ai { background:#334155; color:#f1f5f9; }
             html.dark #chatbot-window { background:#1e293b !important; }
             html.dark #chatbot-input  { background:#0f172a !important; border-color:#334155 !important; color:#f1f5f9 !important; }
+            html.dark .chat-quick-btn {
+                background: #0f172a;
+                border-color: #334155;
+                color: #cbd5e1;
+            }
+            html.dark .chat-quick-btn:hover {
+                background: #1e293b;
+                border-color: #6366f1;
+                color: #eef2ff;
+            }
 
             .typing-dot {
                 width: 7px; height: 7px;
@@ -622,6 +665,28 @@
         <script>
             let chatOpened = false;
             const WELCOME = 'سڵاو! 👋 I\'m your Halzanîn Assistant. Ask me anything about your documents or application process!';
+
+            function getCurrentUiLang() {
+                return document.documentElement.lang === 'ku' ? 'ku' : 'en';
+            }
+
+            window.updateChatQuickPrompts = function(lang = getCurrentUiLang()) {
+                const quickButtons = document.querySelectorAll('#chatbot-quick-questions .chat-quick-btn');
+                quickButtons.forEach((btn) => {
+                    btn.textContent = lang === 'ku' ? btn.dataset.ku : btn.dataset.en;
+                });
+            };
+
+            function sendQuickQuestion(button) {
+                const lang = getCurrentUiLang();
+                const question = lang === 'ku' ? button.dataset.ku : button.dataset.en;
+                if (!question) return;
+
+                const input = document.getElementById('chatbot-input');
+                input.value = question;
+                input.dispatchEvent(new Event('input'));
+                sendChatMessage();
+            }
 
             function toggleChat() {
                 const win    = document.getElementById('chatbot-window');
@@ -645,6 +710,7 @@
                         appendMsg('ai', WELCOME);
                     }
 
+                    window.updateChatQuickPrompts(getCurrentUiLang());
                     setTimeout(() => document.getElementById('chatbot-input').focus(), 100);
                 } else {
                     win.style.display = 'none';
@@ -726,6 +792,8 @@
                     sendBtn.style.opacity = '1';
                 }
             }
+
+            window.updateChatQuickPrompts(getCurrentUiLang());
         </script>
 
         @stack('scripts')

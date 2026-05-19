@@ -144,7 +144,7 @@
     </div>
 
     <script>
-    const dayUrl  = "{{ route('staff.appointments.day') }}";
+    const dayUrl    = "{{ route('staff.appointments.day') }}";
     const statusUrl = "{{ url('/staff/appointments') }}";
 
     const statusLabels = {
@@ -191,7 +191,7 @@
     }
 
     function renderAppointments(appointments) {
-        const list = document.getElementById('panel-list');
+        const list    = document.getElementById('panel-list');
         const countEl = document.getElementById('panel-count');
         countEl.textContent = appointments.length + ' appointment' + (appointments.length !== 1 ? 's' : '');
 
@@ -206,11 +206,30 @@
             const card = document.createElement('div');
             card.className = 'border border-gray-100 rounded-lg p-3';
             card.id = 'appt-' + appt.id;
+
+            const docBadges = appt.documents && appt.documents.length > 0
+                ? `<div class="mt-2 pt-2 border-t border-gray-100">
+                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Documents</p>
+                    <div class="flex flex-wrap gap-1.5">
+                        ${appt.documents.map(d => {
+                            if (d.source === 'vault') {
+                                return `<span class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 font-medium">📦 ${d.name} · Vault</span>`;
+                            } else if (d.source === 'upload') {
+                                const viewUrl = '/staff/documents/' + d.id + '/file';
+                                return `<a href="${viewUrl}" target="_blank" class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 font-medium hover:bg-blue-200">📤 ${d.name} · View ↗</a>`;
+                            } else {
+                                return `<span class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 font-medium">📋 ${d.name} · Bringing</span>`;
+                            }
+                        }).join('')}
+                    </div>
+                   </div>` : '';
+
             card.innerHTML = `
                 <div class="flex items-start justify-between mb-2">
                     <div>
                         <p class="text-sm font-semibold text-gray-800">${timeLabels[appt.time_slot] || appt.time_slot}</p>
-                        <p class="text-sm text-gray-600">${appt.citizen}</p>
+                        <p class="text-sm text-gray-600">${appt.full_name || appt.citizen}</p>
+                        ${appt.document_type ? `<p class="text-xs text-indigo-600 font-medium mt-0.5">${appt.document_type}</p>` : ''}
                         ${appt.notes ? `<p class="text-xs text-gray-400 mt-0.5">${appt.notes}</p>` : ''}
                     </div>
                     <span id="badge-${appt.id}" class="text-xs px-2 py-0.5 rounded-full ${s.cls}">${s.label}</span>
@@ -218,6 +237,7 @@
                 <div class="flex gap-1 flex-wrap">
                     ${buildStatusButtons(appt.id, appt.status)}
                 </div>
+                ${docBadges}
             `;
             list.appendChild(card);
         });
