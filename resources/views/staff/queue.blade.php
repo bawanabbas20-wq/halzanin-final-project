@@ -6,7 +6,7 @@
         <!-- Header & Count -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-fade-in">
             <div class="flex items-center space-x-3 rtl:space-x-reverse">
-                <h2 class="text-2xl font-bold text-brand dark:text-white font-outfit">Application Queue</h2>
+                <h2 class="text-2xl font-bold text-brand dark:text-white font-outfit" data-i18n="Application Queue">Application Queue</h2>
                 <span class="px-3 py-1 bg-brand/10 dark:bg-indigo-900/30 text-brand dark:text-indigo-400 text-sm font-bold rounded-full">
                     {{ $applications->total() }}
                 </span>
@@ -26,18 +26,18 @@
                 <div class="absolute inset-y-0 ltr:left-0 rtl:right-0 pl-3 rtl:pr-3 flex items-center pointer-events-none">
                     <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                 </div>
-                <input type="text" id="searchInput" placeholder="Search by name or tracking code..." 
+                <input type="text" id="searchInput" placeholder="Search by name or tracking code..." data-i18n-placeholder="Search by name or tracking code..."
                        class="block w-full h-[42px] ltr:pl-10 rtl:pr-10 rtl:pl-3 ltr:pr-3 rounded-[8px] border-gray-200 dark:border-gray-700 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 text-sm transition-colors">
             </div>
 
             <!-- Filter Chips -->
             <div class="flex flex-wrap gap-2 items-center" id="filterChips">
-                <button data-filter="all" class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-brand text-white border border-brand">All</button>
-                <button data-filter="submitted" class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-slate-700">Submitted</button>
-                <button data-filter="received" class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-slate-700">Received</button>
-                <button data-filter="under_review" class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-slate-700">Under Review</button>
-                <button data-filter="approved" class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-slate-700">Approved</button>
-                <button data-filter="rejected" class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-slate-700">Rejected</button>
+                <button data-filter="all" class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-brand text-white border border-brand" data-i18n="All">All</button>
+                <button data-filter="submitted" class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-slate-700" data-i18n="Submitted">Submitted</button>
+                <button data-filter="received" class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-slate-700" data-i18n="Received">Received</button>
+                <button data-filter="under_review" class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-slate-700" data-i18n="Under Review">Under Review</button>
+                <button data-filter="approved" class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-slate-700" data-i18n="Approved">Approved</button>
+                <button data-filter="rejected" class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-slate-700" data-i18n="Rejected">Rejected</button>
             </div>
         </div>
 
@@ -74,7 +74,7 @@
                                 <span class="text-xs text-gray-400 dark:text-gray-500">
                                     {{ $app->submitted_at ? $app->submitted_at->format('M d, Y') : '—' }}
                                 </span>
-                                <a href="{{ route('staff.applications.show', $app->id) }}" class="px-4 py-1.5 text-xs font-semibold rounded-[8px] border border-brand text-brand dark:border-indigo-400 dark:text-indigo-400 hover:bg-brand/5 transition-colors">
+                                <a href="{{ route('staff.applications.show', $app->id) }}" class="px-4 py-1.5 text-xs font-semibold rounded-[8px] border border-brand text-brand dark:border-indigo-400 dark:text-indigo-400 hover:bg-brand/5 transition-colors" data-i18n="View">
                                     View
                                 </a>
                             </div>
@@ -98,13 +98,13 @@
                         <thead class="sticky top-0 bg-gray-50 dark:bg-slate-800 z-10 shadow-sm">
                             <tr>
                                 <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">#</th>
-                                <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Applicant Name</th>
-                                <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Tracking Code</th>
-                                <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Document Type</th>
-                                <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Preferred Date</th>
-                                <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
-                                <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Submitted</th>
-                                <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider text-right">Actions</th>
+                                <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider" data-i18n="Applicant Name">Applicant Name</th>
+                                <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider" data-i18n="Tracking Code">Tracking Code</th>
+                                <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider" data-i18n="Document Type">Document Type</th>
+                                <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider" data-i18n="Preferred Date">Preferred Date</th>
+                                <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider" data-i18n="Status">Status</th>
+                                <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider" data-i18n="Submitted">Submitted</th>
+                                <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider text-right" data-i18n="Actions">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
@@ -126,7 +126,7 @@
                                     <td class="px-6 py-4 text-sm font-bold text-gray-900 dark:text-white">{{ $appName }}</td>
                                     <td class="px-6 py-4 text-sm font-mono font-bold text-brand dark:text-indigo-400">{{ $app->tracking_code }}</td>
                                     <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-300">{{ $app->appointment->document_type ?? '—' }}</td>
-                                    <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-300">{{ $app->appointment ? \Carbon\Carbon::parse($app->appointment->preferred_date)->format('M d, Y') : '—' }}</td>
+                                    <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-300">{{ $app->appointment ? \Carbon\Carbon::parse($app->appointment->date)->format('M d, Y') : '—' }}</td>
                                     <td class="px-6 py-4">
                                         <span class="px-2.5 py-1 inline-flex text-[11px] font-bold rounded-full capitalize {{ $badge }}">
                                             {{ str_replace('_', ' ', $app->current_status) }}
@@ -134,7 +134,7 @@
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $app->submitted_at ? $app->submitted_at->format('M d, Y') : '—' }}</td>
                                     <td class="px-6 py-4 text-right">
-                                        <a href="{{ route('staff.applications.show', $app->id) }}" class="inline-flex px-3 py-1.5 text-xs font-semibold rounded-[8px] bg-brand text-white hover:bg-brand-light transition-colors shadow-sm">
+                                        <a href="{{ route('staff.applications.show', $app->id) }}" class="inline-flex px-3 py-1.5 text-xs font-semibold rounded-[8px] bg-brand text-white hover:bg-brand-light transition-colors shadow-sm" data-i18n="View">
                                             View
                                         </a>
                                     </td>

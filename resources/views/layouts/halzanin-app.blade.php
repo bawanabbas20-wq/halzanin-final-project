@@ -59,19 +59,19 @@
                     @if(auth()->user()->role === 'admin')
                         <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
                             <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                            Dashboard
+                            <span data-i18n="Dashboard">Dashboard</span>
                         </a>
                         <a href="#" class="text-white/70 hover:bg-white/5 hover:text-white flex items-center px-4 py-3 rounded-xl transition-all">
                             <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                            All Applications
+                            <span data-i18n="All Applications">All Applications</span>
                         </a>
                         <a href="#" class="text-white/70 hover:bg-white/5 hover:text-white flex items-center px-4 py-3 rounded-xl transition-all">
                             <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                            User Management
+                            <span data-i18n="User Management">User Management</span>
                         </a>
                         <a href="{{ route('profile.edit') }}" class="{{ request()->routeIs('profile.edit') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
                             <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                            Profile
+                            <span data-i18n="Profile">Profile</span>
                         </a>
                     @elseif(auth()->user()->role === 'staff')
                         <a href="{{ route('staff.dashboard') }}" class="{{ request()->routeIs('staff.dashboard') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
@@ -80,7 +80,7 @@
                         </a>
                         <a href="#" class="text-white/70 hover:bg-white/5 hover:text-white flex items-center px-4 py-3 rounded-xl transition-all">
                             <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                            Application Queue
+                            <span data-i18n="Application Queue">Application Queue</span>
                         </a>
                         <a href="{{ route('profile.edit') }}" class="{{ request()->routeIs('profile.edit') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
                             <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
@@ -89,23 +89,23 @@
                     @else
                         <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('*dashboard*') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
                             <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                            Home
+                            <span data-i18n="Home">Home</span>
                         </a>
                         <a href="{{ route('citizen.appointments.calendar') }}" class="{{ request()->routeIs('*appointment*') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
                             <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                            Book Appointment
+                            <span data-i18n="Book Appointment">Book Appointment</span>
                         </a>
                         <a href="{{ route('citizen.vault.index') }}" class="{{ request()->routeIs('*vault*') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
                             <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                            Document Vault
+                            <span data-i18n="Document Vault">Document Vault</span>
                         </a>
                         <a href="#" class="text-white/70 hover:bg-white/5 hover:text-white flex items-center px-4 py-3 rounded-xl transition-all">
                             <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                            Track
+                            <span data-i18n="Track">Track</span>
                         </a>
                         <a href="{{ route('profile.edit') }}" class="{{ request()->routeIs('profile.edit') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
                             <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                            Profile
+                            <span data-i18n="Profile">Profile</span>
                         </a>
                     @endif
                 </nav>
@@ -126,7 +126,7 @@
                                 x-on:click="$dispatch('open-modal', 'confirm-logout')"
                                 class="mt-2 w-full text-left flex items-center px-4 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-white/5 rounded-xl transition-all">
                             <svg class="w-4 h-4 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-                            Log Out
+                            <span data-i18n="Log Out">Log Out</span>
                         </button>
                         <form id="sidebar-logout-form" method="POST" action="{{ route('logout') }}" class="hidden">@csrf</form>
                     </div>
@@ -205,12 +205,12 @@
 
                             {{-- Dropdown header --}}
                             <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800/50">
-                                <span class="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider">Notifications</span>
+                                <span class="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider" data-i18n="Notifications">Notifications</span>
                                 <button type="button"
                                         x-on:click="markAllRead()"
                                         x-show="count > 0"
                                         class="text-xs font-semibold text-brand dark:text-indigo-400 hover:underline">
-                                    Mark all read
+                                    <span data-i18n="Mark all read">Mark all read</span>
                                 </button>
                             </div>
 
@@ -221,7 +221,7 @@
                                         <svg class="w-8 h-8 text-gray-300 dark:text-gray-600 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
                                         </svg>
-                                        <p class="text-xs text-gray-400 dark:text-gray-500">No notifications yet</p>
+                                        <p class="text-xs text-gray-400 dark:text-gray-500" data-i18n="No notifications yet">No notifications yet</p>
                                     </div>
                                 </template>
                                 <template x-for="n in items" :key="n.id">
@@ -308,53 +308,53 @@
                 @if(auth()->user()->role === 'admin')
                     <a href="{{ route('admin.dashboard') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('admin.dashboard') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                        <span class="text-[10px] font-semibold">Dash</span>
+                        <span class="text-[10px] font-semibold" data-i18n="Dash">Dash</span>
                     </a>
                     <a href="#" class="flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-brand dark:hover:text-indigo-400">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                        <span class="text-[10px] font-semibold">Apps</span>
+                        <span class="text-[10px] font-semibold" data-i18n="Apps">Apps</span>
                     </a>
                     <a href="#" class="flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-brand dark:hover:text-indigo-400">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                        <span class="text-[10px] font-semibold">Users</span>
+                        <span class="text-[10px] font-semibold" data-i18n="Users">Users</span>
                     </a>
                     <a href="{{ route('profile.edit') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('profile.edit') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                        <span class="text-[10px] font-semibold">Profile</span>
+                        <span class="text-[10px] font-semibold" data-i18n="Profile">Profile</span>
                     </a>
                 @elseif(auth()->user()->role === 'staff')
                     <a href="{{ route('staff.dashboard') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('staff.dashboard') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                        <span class="text-[10px] font-semibold">Dash</span>
+                        <span class="text-[10px] font-semibold" data-i18n="Dash">Dash</span>
                     </a>
                     <a href="#" class="flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-brand">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                        <span class="text-[10px] font-semibold">Queue</span>
+                        <span class="text-[10px] font-semibold" data-i18n="Queue">Queue</span>
                     </a>
                     <a href="{{ route('profile.edit') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('profile.edit') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                        <span class="text-[10px] font-semibold">Profile</span>
+                        <span class="text-[10px] font-semibold" data-i18n="Profile">Profile</span>
                     </a>
                 @else
                     <a href="{{ route('dashboard') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('*dashboard*') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                        <span class="text-[10px] font-semibold">Home</span>
+                        <span class="text-[10px] font-semibold" data-i18n="Home">Home</span>
                     </a>
                     <a href="{{ route('citizen.appointments.calendar') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('*appointment*') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                        <span class="text-[10px] font-semibold">Book</span>
+                        <span class="text-[10px] font-semibold" data-i18n="Book">Book</span>
                     </a>
                     <a href="{{ route('citizen.vault.index') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('*vault*') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                        <span class="text-[10px] font-semibold">Vault</span>
+                        <span class="text-[10px] font-semibold" data-i18n="Vault">Vault</span>
                     </a>
                     <a href="#" class="flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-brand dark:hover:text-indigo-400">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                        <span class="text-[10px] font-semibold">Track</span>
+                        <span class="text-[10px] font-semibold" data-i18n="Track">Track</span>
                     </a>
                     <a href="{{ route('profile.edit') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('profile.edit') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                        <span class="text-[10px] font-semibold">Profile</span>
+                        <span class="text-[10px] font-semibold" data-i18n="Profile">Profile</span>
                     </a>
                 @endif
             </div>
@@ -421,6 +421,7 @@
                     document.documentElement.classList.add('font-arabic');
                     localStorage.setItem('lang', 'ku');
                     updateLangUI('ku');
+                    if (typeof applyTranslations === 'function') applyTranslations('ku');
                 } else {
                     // Switch to English
                     document.documentElement.dir = 'ltr';
@@ -429,6 +430,7 @@
                     document.documentElement.classList.remove('font-arabic');
                     localStorage.setItem('lang', 'en');
                     updateLangUI('en');
+                    if (typeof applyTranslations === 'function') applyTranslations('en');
                 }
             });
 
@@ -465,18 +467,18 @@
                         <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
                     </div>
                     <div>
-                        <h2 class="text-base font-bold text-gray-900 dark:text-white font-outfit">Log Out</h2>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Are you sure you want to end your session?</p>
+                        <h2 class="text-base font-bold text-gray-900 dark:text-white font-outfit" data-i18n="Log Out">Log Out</h2>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5" data-i18n="Are you sure you want to end your session?">Are you sure you want to end your session?</p>
                     </div>
                 </div>
                 <div class="flex justify-end gap-3">
                     <button type="button" x-on:click="$dispatch('close')"
                             class="px-5 py-2.5 text-sm font-semibold text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-[10px] transition-colors">
-                        Cancel
+                        <span data-i18n="Cancel">Cancel</span>
                     </button>
                     <button type="button" onclick="document.getElementById('sidebar-logout-form').submit()"
                             class="px-5 py-2.5 text-sm font-semibold text-white bg-red-600 hover:bg-red-700 rounded-[10px] transition-all shadow-sm">
-                        Log Out
+                        <span data-i18n="Log Out">Log Out</span>
                     </button>
                 </div>
             </div>
@@ -796,6 +798,7 @@
             window.updateChatQuickPrompts(getCurrentUiLang());
         </script>
 
+        <script src="/js/translations.js"></script>
         @stack('scripts')
     </body>
 </html>

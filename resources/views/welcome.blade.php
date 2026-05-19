@@ -388,25 +388,25 @@
                 <span class="brand-mark">H</span>
                 <span class="brand-text">
                     <strong>Halzanin</strong>
-                    <span>Kurdistan Passport Directorate</span>
+                    <span data-i18n="Kurdistan Passport Directorate">Kurdistan Passport Directorate</span>
                 </span>
             </a>
 
             <nav class="menu">
-                <a href="#services">Services</a>
-                <a href="#process">Process</a>
-                <a href="#updates">Updates</a>
+                <a href="#services" data-i18n="Services">Services</a>
+                <a href="#process" data-i18n="Process">Process</a>
+                <a href="#updates" data-i18n="Updates">Updates</a>
             </nav>
 
             <div class="actions">
                 @auth
-                    <a href="{{ url('/dashboard') }}" class="btn btn-outline">Dashboard</a>
+                    <a href="{{ url('/dashboard') }}" class="btn btn-outline" data-i18n="Dashboard">Dashboard</a>
                 @else
                     @if (Route::has('login'))
-                        <a href="{{ route('login') }}" class="btn btn-outline">Log In</a>
+                        <a href="{{ route('login') }}" class="btn btn-outline" data-i18n="Log In">Log In</a>
                     @endif
                     @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="btn btn-primary">Create Account</a>
+                        <a href="{{ route('register') }}" class="btn btn-primary" data-i18n="Create Account">Create Account</a>
                     @endif
                 @endauth
             </div>
@@ -418,39 +418,39 @@
             <div class="container">
                 <div class="hero">
                     <div class="hero-content">
-                        <div class="hero-kicker">Public Service Portal</div>
-                        <h1>Digital Passport Services for the Kurdistan Region</h1>
-                        <p>
+                        <div class="hero-kicker" data-i18n="Public Service Portal">Public Service Portal</div>
+                        <h1 data-i18n="Digital Passport Services for the Kurdistan Region">Digital Passport Services for the Kurdistan Region</h1>
+                        <p data-i18n="Submit applications, upload required documents, and track your request status in one place. Designed to reduce waiting time and make government service access clear, secure, and fast.">
                             Submit applications, upload required documents, and track your request status in one place.
                             Designed to reduce waiting time and make government service access clear, secure, and fast.
                         </p>
                         <div class="hero-cta">
                             @auth
-                                <a class="btn btn-primary" href="{{ url('/dashboard') }}">Go To Dashboard</a>
+                                <a class="btn btn-primary" href="{{ url('/dashboard') }}" data-i18n="Go To Dashboard">Go To Dashboard</a>
                             @else
                                 @if (Route::has('login'))
-                                    <a class="btn btn-primary" href="{{ route('login') }}">Start Application</a>
+                                    <a class="btn btn-primary" href="{{ route('login') }}" data-i18n="Start Application">Start Application</a>
                                 @endif
                                 @if (Route::has('register'))
-                                    <a class="btn btn-outline" href="{{ route('register') }}">Register Account</a>
+                                    <a class="btn btn-outline" href="{{ route('register') }}" data-i18n="Register Account">Register Account</a>
                                 @endif
                             @endauth
                             @if (Route::has('track'))
-                                <a class="btn btn-outline" href="{{ route('track') }}">Track Application</a>
+                                <a class="btn btn-outline" href="{{ route('track') }}" data-i18n="Track Application">Track Application</a>
                             @endif
                         </div>
                         <div class="stats">
                             <div class="stat">
                                 <strong>24/7</strong>
-                                <span>Tracking Access</span>
+                                <span data-i18n="Tracking Access">Tracking Access</span>
                             </div>
                             <div class="stat">
                                 <strong>1 Portal</strong>
-                                <span>For Citizens And Staff</span>
+                                <span data-i18n="For Citizens And Staff">For Citizens And Staff</span>
                             </div>
                             <div class="stat">
-                                <strong>Fast</strong>
-                                <span>Digital Document Review</span>
+                                <strong data-i18n="Fast">Fast</strong>
+                                <span data-i18n="Digital Document Review">Digital Document Review</span>
                             </div>
                         </div>
                     </div>
@@ -461,27 +461,27 @@
         <section class="section" id="services">
             <div class="container">
                 <div class="section-head">
-                    <h2>Main Services</h2>
-                    <p>
+                    <h2 data-i18n="Main Services">Main Services</h2>
+                    <p data-i18n="Halzanin is built around practical citizen workflows. From scheduling appointments to document upload and status tracking, each step is structured for clarity.">
                         Halzanin is built around practical citizen workflows. From scheduling appointments to document upload
                         and status tracking, each step is structured for clarity.
                     </p>
                 </div>
                 <div class="grid">
                     <article class="card">
-                        <span class="tag">Appointments</span>
-                        <h3>Book With Calendar Slots</h3>
-                        <p>Choose available dates and times, submit requests, and manage appointments through your citizen dashboard.</p>
+                        <span class="tag" data-i18n="Appointments">Appointments</span>
+                        <h3 data-i18n="Book With Calendar Slots">Book With Calendar Slots</h3>
+                        <p data-i18n="Choose available dates and times, submit requests, and manage appointments through your citizen dashboard.">Choose available dates and times, submit requests, and manage appointments through your citizen dashboard.</p>
                     </article>
                     <article class="card">
-                        <span class="tag">Tracking</span>
-                        <h3>Follow Progress By Code</h3>
-                        <p>Use your tracking code to check each status update from submission through review and final decision.</p>
+                        <span class="tag" data-i18n="Tracking">Tracking</span>
+                        <h3 data-i18n="Follow Progress By Code">Follow Progress By Code</h3>
+                        <p data-i18n="Use your tracking code to check each status update from submission through review and final decision.">Use your tracking code to check each status update from submission through review and final decision.</p>
                     </article>
                     <article class="card">
-                        <span class="tag">Document Vault</span>
-                        <h3>Secure Upload And Storage</h3>
-                        <p>Store required files in your vault and reuse them in supported application workflows.</p>
+                        <span class="tag" data-i18n="Document Vault">Document Vault</span>
+                        <h3 data-i18n="Secure Upload And Storage">Secure Upload And Storage</h3>
+                        <p data-i18n="Store required files in your vault and reuse them in supported application workflows.">Store required files in your vault and reuse them in supported application workflows.</p>
                     </article>
                 </div>
             </div>
@@ -490,23 +490,23 @@
         <section class="section" id="process">
             <div class="container">
                 <div class="section-head">
-                    <h2>How It Works</h2>
+                    <h2 data-i18n="How It Works">How It Works</h2>
                 </div>
                 <div class="grid">
                     <article class="card">
-                        <span class="tag">Step 1</span>
-                        <h3>Create Your Account</h3>
-                        <p>Register once, then access your dashboard to begin passport-related submissions and updates.</p>
+                        <span class="tag" data-i18n="Step 1">Step 1</span>
+                        <h3 data-i18n="Create Your Account">Create Your Account</h3>
+                        <p data-i18n="Register once, then access your dashboard to begin passport-related submissions and updates.">Register once, then access your dashboard to begin passport-related submissions and updates.</p>
                     </article>
                     <article class="card">
-                        <span class="tag">Step 2</span>
-                        <h3>Submit Application</h3>
-                        <p>Complete appointment details, attach required documents, and confirm your request.</p>
+                        <span class="tag" data-i18n="Step 2">Step 2</span>
+                        <h3 data-i18n="Submit Application">Submit Application</h3>
+                        <p data-i18n="Complete appointment details, attach required documents, and confirm your request.">Complete appointment details, attach required documents, and confirm your request.</p>
                     </article>
                     <article class="card">
-                        <span class="tag">Step 3</span>
-                        <h3>Track And Receive Updates</h3>
-                        <p>Monitor application status changes from staff review through final processing outcomes.</p>
+                        <span class="tag" data-i18n="Step 3">Step 3</span>
+                        <h3 data-i18n="Track And Receive Updates">Track And Receive Updates</h3>
+                        <p data-i18n="Monitor application status changes from staff review through final processing outcomes.">Monitor application status changes from staff review through final processing outcomes.</p>
                     </article>
                 </div>
             </div>
@@ -515,28 +515,28 @@
         <section class="section" id="updates">
             <div class="container">
                 <div class="section-head">
-                    <h2>Latest Updates</h2>
+                    <h2 data-i18n="Latest Updates">Latest Updates</h2>
                 </div>
                 <div class="news-grid">
                     <article class="news">
                         <div class="news-media"></div>
                         <div class="news-body">
-                            <h4>Service Availability</h4>
-                            <p>Citizen portal is available daily for account access, application tracking, and profile updates.</p>
+                            <h4 data-i18n="Service Availability">Service Availability</h4>
+                            <p data-i18n="Citizen portal is available daily for account access, application tracking, and profile updates.">Citizen portal is available daily for account access, application tracking, and profile updates.</p>
                         </div>
                     </article>
                     <article class="news">
                         <div class="news-media"></div>
                         <div class="news-body">
-                            <h4>Staff Review Queue</h4>
-                            <p>Applications are reviewed according to queue status and required documents submitted by citizens.</p>
+                            <h4 data-i18n="Staff Review Queue">Staff Review Queue</h4>
+                            <p data-i18n="Applications are reviewed according to queue status and required documents submitted by citizens.">Applications are reviewed according to queue status and required documents submitted by citizens.</p>
                         </div>
                     </article>
                     <article class="news">
                         <div class="news-media"></div>
                         <div class="news-body">
-                            <h4>Digital Workflow</h4>
-                            <p>Ongoing improvements continue to reduce manual handling and speed up passport-related processing.</p>
+                            <h4 data-i18n="Digital Workflow">Digital Workflow</h4>
+                            <p data-i18n="Ongoing improvements continue to reduce manual handling and speed up passport-related processing.">Ongoing improvements continue to reduce manual handling and speed up passport-related processing.</p>
                         </div>
                     </article>
                 </div>
@@ -546,9 +546,16 @@
 
     <footer>
         <div class="container foot">
-            <div>Halzanin | Kurdistan Passport Directorate</div>
-            <div>Built for transparent and efficient public service delivery</div>
+            <div data-i18n="Halzanin | Kurdistan Passport Directorate">Halzanin | Kurdistan Passport Directorate</div>
+            <div data-i18n="Built for transparent and efficient public service delivery">Built for transparent and efficient public service delivery</div>
         </div>
     </footer>
+    <script src="/js/translations.js"></script>
+    <script>
+        if (localStorage.lang === 'ku') {
+            document.documentElement.dir = 'rtl';
+            document.documentElement.lang = 'ku';
+        }
+    </script>
 </body>
 </html>

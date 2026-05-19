@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\OffDay;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,6 +23,30 @@ class AdminController extends Controller
             ->get();
 
         return view('admin.off-days.index', compact('offDays', 'year'));
+    }
+
+    public function users()
+    {
+        $users = User::latest()->paginate(15);
+
+        return view('admin.users', compact('users'));
+    }
+
+    public function updateUserRole(Request $request, User $user)
+    {
+        if ($user->is(Auth::user())) {
+            return redirect()->route('admin.users')
+                ->with('error', 'You cannot change your own role.');
+        }
+
+        $request->validate([
+            'role' => 'required|in:citizen,staff,admin',
+        ]);
+
+        $user->update(['role' => $request->role]);
+
+        return redirect()->route('admin.users')
+            ->with('success', 'User role updated successfully.');
     }
 
     public function addOffDay(Request $request)

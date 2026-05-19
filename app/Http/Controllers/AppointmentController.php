@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
+use App\Models\Application;
 use App\Models\Document;
 use App\Models\OffDay;
+use App\Models\StatusLog;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class AppointmentController extends Controller
 {
@@ -140,6 +144,10 @@ class AppointmentController extends Controller
         ]);
 
         if (OffDay::isOffDay($request->date)) {
+            if ($request->ajax()) {
+                return response()->json(['message' => 'That date is an off day. Please choose another.'], 422);
+            }
+
             return back()->with('error', 'That date is an off day. Please choose another.');
         }
 
@@ -149,6 +157,10 @@ class AppointmentController extends Controller
             ->exists();
 
         if ($taken) {
+            if ($request->ajax()) {
+                return response()->json(['message' => 'That time slot was just taken. Please choose another.'], 422);
+            }
+
             return back()->with('error', 'That time slot was just taken. Please choose another.');
         }
 
@@ -158,52 +170,75 @@ class AppointmentController extends Controller
             ->exists();
 
         if ($alreadyBooked) {
+            if ($request->ajax()) {
+                return response()->json(['message' => 'You already have an appointment on that day.'], 422);
+            }
+
             return back()->with('error', 'You already have an appointment on that day.');
         }
 
-        $appointment = Appointment::create([
-            'citizen_id'         => Auth::id(),
-            'full_name'          => $request->full_name,
-            'national_id_number' => $request->national_id_number,
-            'document_type'      => $request->document_type,
-            'date'               => $request->date,
-            'time_slot'          => $request->time_slot,
-            'notes'              => $request->notes,
-        ]);
+        [$appointment, $application] = DB::transaction(function () use ($request) {
+            $appointment = Appointment::create([
+                'citizen_id'         => Auth::id(),
+                'full_name'          => $request->full_name,
+                'national_id_number' => $request->national_id_number,
+                'document_type'      => $request->document_type,
+                'date'               => $request->date,
+                'time_slot'          => $request->time_slot,
+                'notes'              => $request->notes,
+            ]);
 
-        $docInputs = $request->input('docs', []);
-        $docFiles  = $request->file('doc_files', []);
-
-        foreach ($docInputs as $i => $docInput) {
-            $rec = [
+            $application = Application::create([
+                'user_id'        => Auth::id(),
                 'appointment_id' => $appointment->id,
-                'document_name'  => $docInput['name'],
-                'source'         => $docInput['source'],
-            ];
+                'tracking_code'  => $this->generateTrackingCode(),
+                'current_status' => 'submitted',
+                'submitted_at'   => now(),
+            ]);
 
-            if ($docInput['source'] === 'vault' && !empty($docInput['vault_id'])) {
-                $rec['vault_document_id'] = (int) $docInput['vault_id'];
-            } elseif ($docInput['source'] === 'upload' && isset($docFiles[$i])) {
-                $file = $docFiles[$i];
-                $path = $file->store('appointment-docs/' . Auth::id() . '/' . $appointment->id, 'local');
-                $rec['file_path']     = $path;
-                $rec['original_name'] = $file->getClientOriginalName();
-                $rec['file_size']     = $file->getSize();
+            StatusLog::create([
+                'application_id' => $application->id,
+                'status'         => 'submitted',
+                'changed_by'     => Auth::id(),
+                'notes'          => 'Application submitted.',
+            ]);
+
+            $docInputs = $request->input('docs', []);
+            $docFiles  = $request->file('doc_files', []);
+
+            foreach ($docInputs as $i => $docInput) {
+                $rec = [
+                    'appointment_id' => $appointment->id,
+                    'document_name'  => $docInput['name'],
+                    'source'         => $docInput['source'],
+                ];
+
+                if ($docInput['source'] === 'vault' && !empty($docInput['vault_id'])) {
+                    $rec['vault_document_id'] = (int) $docInput['vault_id'];
+                } elseif ($docInput['source'] === 'upload' && isset($docFiles[$i])) {
+                    $file = $docFiles[$i];
+                    $path = $file->store('appointment-docs/' . Auth::id() . '/' . $appointment->id, 'local');
+                    $rec['file_path']     = $path;
+                    $rec['original_name'] = $file->getClientOriginalName();
+                    $rec['file_size']     = $file->getSize();
+                }
+
+                Document::create($rec);
             }
 
-            Document::create($rec);
-        }
+            return [$appointment, $application];
+        });
 
         if ($request->ajax()) {
             return response()->json([
                 'success'  => true,
-                'redirect' => route('citizen.appointments.calendar'),
-                'message'  => 'Appointment booked for ' . $request->date . ' at ' . $request->time_slot . '.',
+                'redirect' => route('citizen.applications.receipt', $application),
+                'message'  => 'Appointment booked. Your tracking code is ' . $application->tracking_code . '.',
             ]);
         }
 
-        return redirect()->route('citizen.appointments.calendar')
-            ->with('success', 'Appointment booked for ' . $request->date . ' at ' . $request->time_slot . '.');
+        return redirect()->route('citizen.applications.receipt', $application)
+            ->with('success', 'Appointment booked. Your tracking code is ' . $application->tracking_code . '.');
     }
 
     public function cancel(Appointment $appointment)
@@ -216,5 +251,14 @@ class AppointmentController extends Controller
 
         return redirect()->route('citizen.appointments.calendar')
             ->with('success', 'Appointment cancelled successfully.');
+    }
+
+    private function generateTrackingCode(): string
+    {
+        do {
+            $code = 'TRK-' . now()->format('ymd') . '-' . strtoupper(Str::random(6));
+        } while (Application::where('tracking_code', $code)->exists());
+
+        return $code;
     }
 }

@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight" data-i18n="Off Days Management">
             Off Days Management
         </h2>
     </x-slot>
@@ -24,8 +24,8 @@
 
                 {{-- Add off days form --}}
                 <div class="bg-white shadow-sm rounded-xl p-6">
-                    <h3 class="text-base font-semibold text-gray-800 mb-1">Add Off Days</h3>
-                    <p class="text-xs text-gray-500 mb-5">
+                    <h3 class="text-base font-semibold text-gray-800 mb-1" data-i18n="Add Off Days">Add Off Days</h3>
+                    <p class="text-xs text-gray-500 mb-5" data-i18n="Select one or multiple dates. Friday & Saturday are always off and don't need to be added here.">
                         Select one or multiple dates. Friday &amp; Saturday are always off and don't need to be added here.
                     </p>
 
@@ -35,7 +35,7 @@
                         {{-- Date picker (multi-select visual calendar) --}}
                         <div class="mb-4">
                             <label class="text-sm font-medium text-gray-700 block mb-2">
-                                Selected dates: <span id="selected-count" class="text-blue-600">0</span>
+                                <span data-i18n="Selected dates:">Selected dates:</span> <span id="selected-count" class="text-blue-600">0</span>
                             </label>
 
                             {{-- Month navigation for picker --}}
@@ -72,16 +72,18 @@
 
                         <div class="mb-4">
                             <label class="text-sm font-medium text-gray-700 block mb-1">
-                                Reason <span class="text-gray-400 font-normal">(optional)</span>
+                                <span data-i18n="Reason">Reason</span> <span class="text-gray-400 font-normal" data-i18n="(optional)">(optional)</span>
                             </label>
                             <input type="text" name="reason" maxlength="255"
                                    class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
-                                   placeholder="e.g. National Holiday, Emergency closure…">
+                                   placeholder="e.g. National Holiday, Emergency closure…"
+                                   data-i18n-placeholder="e.g. National Holiday, Emergency closure…">
                         </div>
 
                         <button type="submit" id="add-btn"
                                 class="w-full bg-blue-600 text-white rounded-lg py-2 text-sm font-medium hover:bg-blue-700 transition disabled:opacity-40 disabled:cursor-not-allowed"
-                                disabled>
+                                disabled
+                                data-i18n="Add Selected Off Days">
                             Add Selected Off Days
                         </button>
                     </form>
@@ -91,7 +93,7 @@
                 <div class="bg-white shadow-sm rounded-xl p-6">
                     {{-- Year filter --}}
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-base font-semibold text-gray-800">Off Days in {{ $year }}</h3>
+                        <h3 class="text-base font-semibold text-gray-800"><span data-i18n="Off Days in">Off Days in</span> {{ $year }}</h3>
                         <div class="flex items-center gap-2">
                             <a href="{{ route('admin.offdays', ['year' => $year - 1]) }}"
                                class="text-xs text-gray-500 hover:text-gray-700 px-2 py-1 rounded hover:bg-gray-100 transition">
@@ -111,8 +113,8 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                                       d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                             </svg>
-                            <p class="text-sm">No custom off days for {{ $year }}</p>
-                            <p class="text-xs mt-1">Friday &amp; Saturday are automatically off every week.</p>
+                            <p class="text-sm"><span data-i18n="No custom off days for">No custom off days for</span> {{ $year }}</p>
+                            <p class="text-xs mt-1" data-i18n="Friday & Saturday are automatically off every week.">Friday &amp; Saturday are automatically off every week.</p>
                         </div>
                     @else
                         <div class="space-y-2 max-h-96 overflow-y-auto">
@@ -143,15 +145,15 @@
                             @endforeach
                         </div>
 
-                        <p class="text-xs text-gray-400 mt-3">{{ $offDays->count() }} custom off day(s) this year</p>
+                        <p class="text-xs text-gray-400 mt-3">{{ $offDays->count() }} <span data-i18n="custom off day(s) this year">custom off day(s) this year</span></p>
                     @endif
                 </div>
             </div>
 
             {{-- Note about weekends --}}
             <div class="bg-blue-50 border border-blue-100 rounded-lg p-4 text-sm text-blue-700">
-                <strong>Note:</strong> Friday and Saturday are automatically marked as off days for all citizens.
-                Only add dates here for additional holidays or emergency closures.
+                <strong data-i18n="Note:">Note:</strong> <span data-i18n="Friday and Saturday are automatically marked as off days for all citizens. Only add dates here for additional holidays or emergency closures.">Friday and Saturday are automatically marked as off days for all citizens.
+                Only add dates here for additional holidays or emergency closures.</span>
             </div>
         </div>
     </div>

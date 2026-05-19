@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight" data-i18n="Appointments Calendar">
             Appointments Calendar
         </h2>
     </x-slot>
@@ -37,7 +37,7 @@
                     <div class="grid grid-cols-7 mb-2">
                         @foreach(['Sun','Mon','Tue','Wed','Thu','Fri','Sat'] as $day)
                             <div class="text-center text-xs font-semibold py-1
-                                {{ in_array($day, ['Fri','Sat']) ? 'text-gray-400' : 'text-gray-600' }}">
+                                {{ in_array($day, ['Fri','Sat']) ? 'text-gray-400' : 'text-gray-600' }}" data-i18n="{{ $day }}">
                                 {{ $day }}
                             </div>
                         @endforeach
@@ -103,11 +103,11 @@
 
                     {{-- Legend --}}
                     <div class="mt-5 flex flex-wrap gap-3 text-xs text-gray-600">
-                        <div class="flex items-center gap-1"><span class="w-4 h-4 rounded bg-green-500 inline-block"></span> Open</div>
-                        <div class="flex items-center gap-1"><span class="w-4 h-4 rounded bg-yellow-400 inline-block"></span> Filling</div>
-                        <div class="flex items-center gap-1"><span class="w-4 h-4 rounded bg-orange-500 inline-block"></span> Almost full</div>
-                        <div class="flex items-center gap-1"><span class="w-4 h-4 rounded bg-red-500 inline-block"></span> Full</div>
-                        <div class="flex items-center gap-1"><span class="w-4 h-4 rounded bg-gray-200 inline-block"></span> Off day</div>
+                        <div class="flex items-center gap-1"><span class="w-4 h-4 rounded bg-green-500 inline-block"></span> <span data-i18n="Open">Open</span></div>
+                        <div class="flex items-center gap-1"><span class="w-4 h-4 rounded bg-yellow-400 inline-block"></span> <span data-i18n="Filling">Filling</span></div>
+                        <div class="flex items-center gap-1"><span class="w-4 h-4 rounded bg-orange-500 inline-block"></span> <span data-i18n="Almost full">Almost full</span></div>
+                        <div class="flex items-center gap-1"><span class="w-4 h-4 rounded bg-red-500 inline-block"></span> <span data-i18n="Full">Full</span></div>
+                        <div class="flex items-center gap-1"><span class="w-4 h-4 rounded bg-gray-200 inline-block"></span> <span data-i18n="Off day">Off day</span></div>
                     </div>
                 </div>
 
@@ -118,7 +118,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                                   d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                         </svg>
-                        <p class="text-sm">Click a day to see appointments</p>
+                        <p class="text-sm" data-i18n="Click a day to see appointments">Click a day to see appointments</p>
                     </div>
 
                     <div id="panel-content" class="hidden">
@@ -133,7 +133,7 @@
 
                         <div id="panel-list" class="space-y-3"></div>
 
-                        <div id="panel-none" class="hidden text-center py-6 text-gray-400 text-sm">
+                        <div id="panel-none" class="hidden text-center py-6 text-gray-400 text-sm" data-i18n="No appointments for this day.">
                             No appointments for this day.
                         </div>
                     </div>

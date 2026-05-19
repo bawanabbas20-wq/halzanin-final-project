@@ -13,6 +13,15 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <script>
+            if (localStorage.lang === 'ku') {
+                document.documentElement.dir = 'rtl';
+                document.documentElement.lang = 'ku';
+            } else {
+                document.documentElement.dir = 'ltr';
+                document.documentElement.lang = 'en';
+            }
+        </script>
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
@@ -32,5 +41,13 @@
                 {{ $slot }}
             </main>
         </div>
+        <script src="/js/translations.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                if (typeof window.syncHalzaninLanguageToggle === 'function') {
+                    window.syncHalzaninLanguageToggle(localStorage.getItem('lang') || 'en');
+                }
+            });
+        </script>
     </body>
 </html>

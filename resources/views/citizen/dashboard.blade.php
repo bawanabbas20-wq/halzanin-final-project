@@ -12,7 +12,7 @@
         <!-- Top Section: Greeting -->
         <div>
             <h2 class="text-2xl font-bold text-brand dark:text-white font-outfit">سڵاو، {{ explode(' ', auth()->user()->name)[0] }}! 👋</h2>
-            <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Here's your upcoming appointments at a glance</p>
+            <p class="text-gray-500 dark:text-gray-400 text-sm mt-1" data-i18n="Here's your upcoming appointments at a glance">Here's your upcoming appointments at a glance</p>
         </div>
 
         <!-- Quick Action Card -->
@@ -28,12 +28,12 @@
             </div>
             <div class="p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between relative z-10 gap-4">
                 <div>
-                    <h3 class="text-lg font-bold text-white mb-1">Ready to visit the directorate?</h3>
-                    <p class="text-sm text-white/80">Book a new appointment in minutes</p>
+                    <h3 class="text-lg font-bold text-white mb-1" data-i18n="Ready to visit the directorate?">Ready to visit the directorate?</h3>
+                    <p class="text-sm text-white/80" data-i18n="Book a new appointment in minutes">Book a new appointment in minutes</p>
                 </div>
                 <a href="{{ route('citizen.appointments.calendar') }}"
                    class="inline-flex items-center px-5 py-2.5 bg-accent text-white font-semibold text-sm rounded-[10px] shadow-brand-btn hover:shadow-brand-btn-hover hover:-translate-y-[1px] transition-all whitespace-nowrap">
-                    Book Appointment
+                    <span data-i18n="Book Appointment">Book Appointment</span>
                 </a>
             </div>
         </div>
@@ -48,7 +48,7 @@
                     </svg>
                 </div>
                 <p class="text-2xl font-bold text-brand dark:text-white font-outfit">{{ $total }}</p>
-                <p class="text-xs lg:text-sm text-gray-500 dark:text-gray-400 mt-1 truncate">Upcoming</p>
+                <p class="text-xs lg:text-sm text-gray-500 dark:text-gray-400 mt-1 truncate" data-i18n="Upcoming">Upcoming</p>
             </div>
             <!-- Confirmed -->
             <div class="bg-white dark:bg-[#1e293b] rounded-[16px] p-4 lg:p-6 shadow-sm border border-gray-100 dark:border-gray-800 animate-fade-up" style="animation-delay: 100ms">
@@ -58,7 +58,7 @@
                     </svg>
                 </div>
                 <p class="text-2xl font-bold text-brand dark:text-white font-outfit">{{ $confirmed }}</p>
-                <p class="text-xs lg:text-sm text-gray-500 dark:text-gray-400 mt-1 truncate">Confirmed</p>
+                <p class="text-xs lg:text-sm text-gray-500 dark:text-gray-400 mt-1 truncate" data-i18n="Confirmed">Confirmed</p>
             </div>
             <!-- Pending -->
             <div class="bg-white dark:bg-[#1e293b] rounded-[16px] p-4 lg:p-6 shadow-sm border border-gray-100 dark:border-gray-800 animate-fade-up" style="animation-delay: 200ms">
@@ -68,14 +68,14 @@
                     </svg>
                 </div>
                 <p class="text-2xl font-bold text-brand dark:text-white font-outfit">{{ $pending }}</p>
-                <p class="text-xs lg:text-sm text-gray-500 dark:text-gray-400 mt-1 truncate">Pending</p>
+                <p class="text-xs lg:text-sm text-gray-500 dark:text-gray-400 mt-1 truncate" data-i18n="Pending">Pending</p>
             </div>
         </div>
 
         <!-- Upcoming Appointments -->
         <div>
             <div class="flex items-center mb-4 space-x-2 rtl:space-x-reverse">
-                <h3 class="text-lg font-bold text-brand dark:text-white font-outfit">Upcoming Appointments</h3>
+                <h3 class="text-lg font-bold text-brand dark:text-white font-outfit" data-i18n="Upcoming Appointments">Upcoming Appointments</h3>
                 <span class="px-2 py-0.5 bg-brand/10 dark:bg-[#1e293b] text-brand dark:text-white text-xs font-bold rounded-full">{{ $total }}</span>
             </div>
 
@@ -86,11 +86,11 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                                   d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                         </svg>
-                        <h4 class="text-base font-semibold text-gray-700 dark:text-gray-300 mb-1">No upcoming appointments</h4>
-                        <p class="text-sm text-gray-400 dark:text-gray-500 mb-5">Book an appointment to visit the directorate.</p>
+                        <h4 class="text-base font-semibold text-gray-700 dark:text-gray-300 mb-1" data-i18n="No upcoming appointments">No upcoming appointments</h4>
+                        <p class="text-sm text-gray-400 dark:text-gray-500 mb-5" data-i18n="Book an appointment to visit the directorate.">Book an appointment to visit the directorate.</p>
                         <a href="{{ route('citizen.appointments.calendar') }}"
                            class="inline-flex items-center px-4 py-2 bg-brand text-white text-sm font-semibold rounded-[10px] hover:bg-brand/90 transition">
-                            Book Appointment
+                            <span data-i18n="Book Appointment">Book Appointment</span>
                         </a>
                     </div>
                 </div>
@@ -146,7 +146,7 @@
                                 @if($appt->status === 'pending' || $appt->status === 'confirmed')
                                     <div class="flex items-center justify-between pt-3 border-t border-gray-100 dark:border-gray-800">
                                         <span class="text-xs text-gray-400">
-                                            Booked {{ $appt->created_at->diffForHumans() }}
+                                            <span data-i18n="Booked">Booked</span> {{ $appt->created_at->diffForHumans() }}
                                         </span>
                                         <form method="POST"
                                               action="{{ route('citizen.appointments.cancel', $appt) }}"
@@ -154,7 +154,8 @@
                                             @csrf
                                             @method('PATCH')
                                             <button type="submit"
-                                                    class="text-xs text-red-500 hover:text-red-700 font-medium transition">
+                                                    class="text-xs text-red-500 hover:text-red-700 font-medium transition"
+                                                    data-i18n="Cancel">
                                                 Cancel
                                             </button>
                                         </form>

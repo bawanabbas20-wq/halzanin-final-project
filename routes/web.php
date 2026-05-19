@@ -5,14 +5,19 @@ use App\Http\Controllers\CitizenController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\VaultController;
 use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\TrackController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/track', [TrackController::class, 'show'])->name('track');
+Route::get('/track/{code}', [TrackController::class, 'show'])->name('track.show');
 
 Route::get('/dashboard', function () {
     $role = auth()->user()->role ?? 'citizen';
@@ -35,6 +40,8 @@ Route::middleware(['auth', 'role:citizen'])->group(function () {
     Route::get('/citizen/appointments/vault-docs', [AppointmentController::class, 'vaultDocs'])->name('citizen.appointments.vault-docs');
     Route::post('/citizen/appointments', [AppointmentController::class, 'store'])->name('citizen.appointments.store');
     Route::patch('/citizen/appointments/{appointment}/cancel', [AppointmentController::class, 'cancel'])->name('citizen.appointments.cancel');
+    Route::get('/citizen/applications/{application}/receipt', [ApplicationController::class, 'showQrReceipt'])->name('citizen.applications.receipt');
+    Route::get('/citizen/applications/{application}/receipt.pdf', [ApplicationController::class, 'downloadPdf'])->name('citizen.applications.receipt.pdf');
 
     // Vault
     Route::get('/citizen/vault', [VaultController::class, 'index'])->name('citizen.vault.index');
@@ -47,6 +54,9 @@ Route::middleware(['auth', 'role:citizen'])->group(function () {
 // Staff routes
 Route::middleware(['auth', 'role:staff,admin'])->group(function () {
     Route::get('/staff/dashboard', [StaffController::class, 'index'])->name('staff.dashboard');
+    Route::get('/staff/queue', [ApplicationController::class, 'queue'])->name('staff.queue');
+    Route::get('/staff/applications/{application}', [ApplicationController::class, 'show'])->name('staff.applications.show');
+    Route::patch('/staff/applications/{application}/status', [ApplicationController::class, 'updateStatus'])->name('staff.applications.update-status');
     Route::get('/staff/calendar', [StaffController::class, 'calendar'])->name('staff.calendar');
     Route::get('/staff/appointments/day', [StaffController::class, 'dayAppointments'])->name('staff.appointments.day');
     Route::patch('/staff/appointments/{appointment}/status', [StaffController::class, 'updateStatus'])->name('staff.appointments.status');
@@ -56,6 +66,8 @@ Route::middleware(['auth', 'role:staff,admin'])->group(function () {
 // Admin routes
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
+    Route::patch('/admin/users/{user}/role', [AdminController::class, 'updateUserRole'])->name('admin.users.update-role');
     Route::get('/admin/off-days', [AdminController::class, 'offDays'])->name('admin.offdays');
     Route::post('/admin/off-days', [AdminController::class, 'addOffDay'])->name('admin.offdays.store');
     Route::delete('/admin/off-days/{offDay}', [AdminController::class, 'removeOffDay'])->name('admin.offdays.destroy');

@@ -669,7 +669,10 @@ async function submitWizard() {
             window.location.href = data.redirect;
         } else {
             btn.disabled = false; btn.innerHTML = orig;
-            if (window.showToast) showToast('error', 'Error', data.message || 'Failed to book. Please try again.');
+            const validationMessages = data.errors
+                ? Object.values(data.errors).flat().join(' ')
+                : '';
+            if (window.showToast) showToast('error', 'Error', validationMessages || data.message || 'Failed to book. Please try again.');
         }
     } catch(e) {
         btn.disabled = false; btn.innerHTML = orig;

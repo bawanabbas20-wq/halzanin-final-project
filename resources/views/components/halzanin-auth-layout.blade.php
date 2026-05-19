@@ -145,6 +145,7 @@
                     document.documentElement.classList.add('font-arabic');
                     localStorage.setItem('lang', 'ku');
                     updateLangUI('ku');
+                    if (typeof applyTranslations === 'function') applyTranslations('ku');
                 } else {
                     // Switch to English
                     document.documentElement.dir = 'ltr';
@@ -153,6 +154,7 @@
                     document.documentElement.classList.remove('font-arabic');
                     localStorage.setItem('lang', 'en');
                     updateLangUI('en');
+                    if (typeof applyTranslations === 'function') applyTranslations('en');
                 }
             });
         </script>
@@ -173,5 +175,6 @@
         @if($errors->any())
         <script>document.addEventListener('DOMContentLoaded',function(){showToast('error','Please fix the errors','Check the highlighted fields and try again.');});</script>
         @endif
+        <script src="/js/translations.js"></script>
     </body>
 </html>

@@ -5,7 +5,7 @@
         
         <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-fade-in">
-            <h2 class="text-2xl font-bold text-brand dark:text-white font-outfit">Admin Dashboard</h2>
+            <h2 class="text-2xl font-bold text-brand dark:text-white font-outfit" data-i18n="Admin Dashboard">Admin Dashboard</h2>
             <span class="text-sm font-semibold text-gray-500 dark:text-gray-400 bg-white dark:bg-slate-800 px-4 py-2 rounded-full border border-gray-100 dark:border-slate-700 shadow-sm">
                 {{ \Carbon\Carbon::now()->format('l, F j, Y') }}
             </span>
@@ -35,7 +35,7 @@
                     </div>
                     <div class="relative z-10">
                         <p class="text-3xl font-bold text-gray-900 dark:text-white font-outfit">{{ number_format($card['value']) }}</p>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 font-semibold uppercase tracking-wider mt-1">{{ $card['title'] }}</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 font-semibold uppercase tracking-wider mt-1" data-i18n="{{ $card['title'] }}">{{ $card['title'] }}</p>
                     </div>
                 </div>
             @endforeach
@@ -44,7 +44,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
             <!-- Left: Bar Chart -->
             <div class="lg:col-span-2 bg-white dark:bg-[#1e293b] rounded-[16px] shadow-sm border border-gray-100 dark:border-slate-800 p-6 animate-fade-up" style="animation-delay: 400ms;">
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-6">Applications This Week</h3>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-6" data-i18n="Applications This Week">Applications This Week</h3>
                 
                 @php
                     $chartData = [];
@@ -96,15 +96,15 @@
 
             <!-- Right: Quick Links & Actions -->
             <div class="bg-white dark:bg-[#1e293b] rounded-[16px] shadow-sm border border-gray-100 dark:border-slate-800 p-6 animate-fade-up flex flex-col" style="animation-delay: 500ms;">
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-6">Quick Actions</h3>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-6" data-i18n="Quick Actions">Quick Actions</h3>
                 <div class="flex flex-col space-y-4 flex-grow justify-center">
                     <a href="{{ route('staff.queue') }}" class="w-full py-3.5 bg-brand text-white text-center rounded-[10px] font-semibold font-outfit shadow-brand-btn hover:shadow-brand-btn-hover hover:-translate-y-[1px] transition-all flex items-center justify-center">
                         <svg class="w-5 h-5 ltr:mr-2 rtl:ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                        View All Applications
+                        <span data-i18n="View All Applications">View All Applications</span>
                     </a>
                     <a href="{{ route('admin.users') }}" class="w-full py-3.5 bg-white dark:bg-slate-800 text-brand dark:text-indigo-400 border-2 border-brand dark:border-indigo-500 text-center rounded-[10px] font-semibold font-outfit hover:bg-brand/5 dark:hover:bg-slate-700 transition-colors flex items-center justify-center">
                         <svg class="w-5 h-5 ltr:mr-2 rtl:ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                        Manage Users
+                        <span data-i18n="Manage Users">Manage Users</span>
                     </a>
                 </div>
             </div>
@@ -113,19 +113,19 @@
         <!-- Recent Applications Table -->
         <div class="bg-white dark:bg-[#1e293b] rounded-[16px] shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay: 600ms;">
             <div class="px-6 py-4 border-b border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-800/50 flex items-center justify-between">
-                <h3 class="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">Recent Applications</h3>
+                <h3 class="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider" data-i18n="Recent Applications">Recent Applications</h3>
                 <a href="{{ route('staff.queue') }}" class="text-sm font-semibold text-brand dark:text-indigo-400 hover:underline flex items-center">
-                    View All <svg class="w-4 h-4 ltr:ml-1 rtl:mr-1 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    <span data-i18n="View All">View All</span> <svg class="w-4 h-4 ltr:ml-1 rtl:mr-1 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                 </a>
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="border-b border-gray-100 dark:border-slate-800">
-                            <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider bg-white dark:bg-[#1e293b]">Applicant</th>
-                            <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider bg-white dark:bg-[#1e293b]">Tracking Code</th>
-                            <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider bg-white dark:bg-[#1e293b]">Status</th>
-                            <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider bg-white dark:bg-[#1e293b]">Submitted</th>
+                            <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider bg-white dark:bg-[#1e293b]" data-i18n="Applicant">Applicant</th>
+                            <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider bg-white dark:bg-[#1e293b]" data-i18n="Tracking Code">Tracking Code</th>
+                            <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider bg-white dark:bg-[#1e293b]" data-i18n="Status">Status</th>
+                            <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider bg-white dark:bg-[#1e293b]" data-i18n="Submitted">Submitted</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100 dark:divide-slate-800">
@@ -158,7 +158,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="px-6 py-10 text-center text-gray-500 dark:text-gray-400">No recent applications.</td>
+                                <td colspan="4" class="px-6 py-10 text-center text-gray-500 dark:text-gray-400" data-i18n="No recent applications.">No recent applications.</td>
                             </tr>
                         @endforelse
                     </tbody>

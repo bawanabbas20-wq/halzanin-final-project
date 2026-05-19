@@ -37,6 +37,11 @@ class Appointment extends Model
         return $this->hasMany(Document::class);
     }
 
+    public function application()
+    {
+        return $this->hasOne(Application::class);
+    }
+
     public static function bookedSlotsForDate(string $date): array
     {
         return self::where('date', $date)

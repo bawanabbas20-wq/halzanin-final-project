@@ -33,7 +33,7 @@ class Application extends Model
 
     public function documents()
     {
-        return $this->hasMany(Document::class);
+        return $this->hasMany(Document::class, 'appointment_id', 'appointment_id');
     }
 
     public function statusLogs()

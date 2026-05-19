@@ -13,7 +13,7 @@
                 
                 <div class="text-center sm:text-left sm:rtl:text-right">
                     <div class="flex items-center justify-center sm:justify-start space-x-3 rtl:space-x-reverse mb-1">
-                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white font-outfit">My Profile</h2>
+                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white font-outfit" data-i18n="My Profile">My Profile</h2>
                         @php
                             $roleBadge = [
                                 'citizen' => 'bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-gray-300',
@@ -25,7 +25,7 @@
                             {{ auth()->user()->role }}
                         </span>
                     </div>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">Manage your account settings and preferences.</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400" data-i18n="Manage your account settings and preferences.">Manage your account settings and preferences.</p>
                 </div>
             </div>
         </div>

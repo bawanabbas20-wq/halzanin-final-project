@@ -13,6 +13,15 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <script>
+            if (localStorage.lang === 'ku') {
+                document.documentElement.dir = 'rtl';
+                document.documentElement.lang = 'ku';
+            } else {
+                document.documentElement.dir = 'ltr';
+                document.documentElement.lang = 'en';
+            }
+        </script>
     </head>
     <body class="font-sans text-gray-900 antialiased">
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
@@ -26,5 +35,6 @@
                 {{ $slot }}
             </div>
         </div>
+        <script src="/js/translations.js"></script>
     </body>
 </html>

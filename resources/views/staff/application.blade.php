@@ -59,7 +59,7 @@
                         <div>
                             <p class="text-[11px] uppercase tracking-wider text-gray-400 font-semibold mb-1">Preferred Date</p>
                             <p class="text-[14px] font-bold text-gray-900 dark:text-white">
-                                {{ $application->appointment ? \Carbon\Carbon::parse($application->appointment->preferred_date)->format('M d, Y') : '—' }}
+                                {{ $application->appointment ? \Carbon\Carbon::parse($application->appointment->date)->format('M d, Y') : '—' }}
                             </p>
                         </div>
                         <div>
@@ -99,8 +99,12 @@
                                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
                                             </div>
                                             <div>
-                                                <a href="{{ route('citizen.documents.download', $doc->id) }}" class="text-sm font-semibold text-brand dark:text-indigo-400 hover:underline line-clamp-1" target="_blank">{{ $doc->original_name }}</a>
-                                                <p class="text-xs text-gray-500 mt-0.5">{{ number_format($doc->file_size / 1024, 1) }} KB</p>
+                                                @if($doc->source === 'upload' && $doc->file_path)
+                                                    <a href="{{ route('staff.documents.view', $doc->id) }}" class="text-sm font-semibold text-brand dark:text-indigo-400 hover:underline line-clamp-1" target="_blank">{{ $doc->original_name ?? $doc->document_name }}</a>
+                                                @else
+                                                    <p class="text-sm font-semibold text-gray-700 dark:text-gray-300 line-clamp-1">{{ $doc->original_name ?? $doc->document_name }}</p>
+                                                @endif
+                                                <p class="text-xs text-gray-500 mt-0.5">{{ $doc->source === 'upload' ? number_format(($doc->file_size ?? 0) / 1024, 1) . ' KB' : ucfirst($doc->source) }}</p>
                                             </div>
                                         </div>
                                         
@@ -278,7 +282,7 @@
                                             </div>
 
                                             <p class="text-sm text-gray-600 dark:text-gray-300 mb-6">
-                                                You are about to <strong>approve</strong> this application. The citizen will be notified by email. This action cannot be undone.
+                                                You are about to <strong>approve</strong> this application. The citizen will be notified by WhatsApp if a phone number is available. This action cannot be undone.
                                             </p>
 
                                             <div class="flex items-center justify-end gap-3">
@@ -347,3 +351,4 @@
         </div>
     </div>
 @endsection
+

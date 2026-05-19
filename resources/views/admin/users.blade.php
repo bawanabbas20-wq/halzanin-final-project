@@ -7,14 +7,14 @@
         <!-- Header -->
         <div class="flex items-center justify-between mb-6 animate-fade-in">
             <h2 class="text-2xl font-bold text-brand dark:text-white font-outfit flex items-center">
-                User Management
+                <span data-i18n="User Management">User Management</span>
                 <span class="ltr:ml-3 rtl:mr-3 px-2.5 py-1 bg-brand/10 dark:bg-indigo-900/30 text-brand dark:text-indigo-400 text-sm font-bold rounded-[8px]">
                     {{ $users->total() }}
                 </span>
             </h2>
             <a href="{{ route('admin.dashboard') }}" class="text-sm font-semibold text-gray-500 hover:text-brand dark:text-gray-400 dark:hover:text-indigo-400 transition-colors flex items-center">
                 <svg class="w-4 h-4 ltr:mr-1.5 rtl:ml-1.5 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                Back to Dashboard
+                <span data-i18n="Back to Dashboard">Back to Dashboard</span>
             </a>
         </div>
 
@@ -36,11 +36,11 @@
                 <table class="w-full text-left border-collapse">
                     <thead class="bg-gray-50 dark:bg-slate-800 border-b border-gray-100 dark:border-slate-700">
                         <tr>
-                            <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">User</th>
-                            <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Email</th>
-                            <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Role</th>
-                            <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Registered</th>
-                            <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider ltr:text-right rtl:text-left">Actions</th>
+                            <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider" data-i18n="User">User</th>
+                            <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider" data-i18n="Email">Email</th>
+                            <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider" data-i18n="Role">Role</th>
+                            <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider" data-i18n="Registered">Registered</th>
+                            <th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider ltr:text-right rtl:text-left" data-i18n="Actions">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100 dark:divide-slate-800">
@@ -69,7 +69,7 @@
                                             <p class="text-sm font-bold text-gray-900 dark:text-white flex items-center">
                                                 {{ $user->name }}
                                                 @if($isSelf)
-                                                    <span class="ltr:ml-2 rtl:mr-2 px-1.5 py-0.5 bg-gray-200 dark:bg-slate-700 text-[10px] text-gray-500 dark:text-gray-400 rounded uppercase tracking-wider">You</span>
+                                                    <span class="ltr:ml-2 rtl:mr-2 px-1.5 py-0.5 bg-gray-200 dark:bg-slate-700 text-[10px] text-gray-500 dark:text-gray-400 rounded uppercase tracking-wider" data-i18n="You">You</span>
                                                 @endif
                                             </p>
                                         </div>
@@ -86,7 +86,7 @@
                                 </td>
                                 <td class="px-6 py-4 ltr:text-right rtl:text-left">
                                     @if($isSelf)
-                                        <span class="text-[11px] text-gray-400 dark:text-gray-500 italic uppercase tracking-wider font-semibold">Cannot change own role</span>
+                                        <span class="text-[11px] text-gray-400 dark:text-gray-500 italic uppercase tracking-wider font-semibold" data-i18n="Cannot change own role">Cannot change own role</span>
                                     @else
                                         <form method="POST" action="{{ route('admin.users.update-role', $user->id) }}"
                                               data-user-name="{{ $user->name }}"
@@ -96,9 +96,9 @@
                                             <div class="relative">
                                                 <select name="role"
                                                     class="block w-32 h-[34px] text-xs font-semibold ltr:pl-3 ltr:pr-8 rtl:pr-3 rtl:pl-8 rounded-[8px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#e0e7ff] dark:focus:shadow-[0_0_0_3px_rgba(49,46,129,0.5)] transition-all">
-                                                    <option value="citizen" {{ $user->role === 'citizen' ? 'selected' : '' }}>Citizen</option>
-                                                    <option value="staff"   {{ $user->role === 'staff'   ? 'selected' : '' }}>Staff</option>
-                                                    <option value="admin"   {{ $user->role === 'admin'   ? 'selected' : '' }}>Admin</option>
+                                                    <option value="citizen" {{ $user->role === 'citizen' ? 'selected' : '' }} data-i18n="Citizen">Citizen</option>
+                                                    <option value="staff"   {{ $user->role === 'staff'   ? 'selected' : '' }} data-i18n="Staff">Staff</option>
+                                                    <option value="admin"   {{ $user->role === 'admin'   ? 'selected' : '' }} data-i18n="Admin">Admin</option>
                                                 </select>
                                             </div>
                                             <button type="button"
@@ -109,7 +109,7 @@
                                                         $dispatch('open-modal', 'confirm-role-update')
                                                     "
                                                     class="h-[34px] px-3 bg-brand text-white text-xs font-semibold rounded-[8px] hover:bg-brand-light transition-colors shadow-sm">
-                                                Update
+                                                <span data-i18n="Update">Update</span>
                                             </button>
                                         </form>
                                     @endif
@@ -130,8 +130,8 @@
                                                 <line x1="101" y1="31" x2="106" y2="36" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round"/>
                                             </svg>
                                         </div>
-                                        <p class="text-base font-bold text-gray-900 dark:text-white mb-1">No users found</p>
-                                        <p class="text-sm text-gray-500 dark:text-gray-400">No registered users match the current criteria.</p>
+                                        <p class="text-base font-bold text-gray-900 dark:text-white mb-1" data-i18n="No users found">No users found</p>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400" data-i18n="No registered users match the current criteria.">No registered users match the current criteria.</p>
                                     </div>
                                 </td>
                             </tr>
@@ -153,8 +153,8 @@
                         <svg class="w-5 h-5 text-brand dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                     </div>
                     <div>
-                        <h2 class="text-base font-bold text-gray-900 dark:text-white font-outfit">Update User Role</h2>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">This will change the user's access level.</p>
+                        <h2 class="text-base font-bold text-gray-900 dark:text-white font-outfit" data-i18n="Update User Role">Update User Role</h2>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5" data-i18n="This will change the user's access level.">This will change the user's access level.</p>
                     </div>
                 </div>
 
@@ -166,11 +166,11 @@
                 <div class="flex justify-end gap-3">
                     <button type="button" x-on:click="$dispatch('close')"
                             class="px-5 py-2.5 text-sm font-semibold text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-[10px] transition-colors">
-                        Cancel
+                        <span data-i18n="Cancel">Cancel</span>
                     </button>
                     <button type="button" x-on:click="$dispatch('close'); if(pendingForm) pendingForm.submit()"
                             class="px-5 py-2.5 text-sm font-semibold text-white bg-brand hover:bg-brand-light rounded-[10px] transition-all shadow-sm">
-                        Update Role
+                        <span data-i18n="Update Role">Update Role</span>
                     </button>
                 </div>
             </div>
