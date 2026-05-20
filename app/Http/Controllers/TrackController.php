@@ -20,6 +20,8 @@ class TrackController extends Controller
                 ->first();
         }
 
-        return view('track', compact('application'));
+        $viewName = auth()->check() ? 'citizen.track' : 'track';
+
+        return view($viewName, compact('application'));
     }
 }

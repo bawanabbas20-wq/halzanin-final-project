@@ -170,16 +170,20 @@
 
                             <div class="p-4 sm:p-5 flex items-start gap-4">
                                 {{-- Date block --}}
-                                <div class="shrink-0 w-12 text-center bg-brand/5 dark:bg-brand/20 rounded-xl py-2 px-1 border border-brand/10 dark:border-amber-800/40">
-                                    <p class="text-[11px] font-bold text-brand/60 dark:text-amber-400/80 uppercase tracking-wide leading-none mb-0.5">
-                                        {{ $apptDate->format('M') }}
-                                    </p>
-                                    <p class="text-2xl font-extrabold text-brand dark:text-white leading-none font-outfit">
-                                        {{ $apptDate->format('d') }}
-                                    </p>
-                                    <p class="text-[10px] font-semibold text-gray-400 dark:text-gray-500 mt-0.5">
-                                        {{ $apptDate->format('D') }}
-                                    </p>
+                                <div class="shrink-0 w-14 rounded-xl overflow-hidden border border-brand/15 dark:border-gray-700 shadow-sm">
+                                    <div class="bg-brand dark:bg-brand px-1 py-1 text-center">
+                                        <p class="text-[10px] font-bold text-white/90 uppercase tracking-wider leading-none">
+                                            {{ $apptDate->format('M') }}
+                                        </p>
+                                    </div>
+                                    <div class="bg-white dark:bg-[#252525] px-1 py-1.5 text-center">
+                                        <p class="text-[22px] font-extrabold text-brand dark:text-white leading-none font-outfit">
+                                            {{ $apptDate->format('d') }}
+                                        </p>
+                                        <p class="text-[10px] font-medium text-gray-400 dark:text-gray-500 mt-0.5">
+                                            {{ $apptDate->format('D') }}
+                                        </p>
+                                    </div>
                                 </div>
 
                                 {{-- Details --}}
@@ -210,25 +214,39 @@
                                 </div>
                             </div>
 
-                            @if($appt->status === 'pending' || $appt->status === 'confirmed')
-                                <div class="px-4 sm:px-5 py-2.5 bg-gray-50/70 dark:bg-slate-800/30 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
-                                    <span class="text-[11px] text-gray-400 dark:text-gray-500">
+                            @if(($appt->status === 'pending' || $appt->status === 'confirmed') || $appt->application)
+                                <div class="px-4 sm:px-5 py-2.5 bg-gray-50/50 dark:bg-white/[0.03] border-t border-gray-100 dark:border-gray-800 flex items-center justify-between gap-2">
+                                    <span class="text-[11px] text-gray-400 dark:text-gray-500 shrink-0">
                                         <span data-i18n="dashboard.booked">Booked</span> {{ $appt->created_at->diffForHumans() }}
                                     </span>
-                                    <form method="POST"
-                                          action="{{ route('citizen.appointments.cancel', $appt) }}"
-                                          onsubmit="return confirm('Cancel this appointment?')">
-                                        @csrf
-                                        @method('PATCH')
-                                        <button type="submit"
-                                                class="text-[11px] font-semibold text-red-400 hover:text-red-600 dark:hover:text-red-300 transition-colors flex items-center gap-1"
-                                                data-i18n="common.cancel">
-                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
-                                            </svg>
-                                            Cancel
-                                        </button>
-                                    </form>
+                                    <div class="flex items-center gap-2.5 shrink-0">
+                                        @if($appt->application)
+                                            <a href="{{ route('citizen.applications.receipt', $appt->application) }}"
+                                               class="text-[11px] font-semibold text-brand dark:text-blue-400 hover:underline flex items-center gap-1 transition-colors"
+                                               data-i18n="dashboard.view_receipt">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                                </svg>
+                                                View Receipt
+                                            </a>
+                                        @endif
+                                        @if($appt->status === 'pending' || $appt->status === 'confirmed')
+                                            <form method="POST"
+                                                  action="{{ route('citizen.appointments.cancel', $appt) }}"
+                                                  onsubmit="return confirm('Cancel this appointment?')">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit"
+                                                        class="text-[11px] font-semibold text-red-400 hover:text-red-600 dark:hover:text-red-300 transition-colors flex items-center gap-1"
+                                                        data-i18n="common.cancel">
+                                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+                                                    </svg>
+                                                    Cancel
+                                                </button>
+                                            </form>
+                                        @endif
+                                    </div>
                                 </div>
                             @endif
                         </div>
