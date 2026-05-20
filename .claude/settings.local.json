@@ -28,7 +28,9 @@
       "Bash(netstat -ano)",
       "Bash(findstr \":80\\\\b\\\\|:8000\\\\|:8080\\\\|:8888\\\\|:3000\\\\|:5173\")",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://127.0.0.1:8000/prototype.html)",
-      "Bash(fuser -k 8000/tcp)"
+      "Bash(fuser -k 8000/tcp)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://127.0.0.1:8000)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://127.0.0.1:8000/admin/dashboard)"
     ]
   }
 }

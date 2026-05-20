@@ -26,7 +26,7 @@
     <div class="w-full">
         <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-brand/8 dark:bg-indigo-900/30 rounded-full mb-4">
             <div class="w-1.5 h-1.5 rounded-full bg-accent pulse-dot"></div>
-            <span class="text-xs font-semibold text-brand dark:text-indigo-400 uppercase tracking-wide">Secure Login</span>
+            <span class="text-xs font-semibold text-brand dark:text-indigo-400 uppercase tracking-wide" data-i18n="auth.secure_login">Secure Login</span>
         </div>
         <h2 class="text-[22px] font-bold text-brand dark:text-white mb-6 font-outfit" data-i18n="auth.welcome">Welcome back</h2>
 

@@ -7,7 +7,7 @@
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-fade-in">
             <div>
                 <h2 class="text-2xl font-bold font-outfit text-gradient" data-i18n="Admin Dashboard">Admin Dashboard</h2>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">System overview and application statistics</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1" data-i18n="admin.subtitle">System overview and application statistics</p>
             </div>
             <span class="self-start sm:self-auto text-sm font-semibold text-gray-500 dark:text-gray-400 bg-white dark:bg-slate-800 px-4 py-2 rounded-full border border-gray-100 dark:border-slate-700 shadow-sm">
                 {{ \Carbon\Carbon::now()->format('l, F j, Y') }}
@@ -49,7 +49,7 @@
                 <div class="p-6">
                     <div class="flex items-center justify-between mb-6">
                         <h3 class="text-base font-bold text-gray-900 dark:text-white font-outfit" data-i18n="Applications This Week">Applications This Week</h3>
-                        <span class="text-xs font-semibold text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-slate-800 px-3 py-1 rounded-full border border-gray-100 dark:border-slate-700">Last 7 days</span>
+                        <span class="text-xs font-semibold text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-slate-800 px-3 py-1 rounded-full border border-gray-100 dark:border-slate-700" data-i18n="admin.last_7_days">Last 7 days</span>
                     </div>
 
                     @php
@@ -116,11 +116,11 @@
                     <div class="mt-6 pt-5 border-t border-gray-100 dark:border-slate-800 grid grid-cols-2 gap-3">
                         <div class="text-center p-3 bg-emerald-50 dark:bg-emerald-900/20 rounded-xl">
                             <p class="text-xl font-extrabold text-emerald-600 dark:text-emerald-400 font-outfit">{{ number_format($stats['approved']) }}</p>
-                            <p class="text-[10px] font-semibold text-emerald-600/70 dark:text-emerald-400/70 uppercase tracking-wide mt-0.5">Approved</p>
+                            <p class="text-[10px] font-semibold text-emerald-600/70 dark:text-emerald-400/70 uppercase tracking-wide mt-0.5" data-i18n="status.approved">Approved</p>
                         </div>
                         <div class="text-center p-3 bg-red-50 dark:bg-red-900/20 rounded-xl">
                             <p class="text-xl font-extrabold text-red-500 dark:text-red-400 font-outfit">{{ number_format($stats['rejected']) }}</p>
-                            <p class="text-[10px] font-semibold text-red-500/70 dark:text-red-400/70 uppercase tracking-wide mt-0.5">Rejected</p>
+                            <p class="text-[10px] font-semibold text-red-500/70 dark:text-red-400/70 uppercase tracking-wide mt-0.5" data-i18n="status.rejected">Rejected</p>
                         </div>
                     </div>
                 </div>

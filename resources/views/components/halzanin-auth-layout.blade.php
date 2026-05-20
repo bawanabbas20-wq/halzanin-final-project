@@ -161,19 +161,19 @@
         {{-- Toast Notifications --}}
         <x-toast />
         @if(session('success'))
-        <script>document.addEventListener('DOMContentLoaded',function(){showToast('success','Success',@json(session('success')));});</script>
+        <script>document.addEventListener('DOMContentLoaded',function(){const msg=@json(session('success'));showToast('success',window.i18n ? i18n('common.success') : 'Success',window.i18nMessage ? i18nMessage(msg) : msg);});</script>
         @endif
         @if(session('error'))
-        <script>document.addEventListener('DOMContentLoaded',function(){showToast('error','Error',@json(session('error')));});</script>
+        <script>document.addEventListener('DOMContentLoaded',function(){const msg=@json(session('error'));showToast('error',window.i18n ? i18n('common.error') : 'Error',window.i18nMessage ? i18nMessage(msg) : msg);});</script>
         @endif
         @if(session('info'))
-        <script>document.addEventListener('DOMContentLoaded',function(){showToast('info','Info',@json(session('info')));});</script>
+        <script>document.addEventListener('DOMContentLoaded',function(){const msg=@json(session('info'));showToast('info',window.i18n ? i18n('common.info') : 'Info',window.i18nMessage ? i18nMessage(msg) : msg);});</script>
         @endif
         @if(session('warning'))
-        <script>document.addEventListener('DOMContentLoaded',function(){showToast('warning','Warning',@json(session('warning')));});</script>
+        <script>document.addEventListener('DOMContentLoaded',function(){const msg=@json(session('warning'));showToast('warning',window.i18n ? i18n('common.warning') : 'Warning',window.i18nMessage ? i18nMessage(msg) : msg);});</script>
         @endif
         @if($errors->any())
-        <script>document.addEventListener('DOMContentLoaded',function(){showToast('error','Please fix the errors','Check the highlighted fields and try again.');});</script>
+        <script>document.addEventListener('DOMContentLoaded',function(){showToast('error',window.i18n ? i18n('common.fix_errors') : 'Please fix the errors',window.i18n ? i18n('common.check_fields') : 'Check the highlighted fields and try again.');});</script>
         @endif
         <script src="{{ asset('js/translations.js') }}"></script>
     </body>

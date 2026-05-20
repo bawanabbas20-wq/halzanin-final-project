@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="max-w-6xl mx-auto pb-10"
-         x-data="{ pendingForm: null, pendingName: '', pendingRole: '' }">
+         x-data="{ pendingForm: null, pendingName: '', pendingRole: '', assignSubRoleUserId: null }">
 
         {{-- Header --}}
         <div class="flex items-center justify-between mb-6 animate-fade-in">
@@ -13,7 +13,7 @@
                         {{ $users->total() }}
                     </span>
                 </div>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Manage user roles and access levels</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1" data-i18n="admin.users_subtitle">Manage user roles and access levels</p>
             </div>
             <a href="{{ route('admin.dashboard') }}"
                class="text-sm font-semibold text-gray-500 hover:text-brand dark:text-gray-400 dark:hover:text-indigo-400 transition-colors flex items-center gap-1.5">
@@ -51,6 +51,7 @@
                             <th class="px-6 py-3.5 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider" data-i18n="User">User</th>
                             <th class="px-6 py-3.5 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider" data-i18n="Email">Email</th>
                             <th class="px-6 py-3.5 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider" data-i18n="Role">Role</th>
+                            <th class="px-6 py-3.5 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Sub-Roles</th>
                             <th class="px-6 py-3.5 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider" data-i18n="Registered">Registered</th>
                             <th class="px-6 py-3.5 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider ltr:text-right rtl:text-left" data-i18n="Actions">Actions</th>
                         </tr>
@@ -90,6 +91,26 @@
                                         {{ $user->role }}
                                     </span>
                                 </td>
+                                <td class="px-6 py-4">
+                                    @if($user->role === 'staff')
+                                        <div class="flex flex-wrap gap-1 max-w-[180px]">
+                                            @forelse($user->subRoles as $sr)
+                                                <span class="px-2 py-0.5 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 text-[10px] font-bold rounded-full">{{ $sr->name }}</span>
+                                            @empty
+                                                <span class="text-[11px] text-gray-400 dark:text-gray-500 italic">Full access</span>
+                                            @endforelse
+                                            @if($taskTypes->isNotEmpty())
+                                                <button type="button"
+                                                        x-on:click="assignSubRoleUserId = {{ $user->id }}; $dispatch('open-modal', 'assign-sub-role')"
+                                                        class="px-2 py-0.5 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold rounded-full hover:bg-emerald-100 transition-colors">
+                                                    + Assign
+                                                </button>
+                                            @endif
+                                        </div>
+                                    @else
+                                        <span class="text-[11px] text-gray-400 dark:text-gray-500">—</span>
+                                    @endif
+                                </td>
                                 <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
                                     {{ $user->created_at->format('M d, Y') }}
                                 </td>
@@ -125,7 +146,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="px-6 py-14">
+                                <td colspan="6" class="px-6 py-14">
                                     <div class="flex flex-col items-center justify-center">
                                         <div class="w-32 h-32 mb-5 rounded-2xl bg-purple-50 dark:bg-purple-900/10 flex items-center justify-center p-4">
                                             <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
@@ -164,7 +185,7 @@
                     </div>
                     <div>
                         <h2 class="text-base font-bold text-gray-900 dark:text-white font-outfit" data-i18n="Update User Role">Update User Role</h2>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5" data-i18n="This will change the user's access level.">This will change the user's access level.</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5" data-i18n="admin.update_role_desc">This will change the user's access level.</p>
                     </div>
                 </div>
 
@@ -183,6 +204,45 @@
                         <span data-i18n="Update Role">Update Role</span>
                     </button>
                 </div>
+            </div>
+        </x-modal>
+
+        {{-- Assign Sub-Role Modal --}}
+        <x-modal name="assign-sub-role" maxWidth="sm">
+            <div class="p-6 bg-white dark:bg-[#1e293b]">
+                <h2 class="text-base font-bold text-gray-900 dark:text-white font-outfit mb-4">Assign Sub-Role</h2>
+                @if($subRoles->isNotEmpty())
+                    <form method="POST"
+                          :action="'/admin/sub-roles/assign/' + assignSubRoleUserId">
+                        @csrf
+                        <div class="space-y-2 mb-4">
+                            @foreach($subRoles as $sr)
+                                <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-800/50 cursor-pointer transition-colors">
+                                    <input type="radio" name="sub_role_id" value="{{ $sr->id }}" class="mt-0.5 text-brand focus:ring-brand">
+                                    <div>
+                                        <p class="text-sm font-semibold text-gray-900 dark:text-white">{{ $sr->name }}</p>
+                                        @if($sr->description)
+                                            <p class="text-[11px] text-gray-400 dark:text-gray-500">{{ $sr->description }}</p>
+                                        @endif
+                                    </div>
+                                </label>
+                            @endforeach
+                        </div>
+                        <div class="flex justify-end gap-3">
+                            <button type="button" x-on:click="$dispatch('close')"
+                                    class="px-4 py-2.5 text-sm font-semibold text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 rounded-xl transition-colors">
+                                Cancel
+                            </button>
+                            <button type="submit"
+                                    class="px-4 py-2.5 text-sm font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl transition-colors">
+                                Assign
+                            </button>
+                        </div>
+                    </form>
+                @else
+                    <p class="text-sm text-gray-500 mb-4">No sub-roles created yet. <a href="{{ route('admin.sub-roles.create') }}" class="text-brand font-semibold hover:underline">Create one first.</a></p>
+                    <button type="button" x-on:click="$dispatch('close')" class="w-full py-2.5 text-sm font-semibold text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors">Close</button>
+                @endif
             </div>
         </x-modal>
 

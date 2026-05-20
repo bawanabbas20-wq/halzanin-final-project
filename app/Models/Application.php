@@ -15,6 +15,7 @@ class Application extends Model
         'tracking_code',
         'current_status',
         'submitted_at',
+        'assigned_to',
     ];
 
     protected $casts = [
@@ -39,5 +40,10 @@ class Application extends Model
     public function statusLogs()
     {
         return $this->hasMany(StatusLog::class);
+    }
+
+    public function assignedStaff()
+    {
+        return $this->belongsTo(User::class, 'assigned_to');
     }
 }

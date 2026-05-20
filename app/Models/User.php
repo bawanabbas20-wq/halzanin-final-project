@@ -45,6 +45,38 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function taskTypes()
+    {
+        return $this->belongsToMany(TaskType::class, 'staff_task_type');
+    }
+
+    public function subRoles()
+    {
+        return $this->belongsToMany(SubRole::class, 'user_sub_roles')
+            ->withPivot('assigned_by')
+            ->withTimestamps();
+    }
+
+    public function hasPermission(string $permission): bool
+    {
+        if ($this->role === 'admin') {
+            return true;
+        }
+        if ($this->role === 'staff') {
+            $subRoles = $this->relationLoaded('subRoles') ? $this->subRoles : $this->subRoles()->with('permissions')->get();
+            if ($subRoles->isEmpty()) {
+                return true; // backward-compatible: staff with no sub-roles can do everything
+            }
+            return $subRoles->contains(fn($sr) => $sr->hasPermission($permission));
+        }
+        return false;
+    }
+
+    public function assignedApplications()
+    {
+        return $this->hasMany(Application::class, 'assigned_to');
+    }
+
     public function appointments()
     {
         return $this->hasMany(Appointment::class, 'citizen_id');

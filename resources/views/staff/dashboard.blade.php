@@ -16,7 +16,7 @@
                 <span data-i18n="Welcome,">Welcome,</span>
                 {{ explode(' ', auth()->user()->name)[0] }}! 👋
             </h2>
-            <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">
+            <p class="text-gray-500 dark:text-gray-400 text-sm mt-1" data-i18n="staff.dashboard_subtitle">
                 Here's the current overview of the application queue.
             </p>
         </div>
@@ -38,7 +38,7 @@
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">{!! $s['icon'] !!}</svg>
                     </div>
                     <p class="text-2xl font-extrabold text-brand dark:text-white font-outfit">{{ number_format($s['value']) }}</p>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5 font-medium">{{ $s['label'] }}</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5 font-medium" data-i18n="{{ ['Total' => 'staff.total', 'Pending' => 'status.pending', 'Reviewing' => 'staff.reviewing', 'Completed' => 'staff.completed'][$s['label']] ?? $s['label'] }}">{{ $s['label'] }}</p>
                 </div>
             @endforeach
         </div>
@@ -66,7 +66,7 @@
                     @if($pending > 0)
                         <div class="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-amber-600 dark:text-amber-400">
                             <div class="w-1.5 h-1.5 rounded-full bg-amber-500 pulse-dot"></div>
-                            {{ $pending }} applications awaiting review
+                            <span data-i18n="staff.awaiting_review" data-i18n-count="{{ $pending }}" data-i18n-label>{{ $pending }} applications awaiting review</span>
                         </div>
                     @endif
                 </div>
@@ -76,7 +76,7 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                     </svg>
-                    View Queue
+                    <span data-i18n-label>View Queue</span>
                 </a>
             </div>
         </div>
@@ -91,8 +91,8 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="font-semibold text-gray-900 dark:text-white text-sm">Appointments Calendar</p>
-                    <p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5">View day-by-day schedule</p>
+                    <p class="font-semibold text-gray-900 dark:text-white text-sm" data-i18n="staff.calendar_title">Appointments Calendar</p>
+                    <p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5" data-i18n="staff.calendar_subtitle">View day-by-day schedule</p>
                 </div>
                 <svg class="w-4 h-4 text-gray-300 dark:text-gray-600 ltr:ml-auto rtl:mr-auto rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -107,8 +107,8 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="font-semibold text-gray-900 dark:text-white text-sm">My Profile</p>
-                    <p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5">Update your account details</p>
+                    <p class="font-semibold text-gray-900 dark:text-white text-sm" data-i18n="staff.profile_title">My Profile</p>
+                    <p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5" data-i18n="staff.profile_subtitle">Update your account details</p>
                 </div>
                 <svg class="w-4 h-4 text-gray-300 dark:text-gray-600 ltr:ml-auto rtl:mr-auto rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>

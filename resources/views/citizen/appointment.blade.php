@@ -180,7 +180,9 @@ function renderDocFields(docType) {
     const container = document.getElementById('doc-upload-fields');
     const label = document.getElementById('doc-type-label');
     const docs = docRequirements[docType] || [];
-    label.textContent = docType ? `Required for "${docType}":` : 'Select a document type in Step 2 first.';
+    const tr = (key, replacements = {}) => window.i18n ? i18n(key, replacements) : key;
+    const trDoc = (value) => window.i18nDocument ? i18nDocument(value) : value;
+    label.textContent = docType ? tr('book.required_for_doc', { document: trDoc(docType) }) : tr('book.select_doc_first');
     container.innerHTML = '';
     docs.forEach(doc => {
         const div = document.createElement('div');
@@ -192,6 +194,8 @@ function renderDocFields(docType) {
             <input type="file" name="${doc.name}" accept=".jpg,.jpeg,.png,.pdf" required
                 class="block w-full text-sm text-gray-500 dark:text-gray-400 file:mr-3 file:py-2 file:px-4 file:rounded-[8px] file:border-0 file:text-sm file:font-semibold file:bg-brand/10 file:text-brand dark:file:bg-indigo-900/30 dark:file:text-indigo-300 hover:file:bg-brand/20 transition-all" />
             <p class="text-xs text-gray-400 mt-1">JPG, PNG or PDF — max 5MB</p>`;
+        div.querySelector('label').childNodes[0].textContent = `📎 ${trDoc(doc.label)} `;
+        div.querySelector('p').textContent = tr('book.file_help');
         container.appendChild(div);
     });
 }

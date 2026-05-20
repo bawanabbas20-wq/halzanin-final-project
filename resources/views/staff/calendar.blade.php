@@ -155,12 +155,15 @@
 <script>
 const dayUrl    = "{{ route('staff.appointments.day') }}";
 const statusUrl = "{{ url('/staff/appointments') }}";
+const uiLang = () => document.documentElement.lang === 'ku' ? 'ku' : 'en';
+const tr = (key, replacements = {}) => window.i18n ? i18n(key, replacements, uiLang()) : key;
+const trDoc = (label) => window.i18nDocument ? i18nDocument(label, {}, uiLang()) : label;
 
 const statusLabels = {
-    'pending':   { label: 'Pending',   cls: 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400' },
-    'confirmed': { label: 'Confirmed', cls: 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' },
-    'completed': { label: 'Completed', cls: 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400' },
-    'cancelled': { label: 'Cancelled', cls: 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400' },
+    'pending':   { key: 'status.pending',   cls: 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400' },
+    'confirmed': { key: 'status.confirmed', cls: 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' },
+    'completed': { key: 'status.completed', cls: 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400' },
+    'cancelled': { key: 'status.cancelled', cls: 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400' },
 };
 
 const timeLabels = {
@@ -184,7 +187,7 @@ async function selectDay(el) {
 
     const d = new Date(date + 'T00:00:00');
     document.getElementById('panel-date').textContent =
-        d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+        d.toLocaleDateString(uiLang() === 'ku' ? 'ckb-IQ' : 'en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 
     activeDay = date;
 
@@ -201,7 +204,7 @@ async function selectDay(el) {
 function renderAppointments(appointments) {
     const list    = document.getElementById('panel-list');
     const countEl = document.getElementById('panel-count');
-    countEl.textContent = appointments.length + ' appointment' + (appointments.length !== 1 ? 's' : '');
+    countEl.textContent = tr(appointments.length === 1 ? 'cal.appointment_count' : 'cal.appointment_count_plural', { count: appointments.length });
 
     if (appointments.length === 0) {
         document.getElementById('panel-none').classList.remove('hidden');
@@ -210,14 +213,14 @@ function renderAppointments(appointments) {
 
     list.innerHTML = '';
     appointments.forEach(appt => {
-        const s = statusLabels[appt.status] || { label: appt.status, cls: 'bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300' };
+        const s = statusLabels[appt.status] || { key: appt.status, cls: 'bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300' };
         const card = document.createElement('div');
         card.className = 'border border-gray-100 dark:border-slate-700 rounded-xl p-3 hover:border-brand/30 dark:hover:border-indigo-500/30 transition-colors';
         card.id = 'appt-' + appt.id;
 
         const docBadges = appt.documents && appt.documents.length > 0
             ? `<div class="mt-2 pt-2 border-t border-gray-100 dark:border-slate-700">
-                <p class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1.5">Documents</p>
+                <p class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1.5">${tr('staff.documents')}</p>
                 <div class="flex flex-wrap gap-1.5">
                     ${appt.documents.map(d => {
                         if (d.source === 'vault') {
@@ -237,10 +240,10 @@ function renderAppointments(appointments) {
                 <div>
                     <p class="text-sm font-bold text-gray-800 dark:text-white">${timeLabels[appt.time_slot] || appt.time_slot}</p>
                     <p class="text-sm text-gray-600 dark:text-gray-300">${appt.full_name || appt.citizen}</p>
-                    ${appt.document_type ? `<p class="text-xs text-indigo-600 dark:text-indigo-400 font-medium mt-0.5">${appt.document_type}</p>` : ''}
+                    ${appt.document_type ? `<p class="text-xs text-indigo-600 dark:text-indigo-400 font-medium mt-0.5">${trDoc(appt.document_type)}</p>` : ''}
                     ${appt.notes ? `<p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5 italic">${appt.notes}</p>` : ''}
                 </div>
-                <span id="badge-${appt.id}" class="text-[10px] px-2.5 py-0.5 rounded-full font-bold ${s.cls}">${s.label}</span>
+                <span id="badge-${appt.id}" class="text-[10px] px-2.5 py-0.5 rounded-full font-bold ${s.cls}">${tr(s.key)}</span>
             </div>
             <div class="flex gap-1.5 flex-wrap">
                 ${buildStatusButtons(appt.id, appt.status)}
@@ -253,9 +256,9 @@ function renderAppointments(appointments) {
 
 function buildStatusButtons(id, current) {
     const actions = [
-        { status: 'confirmed', label: 'Confirm',  color: 'bg-emerald-500 hover:bg-emerald-600' },
-        { status: 'completed', label: 'Complete', color: 'bg-blue-500 hover:bg-blue-600' },
-        { status: 'cancelled', label: 'Cancel',   color: 'bg-red-500 hover:bg-red-600' },
+        { status: 'confirmed', label: tr('staff.confirm'),  color: 'bg-emerald-500 hover:bg-emerald-600' },
+        { status: 'completed', label: tr('staff.complete'), color: 'bg-blue-500 hover:bg-blue-600' },
+        { status: 'cancelled', label: tr('common.cancel'),   color: 'bg-red-500 hover:bg-red-600' },
     ].filter(a => a.status !== current);
 
     return actions.map(a =>

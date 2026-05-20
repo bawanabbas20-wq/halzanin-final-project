@@ -12,7 +12,7 @@
                         {{ $applications->total() }}
                     </span>
                 </div>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Review and process submitted applications</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1" data-i18n="staff.queue_subtitle">Review and process submitted applications</p>
             </div>
         </div>
 
@@ -89,7 +89,7 @@
                                     <div class="w-2 h-2 rounded-full shrink-0 {{ $color['dot'] }}"></div>
                                     <h3 class="font-bold text-gray-900 dark:text-white truncate">{{ $appName }}</h3>
                                 </div>
-                                <span class="shrink-0 px-2.5 py-1 text-[11px] font-bold rounded-full capitalize {{ $color['badge'] }} ltr:ml-2 rtl:mr-2">
+                                <span class="shrink-0 px-2.5 py-1 text-[11px] font-bold rounded-full capitalize {{ $color['badge'] }} ltr:ml-2 rtl:mr-2" data-i18n="status.{{ $app->current_status }}">
                                     {{ str_replace('_', ' ', $app->current_status) }}
                                 </span>
                             </div>
@@ -118,6 +118,8 @@
                             type="no-results"
                             title="No applications found"
                             description="Try adjusting your search or filter to find what you're looking for."
+                            titleKey="staff.no_applications"
+                            descriptionKey="staff.no_applications_desc"
                         />
                     </div>
                 @endforelse
@@ -168,7 +170,7 @@
                                         {{ $app->appointment ? \Carbon\Carbon::parse($app->appointment->date)->format('M d, Y') : '—' }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        <span class="px-2.5 py-1 inline-flex text-[11px] font-bold rounded-full capitalize {{ $color['badge'] }}">
+                                        <span class="px-2.5 py-1 inline-flex text-[11px] font-bold rounded-full capitalize {{ $color['badge'] }}" data-i18n="status.{{ $app->current_status }}">
                                             {{ str_replace('_', ' ', $app->current_status) }}
                                         </span>
                                     </td>
@@ -193,6 +195,8 @@
                                             type="no-results"
                                             title="No applications found"
                                             description="Try adjusting your search or filter."
+                                            titleKey="staff.no_applications"
+                                            descriptionKey="staff.no_applications_desc"
                                         />
                                     </td>
                                 </tr>

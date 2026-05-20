@@ -16,7 +16,7 @@
     <div class="w-full">
         <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-brand/8 dark:bg-indigo-900/30 rounded-full mb-4">
             <div class="w-1.5 h-1.5 rounded-full bg-accent pulse-dot"></div>
-            <span class="text-xs font-semibold text-brand dark:text-indigo-400 uppercase tracking-wide">New Password</span>
+            <span class="text-xs font-semibold text-brand dark:text-indigo-400 uppercase tracking-wide" data-i18n="auth.new_password">New Password</span>
         </div>
 
         <h2 class="text-[22px] font-bold text-brand dark:text-white mb-6 font-outfit" data-i18n="auth.reset_title">Reset Your Password</h2>
@@ -42,7 +42,7 @@
                     <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                 </div>
                 <input id="password" type="password" name="password" required autocomplete="new-password"
-                       placeholder="New Password" data-i18n-placeholder="auth.password"
+                       placeholder="New Password" data-i18n-placeholder="auth.new_password"
                        class="block w-full h-[48px] ltr:pl-11 rtl:pr-11 rtl:pl-4 ltr:pr-4 rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#e0e7ff] dark:focus:shadow-[0_0_0_3px_rgba(49,46,129,0.5)] transition-all duration-200">
                 <x-input-error :messages="$errors->get('password')" class="mt-1" />
                 <x-password-strength inputId="password" />

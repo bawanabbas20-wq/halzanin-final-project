@@ -61,13 +61,21 @@
                             <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                             <span data-i18n="nav.dashboard">Dashboard</span>
                         </a>
-                        <a href="#" class="text-white/70 hover:bg-white/5 hover:text-white flex items-center px-4 py-3 rounded-xl transition-all">
+                        <a href="{{ route('staff.queue') }}" class="{{ request()->routeIs('staff.queue') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
                             <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                             <span data-i18n="nav.all_applications">All Applications</span>
                         </a>
-                        <a href="#" class="text-white/70 hover:bg-white/5 hover:text-white flex items-center px-4 py-3 rounded-xl transition-all">
+                        <a href="{{ route('admin.users') }}" class="{{ request()->routeIs('admin.users') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
                             <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                             <span data-i18n="nav.users">User Management</span>
+                        </a>
+                        <a href="{{ route('admin.offdays') }}" class="{{ request()->routeIs('admin.offdays*') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
+                            <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            <span data-i18n="nav.off_days">Off Days</span>
+                        </a>
+                        <a href="{{ route('admin.sub-roles.index') }}" class="{{ request()->routeIs('admin.sub-roles*') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
+                            <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                            <span>Sub-Role Management</span>
                         </a>
                         <a href="{{ route('profile.edit') }}" class="{{ request()->routeIs('profile.edit') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
                             <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
@@ -78,10 +86,16 @@
                             <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                             <span data-i18n="nav.dashboard">Dashboard</span>
                         </a>
-                        <a href="#" class="text-white/70 hover:bg-white/5 hover:text-white flex items-center px-4 py-3 rounded-xl transition-all">
+                        <a href="{{ route('staff.queue') }}" class="{{ request()->routeIs('staff.queue') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
                             <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                             <span data-i18n="nav.queue">Application Queue</span>
                         </a>
+                        @if(auth()->user()->hasPermission('scan_qr_checkin'))
+                        <a href="{{ route('staff.scan') }}" class="{{ request()->routeIs('staff.scan') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
+                            <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            <span>QR Scanner</span>
+                        </a>
+                        @endif
                         <a href="{{ route('profile.edit') }}" class="{{ request()->routeIs('profile.edit') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
                             <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                             <span data-i18n="nav.profile">Profile</span>
@@ -99,7 +113,7 @@
                             <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                             <span data-i18n="nav.vault">Document Vault</span>
                         </a>
-                        <a href="#" class="text-white/70 hover:bg-white/5 hover:text-white flex items-center px-4 py-3 rounded-xl transition-all">
+                        <a href="{{ route('track') }}" class="{{ request()->routeIs('track*') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
                             <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                             <span data-i18n="nav.track">Track</span>
                         </a>
@@ -310,11 +324,11 @@
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                         <span class="text-[10px] font-semibold" data-i18n="nav.dash">Dash</span>
                     </a>
-                    <a href="#" class="flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-brand dark:hover:text-indigo-400">
+                    <a href="{{ route('staff.queue') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('staff.queue') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand dark:hover:text-indigo-400' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                         <span class="text-[10px] font-semibold" data-i18n="nav.apps">Apps</span>
                     </a>
-                    <a href="#" class="flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-brand dark:hover:text-indigo-400">
+                    <a href="{{ route('admin.users') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('admin.users') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand dark:hover:text-indigo-400' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                         <span class="text-[10px] font-semibold" data-i18n="nav.users">Users</span>
                     </a>
@@ -327,7 +341,7 @@
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                         <span class="text-[10px] font-semibold" data-i18n="nav.dashboard">Dashboard</span>
                     </a>
-                    <a href="#" class="flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-brand">
+                    <a href="{{ route('staff.queue') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('staff.queue') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                         <span class="text-[10px] font-semibold" data-i18n="nav.queue">Queue</span>
                     </a>
@@ -348,7 +362,7 @@
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                         <span class="text-[10px] font-semibold" data-i18n="nav.vault">Vault</span>
                     </a>
-                    <a href="#" class="flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-brand dark:hover:text-indigo-400">
+                    <a href="{{ route('track') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('track*') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand dark:hover:text-indigo-400' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                         <span class="text-[10px] font-semibold" data-i18n="nav.track">Track</span>
                     </a>
@@ -490,16 +504,16 @@
         <x-toast />
 
         @if(session('success'))
-        <script>document.addEventListener('DOMContentLoaded',function(){showToast('success',window.i18n ? i18n('common.success') : 'Success',@json(session('success')));});</script>
+        <script>document.addEventListener('DOMContentLoaded',function(){const msg=@json(session('success'));showToast('success',window.i18n ? i18n('common.success') : 'Success',window.i18nMessage ? i18nMessage(msg) : msg);});</script>
         @endif
         @if(session('error'))
-        <script>document.addEventListener('DOMContentLoaded',function(){showToast('error',window.i18n ? i18n('common.error') : 'Error',@json(session('error')));});</script>
+        <script>document.addEventListener('DOMContentLoaded',function(){const msg=@json(session('error'));showToast('error',window.i18n ? i18n('common.error') : 'Error',window.i18nMessage ? i18nMessage(msg) : msg);});</script>
         @endif
         @if(session('info'))
-        <script>document.addEventListener('DOMContentLoaded',function(){showToast('info',window.i18n ? i18n('common.info') : 'Info',@json(session('info')));});</script>
+        <script>document.addEventListener('DOMContentLoaded',function(){const msg=@json(session('info'));showToast('info',window.i18n ? i18n('common.info') : 'Info',window.i18nMessage ? i18nMessage(msg) : msg);});</script>
         @endif
         @if(session('warning'))
-        <script>document.addEventListener('DOMContentLoaded',function(){showToast('warning',window.i18n ? i18n('common.warning') : 'Warning',@json(session('warning')));});</script>
+        <script>document.addEventListener('DOMContentLoaded',function(){const msg=@json(session('warning'));showToast('warning',window.i18n ? i18n('common.warning') : 'Warning',window.i18nMessage ? i18nMessage(msg) : msg);});</script>
         @endif
         @if(session('status') === 'profile-updated')
         <script>document.addEventListener('DOMContentLoaded',function(){showToast('success',window.i18n ? i18n('common.profile_updated') : 'Profile Updated',window.i18n ? i18n('common.profile_saved') : 'Your profile has been saved successfully.');});</script>
@@ -781,7 +795,7 @@
 
                     const data = await res.json();
                     removeTyping();
-                    appendMsg('ai', data.reply || 'Sorry, something went wrong.');
+                    appendMsg('ai', data.reply || (window.i18n ? i18n('common.sorry_wrong') : 'Sorry, something went wrong.'));
 
                     // Show badge if chat is closed
                     if (!chatOpened) {
@@ -789,7 +803,7 @@
                     }
                 } catch (e) {
                     removeTyping();
-                    appendMsg('ai', 'Connection error. Please try again.');
+                    appendMsg('ai', window.i18n ? i18n('common.connection_error') : 'Connection error. Please try again.');
                 } finally {
                     sendBtn.disabled = false;
                     sendBtn.style.opacity = '1';

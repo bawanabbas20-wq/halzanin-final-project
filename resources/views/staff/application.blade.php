@@ -7,7 +7,7 @@
         <div class="flex items-center justify-between mb-6 animate-fade-in">
             <div>
                 <div class="flex items-center gap-3">
-                    <h2 class="text-2xl font-bold font-outfit text-gradient">Application Detail</h2>
+                    <h2 class="text-2xl font-bold font-outfit text-gradient" data-i18n="staff.application_detail">Application Detail</h2>
                     <span class="px-2.5 py-1 bg-brand/10 dark:bg-indigo-900/30 text-brand dark:text-indigo-400 text-sm font-mono font-bold tracking-widest rounded-xl">
                         {{ $application->tracking_code }}
                     </span>
@@ -21,7 +21,7 @@
                 <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                 </svg>
-                Back to Queue
+                <span data-i18n="staff.back_to_queue">Back to Queue</span>
             </a>
         </div>
 
@@ -54,42 +54,42 @@
                     <div class="h-1 bg-gradient-to-r from-brand via-indigo-500 to-accent"></div>
                     <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-slate-800/50 flex items-center gap-2">
                         <div class="w-1.5 h-5 rounded-full bg-brand dark:bg-indigo-400"></div>
-                        <h3 class="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">Appointment Information</h3>
+                        <h3 class="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider" data-i18n="staff.appointment_info">Appointment Information</h3>
                     </div>
                     <div class="p-6 grid grid-cols-1 sm:grid-cols-2 gap-y-5 gap-x-8">
                         <div>
-                            <p class="text-[11px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-semibold mb-1">Applicant Name</p>
+                            <p class="text-[11px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-semibold mb-1" data-i18n="track.applicant">Applicant Name</p>
                             <p class="text-sm font-bold text-gray-900 dark:text-white">{{ $application->appointment->full_name ?? '—' }}</p>
                         </div>
                         <div>
-                            <p class="text-[11px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-semibold mb-1">National ID</p>
+                            <p class="text-[11px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-semibold mb-1" data-i18n="book.national_id_short">National ID</p>
                             <p class="text-sm font-bold text-gray-900 dark:text-white font-mono">{{ $application->appointment->national_id_number ?? '—' }}</p>
                         </div>
                         <div>
-                            <p class="text-[11px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-semibold mb-1">Document Type</p>
+                            <p class="text-[11px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-semibold mb-1" data-i18n="track.doc_type">Document Type</p>
                             <span class="inline-block px-2.5 py-1 text-xs font-bold rounded-full bg-indigo-50 text-brand dark:bg-indigo-900/30 dark:text-indigo-400">
                                 {{ $application->appointment->document_type ?? '—' }}
                             </span>
                         </div>
                         <div>
-                            <p class="text-[11px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-semibold mb-1">Preferred Date</p>
+                            <p class="text-[11px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-semibold mb-1" data-i18n="book.preferred_date">Preferred Date</p>
                             <p class="text-sm font-bold text-gray-900 dark:text-white">
                                 {{ $application->appointment ? \Carbon\Carbon::parse($application->appointment->date)->format('M d, Y') : '—' }}
                             </p>
                         </div>
                         <div>
-                            <p class="text-[11px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-semibold mb-1">Time Slot</p>
+                            <p class="text-[11px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-semibold mb-1" data-i18n="book.time_slot">Time Slot</p>
                             <p class="text-sm font-bold text-gray-900 dark:text-white">{{ $application->appointment->time_slot ?? '—' }}</p>
                         </div>
                         <div>
-                            <p class="text-[11px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-semibold mb-1">Submitted At</p>
+                            <p class="text-[11px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-semibold mb-1" data-i18n="track.submitted">Submitted At</p>
                             <p class="text-sm font-bold text-gray-900 dark:text-white">
                                 {{ $application->submitted_at ? $application->submitted_at->format('M d, Y h:i A') : '—' }}
                             </p>
                         </div>
                         @if($application->appointment?->notes)
                             <div class="sm:col-span-2 bg-amber-50 dark:bg-amber-900/10 p-4 rounded-xl border border-amber-100 dark:border-amber-900/30">
-                                <p class="text-[11px] uppercase tracking-wider text-amber-500 dark:text-amber-400 font-semibold mb-1">Applicant Notes</p>
+                                <p class="text-[11px] uppercase tracking-wider text-amber-500 dark:text-amber-400 font-semibold mb-1" data-i18n="staff.applicant_notes">Applicant Notes</p>
                                 <p class="text-sm font-medium text-gray-800 dark:text-gray-200 italic">"{{ $application->appointment->notes }}"</p>
                             </div>
                         @endif
@@ -101,15 +101,15 @@
                     <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-slate-800/50 flex justify-between items-center">
                         <div class="flex items-center gap-2">
                             <div class="w-1.5 h-5 rounded-full bg-blue-500 dark:bg-blue-400"></div>
-                            <h3 class="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">Uploaded Documents</h3>
+                            <h3 class="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider" data-i18n="staff.uploaded_documents">Uploaded Documents</h3>
                         </div>
                         <span class="text-xs font-bold bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 px-2.5 py-1 rounded-full">
-                            {{ $application->documents->count() }} Files
+                            {{ $application->documents->count() }} <span data-i18n="common.files">Files</span>
                         </span>
                     </div>
                     <div class="p-5">
                         @if($application->documents->isEmpty())
-                            <p class="text-sm text-gray-500 dark:text-gray-400 text-center py-6">No documents uploaded yet.</p>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 text-center py-6" data-i18n="staff.no_documents">No documents uploaded yet.</p>
                         @else
                             <div class="space-y-2.5">
                                 @foreach($application->documents as $doc)
@@ -140,7 +140,7 @@
                                                 <div class="block bg-gray-300 dark:bg-gray-600 w-10 h-6 rounded-full transition-colors"></div>
                                                 <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform shadow-sm"></div>
                                             </div>
-                                            <span class="text-xs font-semibold text-gray-500 dark:text-gray-400">Verified</span>
+                                            <span class="text-xs font-semibold text-gray-500 dark:text-gray-400" data-i18n="staff.verified">Verified</span>
                                         </label>
                                     </div>
                                 @endforeach
@@ -158,7 +158,7 @@
                 <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden animate-fade-up" style="animation-delay: 300ms">
                     <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-slate-800/50 flex items-center gap-2">
                         <div class="w-1.5 h-5 rounded-full bg-emerald-500 dark:bg-emerald-400"></div>
-                        <h3 class="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">Status Timeline</h3>
+                        <h3 class="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider" data-i18n="track.timeline">Status Timeline</h3>
                     </div>
                     <div class="p-6">
                         @php
@@ -188,7 +188,7 @@
                                     </div>
                                     <div class="flex-grow ltr:pl-4 rtl:pr-4 pb-8">
                                         <div class="flex items-center gap-2 mb-0.5">
-                                            <span class="px-2.5 py-0.5 text-[11px] font-bold rounded-full capitalize {{ $tc['badge_bg'] }} {{ $tc['badge_t'] }}">
+                                            <span class="px-2.5 py-0.5 text-[11px] font-bold rounded-full capitalize {{ $tc['badge_bg'] }} {{ $tc['badge_t'] }}" data-i18n="status.{{ $log->status }}">
                                                 {{ str_replace('_', ' ', $log->status) }}
                                             </span>
                                         </div>
@@ -227,12 +227,12 @@
                     <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden animate-fade-up" style="animation-delay: 400ms">
                         <div class="h-1 bg-gradient-to-r from-brand via-indigo-500 to-accent"></div>
                         <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-slate-800/50">
-                            <h3 class="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider text-center">Update Status</h3>
+                            <h3 class="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider text-center" data-i18n="staff.update_status">Update Status</h3>
                         </div>
 
                         <div class="p-6 flex flex-col items-center">
-                            <p class="text-[11px] text-gray-400 dark:text-gray-500 uppercase font-semibold mb-2">Current Status</p>
-                            <span class="px-4 py-2 rounded-full font-bold text-sm uppercase {{ $currBadge['bg'] }} {{ $currBadge['text'] }} mb-8">
+                            <p class="text-[11px] text-gray-400 dark:text-gray-500 uppercase font-semibold mb-2" data-i18n="staff.current_status">Current Status</p>
+                            <span class="px-4 py-2 rounded-full font-bold text-sm uppercase {{ $currBadge['bg'] }} {{ $currBadge['text'] }} mb-8" data-i18n="status.{{ $application->current_status }}">
                                 {{ str_replace('_', ' ', $application->current_status) }}
                             </span>
 
@@ -250,7 +250,7 @@
                                     @method('PATCH')
 
                                     <div class="mb-4">
-                                        <label for="new_status" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">Select Next Status</label>
+                                        <label for="new_status" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5" data-i18n="staff.select_next_status">Select Next Status</label>
                                         <div class="relative">
                                             <div class="absolute inset-y-0 ltr:left-0 rtl:right-0 flex items-center ltr:pl-3 rtl:pr-3 pointer-events-none">
                                                 <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -259,24 +259,24 @@
                                             </div>
                                             <select id="new_status" name="new_status" required x-model="status"
                                                     class="block w-full h-[48px] ltr:pl-9 rtl:pr-9 rtl:pl-3 ltr:pr-3 rounded-xl border-gray-200 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 transition-all font-semibold text-sm">
-                                                <option value="">Choose...</option>
+                                                <option value="" data-i18n="common.choose">Choose...</option>
                                                 @foreach ($nextStatuses as $value => $label)
-                                                    <option value="{{ $value }}">{{ $label }}</option>
+                                                    <option value="{{ $value }}" data-i18n="status.{{ $value }}">{{ $label }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
 
                                     <div class="mb-5" x-show="status !== 'rejected'">
-                                        <label for="notes" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">Notes for the citizen</label>
+                                        <label for="notes" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5" data-i18n="staff.notes_for_citizen">Notes for the citizen</label>
                                         <textarea id="notes" name="notes" rows="3" x-model="notes"
                                                   class="block w-full p-3 rounded-xl border-gray-200 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 transition-all text-sm resize-none"></textarea>
-                                        <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">Visible on the citizen's public tracking page.</p>
+                                        <p class="text-xs text-gray-400 dark:text-gray-500 mt-1" data-i18n="staff.notes_help">Visible on the citizen's public tracking page.</p>
                                     </div>
 
                                     <button type="submit" x-ref="submitBtn"
                                             class="w-full h-[52px] bg-brand text-white rounded-xl font-semibold font-outfit shadow-brand-btn hover:shadow-brand-btn-hover hover:-translate-y-0.5 transition-all">
-                                        Update Status
+                                        <span data-i18n="staff.update_status">Update Status</span>
                                     </button>
 
                                     {{-- Approval Modal --}}
@@ -288,22 +288,22 @@
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                                     </svg>
                                                 </div>
-                                                <h2 class="text-xl font-bold font-outfit">Confirm Approval</h2>
+                                                <h2 class="text-xl font-bold font-outfit" data-i18n="staff.confirm_approval">Confirm Approval</h2>
                                             </div>
                                             <p class="text-sm text-gray-600 dark:text-gray-300 mb-6">
-                                                You are about to <strong>approve</strong> this application. The citizen will be notified by WhatsApp if a phone number is available. This action cannot be undone.
+                                                <span data-i18n="staff.confirm_approval_body">You are about to approve this application. The citizen will be notified by WhatsApp if a phone number is available. This action cannot be undone.</span>
                                             </p>
                                             <div class="flex items-center justify-end gap-3">
                                                 <button type="button" x-on:click="$dispatch('close')"
                                                         class="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-gray-700 dark:text-gray-200 rounded-xl font-semibold transition-colors text-sm">
-                                                    Cancel
+                                                    <span data-i18n="common.cancel">Cancel</span>
                                                 </button>
                                                 <button type="button" x-on:click="confirmed = true; $refs.submitBtn.click()"
                                                         class="px-5 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-xl font-semibold shadow-md transition-colors text-sm flex items-center gap-2">
                                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                                     </svg>
-                                                    Confirm Approval
+                                                    <span data-i18n="staff.confirm_approval">Confirm Approval</span>
                                                 </button>
                                             </div>
                                         </div>
@@ -318,26 +318,27 @@
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                                                     </svg>
                                                 </div>
-                                                <h2 class="text-xl font-bold font-outfit">Confirm Rejection</h2>
+                                                <h2 class="text-xl font-bold font-outfit" data-i18n="staff.confirm_rejection">Confirm Rejection</h2>
                                             </div>
                                             <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
-                                                Are you sure you want to reject this application? This cannot be undone.
+                                                <span data-i18n="staff.confirm_rejection_body">Are you sure you want to reject this application? This cannot be undone.</span>
                                             </p>
                                             <div class="mb-6">
-                                                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Rejection reason (required)</label>
+                                                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2" data-i18n="staff.rejection_reason">Rejection reason (required)</label>
                                                 <textarea rows="4" x-model="notes" required x-ref="rejectNotes"
                                                           placeholder="Please explain why this application is being rejected..."
+                                                          data-i18n-placeholder="staff.rejection_placeholder"
                                                           class="block w-full p-3 rounded-xl border-gray-200 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-red-500 focus:ring-0 transition-all text-sm resize-none"></textarea>
                                             </div>
                                             <div class="flex items-center justify-end gap-3">
                                                 <button type="button" x-on:click="$dispatch('close-modal', 'confirm-rejection')"
                                                         class="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-gray-700 dark:text-gray-200 rounded-xl font-semibold transition-colors text-sm">
-                                                    Cancel
+                                                    <span data-i18n="common.cancel">Cancel</span>
                                                 </button>
                                                 <button type="button"
                                                         x-on:click="if(notes.trim() !== '') { confirmed = true; $refs.submitBtn.click(); } else { $refs.rejectNotes.focus(); }"
                                                         class="px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl font-semibold shadow-md transition-colors text-sm">
-                                                    Confirm Rejection
+                                                    <span data-i18n="staff.confirm_rejection">Confirm Rejection</span>
                                                 </button>
                                             </div>
                                         </div>
@@ -350,9 +351,9 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                                         </svg>
                                     </div>
-                                    <h4 class="text-sm font-bold text-gray-900 dark:text-white mb-1">Status Finalized</h4>
+                                    <h4 class="text-sm font-bold text-gray-900 dark:text-white mb-1" data-i18n="staff.status_finalized">Status Finalized</h4>
                                     <p class="text-xs text-gray-500 dark:text-gray-400">
-                                        This application has reached its final state. No further updates are possible.
+                                        <span data-i18n="staff.status_finalized_desc">This application has reached its final state. No further updates are possible.</span>
                                     </p>
                                 </div>
                             @endif

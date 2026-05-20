@@ -425,7 +425,7 @@ async function selectDate(ds) {
         const r    = await fetch(`${SLOTS_URL}?date=${ds}`, { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
         const data = await r.json();
         if (data.error) {
-            content.innerHTML = `<p class="text-sm text-red-500 dark:text-red-400">${data.error}</p>`;
+            content.innerHTML = `<p class="text-sm text-red-500 dark:text-red-400">${window.i18nMessage ? i18nMessage(data.error) : data.error}</p>`;
             return;
         }
         if (!data.slots?.length) {
@@ -695,7 +695,8 @@ async function submitWizard() {
             const validationMessages = data.errors
                 ? Object.values(data.errors).flat().join(' ')
                 : '';
-            if (window.showToast) showToast('error', tr('book.error_title'), validationMessages || data.message || tr('book.failed_submit'));
+            const message = validationMessages || data.message || tr('book.failed_submit');
+            if (window.showToast) showToast('error', tr('book.error_title'), window.i18nMessage ? i18nMessage(message) : message);
         }
     } catch(e) {
         btn.disabled = false; btn.innerHTML = orig;

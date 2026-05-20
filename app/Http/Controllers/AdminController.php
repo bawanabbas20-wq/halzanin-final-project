@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Application;
 use App\Models\OffDay;
+use App\Models\TaskType;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +13,23 @@ class AdminController extends Controller
 {
     public function index()
     {
-        return view('admin.dashboard');
+        $stats = [
+            'total'        => Application::count(),
+            'submitted'    => Application::where('current_status', 'submitted')->count(),
+            'received'     => Application::where('current_status', 'received')->count(),
+            'under_review' => Application::where('current_status', 'under_review')->count(),
+            'approved'     => Application::where('current_status', 'approved')->count(),
+            'rejected'     => Application::where('current_status', 'rejected')->count(),
+            'citizens'     => User::where('role', 'citizen')->count(),
+            'today'        => Application::whereDate('created_at', today())->count(),
+        ];
+
+        $recent = Application::with(['appointment', 'user'])
+            ->latest()
+            ->limit(10)
+            ->get();
+
+        return view('admin.dashboard', compact('stats', 'recent'));
     }
 
     public function offDays(Request $request)
@@ -27,9 +45,12 @@ class AdminController extends Controller
 
     public function users()
     {
-        $users = User::latest()->paginate(15);
+        $users = User::with(['taskTypes', 'subRoles'])->latest()->paginate(15);
+        $taskTypes = TaskType::orderBy('name')->get();
+        $subRoles = \App\Models\SubRole::orderBy('name')->get();
+        $staffUsers = User::where('role', 'staff')->with(['taskTypes', 'subRoles'])->get();
 
-        return view('admin.users', compact('users'));
+        return view('admin.users', compact('users', 'taskTypes', 'subRoles', 'staffUsers'));
     }
 
     public function updateUserRole(Request $request, User $user)
@@ -81,5 +102,73 @@ class AdminController extends Controller
 
         return redirect()->route('admin.offdays')
             ->with('success', 'Off day removed.');
+    }
+
+    public function taskTypes()
+    {
+        $taskTypes = TaskType::withCount('staff')->latest()->get();
+        $staffUsers = User::where('role', 'staff')->with('taskTypes')->get();
+        $allApplications = Application::with(['user', 'assignedStaff'])->latest()->get();
+
+        return view('admin.task-types.index', compact('taskTypes', 'staffUsers', 'allApplications'));
+    }
+
+    public function storeTaskType(Request $request)
+    {
+        $request->validate([
+            'name'  => 'required|string|max:100|unique:task_types,name',
+            'color' => 'required|in:indigo,green,blue,amber,rose,purple',
+        ]);
+
+        TaskType::create([
+            'name'       => $request->name,
+            'color'      => $request->color,
+            'created_by' => Auth::id(),
+        ]);
+
+        return redirect()->route('admin.task-types')
+            ->with('success', "Task type \"{$request->name}\" created.");
+    }
+
+    public function destroyTaskType(TaskType $taskType)
+    {
+        $taskType->delete();
+
+        return redirect()->route('admin.task-types')
+            ->with('success', 'Task type deleted.');
+    }
+
+    public function updateStaffTaskTypes(Request $request, User $user)
+    {
+        abort_if($user->role !== 'staff', 403, 'User is not a staff member.');
+
+        $request->validate([
+            'task_type_ids'   => 'nullable|array',
+            'task_type_ids.*' => 'exists:task_types,id',
+        ]);
+
+        $user->taskTypes()->sync($request->task_type_ids ?? []);
+
+        return redirect()->back()->with('success', "Task types updated for {$user->name}.");
+    }
+
+    public function assignApplication(Request $request, Application $application)
+    {
+        $request->validate([
+            'assigned_to' => 'nullable|exists:users,id',
+        ]);
+
+        if ($request->assigned_to) {
+            $staff = User::findOrFail($request->assigned_to);
+            abort_if($staff->role !== 'staff', 422, 'Target user is not a staff member.');
+        }
+
+        $application->update(['assigned_to' => $request->assigned_to]);
+
+        $msg = $request->assigned_to
+            ? "Application assigned to " . User::find($request->assigned_to)->name . "."
+            : "Application unassigned.";
+
+        return redirect()->back()->with('success', $msg);
     }
 }

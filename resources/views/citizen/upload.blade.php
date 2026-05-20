@@ -75,17 +75,17 @@
                     <label for="check_{{ $item['id'] }}" class="font-semibold text-gray-800 dark:text-white cursor-pointer select-none text-sm" data-i18n="upload.{{ $item['id'] }}">{{ $item['label'] }}</label>
                     <span class="ltr:ml-auto rtl:mr-auto">
                         <span class="doc-badge-pending inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-gray-100 dark:bg-slate-700 text-gray-500 dark:text-gray-400 font-semibold">
-                            <span class="w-1.5 h-1.5 rounded-full bg-gray-400 inline-block"></span> Pending
+                            <span class="w-1.5 h-1.5 rounded-full bg-gray-400 inline-block"></span> <span data-i18n="common.pending">Pending</span>
                         </span>
                         <span class="doc-badge-ready hidden inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 font-semibold">
-                            <span class="w-1.5 h-1.5 rounded-full bg-green-500 inline-block"></span> Ready
+                            <span class="w-1.5 h-1.5 rounded-full bg-green-500 inline-block"></span> <span data-i18n="common.ready">Ready</span>
                         </span>
                     </span>
                 </div>
                 <div id="file_{{ $item['id'] }}_wrap" class="hidden mt-3 pl-8">
                     <input id="{{ $item['id'] }}_file" name="{{ $item['name'] }}" type="file" accept=".jpg,.jpeg,.png,.pdf"
                            class="block w-full text-sm text-gray-500 dark:text-gray-400 file:mr-3 file:py-2 file:px-4 file:rounded-[8px] file:border-0 file:text-sm file:font-semibold file:bg-brand/10 file:text-brand dark:file:bg-indigo-900/30 dark:file:text-indigo-300 hover:file:bg-brand/20 transition-all cursor-pointer">
-                    <p class="text-xs text-gray-400 dark:text-gray-500 mt-1.5">{{ $item['hint'] }}</p>
+                    <p class="text-xs text-gray-400 dark:text-gray-500 mt-1.5" data-i18n="upload.file_help_2mb">{{ $item['hint'] }}</p>
                     <x-input-error :messages="$errors->get($item['name'])" class="mt-1" />
                 </div>
             </div>
