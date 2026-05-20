@@ -1,4 +1,4 @@
-@extends('layouts.halzanin-app')
+﻿@extends('layouts.halzanin-app')
 
 @section('content')
 <div class="max-w-2xl mx-auto space-y-6">
@@ -10,22 +10,22 @@
             <p class="text-sm text-gray-500 dark:text-gray-400 mt-1" data-i18n="upload.subtitle">Provide the required files for your application.</p>
         </div>
         <a href="{{ route('citizen.dashboard') }}"
-           class="flex items-center gap-1.5 text-sm font-semibold text-gray-500 dark:text-gray-400 hover:text-brand dark:hover:text-indigo-400 transition-colors">
+           class="flex items-center gap-1.5 text-sm font-semibold text-gray-500 dark:text-gray-400 hover:text-brand dark:hover:text-amber-400 transition-colors">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
             <span data-i18n="common.back">Back</span>
         </a>
     </div>
 
     {{-- Context banner --}}
-    <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-indigo-100 dark:border-indigo-900/40 overflow-hidden animate-fade-up" style="animation-delay: 100ms">
-        <div class="h-1 bg-gradient-to-r from-brand via-indigo-500 to-accent"></div>
+    <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-indigo-100 dark:border-amber-900/40 overflow-hidden animate-fade-up" style="animation-delay: 100ms">
+        <div class="h-1 bg-gradient-to-r from-brand via-amber-500 to-accent"></div>
         <div class="p-5 flex items-center gap-4">
-            <div class="w-10 h-10 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl flex items-center justify-center shrink-0">
-                <svg class="w-5 h-5 text-brand dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            <div class="w-10 h-10 bg-indigo-100 dark:bg-amber-900/30 rounded-xl flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5 text-brand dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
             </div>
             <div>
                 <p class="text-xs text-gray-400 uppercase tracking-wider font-semibold mb-0.5" data-i18n="upload.application">Application</p>
-                <p class="font-bold font-mono text-brand dark:text-indigo-400 tracking-widest text-lg">{{ $application->tracking_code }}</p>
+                <p class="font-bold font-mono text-brand dark:text-amber-400 tracking-widest text-lg">{{ $application->tracking_code }}</p>
             </div>
         </div>
     </div>
@@ -45,7 +45,7 @@
 
     {{-- Upload Form --}}
     <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay: 200ms">
-        <div class="h-1 bg-gradient-to-r from-indigo-400 via-purple-500 to-brand"></div>
+        <div class="h-1 bg-gradient-to-r from-amber-400 via-purple-500 to-brand"></div>
 
         <div class="px-6 py-4 border-b border-gray-100 dark:border-slate-800">
             <h3 class="text-sm font-bold text-gray-800 dark:text-white uppercase tracking-wider" data-i18n="upload.checklist">Requirements Checklist</h3>
@@ -84,7 +84,7 @@
                 </div>
                 <div id="file_{{ $item['id'] }}_wrap" class="hidden mt-3 pl-8">
                     <input id="{{ $item['id'] }}_file" name="{{ $item['name'] }}" type="file" accept=".jpg,.jpeg,.png,.pdf"
-                           class="block w-full text-sm text-gray-500 dark:text-gray-400 file:mr-3 file:py-2 file:px-4 file:rounded-[8px] file:border-0 file:text-sm file:font-semibold file:bg-brand/10 file:text-brand dark:file:bg-indigo-900/30 dark:file:text-indigo-300 hover:file:bg-brand/20 transition-all cursor-pointer">
+                           class="block w-full text-sm text-gray-500 dark:text-gray-400 file:mr-3 file:py-2 file:px-4 file:rounded-[8px] file:border-0 file:text-sm file:font-semibold file:bg-brand/10 file:text-brand dark:file:bg-indigo-900/30 dark:file:text-amber-300 hover:file:bg-brand/20 transition-all cursor-pointer">
                     <p class="text-xs text-gray-400 dark:text-gray-500 mt-1.5" data-i18n="upload.file_help_2mb">{{ $item['hint'] }}</p>
                     <x-input-error :messages="$errors->get($item['name'])" class="mt-1" />
                 </div>

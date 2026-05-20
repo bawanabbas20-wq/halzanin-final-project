@@ -1,4 +1,4 @@
-@extends('layouts.halzanin-app')
+﻿@extends('layouts.halzanin-app')
 
 @section('content')
 <div class="max-w-6xl mx-auto space-y-6">
@@ -15,7 +15,7 @@
 
         {{-- Calendar Card --}}
         <div class="lg:col-span-2 bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay: 100ms">
-            <div class="h-1 bg-gradient-to-r from-brand via-indigo-500 to-accent"></div>
+            <div class="h-1 bg-gradient-to-r from-brand via-amber-500 to-accent"></div>
             <div class="p-6">
 
                 {{-- Month navigation --}}
@@ -92,7 +92,7 @@
 
                         <div class="calendar-day rounded-xl p-1 text-center transition select-none
                                     {{ $bgClass }}
-                                    {{ $isToday ? 'ring-2 ring-offset-1 ring-brand dark:ring-indigo-400' : '' }}"
+                                    {{ $isToday ? 'ring-2 ring-offset-1 ring-brand dark:ring-amber-400' : '' }}"
                              data-date="{{ $dateStr }}"
                              data-off="{{ $isOffDay ? '1' : '0' }}"
                              @if(!$isOffDay) onclick="selectDay(this)" @endif>
@@ -119,7 +119,7 @@
 
         {{-- Day panel --}}
         <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay: 200ms">
-            <div class="h-1 bg-gradient-to-r from-indigo-400 via-purple-500 to-brand"></div>
+            <div class="h-1 bg-gradient-to-r from-amber-400 via-purple-500 to-brand"></div>
             <div class="p-6">
                 <div id="panel-empty" class="text-center py-12 text-gray-400 dark:text-gray-500">
                     <div class="w-14 h-14 bg-gray-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-3">
@@ -134,7 +134,7 @@
                 <div id="panel-content" class="hidden">
                     <div class="flex items-center justify-between mb-4">
                         <h3 id="panel-date" class="text-base font-bold text-gray-900 dark:text-white"></h3>
-                        <span id="panel-count" class="text-xs bg-brand/10 dark:bg-indigo-900/30 text-brand dark:text-indigo-400 px-2.5 py-0.5 rounded-full font-semibold"></span>
+                        <span id="panel-count" class="text-xs bg-brand/10 dark:bg-amber-900/30 text-brand dark:text-amber-400 px-2.5 py-0.5 rounded-full font-semibold"></span>
                     </div>
 
                     <div id="panel-loading" class="text-center py-6 hidden">
@@ -224,7 +224,7 @@ function renderAppointments(appointments) {
                 <div class="flex flex-wrap gap-1.5">
                     ${appt.documents.map(d => {
                         if (d.source === 'vault') {
-                            return `<span class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-medium">📦 ${d.name} · Vault</span>`;
+                            return `<span class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-indigo-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 font-medium">📦 ${d.name} · Vault</span>`;
                         } else if (d.source === 'upload') {
                             const viewUrl = '/staff/documents/' + d.id + '/file';
                             return `<a href="${viewUrl}" target="_blank" class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 font-medium hover:bg-blue-200 dark:hover:bg-blue-900/50">📤 ${d.name} · View ↗</a>`;
@@ -240,7 +240,7 @@ function renderAppointments(appointments) {
                 <div>
                     <p class="text-sm font-bold text-gray-800 dark:text-white">${timeLabels[appt.time_slot] || appt.time_slot}</p>
                     <p class="text-sm text-gray-600 dark:text-gray-300">${appt.full_name || appt.citizen}</p>
-                    ${appt.document_type ? `<p class="text-xs text-indigo-600 dark:text-indigo-400 font-medium mt-0.5">${trDoc(appt.document_type)}</p>` : ''}
+                    ${appt.document_type ? `<p class="text-xs text-amber-600 dark:text-amber-400 font-medium mt-0.5">${trDoc(appt.document_type)}</p>` : ''}
                     ${appt.notes ? `<p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5 italic">${appt.notes}</p>` : ''}
                 </div>
                 <span id="badge-${appt.id}" class="text-[10px] px-2.5 py-0.5 rounded-full font-bold ${s.cls}">${tr(s.key)}</span>

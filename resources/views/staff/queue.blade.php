@@ -1,4 +1,4 @@
-@extends('layouts.halzanin-app')
+﻿@extends('layouts.halzanin-app')
 
 @section('content')
     <div class="space-y-6 max-w-6xl mx-auto">
@@ -8,7 +8,7 @@
             <div>
                 <div class="flex items-center gap-3">
                     <h2 class="text-2xl font-bold font-outfit text-gradient" data-i18n="Application Queue">Application Queue</h2>
-                    <span class="px-3 py-1 bg-brand/10 dark:bg-indigo-900/30 text-brand dark:text-indigo-400 text-sm font-bold rounded-full">
+                    <span class="px-3 py-1 bg-brand/10 dark:bg-amber-900/30 text-brand dark:text-amber-400 text-sm font-bold rounded-full">
                         {{ $applications->total() }}
                     </span>
                 </div>
@@ -94,7 +94,7 @@
                                 </span>
                             </div>
                             <div class="mb-3 flex flex-col space-y-1">
-                                <span class="font-mono font-bold text-brand dark:text-indigo-400 text-sm tracking-tight">{{ $app->tracking_code }}</span>
+                                <span class="font-mono font-bold text-brand dark:text-amber-400 text-sm tracking-tight">{{ $app->tracking_code }}</span>
                                 <span class="text-xs text-gray-500 dark:text-gray-400">{{ $app->appointment->document_type ?? '—' }}</span>
                             </div>
                             <div class="flex items-center justify-between pt-3 border-t border-gray-100 dark:border-gray-800">
@@ -102,7 +102,7 @@
                                     {{ $app->submitted_at ? $app->submitted_at->format('M d, Y') : '—' }}
                                 </span>
                                 <a href="{{ route('staff.applications.show', $app->id) }}"
-                                   class="inline-flex items-center gap-1.5 px-4 py-1.5 text-xs font-semibold rounded-xl border border-brand text-brand dark:border-indigo-400 dark:text-indigo-400 hover:bg-brand/5 transition-colors"
+                                   class="inline-flex items-center gap-1.5 px-4 py-1.5 text-xs font-semibold rounded-xl border border-brand text-brand dark:border-amber-400 dark:text-amber-400 hover:bg-brand/5 transition-colors"
                                    data-i18n="View">
                                     View
                                     <svg class="w-3 h-3 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -164,7 +164,7 @@
                                             <span class="text-sm font-bold text-gray-900 dark:text-white">{{ $appName }}</span>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4 text-sm font-mono font-bold text-brand dark:text-indigo-400">{{ $app->tracking_code }}</td>
+                                    <td class="px-6 py-4 text-sm font-mono font-bold text-brand dark:text-amber-400">{{ $app->tracking_code }}</td>
                                     <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-300">{{ $app->appointment->document_type ?? '—' }}</td>
                                     <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-300">
                                         {{ $app->appointment ? \Carbon\Carbon::parse($app->appointment->date)->format('M d, Y') : '—' }}

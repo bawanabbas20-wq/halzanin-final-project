@@ -1,9 +1,9 @@
-@extends('layouts.halzanin-app')
+﻿@extends('layouts.halzanin-app')
 
 @section('content')
 <div class="w-full max-w-[580px] mx-auto">
     <div class="bg-white dark:bg-[#1e293b] rounded-[16px] shadow-sm border border-gray-100 dark:border-slate-800 relative overflow-hidden">
-        <div class="h-1 bg-gradient-to-r from-brand via-indigo-500 to-accent"></div>
+        <div class="h-1 bg-gradient-to-r from-brand via-amber-500 to-accent"></div>
         <div class="p-6 lg:p-8">
         <h2 class="text-2xl font-bold text-gradient font-outfit text-center mb-8" data-i18n="book.short_title">Book Appointment</h2>
 
@@ -17,7 +17,7 @@
                     <span class="step-num">{{ $n }}</span>
                     <svg class="step-check hidden w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                 </div>
-                <span class="text-xs font-semibold mt-2 text-center {{ $n === 1 ? 'text-brand dark:text-indigo-400' : 'text-gray-400' }}" data-i18n="{{ $step[0] }}">{{ $step[1] }}</span>
+                <span class="text-xs font-semibold mt-2 text-center {{ $n === 1 ? 'text-brand dark:text-amber-400' : 'text-gray-400' }}" data-i18n="{{ $step[0] }}">{{ $step[1] }}</span>
             </div>
             @endforeach
         </div>
@@ -101,9 +101,9 @@
 
                 {{-- STEP 3: Upload Documents --}}
                 <div class="w-1/4 shrink-0 px-1" id="step-3">
-                    <div class="mb-4 p-4 bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800 rounded-[10px]">
-                        <p class="text-sm font-semibold text-brand dark:text-indigo-300 mb-1" data-i18n="book.required_documents">Required Documents</p>
-                        <p id="doc-type-label" class="text-xs text-indigo-600 dark:text-indigo-400" data-i18n="book.select_doc_first">Select a document type in Step 2 first.</p>
+                    <div class="mb-4 p-4 bg-amber-50 dark:bg-amber-900/20 border border-indigo-100 dark:border-amber-800 rounded-[10px]">
+                        <p class="text-sm font-semibold text-brand dark:text-amber-300 mb-1" data-i18n="book.required_documents">Required Documents</p>
+                        <p id="doc-type-label" class="text-xs text-amber-600 dark:text-amber-400" data-i18n="book.select_doc_first">Select a document type in Step 2 first.</p>
                     </div>
                     <div id="doc-upload-fields" class="space-y-4">
                         {{-- Dynamically rendered by JS --}}
@@ -118,7 +118,7 @@
                 {{-- STEP 4: Review --}}
                 <div class="w-1/4 shrink-0 px-1" id="step-4">
                     <div class="bg-gray-50 dark:bg-slate-800/50 rounded-[10px] border border-gray-200 dark:border-gray-700 p-5 mb-4">
-                        <h3 class="text-sm font-semibold text-brand dark:text-indigo-400 mb-4 uppercase tracking-wider" data-i18n="book.summary">Summary</h3>
+                        <h3 class="text-sm font-semibold text-brand dark:text-amber-400 mb-4 uppercase tracking-wider" data-i18n="book.summary">Summary</h3>
                         <div class="grid grid-cols-2 gap-y-4 gap-x-2">
                             <div><p class="text-[11px] text-gray-500 uppercase tracking-wide" data-i18n="book.full_name">Full Name</p><p id="sum-name" class="font-medium text-gray-900 dark:text-white text-sm mt-0.5 truncate"></p></div>
                             <div><p class="text-[11px] text-gray-500 uppercase tracking-wide" data-i18n="book.national_id_short">National ID</p><p id="sum-id" class="font-medium text-gray-900 dark:text-white text-sm mt-0.5 truncate"></p></div>
@@ -127,10 +127,10 @@
                         </div>
                     </div>
                     <div id="sum-files-section" class="bg-gray-50 dark:bg-slate-800/50 rounded-[10px] border border-gray-200 dark:border-gray-700 p-5 mb-4">
-                        <h3 class="text-sm font-semibold text-brand dark:text-indigo-400 mb-3 uppercase tracking-wider" data-i18n="book.uploaded_documents">Uploaded Documents</h3>
+                        <h3 class="text-sm font-semibold text-brand dark:text-amber-400 mb-3 uppercase tracking-wider" data-i18n="book.uploaded_documents">Uploaded Documents</h3>
                         <ul id="sum-files" class="space-y-1.5 text-sm text-gray-700 dark:text-gray-300"></ul>
                     </div>
-                    <div class="flex items-start space-x-3 bg-indigo-50 dark:bg-indigo-900/20 text-brand dark:text-indigo-300 p-4 rounded-[10px] mb-5 border border-indigo-100 dark:border-indigo-800">
+                    <div class="flex items-start space-x-3 bg-amber-50 dark:bg-amber-900/20 text-brand dark:text-amber-300 p-4 rounded-[10px] mb-5 border border-indigo-100 dark:border-amber-800">
                         <svg class="w-5 h-5 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
                         <p class="text-sm" data-i18n="book.qr_notice">You will receive a unique QR tracking code after submission.</p>
                     </div>
@@ -192,7 +192,7 @@ function renderDocFields(docType) {
                 📎 ${doc.label} <span class="text-red-500">*</span>
             </label>
             <input type="file" name="${doc.name}" accept=".jpg,.jpeg,.png,.pdf" required
-                class="block w-full text-sm text-gray-500 dark:text-gray-400 file:mr-3 file:py-2 file:px-4 file:rounded-[8px] file:border-0 file:text-sm file:font-semibold file:bg-brand/10 file:text-brand dark:file:bg-indigo-900/30 dark:file:text-indigo-300 hover:file:bg-brand/20 transition-all" />
+                class="block w-full text-sm text-gray-500 dark:text-gray-400 file:mr-3 file:py-2 file:px-4 file:rounded-[8px] file:border-0 file:text-sm file:font-semibold file:bg-brand/10 file:text-brand dark:file:bg-indigo-900/30 dark:file:text-amber-300 hover:file:bg-brand/20 transition-all" />
             <p class="text-xs text-gray-400 mt-1">JPG, PNG or PDF — max 5MB</p>`;
         div.querySelector('label').childNodes[0].textContent = `📎 ${trDoc(doc.label)} `;
         div.querySelector('p').textContent = tr('book.file_help');
@@ -251,7 +251,7 @@ function updateIndicators(target) {
             lbl.className = 'text-xs font-semibold mt-2 text-center text-accent';
         } else if (i === target) {
             ind.className = 'w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-colors bg-brand text-white shadow-md border-0';
-            lbl.className = 'text-xs font-semibold mt-2 text-center text-brand dark:text-indigo-400';
+            lbl.className = 'text-xs font-semibold mt-2 text-center text-brand dark:text-amber-400';
         }
     }
 }

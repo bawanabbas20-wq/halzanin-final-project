@@ -131,13 +131,15 @@ class AppointmentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'full_name'          => 'required|string|max:255',
-            'national_id_number' => 'required|string|max:255',
-            'document_type'      => 'required|string|max:255',
+            'full_name'          => 'required|string|min:2|max:255',
+            // SECURITY: tightened to realistic max lengths; Iraqi national IDs are ≤20 chars
+            'national_id_number' => 'required|string|max:50',
+            'document_type'      => 'required|string|max:100',
             'date'               => 'required|date|after_or_equal:today',
             'time_slot'          => 'required|in:09:00,10:00,11:00,12:00,13:00',
             'notes'              => 'nullable|string|max:500',
-            'docs'               => 'nullable|array',
+            // SECURITY: max:10 prevents submitting hundreds of document entries in one request
+            'docs'               => 'nullable|array|max:10',
             'docs.*.name'        => 'required_with:docs|string|max:255',
             'docs.*.source'      => 'required_with:docs|in:vault,upload,confirmed',
             'doc_files.*'        => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:5120',

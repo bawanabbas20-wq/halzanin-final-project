@@ -25,7 +25,7 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3 lg:gap-5">
             @php
                 $stats = [
-                    ['label' => 'Total',       'value' => $total,     'delay' =>   0, 'icon_bg' => 'bg-indigo-50 dark:bg-indigo-900/30', 'icon_c' => 'text-brand dark:text-indigo-400',  'ring' => 'ring-indigo-100 dark:ring-indigo-900/40', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>'],
+                    ['label' => 'Total',       'value' => $total,     'delay' =>   0, 'icon_bg' => 'bg-amber-50 dark:bg-amber-900/30', 'icon_c' => 'text-brand dark:text-amber-400',  'ring' => 'ring-amber-100 dark:ring-amber-900/40', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>'],
                     ['label' => 'Pending',     'value' => $pending,   'delay' =>  80, 'icon_bg' => 'bg-amber-50 dark:bg-amber-900/30',   'icon_c' => 'text-amber-500 dark:text-amber-400', 'ring' => 'ring-amber-100 dark:ring-amber-900/30', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>'],
                     ['label' => 'Reviewing',   'value' => $reviewing, 'delay' => 160, 'icon_bg' => 'bg-blue-50 dark:bg-blue-900/30',    'icon_c' => 'text-blue-500 dark:text-blue-400',   'ring' => 'ring-blue-100 dark:ring-blue-900/30',   'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>'],
                     ['label' => 'Completed',   'value' => $completed, 'delay' => 240, 'icon_bg' => 'bg-emerald-50 dark:bg-emerald-900/30','icon_c' => 'text-emerald-500 dark:text-emerald-400','ring' => 'ring-emerald-100 dark:ring-emerald-900/30','icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>'],
@@ -48,11 +48,11 @@
              style="animation-delay: 320ms">
 
             {{-- header strip --}}
-            <div class="h-1.5 bg-gradient-to-r from-brand via-indigo-500 to-accent"></div>
+            <div class="h-1.5 bg-gradient-to-r from-brand via-amber-500 to-accent"></div>
 
             <div class="p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center gap-6">
-                <div class="w-14 h-14 bg-brand/5 dark:bg-indigo-900/30 rounded-2xl flex items-center justify-center shrink-0 border border-brand/10 dark:border-indigo-800/40">
-                    <svg class="w-7 h-7 text-brand dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="w-14 h-14 bg-brand/5 dark:bg-amber-900/30 rounded-2xl flex items-center justify-center shrink-0 border border-brand/10 dark:border-amber-800/40">
+                    <svg class="w-7 h-7 text-brand dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
                     </svg>
                 </div>

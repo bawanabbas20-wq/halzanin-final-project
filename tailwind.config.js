@@ -20,15 +20,17 @@ export default {
             },
             colors: {
                 brand: {
-                    DEFAULT: '#1e1b4b',
-                    light:   '#312e81',
-                    50:      '#eef2ff',
-                    100:     '#e0e7ff',
+                    DEFAULT: '#C8860A',
+                    light:   '#A06B07',
+                    50:      '#fef9ee',
+                    100:     '#fdefc7',
                 },
                 accent: {
                     DEFAULT: '#059669',
                     light:   '#d1fae5',
                 },
+                warm:    '#F7F4EF',
+                charcoal:'#1A1A1A',
             },
             borderRadius: {
                 sm:  '6px',
@@ -52,8 +54,8 @@ export default {
                 'fade-up':  'slideUp 500ms cubic-bezier(0.22,1,0.36,1) both',
             },
             boxShadow: {
-                'brand-btn': '0 4px 14px rgba(30,27,75,0.35)',
-                'brand-btn-hover': '0 6px 20px rgba(30,27,75,0.45)',
+                'brand-btn': '0 4px 14px rgba(200,134,10,0.35)',
+                'brand-btn-hover': '0 6px 20px rgba(200,134,10,0.45)',
             },
         },
     },

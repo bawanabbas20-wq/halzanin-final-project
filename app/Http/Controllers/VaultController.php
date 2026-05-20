@@ -25,10 +25,11 @@ class VaultController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'image'         => 'required|string',
+            // SECURITY: max:7000000 chars ≈ 5 MB decoded; prevents oversized base64 payloads
+            'image'         => 'required|string|max:7000000',
             'document_type' => 'required|string|in:Passport,National ID,Driver License,Other',
             'side'          => 'nullable|string|in:front,back',
-            'vault_id'      => 'nullable|integer',
+            'vault_id'      => 'nullable|integer|min:1',
         ]);
 
         $imageData = $request->input('image');

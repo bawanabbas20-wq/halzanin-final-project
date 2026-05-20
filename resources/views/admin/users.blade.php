@@ -1,4 +1,4 @@
-@extends('layouts.halzanin-app')
+﻿@extends('layouts.halzanin-app')
 
 @section('content')
     <div class="max-w-6xl mx-auto pb-10"
@@ -9,14 +9,14 @@
             <div>
                 <div class="flex items-center gap-3">
                     <h2 class="text-2xl font-bold font-outfit text-gradient" data-i18n="User Management">User Management</h2>
-                    <span class="px-2.5 py-1 bg-brand/10 dark:bg-indigo-900/30 text-brand dark:text-indigo-400 text-sm font-bold rounded-xl">
+                    <span class="px-2.5 py-1 bg-brand/10 dark:bg-amber-900/30 text-brand dark:text-amber-400 text-sm font-bold rounded-xl">
                         {{ $users->total() }}
                     </span>
                 </div>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-1" data-i18n="admin.users_subtitle">Manage user roles and access levels</p>
             </div>
             <a href="{{ route('admin.dashboard') }}"
-               class="text-sm font-semibold text-gray-500 hover:text-brand dark:text-gray-400 dark:hover:text-indigo-400 transition-colors flex items-center gap-1.5">
+               class="text-sm font-semibold text-gray-500 hover:text-brand dark:text-gray-400 dark:hover:text-amber-400 transition-colors flex items-center gap-1.5">
                 <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                 </svg>
@@ -64,7 +64,7 @@
                                 $roleConfig = [
                                     'citizen' => ['badge' => 'bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-gray-300', 'avatar' => 'bg-gray-400 dark:bg-slate-600'],
                                     'staff'   => ['badge' => 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400', 'avatar' => 'bg-blue-500'],
-                                    'admin'   => ['badge' => 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400', 'avatar' => 'bg-brand dark:bg-indigo-500'],
+                                    'admin'   => ['badge' => 'bg-indigo-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400', 'avatar' => 'bg-brand dark:bg-amber-500'],
                                 ];
                                 $rc = $roleConfig[$user->role] ?? $roleConfig['citizen'];
                             @endphp
@@ -95,7 +95,7 @@
                                     @if($user->role === 'staff')
                                         <div class="flex flex-wrap gap-1 max-w-[180px]">
                                             @forelse($user->subRoles as $sr)
-                                                <span class="px-2 py-0.5 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 text-[10px] font-bold rounded-full">{{ $sr->name }}</span>
+                                                <span class="px-2 py-0.5 bg-indigo-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 text-[10px] font-bold rounded-full">{{ $sr->name }}</span>
                                             @empty
                                                 <span class="text-[11px] text-gray-400 dark:text-gray-500 italic">Full access</span>
                                             @endforelse
@@ -178,8 +178,8 @@
         <x-modal name="confirm-role-update" maxWidth="sm">
             <div class="p-6 bg-white dark:bg-[#1e293b]">
                 <div class="flex items-center gap-4 mb-5">
-                    <div class="w-11 h-11 rounded-full bg-brand/10 dark:bg-indigo-900/30 flex items-center justify-center shrink-0">
-                        <svg class="w-5 h-5 text-brand dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-11 h-11 rounded-full bg-brand/10 dark:bg-amber-900/30 flex items-center justify-center shrink-0">
+                        <svg class="w-5 h-5 text-brand dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                         </svg>
                     </div>
@@ -191,7 +191,7 @@
 
                 <div class="bg-gray-50 dark:bg-slate-800/50 rounded-xl px-4 py-3 mb-5 text-sm text-gray-700 dark:text-gray-300">
                     Change <span class="font-bold" x-text="pendingName"></span>'s role to
-                    <span class="font-bold text-brand dark:text-indigo-400 capitalize" x-text="pendingRole"></span>?
+                    <span class="font-bold text-brand dark:text-amber-400 capitalize" x-text="pendingRole"></span>?
                 </div>
 
                 <div class="flex justify-end gap-3">

@@ -1,4 +1,4 @@
-@extends('layouts.halzanin-app')
+﻿@extends('layouts.halzanin-app')
 
 @section('content')
 
@@ -15,7 +15,7 @@
         <div class="flex items-start">
             <div class="flex flex-col items-center shrink-0">
                 <div id="circle-1" class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold bg-brand text-white transition-all duration-300 shadow-brand-btn">1</div>
-                <span id="label-1" class="text-[11px] mt-1.5 font-semibold text-brand dark:text-indigo-400 transition-colors text-center leading-tight" data-i18n="book.step1">Personal Info</span>
+                <span id="label-1" class="text-[11px] mt-1.5 font-semibold text-brand dark:text-amber-400 transition-colors text-center leading-tight" data-i18n="book.step1">Personal Info</span>
             </div>
             <div id="line-1-2" class="flex-1 h-0.5 bg-gray-200 dark:bg-gray-700 mx-3 mt-4 transition-colors duration-300"></div>
             <div class="flex flex-col items-center shrink-0">
@@ -33,7 +33,7 @@
     {{-- ═══ STEP 1: Personal Info ═══ --}}
     <div id="step-1" class="animate-fade-up">
         <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
-        <div class="h-1 bg-gradient-to-r from-brand via-indigo-500 to-accent"></div>
+        <div class="h-1 bg-gradient-to-r from-brand via-amber-500 to-accent"></div>
         <div class="p-6 space-y-5">
             <div>
                 <label for="inp-full-name" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5" data-i18n="book.full_name">Full Name</label>
@@ -85,7 +85,7 @@
 
         {{-- Calendar Card --}}
         <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
-        <div class="h-1 bg-gradient-to-r from-brand via-indigo-500 to-accent"></div>
+        <div class="h-1 bg-gradient-to-r from-brand via-amber-500 to-accent"></div>
         <div class="p-5">
 
             {{-- Month Navigation --}}
@@ -167,11 +167,11 @@
                 <div class="h-px bg-gray-100 dark:bg-gray-800"></div>
                 <div class="flex justify-between items-baseline gap-4">
                     <dt class="text-xs font-semibold text-gray-400 uppercase tracking-wide shrink-0" data-i18n="book.date">Date</dt>
-                    <dd id="rev-date" class="text-sm font-bold text-brand dark:text-indigo-400 text-right"></dd>
+                    <dd id="rev-date" class="text-sm font-bold text-brand dark:text-amber-400 text-right"></dd>
                 </div>
                 <div class="flex justify-between items-baseline gap-4">
                     <dt class="text-xs font-semibold text-gray-400 uppercase tracking-wide shrink-0" data-i18n="book.time">Time</dt>
-                    <dd id="rev-slot" class="text-sm font-bold text-brand dark:text-indigo-400 text-right"></dd>
+                    <dd id="rev-slot" class="text-sm font-bold text-brand dark:text-amber-400 text-right"></dd>
                 </div>
             </dl>
         </div>
@@ -179,7 +179,7 @@
 
         {{-- Required Documents --}}
         <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
-        <div class="h-1 bg-gradient-to-r from-indigo-400 via-brand to-accent"></div>
+        <div class="h-1 bg-gradient-to-r from-amber-400 via-brand to-accent"></div>
         <div class="p-5">
             <h4 class="font-bold text-brand dark:text-white font-outfit mb-1 text-sm" data-i18n="book.required_documents">Required Documents</h4>
             <p class="text-xs text-gray-400 dark:text-gray-500 mb-4" data-i18n="book.required_documents_help">For each document, select from your vault, upload a file, or confirm you'll bring it.</p>
@@ -286,11 +286,11 @@ function updateIndicator(n) {
         if (i < n) {
             c.className = 'w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold bg-brand text-white transition-all duration-300';
             c.innerHTML = TICK;
-            l.className = 'text-[11px] mt-1.5 font-semibold text-brand dark:text-indigo-400 transition-colors text-center leading-tight';
+            l.className = 'text-[11px] mt-1.5 font-semibold text-brand dark:text-amber-400 transition-colors text-center leading-tight';
         } else if (i === n) {
             c.className = 'w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold bg-brand text-white transition-all duration-300';
             c.textContent = i;
-            l.className = 'text-[11px] mt-1.5 font-semibold text-brand dark:text-indigo-400 transition-colors text-center leading-tight';
+            l.className = 'text-[11px] mt-1.5 font-semibold text-brand dark:text-amber-400 transition-colors text-center leading-tight';
         } else {
             c.className = 'w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 transition-all duration-300';
             c.textContent = i;
@@ -521,13 +521,13 @@ function buildDocCard(i, name, matchingVaultDocs) {
     card.className = 'border border-gray-100 dark:border-gray-800 rounded-xl overflow-hidden transition-all';
 
     const vaultSection = matchingVaultDocs.length > 0 ? `
-        <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-800 bg-indigo-50/40 dark:bg-indigo-900/10">
-            <p class="text-[10px] font-bold text-indigo-500 dark:text-indigo-400 uppercase tracking-wider mb-2">${tr('book.use_from_vault')}</p>
+        <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-800 bg-amber-50/40 dark:bg-amber-900/10">
+            <p class="text-[10px] font-bold text-amber-500 dark:text-amber-400 uppercase tracking-wider mb-2">${tr('book.use_from_vault')}</p>
             <div class="space-y-1.5">
                 ${matchingVaultDocs.map(v => `
                     <button type="button" id="vault-btn-${i}-${v.id}"
                         onclick="selectVault(${i}, ${v.id}, '${(v.name || v.type).replace(/'/g,"\\'")}' )"
-                        class="w-full flex items-center justify-between px-3 py-2.5 rounded-lg border border-indigo-200 dark:border-indigo-800 hover:border-brand hover:bg-brand/5 transition text-left group">
+                        class="w-full flex items-center justify-between px-3 py-2.5 rounded-lg border border-indigo-200 dark:border-amber-800 hover:border-brand hover:bg-brand/5 transition text-left group">
                         <div class="min-w-0">
                             <p class="text-xs font-semibold text-gray-800 dark:text-gray-200 group-hover:text-brand truncate">${v.name}</p>
                             <p class="text-[10px] text-gray-400">${tr('book.expires_in_days', { days: v.expires_in })}</p>

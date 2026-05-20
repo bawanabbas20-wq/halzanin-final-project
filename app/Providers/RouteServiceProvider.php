@@ -28,6 +28,16 @@ class RouteServiceProvider extends ServiceProvider
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
 
+        // SECURITY (OWASP A07): 10 req/min per IP on public endpoints prevents brute-force and credential stuffing.
+        RateLimiter::for('public', function (Request $request) {
+            return Limit::perMinute(10)->by($request->ip());
+        });
+
+        // SECURITY: 60 req/min per authenticated user for all protected routes.
+        RateLimiter::for('authenticated', function (Request $request) {
+            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+        });
+
         $this->routes(function () {
             Route::middleware('api')
                 ->prefix('api')

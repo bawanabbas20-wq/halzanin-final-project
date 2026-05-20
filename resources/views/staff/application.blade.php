@@ -1,4 +1,4 @@
-@extends('layouts.halzanin-app')
+﻿@extends('layouts.halzanin-app')
 
 @section('content')
     <div class="max-w-6xl mx-auto pb-10">
@@ -8,7 +8,7 @@
             <div>
                 <div class="flex items-center gap-3">
                     <h2 class="text-2xl font-bold font-outfit text-gradient" data-i18n="staff.application_detail">Application Detail</h2>
-                    <span class="px-2.5 py-1 bg-brand/10 dark:bg-indigo-900/30 text-brand dark:text-indigo-400 text-sm font-mono font-bold tracking-widest rounded-xl">
+                    <span class="px-2.5 py-1 bg-brand/10 dark:bg-amber-900/30 text-brand dark:text-amber-400 text-sm font-mono font-bold tracking-widest rounded-xl">
                         {{ $application->tracking_code }}
                     </span>
                 </div>
@@ -17,7 +17,7 @@
                 </p>
             </div>
             <a href="{{ route('staff.queue') }}"
-               class="text-sm font-semibold text-gray-500 hover:text-brand dark:text-gray-400 dark:hover:text-indigo-400 transition-colors flex items-center gap-1.5">
+               class="text-sm font-semibold text-gray-500 hover:text-brand dark:text-gray-400 dark:hover:text-amber-400 transition-colors flex items-center gap-1.5">
                 <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                 </svg>
@@ -51,7 +51,7 @@
 
                 {{-- Appointment Info Card --}}
                 <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden animate-fade-up" style="animation-delay: 100ms">
-                    <div class="h-1 bg-gradient-to-r from-brand via-indigo-500 to-accent"></div>
+                    <div class="h-1 bg-gradient-to-r from-brand via-amber-500 to-accent"></div>
                     <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-slate-800/50 flex items-center gap-2">
                         <div class="w-1.5 h-5 rounded-full bg-brand dark:bg-indigo-400"></div>
                         <h3 class="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider" data-i18n="staff.appointment_info">Appointment Information</h3>
@@ -67,7 +67,7 @@
                         </div>
                         <div>
                             <p class="text-[11px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-semibold mb-1" data-i18n="track.doc_type">Document Type</p>
-                            <span class="inline-block px-2.5 py-1 text-xs font-bold rounded-full bg-indigo-50 text-brand dark:bg-indigo-900/30 dark:text-indigo-400">
+                            <span class="inline-block px-2.5 py-1 text-xs font-bold rounded-full bg-amber-50 text-brand dark:bg-amber-900/30 dark:text-amber-400">
                                 {{ $application->appointment->document_type ?? '—' }}
                             </span>
                         </div>
@@ -115,7 +115,7 @@
                                 @foreach($application->documents as $doc)
                                     <div class="flex items-center justify-between p-3.5 border border-gray-100 dark:border-gray-700 rounded-xl bg-gray-50/50 dark:bg-slate-800/30 hover:border-brand/20 dark:hover:border-indigo-700/40 transition-colors">
                                         <div class="flex items-center gap-3 rtl:space-x-reverse min-w-0">
-                                            <div class="w-10 h-10 bg-indigo-50 dark:bg-indigo-900/30 rounded-xl flex items-center justify-center text-brand dark:text-indigo-400 shrink-0">
+                                            <div class="w-10 h-10 bg-amber-50 dark:bg-amber-900/30 rounded-xl flex items-center justify-center text-brand dark:text-amber-400 shrink-0">
                                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
                                                 </svg>
@@ -123,7 +123,7 @@
                                             <div class="min-w-0">
                                                 @if($doc->source === 'upload' && $doc->file_path)
                                                     <a href="{{ route('staff.documents.view', $doc->id) }}"
-                                                       class="text-sm font-semibold text-brand dark:text-indigo-400 hover:underline truncate block"
+                                                       class="text-sm font-semibold text-brand dark:text-amber-400 hover:underline truncate block"
                                                        target="_blank">{{ $doc->original_name ?? $doc->document_name }}</a>
                                                 @else
                                                     <p class="text-sm font-semibold text-gray-700 dark:text-gray-300 truncate">{{ $doc->original_name ?? $doc->document_name }}</p>
@@ -225,7 +225,7 @@
                     @endphp
 
                     <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden animate-fade-up" style="animation-delay: 400ms">
-                        <div class="h-1 bg-gradient-to-r from-brand via-indigo-500 to-accent"></div>
+                        <div class="h-1 bg-gradient-to-r from-brand via-amber-500 to-accent"></div>
                         <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-slate-800/50">
                             <h3 class="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider text-center" data-i18n="staff.update_status">Update Status</h3>
                         </div>

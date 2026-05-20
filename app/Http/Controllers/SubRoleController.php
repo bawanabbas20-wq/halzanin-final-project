@@ -40,9 +40,10 @@ class SubRoleController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'          => 'required|string|max:100|unique:sub_roles,name',
+            'name'          => 'required|string|min:2|max:100|unique:sub_roles,name',
             'description'   => 'nullable|string|max:500',
-            'permissions'   => 'nullable|array',
+            // SECURITY: max:8 matches the number of defined permissions; blocks oversized arrays
+            'permissions'   => 'nullable|array|max:8',
             'permissions.*' => 'in:' . implode(',', array_keys(self::PERMISSIONS)),
         ]);
 
@@ -74,9 +75,10 @@ class SubRoleController extends Controller
         $subRole = SubRole::findOrFail($id);
 
         $request->validate([
-            'name'          => 'required|string|max:100|unique:sub_roles,name,' . $id,
+            'name'          => 'required|string|min:2|max:100|unique:sub_roles,name,' . $id,
             'description'   => 'nullable|string|max:500',
-            'permissions'   => 'nullable|array',
+            // SECURITY: max:8 matches the number of defined permissions; blocks oversized arrays
+            'permissions'   => 'nullable|array|max:8',
             'permissions.*' => 'in:' . implode(',', array_keys(self::PERMISSIONS)),
         ]);
 

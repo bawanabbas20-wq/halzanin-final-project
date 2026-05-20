@@ -40,6 +40,9 @@ class StaffController extends Controller
 
     public function dayAppointments(Request $request)
     {
+        // SECURITY: validate date format before using in query
+        $request->validate(['date' => 'required|date_format:Y-m-d']);
+
         $date = $request->get('date');
 
         $appointments = Appointment::with(['citizen', 'documents.vaultDocument'])

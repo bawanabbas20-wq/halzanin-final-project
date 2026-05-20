@@ -73,7 +73,8 @@ class AdminController extends Controller
     public function addOffDay(Request $request)
     {
         $request->validate([
-            'dates'  => 'required|string',
+            // SECURITY: max:2000 allows ~100 comma-separated dates while blocking oversized payloads
+            'dates'  => 'required|string|max:2000',
             'reason' => 'nullable|string|max:255',
         ]);
 

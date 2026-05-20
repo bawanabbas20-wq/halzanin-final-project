@@ -11,7 +11,8 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('guest')->group(function () {
+// SECURITY (OWASP A07): throttle:public limits login/register/password routes to 10 req/min per IP.
+Route::middleware(['guest', 'throttle:public'])->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
                 ->name('register');
 

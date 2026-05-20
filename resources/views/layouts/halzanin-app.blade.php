@@ -37,108 +37,107 @@
             }
         </script>
     </head>
-    <body class="bg-[#f8fafc] dark:bg-[#0f172a] text-gray-900 dark:text-[#f1f5f9] antialiased transition-colors duration-200">
+    <body class="bg-[#F7F4EF] dark:bg-[#0f172a] text-charcoal dark:text-[#f1f5f9] antialiased transition-colors duration-200">
         
         <div class="flex h-screen overflow-hidden">
             
             <!-- Desktop Sidebar -->
-            <aside class="hidden lg:flex lg:flex-col w-[240px] bg-brand text-white flex-shrink-0 shadow-xl relative z-30">
+            <aside class="hidden lg:flex lg:flex-col w-56 bg-white dark:bg-slate-900 border-r border-stone-200 dark:border-slate-800 flex-shrink-0 relative z-30">
                 <!-- Logo -->
-                <div class="flex items-center space-x-3 px-6 py-8 ltr:space-x-reverse rtl:space-x-reverse relative">
-                    <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md">
-                        <span class="text-brand text-xl font-bold font-outfit">H</span>
-                    </div>
-                    <div>
-                        <h1 class="text-xl font-bold font-outfit leading-tight">Halzanîn</h1>
-                        <p class="text-[10px] text-white/70 font-arabic opacity-80">بزانە بەلگەکەت لە کوێیە</p>
-                    </div>
+                <div class="flex items-center gap-3 px-5 py-4 border-b border-stone-100 dark:border-slate-800">
+                    <img src="{{ asset('images/halzanin-logo.png') }}" alt="Halzanîn" class="h-8 w-auto">
                 </div>
 
                 <!-- Navigation Links -->
-                <nav class="flex-1 px-4 space-y-2 mt-4 overflow-y-auto">
+                <nav class="flex-1 px-3 py-3 space-y-0.5 overflow-y-auto">
+                    @php
+                        $navActive   = 'bg-amber-50 dark:bg-amber-900/20 ltr:border-l-2 rtl:border-r-2 border-amber-600 text-amber-700 dark:text-amber-400 font-medium';
+                        $navInactive = 'text-gray-600 dark:text-gray-400 hover:bg-stone-50 dark:hover:bg-slate-800 hover:text-gray-900 dark:hover:text-white';
+                        $navBase     = 'flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all text-sm';
+                    @endphp
                     @if(auth()->user()->role === 'admin')
-                        <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
-                            <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                        <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? $navActive : $navInactive }} {{ $navBase }}">
+                            <svg class="w-5 h-5 shrink-0 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                             <span data-i18n="nav.dashboard">Dashboard</span>
                         </a>
-                        <a href="{{ route('staff.queue') }}" class="{{ request()->routeIs('staff.queue') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
-                            <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        <a href="{{ route('staff.queue') }}" class="{{ request()->routeIs('staff.queue') ? $navActive : $navInactive }} {{ $navBase }}">
+                            <svg class="w-5 h-5 shrink-0 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                             <span data-i18n="nav.all_applications">All Applications</span>
                         </a>
-                        <a href="{{ route('admin.users') }}" class="{{ request()->routeIs('admin.users') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
-                            <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                        <a href="{{ route('admin.users') }}" class="{{ request()->routeIs('admin.users') ? $navActive : $navInactive }} {{ $navBase }}">
+                            <svg class="w-5 h-5 shrink-0 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                             <span data-i18n="nav.users">User Management</span>
                         </a>
-                        <a href="{{ route('admin.offdays') }}" class="{{ request()->routeIs('admin.offdays*') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
-                            <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        <a href="{{ route('admin.offdays') }}" class="{{ request()->routeIs('admin.offdays*') ? $navActive : $navInactive }} {{ $navBase }}">
+                            <svg class="w-5 h-5 shrink-0 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                             <span data-i18n="nav.off_days">Off Days</span>
                         </a>
-                        <a href="{{ route('admin.sub-roles.index') }}" class="{{ request()->routeIs('admin.sub-roles*') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
-                            <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        <a href="{{ route('admin.sub-roles.index') }}" class="{{ request()->routeIs('admin.sub-roles*') ? $navActive : $navInactive }} {{ $navBase }}">
+                            <svg class="w-5 h-5 shrink-0 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
                             <span>Sub-Role Management</span>
                         </a>
-                        <a href="{{ route('profile.edit') }}" class="{{ request()->routeIs('profile.edit') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
-                            <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                        <a href="{{ route('profile.edit') }}" class="{{ request()->routeIs('profile.edit') ? $navActive : $navInactive }} {{ $navBase }}">
+                            <svg class="w-5 h-5 shrink-0 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                             <span data-i18n="nav.profile">Profile</span>
                         </a>
                     @elseif(auth()->user()->role === 'staff')
-                        <a href="{{ route('staff.dashboard') }}" class="{{ request()->routeIs('staff.dashboard') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
-                            <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                        <a href="{{ route('staff.dashboard') }}" class="{{ request()->routeIs('staff.dashboard') ? $navActive : $navInactive }} {{ $navBase }}">
+                            <svg class="w-5 h-5 shrink-0 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                             <span data-i18n="nav.dashboard">Dashboard</span>
                         </a>
-                        <a href="{{ route('staff.queue') }}" class="{{ request()->routeIs('staff.queue') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
-                            <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        <a href="{{ route('staff.queue') }}" class="{{ request()->routeIs('staff.queue') ? $navActive : $navInactive }} {{ $navBase }}">
+                            <svg class="w-5 h-5 shrink-0 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                             <span data-i18n="nav.queue">Application Queue</span>
                         </a>
                         @if(auth()->user()->hasPermission('scan_qr_checkin'))
-                        <a href="{{ route('staff.scan') }}" class="{{ request()->routeIs('staff.scan') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
-                            <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        <a href="{{ route('staff.scan') }}" class="{{ request()->routeIs('staff.scan') ? $navActive : $navInactive }} {{ $navBase }}">
+                            <svg class="w-5 h-5 shrink-0 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                             <span>QR Scanner</span>
                         </a>
                         @endif
-                        <a href="{{ route('profile.edit') }}" class="{{ request()->routeIs('profile.edit') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
-                            <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                        <a href="{{ route('profile.edit') }}" class="{{ request()->routeIs('profile.edit') ? $navActive : $navInactive }} {{ $navBase }}">
+                            <svg class="w-5 h-5 shrink-0 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                             <span data-i18n="nav.profile">Profile</span>
                         </a>
                     @else
-                        <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('*dashboard*') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
-                            <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                        <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('*dashboard*') ? $navActive : $navInactive }} {{ $navBase }}">
+                            <svg class="w-5 h-5 shrink-0 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                             <span data-i18n="nav.home">Home</span>
                         </a>
-                        <a href="{{ route('citizen.appointments.calendar') }}" class="{{ request()->routeIs('*appointment*') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
-                            <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        <a href="{{ route('citizen.appointments.calendar') }}" class="{{ request()->routeIs('*appointment*') ? $navActive : $navInactive }} {{ $navBase }}">
+                            <svg class="w-5 h-5 shrink-0 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                             <span data-i18n="nav.book">Book Appointment</span>
                         </a>
-                        <a href="{{ route('citizen.vault.index') }}" class="{{ request()->routeIs('*vault*') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
-                            <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                        <a href="{{ route('citizen.vault.index') }}" class="{{ request()->routeIs('*vault*') ? $navActive : $navInactive }} {{ $navBase }}">
+                            <svg class="w-5 h-5 shrink-0 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                             <span data-i18n="nav.vault">Document Vault</span>
                         </a>
-                        <a href="{{ route('track') }}" class="{{ request()->routeIs('track*') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
-                            <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        <a href="{{ route('track') }}" class="{{ request()->routeIs('track*') ? $navActive : $navInactive }} {{ $navBase }}">
+                            <svg class="w-5 h-5 shrink-0 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                             <span data-i18n="nav.track">Track</span>
                         </a>
-                        <a href="{{ route('profile.edit') }}" class="{{ request()->routeIs('profile.edit') ? 'bg-white/10 text-white font-semibold' : 'text-white/70 hover:bg-white/5 hover:text-white' }} flex items-center px-4 py-3 rounded-xl transition-all">
-                            <svg class="w-5 h-5 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                        <a href="{{ route('profile.edit') }}" class="{{ request()->routeIs('profile.edit') ? $navActive : $navInactive }} {{ $navBase }}">
+                            <svg class="w-5 h-5 shrink-0 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                             <span data-i18n="nav.profile">Profile</span>
                         </a>
                     @endif
                 </nav>
 
                 <!-- User Profile & Logout -->
-                <div class="p-4 border-t border-white/10">
+                <div class="p-4 border-t border-stone-100 dark:border-slate-800">
                     <div class="flex items-center px-2 py-2">
-                        <div class="w-10 h-10 bg-accent rounded-full flex items-center justify-center font-bold text-white uppercase shrink-0">
+                        <div class="w-8 h-8 bg-accent rounded-full flex items-center justify-center font-bold text-white uppercase shrink-0 text-sm">
                             {{ substr(auth()->user()->name, 0, 1) }}
                         </div>
-                        <div class="ltr:ml-3 rtl:mr-3 overflow-hidden">
-                            <p class="text-sm font-semibold text-white truncate">{{ auth()->user()->name }}</p>
-                            <p class="text-[10px] text-brand-light uppercase tracking-wider font-bold truncate" data-i18n="role.{{ auth()->user()->role }}">{{ auth()->user()->role }}</p>
+                        <div class="ltr:ml-2.5 rtl:mr-2.5 overflow-hidden">
+                            <p class="text-sm font-semibold text-charcoal dark:text-white truncate">{{ auth()->user()->name }}</p>
+                            <p class="text-[10px] text-brand uppercase tracking-wider font-bold truncate" data-i18n="role.{{ auth()->user()->role }}">{{ auth()->user()->role }}</p>
                         </div>
                     </div>
                     <div x-data="{}">
                         <button type="button"
                                 x-on:click="$dispatch('open-modal', 'confirm-logout')"
-                                class="mt-2 w-full text-left flex items-center px-4 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-white/5 rounded-xl transition-all">
+                                class="mt-1 w-full text-left flex items-center px-4 py-2 text-sm text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-all">
                             <svg class="w-4 h-4 ltr:mr-3 rtl:ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
                             <span data-i18n="nav.logout">Log Out</span>
                         </button>
@@ -223,7 +222,7 @@
                                 <button type="button"
                                         x-on:click="markAllRead()"
                                         x-show="count > 0"
-                                        class="text-xs font-semibold text-brand dark:text-indigo-400 hover:underline">
+                                        class="text-xs font-semibold text-brand dark:text-amber-400 hover:underline">
                                     <span data-i18n="common.mark_all_read">Mark all read</span>
                                 </button>
                             </div>
@@ -241,7 +240,7 @@
                                 <template x-for="n in items" :key="n.id">
                                     <div x-on:click="markRead(n.id); n.read = true"
                                          class="flex items-start gap-3 px-4 py-3 cursor-pointer hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors"
-                                         :class="n.read ? '' : 'bg-indigo-50/40 dark:bg-indigo-900/10'">
+                                         :class="n.read ? '' : 'bg-amber-50/40 dark:bg-amber-900/10'">
                                         {{-- Status dot --}}
                                         <div class="mt-0.5 w-2 h-2 rounded-full shrink-0"
                                              :class="{
@@ -254,7 +253,7 @@
                                         </div>
                                         <div class="flex-1 min-w-0">
                                             <p class="text-xs font-semibold text-gray-900 dark:text-white leading-snug">
-                                                Your application <span class="font-mono text-brand dark:text-indigo-400" x-text="n.tracking"></span>
+                                                Your application <span class="font-mono text-brand dark:text-amber-400" x-text="n.tracking"></span>
                                                 status changed to <span class="capitalize" x-text="n.status.replace('_',' ')"></span>
                                             </p>
                                             <p class="text-[11px] text-gray-400 dark:text-gray-500 mt-0.5" x-text="n.time"></p>
@@ -294,7 +293,7 @@
                 {{-- ═══════════════════════════════════════════════ --}}
                 {{-- Page Transition Skeleton Overlay                 --}}
                 {{-- ═══════════════════════════════════════════════ --}}
-                <div id="nav-skeleton" class="hidden absolute top-16 inset-x-0 bottom-0 z-50 bg-[#f8fafc] dark:bg-[#0f172a] overflow-y-auto" aria-hidden="true">
+                <div id="nav-skeleton" class="hidden absolute top-16 inset-x-0 bottom-0 z-50 bg-[#F7F4EF] dark:bg-[#0f172a] overflow-y-auto" aria-hidden="true">
                     <div class="p-4 lg:p-8 pb-24 lg:pb-8 max-w-5xl mx-auto w-full space-y-6">
                         <div class="flex items-center justify-between">
                             <div class="h-8 w-52 skeleton rounded-xl"></div>
@@ -320,53 +319,53 @@
             <!-- Mobile Bottom Nav -->
             <div class="lg:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-800 border-t border-gray-200 dark:border-slate-700 flex items-center justify-around pb-safe pt-2 px-2 z-50 h-[68px] shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
                 @if(auth()->user()->role === 'admin')
-                    <a href="{{ route('admin.dashboard') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('admin.dashboard') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand' }}">
+                    <a href="{{ route('admin.dashboard') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('admin.dashboard') ? 'text-brand dark:text-amber-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                         <span class="text-[10px] font-semibold" data-i18n="nav.dash">Dash</span>
                     </a>
-                    <a href="{{ route('staff.queue') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('staff.queue') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand dark:hover:text-indigo-400' }}">
+                    <a href="{{ route('staff.queue') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('staff.queue') ? 'text-brand dark:text-amber-400' : 'text-gray-400 hover:text-brand dark:hover:text-indigo-400' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                         <span class="text-[10px] font-semibold" data-i18n="nav.apps">Apps</span>
                     </a>
-                    <a href="{{ route('admin.users') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('admin.users') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand dark:hover:text-indigo-400' }}">
+                    <a href="{{ route('admin.users') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('admin.users') ? 'text-brand dark:text-amber-400' : 'text-gray-400 hover:text-brand dark:hover:text-indigo-400' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                         <span class="text-[10px] font-semibold" data-i18n="nav.users">Users</span>
                     </a>
-                    <a href="{{ route('profile.edit') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('profile.edit') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand' }}">
+                    <a href="{{ route('profile.edit') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('profile.edit') ? 'text-brand dark:text-amber-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                         <span class="text-[10px] font-semibold" data-i18n="nav.profile">Profile</span>
                     </a>
                 @elseif(auth()->user()->role === 'staff')
-                    <a href="{{ route('staff.dashboard') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('staff.dashboard') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand' }}">
+                    <a href="{{ route('staff.dashboard') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('staff.dashboard') ? 'text-brand dark:text-amber-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                         <span class="text-[10px] font-semibold" data-i18n="nav.dashboard">Dashboard</span>
                     </a>
-                    <a href="{{ route('staff.queue') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('staff.queue') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand' }}">
+                    <a href="{{ route('staff.queue') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('staff.queue') ? 'text-brand dark:text-amber-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                         <span class="text-[10px] font-semibold" data-i18n="nav.queue">Queue</span>
                     </a>
-                    <a href="{{ route('profile.edit') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('profile.edit') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand' }}">
+                    <a href="{{ route('profile.edit') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('profile.edit') ? 'text-brand dark:text-amber-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                         <span class="text-[10px] font-semibold" data-i18n="nav.profile">Profile</span>
                     </a>
                 @else
-                    <a href="{{ route('dashboard') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('*dashboard*') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand' }}">
+                    <a href="{{ route('dashboard') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('*dashboard*') ? 'text-brand dark:text-amber-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                         <span class="text-[10px] font-semibold" data-i18n="nav.home">Home</span>
                     </a>
-                    <a href="{{ route('citizen.appointments.calendar') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('*appointment*') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand' }}">
+                    <a href="{{ route('citizen.appointments.calendar') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('*appointment*') ? 'text-brand dark:text-amber-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                         <span class="text-[10px] font-semibold" data-i18n="nav.book_short">Book</span>
                     </a>
-                    <a href="{{ route('citizen.vault.index') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('*vault*') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand' }}">
+                    <a href="{{ route('citizen.vault.index') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('*vault*') ? 'text-brand dark:text-amber-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                         <span class="text-[10px] font-semibold" data-i18n="nav.vault">Vault</span>
                     </a>
-                    <a href="{{ route('track') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('track*') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand dark:hover:text-indigo-400' }}">
+                    <a href="{{ route('track') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('track*') ? 'text-brand dark:text-amber-400' : 'text-gray-400 hover:text-brand dark:hover:text-indigo-400' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                         <span class="text-[10px] font-semibold" data-i18n="nav.track">Track</span>
                     </a>
-                    <a href="{{ route('profile.edit') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('profile.edit') ? 'text-brand dark:text-indigo-400' : 'text-gray-400 hover:text-brand' }}">
+                    <a href="{{ route('profile.edit') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('profile.edit') ? 'text-brand dark:text-amber-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                         <span class="text-[10px] font-semibold" data-i18n="nav.profile">Profile</span>
                     </a>
@@ -535,12 +534,14 @@
                  class="dark:[background:#1e293b] animate-fade-in">
 
                 {{-- Header --}}
-                <div style="background:linear-gradient(135deg,#4338ca 0%,#3730a3 100%);padding:14px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0;">
-                    <div style="width:36px;height:36px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🤖</div>
+                <div style="background:#d97706;padding:14px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0;">
+                    <div style="width:36px;height:36px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-4l-4 4z"/></svg>
+                    </div>
                     <div style="flex:1;min-width:0;">
                         <p style="color:#fff;font-weight:700;font-size:14px;margin:0;font-family:Outfit,sans-serif;" data-i18n="chat.assistant">Halzanin Assistant</p>
                         <div style="display:flex;align-items:center;gap:5px;margin-top:2px;">
-                            <div style="width:7px;height:7px;background:#34d399;border-radius:50%;"></div>
+                            <div style="width:7px;height:7px;background:#4ade80;border-radius:50%;"></div>
                             <span style="color:rgba(255,255,255,0.8);font-size:11px;font-weight:600;" data-i18n="chat.online">Online</span>
                         </div>
                     </div>
@@ -573,9 +574,9 @@
                                   onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChatMessage();}"
                                   oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,88)+'px';"
                                   style="flex:1;resize:none;border:1.5px solid #e2e8f0;border-radius:10px;padding:10px 12px;font-size:13px;font-family:Outfit,sans-serif;outline:none;background:#f8fafc;color:#1e293b;max-height:88px;line-height:1.4;transition:border-color 0.2s;"
-                                  onfocus="this.style.borderColor='#4338ca'" onblur="this.style.borderColor='#e2e8f0'"></textarea>
+                                  onfocus="this.style.borderColor='#C8860A'" onblur="this.style.borderColor='#e2e8f0'"></textarea>
                         <button onclick="sendChatMessage()" id="chatbot-send"
-                                style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#4338ca,#3730a3);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform 0.15s,opacity 0.15s;"
+                                style="width:40px;height:40px;border-radius:10px;background:#d97706;border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform 0.15s,opacity 0.15s;"
                                 onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
                             <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
                         </button>
@@ -586,11 +587,11 @@
             {{-- Floating Bubble Button --}}
             <div style="position:relative;">
                 {{-- Pulse ring --}}
-                <div id="chatbot-pulse" style="position:absolute;inset:-6px;border-radius:50%;background:rgba(67,56,202,0.3);animation:chatPulse 2s ease-in-out infinite;pointer-events:none;"></div>
+                <div id="chatbot-pulse" style="position:absolute;inset:-6px;border-radius:50%;background:rgba(200,134,10,0.3);animation:chatPulse 2s ease-in-out infinite;pointer-events:none;"></div>
                 <button id="chatbot-btn" onclick="toggleChat()"
-                        style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#4338ca,#6366f1);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 25px -5px rgba(67,56,202,0.5);transition:transform 0.2s,box-shadow 0.2s;position:relative;z-index:1;"
-                        onmouseover="this.style.transform='scale(1.08)';this.style.boxShadow='0 15px 30px -5px rgba(67,56,202,0.6)'"
-                        onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 10px 25px -5px rgba(67,56,202,0.5)'">
+                        style="width:56px;height:56px;border-radius:50%;background:#d97706;border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 25px -5px rgba(200,134,10,0.5);transition:transform 0.2s,box-shadow 0.2s;position:relative;z-index:1;"
+                        onmouseover="this.style.transform='scale(1.08)';this.style.boxShadow='0 15px 30px -5px rgba(200,134,10,0.6)'"
+                        onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 10px 25px -5px rgba(200,134,10,0.5)'">
                     <svg id="chatbot-icon-open" width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
                     <svg id="chatbot-icon-close" width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display:none;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
                     {{-- Unread badge --}}
@@ -611,7 +612,7 @@
 
             .chat-msg-user {
                 align-self: flex-end;
-                background: linear-gradient(135deg,#4338ca,#6366f1);
+                background: #d97706;
                 color: #fff;
                 padding: 9px 13px;
                 border-radius: 14px 14px 4px 14px;
@@ -646,9 +647,9 @@
                 transition: all 0.15s ease;
             }
             .chat-quick-btn:hover {
-                border-color: #818cf8;
-                color: #312e81;
-                background: #eef2ff;
+                border-color: #C8860A;
+                color: #A06B07;
+                background: #fef9ee;
             }
             html.dark .chat-msg-ai { background:#334155; color:#f1f5f9; }
             html.dark #chatbot-window { background:#1e293b !important; }
@@ -660,8 +661,8 @@
             }
             html.dark .chat-quick-btn:hover {
                 background: #1e293b;
-                border-color: #6366f1;
-                color: #eef2ff;
+                border-color: #d97706;
+                color: #fdefc7;
             }
 
             .typing-dot {

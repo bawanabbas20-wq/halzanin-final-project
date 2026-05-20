@@ -8,7 +8,7 @@
             <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-5">
                 {{-- Avatar --}}
                 <div class="relative shrink-0">
-                    <div class="w-20 h-20 bg-gradient-to-br from-brand to-indigo-500 rounded-full flex items-center justify-center text-3xl font-bold text-white uppercase shadow-lg ring-4 ring-white dark:ring-[#1e293b]">
+                    <div class="w-20 h-20 bg-brand rounded-full flex items-center justify-center text-3xl font-bold text-white uppercase shadow-lg ring-4 ring-white dark:ring-[#1e293b]">
                         {{ mb_substr(auth()->user()->name, 0, 1) }}
                     </div>
                     <div class="absolute -bottom-1 -right-1 w-6 h-6 bg-accent rounded-full border-2 border-white dark:border-[#1e293b] flex items-center justify-center">
@@ -25,7 +25,7 @@
                             $roleBadge = [
                                 'citizen' => 'bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-gray-300',
                                 'staff'   => 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
-                                'admin'   => 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400',
+                                'admin'   => 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',
                             ][auth()->user()->role] ?? 'bg-gray-100 text-gray-600';
                         @endphp
                         <span class="px-2.5 py-1 text-[11px] font-bold rounded-full capitalize {{ $roleBadge }}" data-i18n="role.{{ auth()->user()->role }}">
@@ -39,7 +39,7 @@
 
         {{-- Profile Info Card --}}
         <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay: 100ms">
-            <div class="h-1 bg-gradient-to-r from-brand via-indigo-500 to-accent"></div>
+            <div class="border-b border-stone-200 dark:border-slate-700"></div>
             <div class="p-6 sm:p-8">
                 <div class="max-w-xl">
                     @include('profile.partials.update-profile-information-form')
@@ -49,7 +49,7 @@
 
         {{-- Update Password Card --}}
         <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay: 200ms">
-            <div class="h-1 bg-gradient-to-r from-indigo-400 via-purple-500 to-brand"></div>
+            <div class="border-b border-stone-200 dark:border-slate-700"></div>
             <div class="p-6 sm:p-8">
                 <div class="max-w-xl">
                     @include('profile.partials.update-password-form')
@@ -59,7 +59,7 @@
 
         {{-- Delete Account Card --}}
         <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-red-100 dark:border-red-900/30 overflow-hidden animate-fade-up" style="animation-delay: 300ms">
-            <div class="h-1 bg-gradient-to-r from-red-400 to-red-500"></div>
+            <div class="border-b border-stone-200 dark:border-slate-700"></div>
             <div class="p-6 sm:p-8">
                 <div class="max-w-xl">
                     @include('profile.partials.delete-user-form')

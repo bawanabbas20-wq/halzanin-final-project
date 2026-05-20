@@ -1,4 +1,4 @@
-@extends('layouts.halzanin-app')
+﻿@extends('layouts.halzanin-app')
 
 @section('content')
     @php
@@ -21,7 +21,7 @@
         </div>
 
         {{-- ── Hero CTA ── --}}
-        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-brand via-[#2d2a6e] to-[#312e81] shadow-brand-btn animate-fade-up">
+        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-brand via-[#2d2a6e] to-[#A06B07] shadow-brand-btn animate-fade-up">
             {{-- decorative rings --}}
             <div class="absolute -top-10 -right-10 w-48 h-48 bg-white/5 rounded-full pointer-events-none"></div>
             <div class="absolute -bottom-8 -left-8 w-32 h-32 bg-white/5 rounded-full pointer-events-none"></div>
@@ -104,13 +104,13 @@
                         Upcoming Appointments
                     </h3>
                     @if($total > 0)
-                        <span class="px-2 py-0.5 bg-brand/10 dark:bg-indigo-900/30 text-brand dark:text-indigo-400 text-xs font-bold rounded-full">
+                        <span class="px-2 py-0.5 bg-brand/10 dark:bg-amber-900/30 text-brand dark:text-amber-400 text-xs font-bold rounded-full">
                             {{ $total }}
                         </span>
                     @endif
                 </div>
                 <a href="{{ route('citizen.appointments.calendar') }}"
-                   class="text-xs font-semibold text-brand dark:text-indigo-400 hover:underline flex items-center gap-1">
+                   class="text-xs font-semibold text-brand dark:text-amber-400 hover:underline flex items-center gap-1">
                     <span data-i18n="dashboard.book_new">Book new</span>
                     <svg class="w-3.5 h-3.5 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
@@ -170,8 +170,8 @@
 
                             <div class="p-4 sm:p-5 flex items-start gap-4">
                                 {{-- Date block --}}
-                                <div class="shrink-0 w-12 text-center bg-brand/5 dark:bg-brand/20 rounded-xl py-2 px-1 border border-brand/10 dark:border-indigo-800/40">
-                                    <p class="text-[11px] font-bold text-brand/60 dark:text-indigo-400/80 uppercase tracking-wide leading-none mb-0.5">
+                                <div class="shrink-0 w-12 text-center bg-brand/5 dark:bg-brand/20 rounded-xl py-2 px-1 border border-brand/10 dark:border-amber-800/40">
+                                    <p class="text-[11px] font-bold text-brand/60 dark:text-amber-400/80 uppercase tracking-wide leading-none mb-0.5">
                                         {{ $apptDate->format('M') }}
                                     </p>
                                     <p class="text-2xl font-extrabold text-brand dark:text-white leading-none font-outfit">

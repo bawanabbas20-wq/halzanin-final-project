@@ -16,7 +16,8 @@ class StaffScanController extends Controller
 
     public function checkin(Request $request)
     {
-        $request->validate(['tracking_code' => 'required|string']);
+        // SECURITY: regex enforces TRK-YYMMDD-XXXXXX format; max:30 prevents oversized input
+        $request->validate(['tracking_code' => 'required|string|max:30|regex:/^[A-Z0-9\-]+$/']);
 
         $application = Application::with(['user', 'appointment'])
             ->where('tracking_code', $request->tracking_code)
