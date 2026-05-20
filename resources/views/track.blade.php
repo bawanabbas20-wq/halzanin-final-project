@@ -77,7 +77,9 @@
 
         @if(!$application)
             <!-- Search & Scan Section -->
-            <div class="w-full max-w-[600px] bg-white dark:bg-[#1e293b] rounded-[16px] shadow-sm border border-gray-100 dark:border-slate-800 p-6 animate-fade-up" style="animation-delay: 200ms;">
+            <div class="w-full max-w-[600px] bg-white dark:bg-[#1e293b] rounded-[16px] shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay: 200ms;">
+                <div class="h-1 bg-gradient-to-r from-brand via-indigo-500 to-accent"></div>
+                <div class="p-6">
                 <form action="javascript:void(0)" onsubmit="manualTrack()" class="flex flex-col gap-4">
                     <div class="flex flex-col sm:flex-row gap-3">
                         <input type="text" id="manualTrackingCode" placeholder="Enter tracking code (e.g. TRK-...)" data-i18n-placeholder="track.placeholder" class="flex-1 h-[48px] rounded-[10px] border-gray-300 dark:border-slate-600 bg-transparent dark:text-white focus:border-brand focus:ring-0 px-4 transition-colors">
@@ -95,6 +97,7 @@
                         <span data-i18n="track.scan_qr">Scan QR Code</span>
                     </button>
                 </form>
+                </div>
             </div>
         @else
 
@@ -110,7 +113,8 @@
         @endphp
 
         <!-- Application Info Card -->
-        <div class="w-full max-w-[600px] bg-white dark:bg-[#1e293b] rounded-[16px] shadow-md mb-10 overflow-hidden animate-fade-up" style="animation-delay: 200ms;">
+        <div class="w-full max-w-[600px] bg-white dark:bg-[#1e293b] rounded-[16px] shadow-sm border border-gray-100 dark:border-slate-800 mb-10 overflow-hidden animate-fade-up" style="animation-delay: 200ms;">
+            <div class="h-1 bg-gradient-to-r from-brand via-indigo-500 to-accent"></div>
             <div class="p-6">
                 <!-- Top Row -->
                 <div class="flex items-center justify-between mb-4">

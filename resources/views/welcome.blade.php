@@ -9,14 +9,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #f6f8fc;
+            --bg: #f8fafc;
             --text: #101828;
             --muted: #475467;
-            --navy: #0d2451;
-            --navy-2: #12316d;
-            --gold: #dfb650;
+            --navy: #1e1b4b;
+            --navy-2: #312e81;
+            --gold: #059669;
             --white: #ffffff;
-            --line: #dbe2ef;
+            --line: #e2e8f0;
             --card: #ffffff;
         }
 
@@ -63,14 +63,14 @@
             width: 42px;
             height: 42px;
             border-radius: 12px;
-            background: linear-gradient(145deg, var(--gold), #f1d487);
-            color: #302305;
+            background: linear-gradient(145deg, #312e81, #4f46e5);
+            color: #fff;
             display: grid;
             place-items: center;
             font-family: "Outfit", sans-serif;
             font-weight: 800;
             font-size: 18px;
-            box-shadow: 0 6px 18px rgba(223, 182, 80, 0.35);
+            box-shadow: 0 6px 18px rgba(49, 46, 129, 0.35);
         }
 
         .brand-text {
@@ -128,14 +128,17 @@
         }
 
         .btn-outline {
-            background: #eef2fb;
+            background: #ede9fe;
             color: var(--navy);
+        }
+        .btn-outline:hover {
+            background: #ddd6fe;
         }
 
         .btn-primary {
             background: var(--gold);
-            color: #1f2937;
-            box-shadow: 0 8px 20px rgba(223, 182, 80, 0.35);
+            color: #fff;
+            box-shadow: 0 8px 20px rgba(5, 150, 105, 0.35);
         }
 
         .hero-wrap {
@@ -148,9 +151,9 @@
             border-radius: 24px;
             overflow: hidden;
             background:
-                linear-gradient(120deg, rgba(7, 24, 57, 0.88) 0%, rgba(14, 46, 102, 0.66) 55%, rgba(17, 53, 115, 0.45) 100%),
-                radial-gradient(circle at 80% 25%, rgba(223, 182, 80, 0.32) 0%, transparent 44%),
-                linear-gradient(135deg, #132f64, #0a1f44);
+                linear-gradient(120deg, rgba(30, 27, 75, 0.95) 0%, rgba(49, 46, 129, 0.80) 55%, rgba(79, 70, 229, 0.55) 100%),
+                radial-gradient(circle at 80% 25%, rgba(5, 150, 105, 0.22) 0%, transparent 44%),
+                linear-gradient(135deg, #1e1b4b, #312e81);
             display: flex;
             align-items: center;
         }
@@ -278,13 +281,18 @@
             border: 1px solid var(--line);
             border-radius: 18px;
             padding: 22px;
-            box-shadow: 0 12px 24px rgba(17, 24, 39, 0.05);
+            box-shadow: 0 4px 16px rgba(30, 27, 75, 0.06);
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+        }
+        .card:hover {
+            box-shadow: 0 12px 28px rgba(30, 27, 75, 0.12);
+            transform: translateY(-2px);
         }
 
         .card .tag {
             display: inline-block;
-            background: #edf2fb;
-            color: #1d3f7c;
+            background: #ede9fe;
+            color: #312e81;
             border-radius: 999px;
             padding: 4px 10px;
             font-size: 12px;
@@ -320,8 +328,8 @@
         .news-media {
             height: 150px;
             background:
-                radial-gradient(circle at 30% 30%, rgba(223, 182, 80, 0.35), transparent 55%),
-                linear-gradient(145deg, #0f2f6a, #1c3f88);
+                radial-gradient(circle at 30% 30%, rgba(5, 150, 105, 0.25), transparent 55%),
+                linear-gradient(145deg, #1e1b4b, #312e81);
             position: relative;
         }
 

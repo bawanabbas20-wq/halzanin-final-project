@@ -2,8 +2,10 @@
 
 @section('content')
 <div class="w-full max-w-[580px] mx-auto">
-    <div class="bg-white dark:bg-[#1e293b] rounded-[16px] p-6 lg:p-8 shadow-[0_10px_15px_rgba(0,0,0,0.08)] relative overflow-hidden">
-        <h2 class="text-2xl font-bold text-brand dark:text-white font-outfit text-center mb-8" data-i18n="book.short_title">Book Appointment</h2>
+    <div class="bg-white dark:bg-[#1e293b] rounded-[16px] shadow-sm border border-gray-100 dark:border-slate-800 relative overflow-hidden">
+        <div class="h-1 bg-gradient-to-r from-brand via-indigo-500 to-accent"></div>
+        <div class="p-6 lg:p-8">
+        <h2 class="text-2xl font-bold text-gradient font-outfit text-center mb-8" data-i18n="book.short_title">Book Appointment</h2>
 
         {{-- Step Indicator --}}
         <div class="relative flex justify-between mb-10" id="step-indicator">
@@ -139,6 +141,7 @@
                 </div>
 
             </form>
+        </div>
         </div>
     </div>
 

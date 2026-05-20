@@ -42,7 +42,7 @@
 <div class="w-full max-w-[480px] mx-auto flex flex-col items-center">
 
     {{-- Success Header --}}
-    <div class="flex flex-col items-center text-center mb-8 print:hidden">
+    <div class="flex flex-col items-center text-center mb-8 print:hidden animate-fade-in">
         <div class="w-16 h-16 bg-accent rounded-full flex items-center justify-center mb-4 anim-scale-in shadow-lg">
             <svg class="w-8 h-8 text-white anim-draw-check" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>

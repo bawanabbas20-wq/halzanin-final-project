@@ -4,12 +4,20 @@
 <div class="max-w-2xl mx-auto space-y-6" x-data="documentScanner()" x-init="initLang()">
 
     <div class="flex items-center justify-between">
-        <h2 class="text-2xl font-bold text-brand dark:text-white font-outfit" data-i18n="vault.scan">Scan Document</h2>
-        <a href="{{ route('citizen.vault.index') }}" class="text-sm font-semibold text-gray-500 hover:text-brand dark:text-gray-400 dark:hover:text-indigo-400 transition-colors" data-i18n="common.cancel">Cancel</a>
+        <div>
+            <h2 class="text-2xl font-bold text-gradient font-outfit" data-i18n="vault.scan">Scan Document</h2>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1" data-i18n="vault.scan_subtitle">Use your camera to capture and save documents.</p>
+        </div>
+        <a href="{{ route('citizen.vault.index') }}" class="flex items-center gap-1.5 text-sm font-semibold text-gray-500 hover:text-brand dark:text-gray-400 dark:hover:text-indigo-400 transition-colors" data-i18n="common.cancel">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            Cancel
+        </a>
     </div>
 
     <!-- Step 1: Choose document type BEFORE opening camera -->
-    <div x-show="step === 'choose'" class="bg-white dark:bg-[#1e293b] p-6 rounded-[16px] shadow-sm border border-gray-100 dark:border-gray-800 space-y-5">
+    <div x-show="step === 'choose'" class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
+        <div class="h-1 bg-gradient-to-r from-brand via-indigo-500 to-accent"></div>
+        <div class="p-6 space-y-5">
         <div>
             <h3 class="font-bold text-gray-900 dark:text-white mb-1" data-i18n="vault.scan_question">What are you scanning?</h3>
             <p class="text-sm text-gray-500 dark:text-gray-400" data-i18n="vault.scan_help">The frame will adjust to fit your document.</p>
@@ -29,9 +37,10 @@
         <button type="button"
             @click="startScanning()"
             :disabled="!documentType"
-            class="w-full h-[48px] bg-brand text-white font-bold rounded-[12px] hover:bg-brand-light transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+            class="w-full h-[48px] bg-brand text-white font-bold rounded-[12px] hover:bg-brand-light shadow-brand-btn hover:shadow-brand-btn-hover hover:-translate-y-[1px] transition-all disabled:opacity-40 disabled:cursor-not-allowed">
             <span data-i18n="vault.open_camera">Open Camera</span>
         </button>
+        </div>
     </div>
 
     <!-- Step 2: Camera / Capture (front or back) -->
@@ -107,7 +116,9 @@
 
     <!-- Step 3: Back-side prompt -->
     <div x-show="step === 'back-prompt'" style="display:none"
-         class="bg-white dark:bg-[#1e293b] p-8 rounded-[16px] shadow-sm border border-gray-100 dark:border-gray-800 text-center space-y-5">
+         class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
+        <div class="h-1 bg-gradient-to-r from-indigo-400 via-purple-500 to-brand"></div>
+        <div class="p-8 text-center space-y-5">
         <div class="w-16 h-16 mx-auto bg-indigo-100 dark:bg-indigo-900/30 rounded-full flex items-center justify-center">
             <svg class="w-8 h-8 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
@@ -123,14 +134,15 @@
                 <span data-i18n="vault.skip_front_only">Skip (front only)</span>
             </button>
             <button type="button" @click="scanBack"
-                class="flex-1 px-4 py-3 bg-brand text-white font-semibold rounded-[10px] hover:bg-brand-light transition-colors">
+                class="flex-1 px-4 py-3 bg-brand text-white font-semibold rounded-[10px] hover:bg-brand-light shadow-brand-btn hover:shadow-brand-btn-hover transition-all">
                 <span data-i18n="vault.scan_back_side">Scan Back Side</span>
             </button>
+        </div>
         </div>
     </div>
 
     <!-- Security note (always visible outside scanner) -->
-    <div class="bg-indigo-50 dark:bg-indigo-900/20 p-4 rounded-lg flex items-start gap-3" x-show="step !== 'choose'">
+    <div class="bg-indigo-50 dark:bg-indigo-900/20 p-4 rounded-2xl border border-indigo-100 dark:border-indigo-800 flex items-start gap-3" x-show="step !== 'choose'">
         <svg class="w-5 h-5 text-brand shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
         </svg>
