@@ -175,6 +175,6 @@
         @if($errors->any())
         <script>document.addEventListener('DOMContentLoaded',function(){showToast('error','Please fix the errors','Check the highlighted fields and try again.');});</script>
         @endif
-        <script src="/js/translations.js"></script>
+        <script src="{{ asset('js/translations.js') }}"></script>
     </body>
 </html>

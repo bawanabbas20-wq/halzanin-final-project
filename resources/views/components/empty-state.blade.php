@@ -4,6 +4,9 @@
     'description' => null,
     'actionLabel' => null,
     'actionRoute' => null,
+    'titleKey' => null,
+    'descriptionKey' => null,
+    'actionKey' => null,
 ])
 
 @php
@@ -95,15 +98,15 @@ $data = $illustrations[$type] ?? $illustrations['no-documents'];
     </div>
 
     @if($title)
-        <h4 class="text-lg font-bold text-gray-900 dark:text-white mb-2">{{ $title }}</h4>
+        <h4 class="text-lg font-bold text-gray-900 dark:text-white mb-2" @if($titleKey) data-i18n="{{ $titleKey }}" @endif>{{ $title }}</h4>
     @endif
 
     @if($description)
-        <p class="text-sm text-gray-500 dark:text-gray-400 max-w-xs mx-auto {{ $actionLabel ? 'mb-6' : '' }}">{{ $description }}</p>
+        <p class="text-sm text-gray-500 dark:text-gray-400 max-w-xs mx-auto {{ $actionLabel ? 'mb-6' : '' }}" @if($descriptionKey) data-i18n="{{ $descriptionKey }}" @endif>{{ $description }}</p>
     @endif
 
     @if($actionLabel && $actionRoute)
-        <a href="{{ $actionRoute }}" class="inline-flex items-center px-5 py-2.5 bg-brand text-white text-sm font-semibold rounded-[10px] hover:bg-brand-light transition-colors shadow-sm">
+        <a href="{{ $actionRoute }}" class="inline-flex items-center px-5 py-2.5 bg-brand text-white text-sm font-semibold rounded-[10px] hover:bg-brand-light transition-colors shadow-sm" @if($actionKey) data-i18n="{{ $actionKey }}" @endif>
             {{ $actionLabel }}
         </a>
     @endif

@@ -48,8 +48,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
             </svg>
         </div>
-        <h2 class="text-2xl font-bold text-accent font-outfit mb-1" data-i18n="Application Submitted!">Application Submitted!</h2>
-        <p class="text-gray-500 dark:text-gray-400 text-sm" data-i18n="Your QR receipt is ready — print it or save it">Your QR receipt is ready — print it or save it</p>
+        <h2 class="text-2xl font-bold text-accent font-outfit mb-1" data-i18n="qr.submitted">Application Submitted!</h2>
+        <p class="text-gray-500 dark:text-gray-400 text-sm" data-i18n="qr.ready">Your QR receipt is ready — print it or save it</p>
     </div>
 
     {{-- ===== PRINTABLE RECEIPT ===== --}}
@@ -57,8 +57,8 @@
 
         {{-- Print-only title --}}
         <div class="hidden print:block mb-6 text-center border-b border-gray-200 pb-4">
-            <p class="text-xs text-gray-500 uppercase tracking-widest mb-1" data-i18n="Kurdistan Region — Passport Directorate">Kurdistan Region — Passport Directorate</p>
-            <h1 class="text-xl font-bold text-gray-900" data-i18n="Appointment Receipt">Appointment Receipt</h1>
+            <p class="text-xs text-gray-500 uppercase tracking-widest mb-1" data-i18n="qr.region">Kurdistan Region — Passport Directorate</p>
+            <h1 class="text-xl font-bold text-gray-900" data-i18n="qr.receipt">Appointment Receipt</h1>
         </div>
 
         <div class="ticket-inner bg-white dark:bg-[#1e293b] rounded-[24px] w-full flex flex-col overflow-hidden">
@@ -79,19 +79,19 @@
 
                 <div class="grid grid-cols-2 gap-x-4 gap-y-4">
                     <div>
-                        <p class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold mb-0.5" data-i18n="Applicant Name">Applicant Name</p>
+                        <p class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold mb-0.5" data-i18n="track.applicant">Applicant Name</p>
                         <p class="font-bold text-gray-900 dark:text-white text-sm">{{ $application->appointment->full_name ?? $application->user->name }}</p>
                     </div>
                     <div>
-                        <p class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold mb-0.5" data-i18n="National ID">National ID</p>
+                        <p class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold mb-0.5" data-i18n="book.national_id_short">National ID</p>
                         <p class="font-bold text-gray-900 dark:text-white text-sm">{{ $application->appointment->national_id_number ?? '—' }}</p>
                     </div>
                     <div>
-                        <p class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold mb-0.5" data-i18n="Document Type">Document Type</p>
+                        <p class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold mb-0.5" data-i18n="track.doc_type">Document Type</p>
                         <p class="font-bold text-gray-900 dark:text-white text-sm">{{ $application->appointment->document_type ?? '—' }}</p>
                     </div>
                     <div>
-                        <p class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold mb-0.5" data-i18n="Appointment">Appointment</p>
+                        <p class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold mb-0.5" data-i18n="qr.appointment">Appointment</p>
                         <p class="font-bold text-gray-900 dark:text-white text-sm">
                             @if($application->appointment)
                                 {{ \Carbon\Carbon::parse($application->appointment->date)->format('M d, Y') }}
@@ -112,7 +112,7 @@
 
             {{-- QR Code --}}
             <div class="p-6 flex flex-col items-center">
-                <p class="text-[11px] text-gray-400 tracking-[0.1em] uppercase font-semibold mb-1" data-i18n="Tracking Code">Tracking Code</p>
+                <p class="text-[11px] text-gray-400 tracking-[0.1em] uppercase font-semibold mb-1" data-i18n="qr.tracking">Tracking Code</p>
                 <p class="tracking-code-print font-bold text-[28px] text-brand dark:text-indigo-400 font-mono tracking-wider mb-5">
                     {{ $application->tracking_code }}
                 </p>
@@ -133,9 +133,9 @@
             {{-- Footer --}}
             <div class="py-5 px-6 text-center">
                 <p class="text-[12px] text-gray-500 dark:text-gray-400 leading-relaxed">
-                    <span data-i18n="Scan the QR code or visit">Scan the QR code or visit</span> <strong class="font-mono text-brand dark:text-indigo-400">{{ url('/track/' . $application->tracking_code) }}</strong>
+                    <span data-i18n="qr.scan_or_visit">Scan the QR code or visit</span> <strong class="font-mono text-brand dark:text-indigo-400">{{ url('/track/' . $application->tracking_code) }}</strong>
                 </p>
-                <p class="text-[11px] text-gray-400 mt-1.5" data-i18n="Please bring this receipt to your appointment.">Please bring this receipt to your appointment.</p>
+                <p class="text-[11px] text-gray-400 mt-1.5" data-i18n="qr.bring">Please bring this receipt to your appointment.</p>
             </div>
 
         </div>
@@ -149,11 +149,11 @@
             <svg class="w-5 h-5 ltr:mr-2 rtl:ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
             </svg>
-            <span data-i18n="Print Receipt">Print Receipt</span>
+            <span data-i18n="qr.print">Print Receipt</span>
         </button>
         <a href="{{ route('citizen.dashboard') }}"
             class="flex items-center justify-center w-full h-[52px] bg-transparent border-2 border-brand dark:border-indigo-400 text-brand dark:text-indigo-400 rounded-[10px] font-semibold font-outfit hover:bg-brand/5 transition-colors">
-            <span data-i18n="Back to Dashboard">Back to Dashboard</span>
+            <span data-i18n="qr.back">Back to Dashboard</span>
         </a>
     </div>
 

@@ -24,7 +24,11 @@
       "PowerShell(Test-Path *)",
       "PowerShell($msg = \"fix: stricter Step 3 document validation with amber/green badges and warnings`n`nBadge is green \\(Fulfilled\\) for file/vault, amber \\(Confirmed\\) for checkbox-only.`nWarning banner shows above Submit when all docs are confirm-only.`nFinal guard in submitWizard highlights unfulfilled cards in red.`nVault button shows active state and syncs vault_document_id to hidden input.`n`nCo-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>\"; git -C \"D:\\\\final project\" commit -m $msg)",
       "PowerShell($msg = \"feat: citizen dashboard receipt links and My Applications tracking page`n`nProblem 1 - Dashboard appointment cards: eager load application relation and`nshow View Receipt and Track Status buttons when an Application record exists.`n`nProblem 2 - New /citizen/track page \\(citizen.applications.index\\): lists all`napplications with status badge, tracking code, appointment details, latest`nstatus log preview, View Full Timeline and Download Receipt actions.`nSidebar and mobile nav Track link now points to this personal overview.`nPublic /track/{code} page is unchanged.`n`nCo-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>\"; git -C \"D:\\\\final project\" commit -m $msg)",
-      "Bash(git *)"
+      "Bash(git *)",
+      "Bash(netstat -ano)",
+      "Bash(findstr \":80\\\\b\\\\|:8000\\\\|:8080\\\\|:8888\\\\|:3000\\\\|:5173\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://127.0.0.1:8000/prototype.html)",
+      "Bash(fuser -k 8000/tcp)"
     ]
   }
 }

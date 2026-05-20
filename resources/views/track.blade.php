@@ -71,8 +71,8 @@
         
         <!-- Hero Section -->
         <div class="text-center w-full max-w-[600px] mb-8 animate-fade-up" style="animation-delay: 100ms;">
-            <h1 class="text-[28px] font-bold text-brand dark:text-white font-outfit mb-2" data-i18n="Track Your Application">Track Your Application</h1>
-            <p class="text-sm text-gray-500 dark:text-gray-400" data-i18n="Real-time status updates for your document submission">Real-time status updates for your document submission</p>
+            <h1 class="text-[28px] font-bold text-brand dark:text-white font-outfit mb-2" data-i18n="track.title">Track Your Application</h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400" data-i18n="track.subtitle">Real-time status updates for your document submission</p>
         </div>
 
         @if(!$application)
@@ -80,19 +80,19 @@
             <div class="w-full max-w-[600px] bg-white dark:bg-[#1e293b] rounded-[16px] shadow-sm border border-gray-100 dark:border-slate-800 p-6 animate-fade-up" style="animation-delay: 200ms;">
                 <form action="javascript:void(0)" onsubmit="manualTrack()" class="flex flex-col gap-4">
                     <div class="flex flex-col sm:flex-row gap-3">
-                        <input type="text" id="manualTrackingCode" placeholder="Enter tracking code (e.g. TRK-...)" data-i18n-placeholder="Enter tracking code (e.g. TRK-...)" class="flex-1 h-[48px] rounded-[10px] border-gray-300 dark:border-slate-600 bg-transparent dark:text-white focus:border-brand focus:ring-0 px-4 transition-colors">
-                        <button type="submit" class="h-[48px] px-6 bg-brand text-white font-semibold rounded-[10px] shadow-brand-btn hover:-translate-y-[1px] transition-all" data-i18n="Track Now">Track Now</button>
+                        <input type="text" id="manualTrackingCode" placeholder="Enter tracking code (e.g. TRK-...)" data-i18n-placeholder="track.placeholder" class="flex-1 h-[48px] rounded-[10px] border-gray-300 dark:border-slate-600 bg-transparent dark:text-white focus:border-brand focus:ring-0 px-4 transition-colors">
+                        <button type="submit" class="h-[48px] px-6 bg-brand text-white font-semibold rounded-[10px] shadow-brand-btn hover:-translate-y-[1px] transition-all" data-i18n="track.now">Track Now</button>
                     </div>
                     
                     <div class="flex items-center gap-4 my-2">
                         <div class="flex-1 h-px bg-gray-200 dark:bg-slate-700"></div>
-                        <span class="text-sm text-gray-400 font-semibold uppercase" data-i18n="OR">OR</span>
+                        <span class="text-sm text-gray-400 font-semibold uppercase" data-i18n="track.or">OR</span>
                         <div class="flex-1 h-px bg-gray-200 dark:bg-slate-700"></div>
                     </div>
 
                     <button type="button" onclick="startScanner()" class="h-[48px] w-full flex items-center justify-center gap-2 bg-emerald-500 text-white font-semibold rounded-[10px] shadow-md hover:-translate-y-[1px] transition-all">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                        <span data-i18n="Scan QR Code">Scan QR Code</span>
+                        <span data-i18n="track.scan_qr">Scan QR Code</span>
                     </button>
                 </form>
             </div>
@@ -115,7 +115,7 @@
                 <!-- Top Row -->
                 <div class="flex items-center justify-between mb-4">
                     <span class="font-mono font-bold text-brand dark:text-indigo-400 text-lg tracking-widest">{{ $application->tracking_code }}</span>
-                    <span class="px-3 py-1 text-xs font-bold uppercase rounded-full {{ $currentBadge['bg'] }} {{ $currentBadge['text'] }}">
+                    <span class="px-3 py-1 text-xs font-bold uppercase rounded-full {{ $currentBadge['bg'] }} {{ $currentBadge['text'] }}" data-i18n="status.{{ $application->current_status }}">
                         {{ $statusLabel }}
                     </span>
                 </div>
@@ -125,19 +125,19 @@
                 <!-- 2-Column Grid (1 on mobile) -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-4">
                     <div>
-                        <p class="text-[11px] text-gray-400 uppercase tracking-wider font-semibold mb-1" data-i18n="Applicant Name">Applicant Name</p>
+                        <p class="text-[11px] text-gray-400 uppercase tracking-wider font-semibold mb-1" data-i18n="track.applicant">Applicant Name</p>
                         <p class="text-[14px] font-bold text-gray-900 dark:text-white">{{ $application->appointment->full_name ?? $application->user->name }}</p>
                     </div>
                     <div>
-                        <p class="text-[11px] text-gray-400 uppercase tracking-wider font-semibold mb-1" data-i18n="Document Type">Document Type</p>
+                        <p class="text-[11px] text-gray-400 uppercase tracking-wider font-semibold mb-1" data-i18n="track.doc_type">Document Type</p>
                         <p class="text-[14px] font-bold text-gray-900 dark:text-white">{{ $application->appointment->document_type ?? '—' }}</p>
                     </div>
                     <div>
-                        <p class="text-[11px] text-gray-400 uppercase tracking-wider font-semibold mb-1" data-i18n="Submitted Date">Submitted Date</p>
+                        <p class="text-[11px] text-gray-400 uppercase tracking-wider font-semibold mb-1" data-i18n="track.submitted">Submitted Date</p>
                         <p class="text-[14px] font-bold text-gray-900 dark:text-white">{{ $application->submitted_at ? $application->submitted_at->format('M d, Y h:i A') : '—' }}</p>
                     </div>
                     <div>
-                        <p class="text-[11px] text-gray-400 uppercase tracking-wider font-semibold mb-1" data-i18n="Appointment Date">Appointment Date</p>
+                        <p class="text-[11px] text-gray-400 uppercase tracking-wider font-semibold mb-1" data-i18n="track.appointment">Appointment Date</p>
                         <p class="text-[14px] font-bold text-gray-900 dark:text-white">{{ $application->appointment ? \Carbon\Carbon::parse($application->appointment->date)->format('M d, Y') : '—' }}</p>
                     </div>
                 </div>
@@ -148,7 +148,7 @@
         <div class="w-full max-w-[600px] mb-12">
             <h3 class="flex items-center text-lg font-bold text-gray-900 dark:text-white mb-6">
                 <svg class="w-5 h-5 ltr:mr-2 rtl:ml-2 text-brand dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                <span data-i18n="Status Timeline">Status Timeline</span>
+                <span data-i18n="track.timeline">Status Timeline</span>
             </h3>
 
             <div class="relative">
@@ -209,7 +209,7 @@
 
                         <!-- Right Column (Content) -->
                         <div class="flex-grow ltr:pl-4 rtl:pr-4 {{ $highlightClass }}">
-                            <h4 class="text-base font-bold capitalize {{ $logBadge['text'] }}">
+                            <h4 class="text-base font-bold capitalize {{ $logBadge['text'] }}" data-i18n="status.{{ $log->status }}">
                                 {{ str_replace('_', ' ', $log->status) }}
                             </h4>
                             <p class="text-[12px] sm:text-[13px] text-gray-500 dark:text-gray-400 mt-0.5">
@@ -231,29 +231,29 @@
             @if($application->current_status === 'approved')
                 <div class="bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 rounded-[12px] p-4 text-center mb-6">
                     <p class="text-green-800 dark:text-green-300 font-semibold text-sm">
-                        🎉 <span data-i18n="Your document is ready! Please visit the Passport Directorate to collect it.">Your document is ready! Please visit the Passport Directorate to collect it.</span>
+                        🎉 <span data-i18n="track.ready">Your document is ready! Please visit the Passport Directorate to collect it.</span>
                     </p>
                 </div>
             @elseif($application->current_status === 'rejected')
                 <div class="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-[12px] p-4 text-center mb-6">
                     <p class="text-red-800 dark:text-red-300 font-semibold text-sm">
-                        ⚠️ <span data-i18n="Your application was rejected. Please review the notes above and resubmit.">Your application was rejected. Please review the notes above and resubmit.</span>
+                        ⚠️ <span data-i18n="track.rejected">Your application was rejected. Please review the notes above and resubmit.</span>
                     </p>
                 </div>
             @else
                 <div class="bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800 rounded-[12px] p-4 flex flex-col sm:flex-row items-center justify-between mb-6">
                     <p class="text-brand dark:text-indigo-300 text-sm font-medium text-center sm:text-left sm:rtl:text-right mb-3 sm:mb-0">
-                        <span data-i18n="Your application is being processed. Check back later for updates.">Your application is being processed. Check back later for updates.</span>
+                        <span data-i18n="track.processing">Your application is being processed. Check back later for updates.</span>
                     </p>
                     <button onclick="window.location.reload()" class="shrink-0 px-4 py-2 bg-white dark:bg-[#1e293b] border border-indigo-200 dark:border-indigo-700 rounded-[8px] text-xs font-semibold text-brand dark:text-indigo-300 hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors flex items-center">
                         <svg class="w-3.5 h-3.5 ltr:mr-1.5 rtl:ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                        <span data-i18n="Refresh Status">Refresh Status</span>
+                        <span data-i18n="track.refresh">Refresh Status</span>
                     </button>
                 </div>
             @endif
 
             <div class="text-center">
-                <a href="{{ route('login') }}" class="text-sm font-semibold text-brand dark:text-indigo-400 hover:underline" data-i18n="Login to your account">
+                <a href="{{ route('login') }}" class="text-sm font-semibold text-brand dark:text-indigo-400 hover:underline" data-i18n="track.login">
                     Login to your account
                 </a>
             </div>
@@ -272,8 +272,8 @@
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
             <div class="text-center mb-4 mt-2">
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white font-outfit mb-1" data-i18n="Scan QR Code">Scan QR Code</h3>
-                <p class="text-sm text-gray-500 dark:text-gray-400" data-i18n="Point your camera at the QR code">Point your camera at the QR code</p>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white font-outfit mb-1" data-i18n="track.scan_qr">Scan QR Code</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400" data-i18n="track.camera_help">Point your camera at the QR code</p>
             </div>
             <div class="rounded-[16px] overflow-hidden border-2 border-brand/20 relative bg-black/5 dark:bg-white/5">
                 <div id="reader" style="width: 100%; min-height: 250px;"></div>
@@ -413,6 +413,6 @@
             }
         });
     </script>
-    <script src="/js/translations.js"></script>
+    <script src="{{ asset('js/translations.js') }}"></script>
 </body>
 </html>

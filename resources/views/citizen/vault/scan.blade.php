@@ -1,18 +1,18 @@
 @extends('layouts.halzanin-app')
 
 @section('content')
-<div class="max-w-2xl mx-auto space-y-6" x-data="documentScanner()">
+<div class="max-w-2xl mx-auto space-y-6" x-data="documentScanner()" x-init="initLang()">
 
     <div class="flex items-center justify-between">
-        <h2 class="text-2xl font-bold text-brand dark:text-white font-outfit">Scan Document</h2>
-        <a href="{{ route('citizen.vault.index') }}" class="text-sm font-semibold text-gray-500 hover:text-brand dark:text-gray-400 dark:hover:text-indigo-400 transition-colors">Cancel</a>
+        <h2 class="text-2xl font-bold text-brand dark:text-white font-outfit" data-i18n="vault.scan">Scan Document</h2>
+        <a href="{{ route('citizen.vault.index') }}" class="text-sm font-semibold text-gray-500 hover:text-brand dark:text-gray-400 dark:hover:text-indigo-400 transition-colors" data-i18n="common.cancel">Cancel</a>
     </div>
 
     <!-- Step 1: Choose document type BEFORE opening camera -->
     <div x-show="step === 'choose'" class="bg-white dark:bg-[#1e293b] p-6 rounded-[16px] shadow-sm border border-gray-100 dark:border-gray-800 space-y-5">
         <div>
-            <h3 class="font-bold text-gray-900 dark:text-white mb-1">What are you scanning?</h3>
-            <p class="text-sm text-gray-500 dark:text-gray-400">The frame will adjust to fit your document.</p>
+            <h3 class="font-bold text-gray-900 dark:text-white mb-1" data-i18n="vault.scan_question">What are you scanning?</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400" data-i18n="vault.scan_help">The frame will adjust to fit your document.</p>
         </div>
         <div class="grid grid-cols-2 gap-3">
             <template x-for="dt in docTypes" :key="dt.value">
@@ -21,8 +21,8 @@
                     :class="documentType === dt.value ? 'ring-2 ring-brand bg-indigo-50 dark:bg-indigo-900/30' : 'bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700'"
                     class="p-4 rounded-[12px] border border-gray-200 dark:border-gray-700 text-left transition-all">
                     <div class="text-2xl mb-1" x-text="dt.icon"></div>
-                    <div class="font-semibold text-sm text-gray-900 dark:text-white" x-text="dt.label"></div>
-                    <div class="text-xs text-gray-400 dark:text-gray-500 mt-0.5" x-text="dt.hint"></div>
+                    <div class="font-semibold text-sm text-gray-900 dark:text-white" x-text="t(dt.labelKey)"></div>
+                    <div class="text-xs text-gray-400 dark:text-gray-500 mt-0.5" x-text="t(dt.hintKey)"></div>
                 </button>
             </template>
         </div>
@@ -30,7 +30,7 @@
             @click="startScanning()"
             :disabled="!documentType"
             class="w-full h-[48px] bg-brand text-white font-bold rounded-[12px] hover:bg-brand-light transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
-            Open Camera
+            <span data-i18n="vault.open_camera">Open Camera</span>
         </button>
     </div>
 
@@ -40,11 +40,11 @@
         <div x-show="hasTwoSides" class="flex items-center gap-3 mb-3" style="display:none">
             <div class="flex gap-2">
                 <span :class="currentSide === 'front' ? 'bg-brand text-white' : 'bg-gray-200 dark:bg-slate-700 text-gray-500'"
-                    class="px-3 py-1 rounded-full text-xs font-bold transition-colors">Front</span>
+                    class="px-3 py-1 rounded-full text-xs font-bold transition-colors" x-text="t('vault.front')">Front</span>
                 <span :class="currentSide === 'back' ? 'bg-brand text-white' : 'bg-gray-200 dark:bg-slate-700 text-gray-500'"
-                    class="px-3 py-1 rounded-full text-xs font-bold transition-colors">Back</span>
+                    class="px-3 py-1 rounded-full text-xs font-bold transition-colors" x-text="t('vault.back')">Back</span>
             </div>
-            <span class="text-sm text-gray-500 dark:text-gray-400" x-text="currentSide === 'front' ? 'Scanning front side' : 'Flip document — scanning back side'"></span>
+            <span class="text-sm text-gray-500 dark:text-gray-400" x-text="currentSide === 'front' ? t('vault.scanning_front') : t('vault.scanning_back')"></span>
         </div>
 
         <!-- Camera box — aspect ratio driven by document type -->
@@ -64,7 +64,7 @@
                     <div class="absolute bottom-0 right-0 w-6 h-6 border-b-4 border-r-4 border-brand -mb-1 -mr-1"></div>
                     <div class="absolute inset-0 flex items-center justify-center">
                         <p class="text-white/70 font-semibold bg-black/50 px-4 py-2 rounded-full text-sm backdrop-blur-sm" x-show="!isCaptured">
-                            Position document within frame
+                            <span data-i18n="vault.position_document">Position document within frame</span>
                         </p>
                     </div>
                 </div>
@@ -82,10 +82,10 @@
                 </button>
                 <div x-show="isCaptured" class="flex gap-4 w-full" style="display:none;">
                     <button type="button" @click="retake"
-                        class="flex-1 px-4 py-3 bg-gray-800 text-white font-semibold rounded-[10px] hover:bg-gray-700 transition-colors">Retake</button>
+                        class="flex-1 px-4 py-3 bg-gray-800 text-white font-semibold rounded-[10px] hover:bg-gray-700 transition-colors" data-i18n="vault.retake">Retake</button>
                     <button type="button" @click="confirmCapture" :disabled="isSaving"
                         class="flex-1 px-4 py-3 bg-brand text-white font-semibold rounded-[10px] hover:bg-brand-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center">
-                        <span x-show="!isSaving" x-text="currentSide === 'front' && hasTwoSides ? 'Next: Scan Back' : 'Save Securely'"></span>
+                        <span x-show="!isSaving" x-text="currentSide === 'front' && hasTwoSides ? t('vault.next_scan_back') : t('vault.save_securely')"></span>
                         <svg x-show="isSaving" class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -97,9 +97,9 @@
 
         <!-- Filter strip -->
         <div x-show="isCaptured" class="bg-white dark:bg-[#1e293b] p-4 rounded-[16px] shadow-sm border border-gray-100 dark:border-gray-800 flex justify-around gap-2 mt-4" style="display:none;">
-            <button type="button" @click="applyFilter('original')" :class="activeFilter==='original'?'bg-brand text-white':'bg-gray-100 text-gray-700 dark:bg-slate-800 dark:text-gray-300'" class="flex-1 px-3 py-2 text-xs font-bold rounded-lg transition-all">Original</button>
-            <button type="button" @click="applyFilter('magic')"    :class="activeFilter==='magic'   ?'bg-brand text-white':'bg-gray-100 text-gray-700 dark:bg-slate-800 dark:text-gray-300'" class="flex-1 px-3 py-2 text-xs font-bold rounded-lg transition-all">Magic Scan ✨</button>
-            <button type="button" @click="applyFilter('bw')"       :class="activeFilter==='bw'      ?'bg-brand text-white':'bg-gray-100 text-gray-700 dark:bg-slate-800 dark:text-gray-300'" class="flex-1 px-3 py-2 text-xs font-bold rounded-lg transition-all">B&W Doc 📝</button>
+            <button type="button" @click="applyFilter('original')" :class="activeFilter==='original'?'bg-brand text-white':'bg-gray-100 text-gray-700 dark:bg-slate-800 dark:text-gray-300'" class="flex-1 px-3 py-2 text-xs font-bold rounded-lg transition-all" x-text="t('vault.original')">Original</button>
+            <button type="button" @click="applyFilter('magic')"    :class="activeFilter==='magic'   ?'bg-brand text-white':'bg-gray-100 text-gray-700 dark:bg-slate-800 dark:text-gray-300'" class="flex-1 px-3 py-2 text-xs font-bold rounded-lg transition-all" x-text="t('vault.magic_scan')">Magic Scan</button>
+            <button type="button" @click="applyFilter('bw')"       :class="activeFilter==='bw'      ?'bg-brand text-white':'bg-gray-100 text-gray-700 dark:bg-slate-800 dark:text-gray-300'" class="flex-1 px-3 py-2 text-xs font-bold rounded-lg transition-all" x-text="t('vault.bw_doc')">B&amp;W Doc</button>
         </div>
 
         <div x-show="errorMessage" class="mt-3 bg-red-50 text-red-600 p-3 rounded-lg text-sm" x-text="errorMessage" style="display:none;"></div>
@@ -114,17 +114,17 @@
             </svg>
         </div>
         <div>
-            <h3 class="font-bold text-lg text-gray-900 dark:text-white mb-1">Flip your <span x-text="documentType"></span></h3>
-            <p class="text-sm text-gray-500 dark:text-gray-400">Front side saved. Now scan the back side to complete your document.</p>
+            <h3 class="font-bold text-lg text-gray-900 dark:text-white mb-1"><span data-i18n="vault.flip_title">Flip your</span> <span x-text="translatedDocumentType"></span></h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400" data-i18n="vault.flip_desc">Front side saved. Now scan the back side to complete your document.</p>
         </div>
         <div class="flex gap-3">
             <button type="button" @click="skipBack"
                 class="flex-1 px-4 py-3 bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-gray-300 font-semibold rounded-[10px] hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors">
-                Skip (front only)
+                <span data-i18n="vault.skip_front_only">Skip (front only)</span>
             </button>
             <button type="button" @click="scanBack"
                 class="flex-1 px-4 py-3 bg-brand text-white font-semibold rounded-[10px] hover:bg-brand-light transition-colors">
-                Scan Back Side
+                <span data-i18n="vault.scan_back_side">Scan Back Side</span>
             </button>
         </div>
     </div>
@@ -135,7 +135,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
         </svg>
         <p class="text-sm text-gray-700 dark:text-gray-300">
-            <strong>Secure Storage Guarantee:</strong> Your document is encrypted before saving. Staff cannot view it and it auto-deletes in 100 days.
+            <strong data-i18n="vault.secure_label">Secure Storage Guarantee:</strong> <span data-i18n="vault.secure_desc">Your document is encrypted before saving. Staff cannot view it and it auto-deletes in 100 days.</span>
         </p>
     </div>
 </div>
@@ -155,14 +155,30 @@ function documentScanner() {
         activeFilter: 'magic',
         errorMessage: '',
         frameAspect: 'card',     // 'card' (landscape 16:10) | 'portrait' (3:4)
+        lang: document.documentElement.lang === 'ku' ? 'ku' : 'en',
 
         docTypes: [
-            { value: 'National ID',    label: 'National ID',    icon: '🪪', hint: 'Front + back' },
-            { value: 'Driver License', label: 'Driver License', icon: '🚗', hint: 'Front + back' },
-            { value: 'Passport',       label: 'Passport',       icon: '📘', hint: 'Photo page' },
-            { value: 'Other',          label: 'Other',          icon: '📄', hint: 'Single page' },
+            { value: 'National ID',    labelKey: 'book.national_id_short', icon: 'ID', hintKey: 'vault.front_back' },
+            { value: 'Driver License', labelKey: 'vault.driver_license',   icon: 'DL', hintKey: 'vault.front_back' },
+            { value: 'Passport',       labelKey: 'vault.passport',         icon: 'PP', hintKey: 'vault.photo_page' },
+            { value: 'Other',          labelKey: 'doc.other',              icon: 'DOC', hintKey: 'vault.single_page' },
         ],
 
+        initLang() {
+            document.addEventListener('halzanin-language-changed', (event) => {
+                this.lang = event.detail.lang;
+            });
+        },
+
+        t(key) {
+            this.lang;
+            return window.i18n ? i18n(key) : key;
+        },
+
+        get translatedDocumentType() {
+            const item = this.docTypes.find(dt => dt.value === this.documentType);
+            return item ? this.t(item.labelKey) : this.documentType;
+        },
         get hasTwoSides() {
             return this.documentType === 'National ID' || this.documentType === 'Driver License';
         },
@@ -188,7 +204,7 @@ function documentScanner() {
                 });
                 this.$refs.video.srcObject = this.stream;
             } catch (err) {
-                this.errorMessage = 'Camera access is required. Please allow camera access and try again.';
+                this.errorMessage = this.t('vault.camera_required');
             }
         },
 
@@ -393,11 +409,11 @@ function documentScanner() {
                         window.location.href = data.redirect;
                     }
                 } else {
-                    this.errorMessage = data.error || 'Failed to save document.';
+                    this.errorMessage = data.error || this.t('vault.save_failed');
                     this.isSaving = false;
                 }
             } catch (e) {
-                this.errorMessage = 'An error occurred while saving.';
+                this.errorMessage = this.t('vault.save_error');
                 this.isSaving = false;
             }
         },
