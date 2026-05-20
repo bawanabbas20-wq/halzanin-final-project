@@ -23,7 +23,7 @@
 }
 .hover-lift:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px -6px rgba(200,134,10,0.12);
+  box-shadow: 0 8px 24px -6px rgba(27,79,138,0.12);
 }
 .dark .hover-lift:hover {
   box-shadow: 0 8px 24px -6px rgba(0,0,0,0.4);
@@ -67,15 +67,15 @@ input:focus, select:focus, textarea:focus {
 .status-dot-blue   { background: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.2); }
 .status-dot-gray   { background: #94a3b8; box-shadow: 0 0 0 3px rgba(148,163,184,0.2); }
 
-/* ── Gradient text ── */
+/* ── Accent text ── */
 .text-gradient {
-  background: linear-gradient(135deg, #C8860A 0%, #d97706 100%);
+  background: #1B4F8A;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 .dark .text-gradient {
-  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  background: #4A82C4;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -83,11 +83,11 @@ input:focus, select:focus, textarea:focus {
 
 /* ── Filter chip active state ── */
 .filter-chip-active {
-  background: #C8860A;
+  background: #1B4F8A;
   color: #fff;
-  border-color: #C8860A;
+  border-color: #1B4F8A;
 }
 .dark .filter-chip-active {
-  background: #d97706;
-  border-color: #d97706;
+  background: #4A82C4;
+  border-color: #4A82C4;
 }

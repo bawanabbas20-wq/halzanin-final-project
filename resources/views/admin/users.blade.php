@@ -9,14 +9,14 @@
             <div>
                 <div class="flex items-center gap-3">
                     <h2 class="text-2xl font-bold font-outfit text-gradient" data-i18n="User Management">User Management</h2>
-                    <span class="px-2.5 py-1 bg-brand/10 dark:bg-amber-900/30 text-brand dark:text-amber-400 text-sm font-bold rounded-xl">
+                    <span class="px-2.5 py-1 bg-brand/10 dark:bg-brand/10 text-brand dark:text-blue-400 text-sm font-bold rounded-xl">
                         {{ $users->total() }}
                     </span>
                 </div>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-1" data-i18n="admin.users_subtitle">Manage user roles and access levels</p>
             </div>
             <a href="{{ route('admin.dashboard') }}"
-               class="text-sm font-semibold text-gray-500 hover:text-brand dark:text-gray-400 dark:hover:text-amber-400 transition-colors flex items-center gap-1.5">
+               class="text-sm font-semibold text-gray-500 hover:text-brand dark:text-gray-400 dark:hover:text-blue-400 transition-colors flex items-center gap-1.5">
                 <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                 </svg>
@@ -43,10 +43,10 @@
         @endif
 
         {{-- Users Table --}}
-        <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay: 100ms">
+        <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay: 100ms">
             <div class="overflow-x-auto min-h-[400px]">
                 <table class="w-full text-left border-collapse">
-                    <thead class="bg-gray-50 dark:bg-slate-800 border-b border-gray-100 dark:border-slate-700">
+                    <thead class="bg-gray-50 dark:bg-[#1F1F1F]/80 border-b border-gray-100 dark:border-slate-700">
                         <tr>
                             <th class="px-6 py-3.5 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider" data-i18n="User">User</th>
                             <th class="px-6 py-3.5 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider" data-i18n="Email">Email</th>
@@ -64,7 +64,7 @@
                                 $roleConfig = [
                                     'citizen' => ['badge' => 'bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-gray-300', 'avatar' => 'bg-gray-400 dark:bg-slate-600'],
                                     'staff'   => ['badge' => 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400', 'avatar' => 'bg-blue-500'],
-                                    'admin'   => ['badge' => 'bg-indigo-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400', 'avatar' => 'bg-brand dark:bg-amber-500'],
+                                    'admin'   => ['badge' => 'bg-brand/5 text-brand dark:bg-brand/10 dark:text-blue-400', 'avatar' => 'bg-brand dark:bg-blue-600'],
                                 ];
                                 $rc = $roleConfig[$user->role] ?? $roleConfig['citizen'];
                             @endphp
@@ -72,7 +72,7 @@
                             <tr class="hover:bg-gray-50/70 dark:hover:bg-slate-800/50 transition-colors {{ $isSelf ? 'opacity-80' : '' }}">
                                 <td class="px-6 py-4">
                                     <div class="flex items-center gap-3 rtl:space-x-reverse">
-                                        <div class="w-10 h-10 rounded-full ring-2 ring-white dark:ring-[#1e293b] ring-offset-2 ring-offset-white dark:ring-offset-[#1e293b] flex items-center justify-center font-bold text-white uppercase shrink-0 text-sm {{ $rc['avatar'] }}">
+                                        <div class="w-10 h-10 rounded-full ring-2 ring-white dark:ring-[#1F1F1F] ring-offset-2 ring-offset-white dark:ring-offset-[#1F1F1F] flex items-center justify-center font-bold text-white uppercase shrink-0 text-sm {{ $rc['avatar'] }}">
                                             {{ mb_substr($user->name, 0, 1) }}
                                         </div>
                                         <div>
@@ -95,7 +95,7 @@
                                     @if($user->role === 'staff')
                                         <div class="flex flex-wrap gap-1 max-w-[180px]">
                                             @forelse($user->subRoles as $sr)
-                                                <span class="px-2 py-0.5 bg-indigo-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 text-[10px] font-bold rounded-full">{{ $sr->name }}</span>
+                                                <span class="px-2 py-0.5 bg-brand/5 dark:bg-brand/10 text-brand dark:text-blue-400 text-[10px] font-bold rounded-full">{{ $sr->name }}</span>
                                             @empty
                                                 <span class="text-[11px] text-gray-400 dark:text-gray-500 italic">Full access</span>
                                             @endforelse
@@ -125,7 +125,7 @@
                                             @csrf
                                             @method('PATCH')
                                             <select name="role"
-                                                    class="block w-28 h-[34px] text-xs font-semibold ltr:pl-3 ltr:pr-8 rtl:pr-3 rtl:pl-8 rounded-xl border-gray-200 dark:border-gray-700 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 transition-all">
+                                                    class="block w-28 h-[34px] text-xs font-semibold ltr:pl-3 ltr:pr-8 rtl:pr-3 rtl:pl-8 rounded-xl border-gray-200 dark:border-gray-700 dark:bg-[#141414] dark:text-white focus:border-brand focus:ring-0 transition-all">
                                                 <option value="citizen" {{ $user->role === 'citizen' ? 'selected' : '' }}>Citizen</option>
                                                 <option value="staff"   {{ $user->role === 'staff'   ? 'selected' : '' }}>Staff</option>
                                                 <option value="admin"   {{ $user->role === 'admin'   ? 'selected' : '' }}>Admin</option>
@@ -169,17 +169,17 @@
                 </table>
             </div>
 
-            <div class="px-6 py-4 border-t border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-800/30">
+            <div class="px-6 py-4 border-t border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-[#1F1F1F]/50">
                 {{ $users->links() }}
             </div>
         </div>
 
         {{-- Role Update Confirmation Modal --}}
         <x-modal name="confirm-role-update" maxWidth="sm">
-            <div class="p-6 bg-white dark:bg-[#1e293b]">
+            <div class="p-6 bg-white dark:bg-[#1F1F1F]">
                 <div class="flex items-center gap-4 mb-5">
-                    <div class="w-11 h-11 rounded-full bg-brand/10 dark:bg-amber-900/30 flex items-center justify-center shrink-0">
-                        <svg class="w-5 h-5 text-brand dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-11 h-11 rounded-full bg-brand/10 dark:bg-brand/10 flex items-center justify-center shrink-0">
+                        <svg class="w-5 h-5 text-brand dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                         </svg>
                     </div>
@@ -191,7 +191,7 @@
 
                 <div class="bg-gray-50 dark:bg-slate-800/50 rounded-xl px-4 py-3 mb-5 text-sm text-gray-700 dark:text-gray-300">
                     Change <span class="font-bold" x-text="pendingName"></span>'s role to
-                    <span class="font-bold text-brand dark:text-amber-400 capitalize" x-text="pendingRole"></span>?
+                    <span class="font-bold text-brand dark:text-blue-400 capitalize" x-text="pendingRole"></span>?
                 </div>
 
                 <div class="flex justify-end gap-3">
@@ -209,7 +209,7 @@
 
         {{-- Assign Sub-Role Modal --}}
         <x-modal name="assign-sub-role" maxWidth="sm">
-            <div class="p-6 bg-white dark:bg-[#1e293b]">
+            <div class="p-6 bg-white dark:bg-[#1F1F1F]">
                 <h2 class="text-base font-bold text-gray-900 dark:text-white font-outfit mb-4">Assign Sub-Role</h2>
                 @if($subRoles->isNotEmpty())
                     <form method="POST"

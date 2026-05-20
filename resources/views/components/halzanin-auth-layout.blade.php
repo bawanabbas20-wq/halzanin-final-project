@@ -39,12 +39,12 @@
 
         <!-- Floating Toggles -->
         <div class="fixed top-4 ltr:right-4 rtl:left-4 z-50 flex items-center space-x-3 rtl:space-x-reverse">
-            <button id="theme-toggle" class="p-2 rounded-full border border-brand/30 dark:border-amber-400/30 text-brand dark:text-amber-300 hover:bg-brand/10 dark:hover:bg-amber-400/10 transition bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm">
+            <button id="theme-toggle" class="p-2 rounded-full border border-brand/30 dark:border-blue-400/30 text-brand dark:text-blue-400 hover:bg-brand/10 dark:hover:bg-blue-400/10 transition bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm">
                 <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
                 <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
             </button>
 
-            <button id="lang-toggle" class="flex items-center border border-brand/30 dark:border-amber-400/30 rounded-full p-1 text-sm font-semibold transition overflow-hidden bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm">
+            <button id="lang-toggle" class="flex items-center border border-brand/30 dark:border-blue-400/30 rounded-full p-1 text-sm font-semibold transition overflow-hidden bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm">
                 <span id="lang-en" class="px-3 py-0.5 rounded-full transition-colors">EN</span>
                 <span id="lang-ku" class="px-3 py-0.5 rounded-full transition-colors font-arabic">کوردی</span>
             </button>
@@ -55,11 +55,11 @@
 
             <!-- Geometric dot pattern -->
             <div class="absolute inset-0 opacity-[0.18] dark:opacity-[0.07]"
-                 style="background-image: radial-gradient(circle, #C8860A 1px, transparent 1px); background-size: 28px 28px;"></div>
+                 style="background-image: radial-gradient(circle, #1B4F8A 1px, transparent 1px); background-size: 28px 28px;"></div>
 
             <!-- Warm ambient blobs -->
             <div class="absolute top-1/4 ltr:-left-20 rtl:-right-20 w-72 h-72 bg-brand/10 rounded-full filter blur-3xl pointer-events-none"></div>
-            <div class="absolute bottom-1/4 ltr:-right-20 rtl:-left-20 w-64 h-64 bg-amber-300/20 rounded-full filter blur-3xl pointer-events-none"></div>
+            <div class="absolute bottom-1/4 ltr:-right-20 rtl:-left-20 w-64 h-64 bg-brand/10 rounded-full filter blur-3xl pointer-events-none"></div>
 
             <!-- Centered card -->
             <div class="w-full max-w-[420px] relative z-10 animate-slide-up">
@@ -105,15 +105,15 @@
 
             function updateLangUI(lang) {
                 if (lang === 'ku') {
-                    langKu.classList.add('bg-brand', 'text-white', 'dark:bg-amber-500', 'dark:text-white');
-                    langKu.classList.remove('text-brand', 'dark:text-amber-300', 'bg-transparent');
-                    langEn.classList.remove('bg-brand', 'text-white', 'dark:bg-amber-500', 'dark:text-white');
-                    langEn.classList.add('text-brand', 'dark:text-amber-300', 'bg-transparent');
+                    langKu.classList.add('bg-brand', 'text-white', 'dark:bg-blue-600', 'dark:text-white');
+                    langKu.classList.remove('text-brand', 'dark:text-blue-400', 'bg-transparent');
+                    langEn.classList.remove('bg-brand', 'text-white', 'dark:bg-blue-600', 'dark:text-white');
+                    langEn.classList.add('text-brand', 'dark:text-blue-400', 'bg-transparent');
                 } else {
-                    langEn.classList.add('bg-brand', 'text-white', 'dark:bg-amber-500', 'dark:text-white');
-                    langEn.classList.remove('text-brand', 'dark:text-amber-300', 'bg-transparent');
-                    langKu.classList.remove('bg-brand', 'text-white', 'dark:bg-amber-500', 'dark:text-white');
-                    langKu.classList.add('text-brand', 'dark:text-amber-300', 'bg-transparent');
+                    langEn.classList.add('bg-brand', 'text-white', 'dark:bg-blue-600', 'dark:text-white');
+                    langEn.classList.remove('text-brand', 'dark:text-blue-400', 'bg-transparent');
+                    langKu.classList.remove('bg-brand', 'text-white', 'dark:bg-blue-600', 'dark:text-white');
+                    langKu.classList.add('text-brand', 'dark:text-blue-400', 'bg-transparent');
                 }
             }
 

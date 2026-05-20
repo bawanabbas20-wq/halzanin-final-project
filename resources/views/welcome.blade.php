@@ -9,13 +9,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg:    #F7F4EF;
-            --text:  #1A1A1A;
-            --muted: #6B7280;
-            --brand: #C8860A;
-            --brand-dark: #A06B07;
+            --bg:    #EFEDE8;
+            --text:  #111111;
+            --muted: #6B6860;
+            --brand: #1B4F8A;
+            --brand-dark: #163F6E;
             --white: #ffffff;
-            --line:  #E5E0D8;
+            --line:  #DDD9D0;
             --card:  #ffffff;
         }
 
@@ -36,7 +36,7 @@
         /* ── Navbar ── */
         .topbar {
             position: sticky; top: 0; z-index: 40;
-            background: rgba(247, 244, 239, 0.96);
+            background: rgba(239, 237, 232, 0.96);
             backdrop-filter: blur(8px);
             border-bottom: 1px solid var(--line);
         }
@@ -77,7 +77,7 @@
 
         .btn-primary {
             background: var(--brand); color: #fff;
-            box-shadow: 0 6px 18px rgba(200, 134, 10, 0.35);
+            box-shadow: 0 6px 18px rgba(27, 79, 138, 0.35);
         }
         .btn-primary:hover { background: var(--brand-dark); }
 
@@ -98,24 +98,16 @@
         .hero::before {
             content: "";
             position: absolute; inset: 0;
-            background-image: radial-gradient(circle, rgba(200,134,10,0.7) 1px, transparent 1px);
+            background-image: radial-gradient(circle, rgba(27,79,138,0.7) 1px, transparent 1px);
             background-size: 28px 28px;
             opacity: 0.07;
             pointer-events: none;
         }
 
-        /* Amber glow top-right */
-        .hero-glow {
-            position: absolute; top: -80px; right: -80px;
-            width: 360px; height: 360px;
-            background: radial-gradient(circle, rgba(200,134,10,0.18) 0%, transparent 65%);
-            border-radius: 50%; pointer-events: none;
-        }
-
         .hero-kicker {
             position: relative; z-index: 2;
             display: inline-flex; align-items: center; gap: 8px;
-            background: rgba(200,134,10,0.1); border: 1px solid rgba(200,134,10,0.25);
+            background: rgba(27,79,138,0.08); border: 1px solid rgba(27,79,138,0.2);
             border-radius: 999px; padding: 6px 14px;
             font-size: 12px; font-weight: 700; letter-spacing: .3px; text-transform: uppercase;
             color: var(--brand-dark); margin-bottom: 20px;
@@ -191,13 +183,13 @@
             transition: box-shadow .2s ease, transform .2s ease;
         }
         .card:hover {
-            box-shadow: 0 10px 30px rgba(200,134,10,0.13);
+            box-shadow: 0 10px 30px rgba(27,79,138,0.13);
             transform: translateY(-3px);
         }
 
         .card-icon {
             width: 44px; height: 44px; border-radius: 12px;
-            background: rgba(200,134,10,0.1);
+            background: rgba(27,79,138,0.08);
             display: flex; align-items: center; justify-content: center;
             margin-bottom: 16px;
         }
@@ -205,7 +197,7 @@
 
         .card .tag {
             display: inline-block;
-            background: rgba(200,134,10,0.1); color: var(--brand-dark);
+            background: rgba(27,79,138,0.08); color: var(--brand-dark);
             border-radius: 999px; padding: 3px 10px;
             font-size: 11px; font-weight: 700; letter-spacing: .3px; text-transform: uppercase;
             margin-bottom: 12px;
@@ -234,13 +226,13 @@
             background: var(--brand); color: #fff;
             display: flex; align-items: center; justify-content: center;
             font-size: 20px; font-weight: 800;
-            box-shadow: 0 4px 14px rgba(200,134,10,0.35);
+            box-shadow: 0 4px 14px rgba(27,79,138,0.35);
             flex-shrink: 0; position: relative; z-index: 1;
         }
 
         .timeline-line {
             width: 2px; flex: 1; min-height: 24px; margin-top: 6px;
-            background: linear-gradient(to bottom, rgba(200,134,10,0.5), rgba(200,134,10,0.08));
+            background: linear-gradient(to bottom, rgba(27,79,138,0.4), rgba(27,79,138,0.06));
         }
         .timeline-item:last-child .timeline-line { display: none; }
 
@@ -258,12 +250,12 @@
 
         .news-media {
             height: 140px;
-            background: linear-gradient(145deg, rgba(200,134,10,0.12), rgba(200,134,10,0.04));
+            background: linear-gradient(145deg, rgba(27,79,138,0.08), rgba(27,79,138,0.03));
             display: flex; align-items: center; justify-content: center;
         }
         .news-media-icon {
             width: 52px; height: 52px; border-radius: 14px;
-            background: rgba(200,134,10,0.12);
+            background: rgba(27,79,138,0.1);
             display: flex; align-items: center; justify-content: center;
         }
         .news-media-icon svg { width: 26px; height: 26px; stroke: var(--brand); }
@@ -332,7 +324,6 @@
         <section class="hero-wrap">
             <div class="container">
                 <div class="hero">
-                    <div class="hero-glow"></div>
                     <div class="hero-kicker">
                         <span class="hero-kicker-dot"></span>
                         <span data-i18n="Public Service Portal">Public Service Portal</span>

@@ -30,7 +30,7 @@
             @endphp
 
             @foreach($statCards as $index => $card)
-                <div class="bg-white dark:bg-[#1e293b] rounded-xl p-4 lg:p-5 shadow-sm border border-gray-100 dark:border-gray-800 hover-lift animate-fade-up"
+                <div class="bg-white dark:bg-[#1F1F1F] rounded-xl p-4 lg:p-5 shadow-sm border border-gray-100 dark:border-gray-800 hover-lift animate-fade-up"
                      style="animation-delay: {{ $index * 60 }}ms">
                     <div class="w-9 h-9 rounded-full ring-4 {{ $card['ring'] }} bg-{{ $card['color'] }}-50 dark:bg-{{ $card['color'] }}-900/30 text-{{ $card['color'] }}-500 dark:text-{{ $card['color'] }}-400 flex items-center justify-center mb-3">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">{!! $card['icon'] !!}</svg>
@@ -44,8 +44,8 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
 
             {{-- Bar Chart --}}
-            <div class="lg:col-span-2 bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay: 500ms">
-                <div class="h-1.5 bg-gradient-to-r from-brand via-amber-500 to-accent"></div>
+            <div class="lg:col-span-2 bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay: 500ms">
+                <div class="h-1.5 bg-brand"></div>
                 <div class="p-6">
                     <div class="flex items-center justify-between mb-6">
                         <h3 class="text-base font-bold text-gray-900 dark:text-white font-outfit" data-i18n="Applications This Week">Applications This Week</h3>
@@ -80,7 +80,7 @@
                                 <div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-xs font-bold px-2 py-1 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg">
                                     {{ $data['count'] }}
                                 </div>
-                                <div class="w-8 sm:w-10 rounded-t-lg origin-bottom bg-gradient-to-t from-brand to-amber-400 dark:from-amber-600 dark:to-amber-400 hover:from-amber-500 hover:to-amber-300 transition-all"
+                                <div class="w-8 sm:w-10 rounded-t-lg origin-bottom bg-brand hover:bg-brand-light dark:bg-blue-600 dark:hover:bg-blue-500 transition-all"
                                      style="height: {{ $heightPct }}%; animation: scaleUp 600ms cubic-bezier(0.4, 0, 0.2, 1) forwards; animation-delay: {{ $index * 80 }}ms; transform: scaleY(0)">
                                 </div>
                                 <span class="text-xs font-semibold text-gray-400 dark:text-gray-500 mt-2.5">{{ $data['date'] }}</span>
@@ -91,8 +91,8 @@
             </div>
 
             {{-- Quick Actions --}}
-            <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay: 600ms">
-                <div class="h-1.5 bg-gradient-to-r from-brand via-amber-500 to-accent"></div>
+            <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay: 600ms">
+                <div class="h-1.5 bg-brand"></div>
                 <div class="p-6 flex flex-col h-full">
                     <h3 class="text-base font-bold text-gray-900 dark:text-white mb-6 font-outfit" data-i18n="Quick Actions">Quick Actions</h3>
                     <div class="flex flex-col space-y-3 flex-grow justify-center">
@@ -104,7 +104,7 @@
                             <span data-i18n="View All Applications">View All Applications</span>
                         </a>
                         <a href="{{ route('admin.users') }}"
-                           class="w-full py-3.5 bg-white dark:bg-slate-800 text-brand dark:text-amber-400 border-2 border-brand/20 dark:border-amber-700/40 text-center rounded-xl font-semibold font-outfit hover:border-brand dark:hover:border-amber-500 hover:bg-brand/5 dark:hover:bg-slate-700 transition-all flex items-center justify-center gap-2">
+                           class="w-full py-3.5 bg-white dark:bg-slate-800 text-brand dark:text-blue-400 border-2 border-brand/20 dark:border-brand/40 text-center rounded-xl font-semibold font-outfit hover:border-brand dark:hover:border-blue-500 hover:bg-brand/5 dark:hover:bg-slate-700 transition-all flex items-center justify-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
                             </svg>
@@ -128,14 +128,14 @@
         </div>
 
         {{-- Recent Applications Table --}}
-        <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay: 700ms">
+        <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay: 700ms">
             <div class="px-6 py-4 border-b border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-800/50 flex items-center justify-between">
                 <div class="flex items-center gap-2">
-                    <div class="w-1.5 h-5 rounded-full bg-brand dark:bg-indigo-400"></div>
+                    <div class="w-1.5 h-5 rounded-full bg-brand dark:bg-blue-400"></div>
                     <h3 class="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider" data-i18n="Recent Applications">Recent Applications</h3>
                 </div>
                 <a href="{{ route('staff.queue') }}"
-                   class="text-xs font-semibold text-brand dark:text-amber-400 hover:underline flex items-center gap-1">
+                   class="text-xs font-semibold text-brand dark:text-blue-400 hover:underline flex items-center gap-1">
                     <span data-i18n="View All">View All</span>
                     <svg class="w-3.5 h-3.5 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
@@ -145,7 +145,7 @@
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse">
                     <thead>
-                        <tr class="border-b border-gray-100 dark:border-slate-800 bg-white dark:bg-[#1e293b]">
+                        <tr class="border-b border-gray-100 dark:border-slate-800 bg-white dark:bg-[#1F1F1F]">
                             <th class="px-6 py-3.5 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider" data-i18n="Applicant">Applicant</th>
                             <th class="px-6 py-3.5 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider" data-i18n="Tracking Code">Tracking Code</th>
                             <th class="px-6 py-3.5 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider" data-i18n="Status">Status</th>
@@ -167,13 +167,13 @@
                             <tr class="hover:bg-gray-50/70 dark:hover:bg-slate-800/50 transition-colors">
                                 <td class="px-6 py-4">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-8 h-8 rounded-full bg-brand/10 dark:bg-amber-900/30 flex items-center justify-center text-brand dark:text-amber-400 font-bold text-sm shrink-0">
+                                        <div class="w-8 h-8 rounded-full bg-brand/10 dark:bg-brand/10 flex items-center justify-center text-brand dark:text-blue-400 font-bold text-sm shrink-0">
                                             {{ mb_substr($app->appointment->full_name ?? $app->user->name, 0, 1) }}
                                         </div>
                                         <span class="text-sm font-bold text-gray-900 dark:text-white">{{ $app->appointment->full_name ?? $app->user->name }}</span>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4 text-sm font-mono font-bold text-brand dark:text-amber-400">{{ $app->tracking_code }}</td>
+                                <td class="px-6 py-4 text-sm font-mono font-bold text-brand dark:text-blue-400">{{ $app->tracking_code }}</td>
                                 <td class="px-6 py-4">
                                     <span class="px-2.5 py-1 text-[11px] font-bold rounded-full capitalize {{ $badge }}">
                                         {{ str_replace('_', ' ', $app->current_status) }}

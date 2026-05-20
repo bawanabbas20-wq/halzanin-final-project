@@ -1,9 +1,9 @@
 <x-halzanin-auth-layout>
 
     <div class="w-full">
-        <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-brand/10 dark:bg-amber-900/30 rounded-full mb-4">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-brand/10 dark:bg-brand/10 rounded-full mb-4">
             <div class="w-1.5 h-1.5 rounded-full bg-accent pulse-dot"></div>
-            <span class="text-xs font-semibold text-brand dark:text-amber-400 uppercase tracking-wide" data-i18n="auth.new_password">New Password</span>
+            <span class="text-xs font-semibold text-brand dark:text-blue-400 uppercase tracking-wide" data-i18n="auth.new_password">New Password</span>
         </div>
 
         <h2 class="text-[22px] font-bold text-charcoal dark:text-white mb-6 font-outfit tracking-tight" data-i18n="auth.reset_title">Reset Your Password</h2>
@@ -19,7 +19,7 @@
                 </div>
                 <input id="email" type="email" name="email" value="{{ old('email', $request->email) }}" required autofocus autocomplete="username"
                        placeholder="Email Address" data-i18n-placeholder="auth.email"
-                       class="block w-full h-[48px] ltr:pl-11 rtl:pr-11 rtl:pl-4 ltr:pr-4 rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#fdefc7] dark:focus:shadow-[0_0_0_3px_rgba(200,134,10,0.3)] transition-all duration-200">
+                       class="block w-full h-[48px] ltr:pl-11 rtl:pr-11 rtl:pl-4 ltr:pr-4 rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#D6E4F5] dark:focus:shadow-[0_0_0_3px_rgba(74,130,196,0.3)] transition-all duration-200">
                 <x-input-error :messages="$errors->get('email')" class="mt-1" />
             </div>
 
@@ -30,7 +30,7 @@
                 </div>
                 <input id="password" type="password" name="password" required autocomplete="new-password"
                        placeholder="New Password" data-i18n-placeholder="auth.new_password"
-                       class="block w-full h-[48px] ltr:pl-11 rtl:pr-11 rtl:pl-4 ltr:pr-4 rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#fdefc7] dark:focus:shadow-[0_0_0_3px_rgba(200,134,10,0.3)] transition-all duration-200">
+                       class="block w-full h-[48px] ltr:pl-11 rtl:pr-11 rtl:pl-4 ltr:pr-4 rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#D6E4F5] dark:focus:shadow-[0_0_0_3px_rgba(74,130,196,0.3)] transition-all duration-200">
                 <x-input-error :messages="$errors->get('password')" class="mt-1" />
                 <x-password-strength inputId="password" />
             </div>
@@ -42,7 +42,7 @@
                 </div>
                 <input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password"
                        placeholder="Confirm Password" data-i18n-placeholder="auth.confirm_password"
-                       class="block w-full h-[48px] ltr:pl-11 rtl:pr-11 rtl:pl-4 ltr:pr-4 rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#fdefc7] dark:focus:shadow-[0_0_0_3px_rgba(200,134,10,0.3)] transition-all duration-200">
+                       class="block w-full h-[48px] ltr:pl-11 rtl:pr-11 rtl:pl-4 ltr:pr-4 rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#D6E4F5] dark:focus:shadow-[0_0_0_3px_rgba(74,130,196,0.3)] transition-all duration-200">
                 <x-input-error :messages="$errors->get('password_confirmation')" class="mt-1" />
             </div>
 

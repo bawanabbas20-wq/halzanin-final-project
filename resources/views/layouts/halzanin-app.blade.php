@@ -37,12 +37,12 @@
             }
         </script>
     </head>
-    <body class="bg-[#F7F4EF] dark:bg-[#0f172a] text-charcoal dark:text-[#f1f5f9] antialiased transition-colors duration-200">
+    <body class="bg-[#EFEDE8] dark:bg-[#141414] text-charcoal dark:text-[#f1f5f9] antialiased transition-colors duration-200">
         
         <div class="flex h-screen overflow-hidden">
             
             <!-- Desktop Sidebar -->
-            <aside class="hidden lg:flex lg:flex-col w-56 bg-white dark:bg-slate-900 border-r border-stone-200 dark:border-slate-800 flex-shrink-0 relative z-30">
+            <aside class="hidden lg:flex lg:flex-col w-56 bg-white dark:bg-[#1F1F1F] border-r border-stone-200 dark:border-slate-800 flex-shrink-0 relative z-30">
                 <!-- Logo -->
                 <div class="flex items-center gap-3 px-5 py-4 border-b border-stone-100 dark:border-slate-800">
                     <img src="{{ asset('images/halzanin-logo.png') }}" alt="Halzanîn" class="h-8 w-auto">
@@ -51,7 +51,7 @@
                 <!-- Navigation Links -->
                 <nav class="flex-1 px-3 py-3 space-y-0.5 overflow-y-auto">
                     @php
-                        $navActive   = 'bg-amber-50 dark:bg-amber-900/20 ltr:border-l-2 rtl:border-r-2 border-amber-600 text-amber-700 dark:text-amber-400 font-medium';
+                        $navActive   = 'bg-brand/5 dark:bg-brand/10 ltr:border-l-2 rtl:border-r-2 border-brand text-brand dark:text-blue-400 font-medium';
                         $navInactive = 'text-gray-600 dark:text-gray-400 hover:bg-stone-50 dark:hover:bg-slate-800 hover:text-gray-900 dark:hover:text-white';
                         $navBase     = 'flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all text-sm';
                     @endphp
@@ -214,7 +214,7 @@
                              x-transition:leave-start="opacity-100 scale-100 translate-y-0"
                              x-transition:leave-end="opacity-0 scale-95 translate-y-1"
                              style="display:none"
-                             class="absolute ltr:right-0 rtl:left-0 top-full mt-2 w-80 bg-white dark:bg-[#1e293b] rounded-[14px] shadow-xl border border-gray-100 dark:border-slate-700 overflow-hidden z-50">
+                             class="absolute ltr:right-0 rtl:left-0 top-full mt-2 w-80 bg-white dark:bg-[#1F1F1F] rounded-[14px] shadow-xl border border-gray-100 dark:border-slate-700 overflow-hidden z-50">
 
                             {{-- Dropdown header --}}
                             <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800/50">
@@ -222,7 +222,7 @@
                                 <button type="button"
                                         x-on:click="markAllRead()"
                                         x-show="count > 0"
-                                        class="text-xs font-semibold text-brand dark:text-amber-400 hover:underline">
+                                        class="text-xs font-semibold text-brand dark:text-blue-400 hover:underline">
                                     <span data-i18n="common.mark_all_read">Mark all read</span>
                                 </button>
                             </div>
@@ -240,7 +240,7 @@
                                 <template x-for="n in items" :key="n.id">
                                     <div x-on:click="markRead(n.id); n.read = true"
                                          class="flex items-start gap-3 px-4 py-3 cursor-pointer hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors"
-                                         :class="n.read ? '' : 'bg-amber-50/40 dark:bg-amber-900/10'">
+                                         :class="n.read ? '' : 'bg-brand/5 dark:bg-brand/10'">
                                         {{-- Status dot --}}
                                         <div class="mt-0.5 w-2 h-2 rounded-full shrink-0"
                                              :class="{
@@ -253,7 +253,7 @@
                                         </div>
                                         <div class="flex-1 min-w-0">
                                             <p class="text-xs font-semibold text-gray-900 dark:text-white leading-snug">
-                                                Your application <span class="font-mono text-brand dark:text-amber-400" x-text="n.tracking"></span>
+                                                Your application <span class="font-mono text-brand dark:text-blue-400" x-text="n.tracking"></span>
                                                 status changed to <span class="capitalize" x-text="n.status.replace('_',' ')"></span>
                                             </p>
                                             <p class="text-[11px] text-gray-400 dark:text-gray-500 mt-0.5" x-text="n.time"></p>
@@ -293,7 +293,7 @@
                 {{-- ═══════════════════════════════════════════════ --}}
                 {{-- Page Transition Skeleton Overlay                 --}}
                 {{-- ═══════════════════════════════════════════════ --}}
-                <div id="nav-skeleton" class="hidden absolute top-16 inset-x-0 bottom-0 z-50 bg-[#F7F4EF] dark:bg-[#0f172a] overflow-y-auto" aria-hidden="true">
+                <div id="nav-skeleton" class="hidden absolute top-16 inset-x-0 bottom-0 z-50 bg-[#EFEDE8] dark:bg-[#141414] overflow-y-auto" aria-hidden="true">
                     <div class="p-4 lg:p-8 pb-24 lg:pb-8 max-w-5xl mx-auto w-full space-y-6">
                         <div class="flex items-center justify-between">
                             <div class="h-8 w-52 skeleton rounded-xl"></div>
@@ -319,53 +319,53 @@
             <!-- Mobile Bottom Nav -->
             <div class="lg:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-800 border-t border-gray-200 dark:border-slate-700 flex items-center justify-around pb-safe pt-2 px-2 z-50 h-[68px] shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
                 @if(auth()->user()->role === 'admin')
-                    <a href="{{ route('admin.dashboard') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('admin.dashboard') ? 'text-brand dark:text-amber-400' : 'text-gray-400 hover:text-brand' }}">
+                    <a href="{{ route('admin.dashboard') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('admin.dashboard') ? 'text-brand dark:text-blue-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                         <span class="text-[10px] font-semibold" data-i18n="nav.dash">Dash</span>
                     </a>
-                    <a href="{{ route('staff.queue') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('staff.queue') ? 'text-brand dark:text-amber-400' : 'text-gray-400 hover:text-brand dark:hover:text-indigo-400' }}">
+                    <a href="{{ route('staff.queue') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('staff.queue') ? 'text-brand dark:text-blue-400' : 'text-gray-400 hover:text-brand dark:hover:text-blue-400' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                         <span class="text-[10px] font-semibold" data-i18n="nav.apps">Apps</span>
                     </a>
-                    <a href="{{ route('admin.users') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('admin.users') ? 'text-brand dark:text-amber-400' : 'text-gray-400 hover:text-brand dark:hover:text-indigo-400' }}">
+                    <a href="{{ route('admin.users') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('admin.users') ? 'text-brand dark:text-blue-400' : 'text-gray-400 hover:text-brand dark:hover:text-blue-400' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                         <span class="text-[10px] font-semibold" data-i18n="nav.users">Users</span>
                     </a>
-                    <a href="{{ route('profile.edit') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('profile.edit') ? 'text-brand dark:text-amber-400' : 'text-gray-400 hover:text-brand' }}">
+                    <a href="{{ route('profile.edit') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('profile.edit') ? 'text-brand dark:text-blue-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                         <span class="text-[10px] font-semibold" data-i18n="nav.profile">Profile</span>
                     </a>
                 @elseif(auth()->user()->role === 'staff')
-                    <a href="{{ route('staff.dashboard') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('staff.dashboard') ? 'text-brand dark:text-amber-400' : 'text-gray-400 hover:text-brand' }}">
+                    <a href="{{ route('staff.dashboard') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('staff.dashboard') ? 'text-brand dark:text-blue-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                         <span class="text-[10px] font-semibold" data-i18n="nav.dashboard">Dashboard</span>
                     </a>
-                    <a href="{{ route('staff.queue') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('staff.queue') ? 'text-brand dark:text-amber-400' : 'text-gray-400 hover:text-brand' }}">
+                    <a href="{{ route('staff.queue') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('staff.queue') ? 'text-brand dark:text-blue-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                         <span class="text-[10px] font-semibold" data-i18n="nav.queue">Queue</span>
                     </a>
-                    <a href="{{ route('profile.edit') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('profile.edit') ? 'text-brand dark:text-amber-400' : 'text-gray-400 hover:text-brand' }}">
+                    <a href="{{ route('profile.edit') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('profile.edit') ? 'text-brand dark:text-blue-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                         <span class="text-[10px] font-semibold" data-i18n="nav.profile">Profile</span>
                     </a>
                 @else
-                    <a href="{{ route('dashboard') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('*dashboard*') ? 'text-brand dark:text-amber-400' : 'text-gray-400 hover:text-brand' }}">
+                    <a href="{{ route('dashboard') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('*dashboard*') ? 'text-brand dark:text-blue-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                         <span class="text-[10px] font-semibold" data-i18n="nav.home">Home</span>
                     </a>
-                    <a href="{{ route('citizen.appointments.calendar') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('*appointment*') ? 'text-brand dark:text-amber-400' : 'text-gray-400 hover:text-brand' }}">
+                    <a href="{{ route('citizen.appointments.calendar') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('*appointment*') ? 'text-brand dark:text-blue-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                         <span class="text-[10px] font-semibold" data-i18n="nav.book_short">Book</span>
                     </a>
-                    <a href="{{ route('citizen.vault.index') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('*vault*') ? 'text-brand dark:text-amber-400' : 'text-gray-400 hover:text-brand' }}">
+                    <a href="{{ route('citizen.vault.index') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('*vault*') ? 'text-brand dark:text-blue-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                         <span class="text-[10px] font-semibold" data-i18n="nav.vault">Vault</span>
                     </a>
-                    <a href="{{ route('track') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('track*') ? 'text-brand dark:text-amber-400' : 'text-gray-400 hover:text-brand dark:hover:text-indigo-400' }}">
+                    <a href="{{ route('track') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('track*') ? 'text-brand dark:text-blue-400' : 'text-gray-400 hover:text-brand dark:hover:text-blue-400' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                         <span class="text-[10px] font-semibold" data-i18n="nav.track">Track</span>
                     </a>
-                    <a href="{{ route('profile.edit') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('profile.edit') ? 'text-brand dark:text-amber-400' : 'text-gray-400 hover:text-brand' }}">
+                    <a href="{{ route('profile.edit') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('profile.edit') ? 'text-brand dark:text-blue-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                         <span class="text-[10px] font-semibold" data-i18n="nav.profile">Profile</span>
                     </a>
@@ -474,7 +474,7 @@
         {{-- Logout Confirmation Modal                       --}}
         {{-- ═══════════════════════════════════════════════ --}}
         <x-modal name="confirm-logout" maxWidth="sm">
-            <div class="p-6 bg-white dark:bg-[#1e293b]">
+            <div class="p-6 bg-white dark:bg-[#1F1F1F]">
                 <div class="flex items-center gap-4 mb-5">
                     <div class="w-11 h-11 rounded-full bg-red-50 dark:bg-red-900/30 flex items-center justify-center shrink-0">
                         <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
@@ -534,7 +534,7 @@
                  class="dark:[background:#1e293b] animate-fade-in">
 
                 {{-- Header --}}
-                <div style="background:#d97706;padding:14px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0;">
+                <div style="background:#1B4F8A;padding:14px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0;">
                     <div style="width:36px;height:36px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-4l-4 4z"/></svg>
                     </div>
@@ -574,9 +574,9 @@
                                   onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChatMessage();}"
                                   oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,88)+'px';"
                                   style="flex:1;resize:none;border:1.5px solid #e2e8f0;border-radius:10px;padding:10px 12px;font-size:13px;font-family:Outfit,sans-serif;outline:none;background:#f8fafc;color:#1e293b;max-height:88px;line-height:1.4;transition:border-color 0.2s;"
-                                  onfocus="this.style.borderColor='#C8860A'" onblur="this.style.borderColor='#e2e8f0'"></textarea>
+                                  onfocus="this.style.borderColor='#1B4F8A'" onblur="this.style.borderColor='#e2e8f0'"></textarea>
                         <button onclick="sendChatMessage()" id="chatbot-send"
-                                style="width:40px;height:40px;border-radius:10px;background:#d97706;border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform 0.15s,opacity 0.15s;"
+                                style="width:40px;height:40px;border-radius:10px;background:#1B4F8A;border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform 0.15s,opacity 0.15s;"
                                 onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
                             <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
                         </button>
@@ -587,11 +587,11 @@
             {{-- Floating Bubble Button --}}
             <div style="position:relative;">
                 {{-- Pulse ring --}}
-                <div id="chatbot-pulse" style="position:absolute;inset:-6px;border-radius:50%;background:rgba(200,134,10,0.3);animation:chatPulse 2s ease-in-out infinite;pointer-events:none;"></div>
+                <div id="chatbot-pulse" style="position:absolute;inset:-6px;border-radius:50%;background:rgba(27,79,138,0.3);animation:chatPulse 2s ease-in-out infinite;pointer-events:none;"></div>
                 <button id="chatbot-btn" onclick="toggleChat()"
-                        style="width:56px;height:56px;border-radius:50%;background:#d97706;border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 25px -5px rgba(200,134,10,0.5);transition:transform 0.2s,box-shadow 0.2s;position:relative;z-index:1;"
-                        onmouseover="this.style.transform='scale(1.08)';this.style.boxShadow='0 15px 30px -5px rgba(200,134,10,0.6)'"
-                        onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 10px 25px -5px rgba(200,134,10,0.5)'">
+                        style="width:56px;height:56px;border-radius:50%;background:#1B4F8A;border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 25px -5px rgba(27,79,138,0.5);transition:transform 0.2s,box-shadow 0.2s;position:relative;z-index:1;"
+                        onmouseover="this.style.transform='scale(1.08)';this.style.boxShadow='0 15px 30px -5px rgba(27,79,138,0.6)'"
+                        onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 10px 25px -5px rgba(27,79,138,0.5)'">
                     <svg id="chatbot-icon-open" width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
                     <svg id="chatbot-icon-close" width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display:none;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
                     {{-- Unread badge --}}
@@ -612,7 +612,7 @@
 
             .chat-msg-user {
                 align-self: flex-end;
-                background: #d97706;
+                background: #1B4F8A;
                 color: #fff;
                 padding: 9px 13px;
                 border-radius: 14px 14px 4px 14px;
@@ -647,22 +647,22 @@
                 transition: all 0.15s ease;
             }
             .chat-quick-btn:hover {
-                border-color: #C8860A;
-                color: #A06B07;
-                background: #fef9ee;
+                border-color: #1B4F8A;
+                color: #163F6E;
+                background: #EEF3FA;
             }
             html.dark .chat-msg-ai { background:#334155; color:#f1f5f9; }
-            html.dark #chatbot-window { background:#1e293b !important; }
-            html.dark #chatbot-input  { background:#0f172a !important; border-color:#334155 !important; color:#f1f5f9 !important; }
+            html.dark #chatbot-window { background:#1F1F1F !important; }
+            html.dark #chatbot-input  { background:#141414 !important; border-color:#2E2E2E !important; color:#f1f5f9 !important; }
             html.dark .chat-quick-btn {
                 background: #0f172a;
                 border-color: #334155;
                 color: #cbd5e1;
             }
             html.dark .chat-quick-btn:hover {
-                background: #1e293b;
-                border-color: #d97706;
-                color: #fdefc7;
+                background: #1F1F1F;
+                border-color: #4A82C4;
+                color: #D6E4F5;
             }
 
             .typing-dot {

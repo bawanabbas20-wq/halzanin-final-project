@@ -4,9 +4,9 @@
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <div class="w-full">
-        <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-brand/10 dark:bg-amber-900/30 rounded-full mb-4">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-brand/10 dark:bg-brand/10 rounded-full mb-4">
             <div class="w-1.5 h-1.5 rounded-full bg-accent pulse-dot"></div>
-            <span class="text-xs font-semibold text-brand dark:text-amber-400 uppercase tracking-wide" data-i18n="auth.secure_login">Secure Login</span>
+            <span class="text-xs font-semibold text-brand dark:text-blue-400 uppercase tracking-wide" data-i18n="auth.secure_login">Secure Login</span>
         </div>
         <h2 class="text-[22px] font-bold text-charcoal dark:text-white mb-6 font-outfit tracking-tight" data-i18n="auth.welcome">Welcome back</h2>
 
@@ -20,7 +20,7 @@
                 </div>
                 <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username"
                        placeholder="Email Address" data-i18n-placeholder="auth.email"
-                       class="block w-full h-[48px] ltr:pl-11 rtl:pr-11 rtl:pl-4 ltr:pr-4 rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#fdefc7] dark:focus:shadow-[0_0_0_3px_rgba(200,134,10,0.3)] transition-all duration-200">
+                       class="block w-full h-[48px] ltr:pl-11 rtl:pr-11 rtl:pl-4 ltr:pr-4 rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#D6E4F5] dark:focus:shadow-[0_0_0_3px_rgba(74,130,196,0.3)] transition-all duration-200">
                 <x-input-error :messages="$errors->get('email')" class="mt-1" />
             </div>
 
@@ -31,7 +31,7 @@
                 </div>
                 <input id="password" type="password" name="password" required autocomplete="current-password"
                        placeholder="Password" data-i18n-placeholder="auth.password"
-                       class="block w-full h-[48px] ltr:pl-11 rtl:pr-11 rtl:pl-11 ltr:pr-11 rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#fdefc7] dark:focus:shadow-[0_0_0_3px_rgba(200,134,10,0.3)] transition-all duration-200">
+                       class="block w-full h-[48px] ltr:pl-11 rtl:pr-11 rtl:pl-11 ltr:pr-11 rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#D6E4F5] dark:focus:shadow-[0_0_0_3px_rgba(74,130,196,0.3)] transition-all duration-200">
                 <button type="button" id="toggle-password" class="absolute inset-y-0 ltr:right-0 rtl:left-0 flex items-center ltr:pr-4 rtl:pl-4 text-gray-400 hover:text-brand focus:outline-none">
                     <svg id="eye-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                 </button>
@@ -45,7 +45,7 @@
                     <span class="ltr:ml-2 rtl:mr-2 text-sm text-gray-600 dark:text-gray-400" data-i18n="auth.remember">{{ __('Remember me') }}</span>
                 </label>
                 @if (Route::has('password.request'))
-                    <a class="text-sm font-medium text-brand dark:text-amber-400 hover:underline" href="{{ route('password.request') }}" data-i18n="auth.forgot">
+                    <a class="text-sm font-medium text-brand dark:text-blue-400 hover:underline" href="{{ route('password.request') }}" data-i18n="auth.forgot">
                         Forgot password?
                     </a>
                 @endif
@@ -66,7 +66,7 @@
             <!-- Register Link -->
             <div class="text-center text-sm text-gray-600 dark:text-gray-400">
                 <span data-i18n="auth.no_account">Don't have an account?</span>
-                <a href="{{ route('register') }}" class="font-semibold text-brand dark:text-amber-400 hover:underline" data-i18n="auth.register">Register</a>
+                <a href="{{ route('register') }}" class="font-semibold text-brand dark:text-blue-400 hover:underline" data-i18n="auth.register">Register</a>
             </div>
         </form>
     </div>
