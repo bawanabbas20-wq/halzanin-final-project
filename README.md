@@ -26,7 +26,7 @@ Academic Year 2025–2026
 5. Generate key: `php artisan key:generate`
 6. Migrate & seed: `php artisan migrate --seed`
 7. Build assets: `npm run build`
-8. Open: `http://localhost/document-tracking-system/public`
+8. Open: `http://localhost/final%20project/public`
 
 ## Test Accounts
 | Role | Email | Password |

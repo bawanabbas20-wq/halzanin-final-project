@@ -4,7 +4,7 @@
 
 ### 1. Authentication
 
-- [X] Go to http://localhost/document-tracking-system/public → redirects to login
+- [X] Go to http://localhost/final%20project/public → redirects to login
 - [X] Login as citizen@test.com / password123 → lands on citizen dashboard
 - [X] Login as staff@test.com / password123 → lands on staff dashboard
 - [X] Login as admin@test.com / password123 → lands on admin dashboard

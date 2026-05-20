@@ -8,7 +8,7 @@ Use this file to test both:
 
 ## Test Setup
 
-- Base URL: `http://localhost/document-tracking-system/public`
+- Base URL: `http://localhost/final%20project/public`
 - Test accounts:
   - Citizen: `citizen@test.com / password123`
   - Staff: `staff@test.com / password123`
@@ -153,4 +153,3 @@ Do not release unless:
 - [ ] No critical auth/role/security bug
 - [ ] No blocking issue in appointment booking/tracking/chatbot
 - [ ] No unhandled 500 error in core flows
-

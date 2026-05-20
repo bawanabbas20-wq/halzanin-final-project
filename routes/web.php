@@ -37,6 +37,7 @@ Route::get('/dashboard', function () {
 // Citizen routes
 Route::middleware(['auth', 'role:citizen', 'throttle:authenticated'])->group(function () {
     Route::get('/citizen/dashboard', [CitizenController::class, 'index'])->name('citizen.dashboard');
+    Route::get('/citizen/applications', [ApplicationController::class, 'index'])->name('citizen.applications.index');
 
     // Appointments / calendar
     Route::get('/citizen/appointments', [AppointmentController::class, 'calendar'])->name('citizen.appointments.calendar');

@@ -991,6 +991,36 @@ Object.assign(window.translations.ku, {
   'book.required_for_doc': 'پێویستە بۆ "{document}":',
 });
 
+Object.assign(window.translations.en, {
+  'nav.my_applications': 'My Applications',
+  'nav.calendar_short': 'Calendar',
+  'nav.qr_scanner': 'QR Scanner',
+  'staff.calendar_view': 'Calendar View',
+  'applications.title': 'My Applications',
+  'applications.subtitle': 'Track all your submitted applications and their current status.',
+  'applications.empty_title': 'No applications yet',
+  'applications.empty_desc': 'Book an appointment to get started.',
+  'applications.latest_update': 'Latest update',
+  'applications.status_changed': 'Status changed to',
+  'applications.view_timeline': 'View Full Timeline',
+  'applications.download_receipt': 'Download Receipt',
+});
+
+Object.assign(window.translations.ku, {
+  'nav.my_applications': 'داواکارییەکانم',
+  'nav.calendar_short': 'ساڵنامە',
+  'nav.qr_scanner': 'سکەنەری QR',
+  'staff.calendar_view': 'بینینی ساڵنامە',
+  'applications.title': 'داواکارییەکانم',
+  'applications.subtitle': 'هەموو داواکارییە نێردراوەکانت و دۆخی ئێستایان ببینە.',
+  'applications.empty_title': 'هێشتا هیچ داواکارییەک نییە',
+  'applications.empty_desc': 'بۆ دەستپێکردن وەختی چاوپێکەوتن حەجز بکە.',
+  'applications.latest_update': 'نوێترین نوێکاری',
+  'applications.status_changed': 'دۆخ گۆڕدرا بۆ',
+  'applications.view_timeline': 'بینینی هەموو مێژوو',
+  'applications.download_receipt': 'داگرتنی وەسڵ',
+});
+
 const legacyTranslationKeys = {
   'Dashboard': 'nav.dashboard',
   'Home': 'nav.home',

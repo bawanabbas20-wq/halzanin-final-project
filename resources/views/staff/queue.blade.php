@@ -1,7 +1,7 @@
 ﻿@extends('layouts.halzanin-app')
 
 @section('content')
-    <div class="space-y-6 max-w-6xl mx-auto">
+    <div class="space-y-6 max-w-7xl mx-auto">
 
         {{-- Header --}}
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-fade-in">
@@ -14,6 +14,13 @@
                 </div>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-1" data-i18n="staff.queue_subtitle">Review and process submitted applications</p>
             </div>
+            <a href="{{ route('staff.calendar') }}"
+               class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white dark:bg-slate-800 border border-gray-200 dark:border-gray-700 text-sm font-semibold text-brand dark:text-blue-400 hover:bg-brand/5 dark:hover:bg-slate-700 transition-colors shadow-sm">
+                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+                <span data-i18n="staff.calendar_view">Calendar View</span>
+            </a>
         </div>
 
         @if (session('success'))
@@ -57,6 +64,9 @@
                 <button data-filter="approved"
                         class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-slate-700"
                         data-i18n="Approved">Approved</button>
+                <button data-filter="checked_in"
+                        class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-slate-700"
+                        data-i18n="Checked In">Checked In</button>
                 <button data-filter="rejected"
                         class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-slate-700"
                         data-i18n="Rejected">Rejected</button>
@@ -75,6 +85,7 @@
                             'received'     => ['border' => 'border-blue-400',   'badge' => 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',    'dot' => 'status-dot-blue'],
                             'under_review' => ['border' => 'border-yellow-400', 'badge' => 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400', 'dot' => 'status-dot-yellow'],
                             'approved'     => ['border' => 'border-green-400',  'badge' => 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400', 'dot' => 'status-dot-green'],
+                            'checked_in'   => ['border' => 'border-purple-400', 'badge' => 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400', 'dot' => 'status-dot-purple'],
                             'rejected'     => ['border' => 'border-red-400',    'badge' => 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',         'dot' => 'status-dot-red'],
                         ];
                         $color   = $colors[$app->current_status] ?? $colors['submitted'];
@@ -128,7 +139,7 @@
             {{-- DESKTOP VIEW: Table --}}
             <div class="hidden lg:block bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden" id="desktopList">
                 <div class="overflow-x-auto max-h-[600px] overflow-y-auto">
-                    <table class="w-full text-left border-collapse">
+                    <table class="w-full min-w-[1040px] text-left border-collapse">
                         <thead class="sticky top-0 bg-gray-50 dark:bg-slate-800 z-10 border-b border-gray-100 dark:border-gray-800">
                             <tr>
                                 <th class="px-6 py-3.5 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">#</th>
@@ -149,6 +160,7 @@
                                         'received'     => ['badge' => 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',    'dot' => 'status-dot-blue'],
                                         'under_review' => ['badge' => 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400', 'dot' => 'status-dot-yellow'],
                                         'approved'     => ['badge' => 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400', 'dot' => 'status-dot-green'],
+                                        'checked_in'   => ['badge' => 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400', 'dot' => 'status-dot-purple'],
                                         'rejected'     => ['badge' => 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',         'dot' => 'status-dot-red'],
                                     ];
                                     $color   = $colors[$app->current_status] ?? $colors['submitted'];

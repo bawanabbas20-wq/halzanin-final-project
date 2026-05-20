@@ -19,6 +19,20 @@ class ApplicationController extends Controller
         'under_review' => ['approved' => 'Approve', 'rejected' => 'Reject'],
     ];
 
+    public function index()
+    {
+        $applications = Application::with([
+            'appointment',
+            'statusLogs' => fn ($query) => $query->latest(),
+        ])
+            ->where('user_id', Auth::id())
+            ->latest('submitted_at')
+            ->latest()
+            ->get();
+
+        return view('citizen.my-applications', compact('applications'));
+    }
+
     public function queue()
     {
         $applications = Application::with(['user', 'appointment'])
