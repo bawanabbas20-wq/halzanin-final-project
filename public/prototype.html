@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1e1b4b">
+<title>Halzanîn — Prototype</title>
+<style>
+/* ── Tokens ── */
+:root {
+  --canvas:#f6f6f3; --surface:#fff; --surface-2:#f0efe9;
+  --t1:#1e1b4b; --t2:#75748c; --t3:#a09fb8;
+  --accent:#1e1b4b; --accent2:#4f46e5; --fg:#fff;
+  --border:#e8e6df; --border2:#ccc;
+  --green:#16a34a; --green-bg:#dcfce7;
+  --red:#dc2626;   --red-bg:#fee2e2;
+  --amber:#d97706; --amber-bg:#fef3c7;
+  --blue:#2563eb;  --blue-bg:#dbeafe;
+  --sh:0 1px 3px rgba(0,0,0,.07),0 4px 12px rgba(0,0,0,.05);
+  --sh2:0 8px 28px rgba(0,0,0,.13);
+  --r:12px; --r2:8px;
+}
+[data-theme=dark]{
+  --canvas:#0f0e1a; --surface:#1a1928; --surface-2:#221f35;
+  --t1:#e8e6ff; --t2:#9998b8; --t3:#5f5e88;
+  --accent:#6b68ff; --accent2:#818cf8; --fg:#fff;
+  --border:#2d2b4a; --border2:#3d3b5a;
+  --green:#22c55e; --green-bg:#052e16;
+  --red:#f87171;   --red-bg:#450a0a;
+  --amber:#fbbf24; --amber-bg:#451a03;
+  --blue:#60a5fa;  --blue-bg:#1e3a5f;
+  --sh:0 1px 3px rgba(0,0,0,.3),0 4px 12px rgba(0,0,0,.2);
+  --sh2:0 8px 28px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;height:100%;background:var(--canvas);overscroll-behavior:none;color:var(--t1);}
+body{font-family:'Outfit',system-ui,sans-serif;}
+#root{height:100%;}
+button:disabled{opacity:.45;cursor:not-allowed;}
+[dir=rtl]{text-align:right;}
+
+/* ── Surface bar ── */
+.surf{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(246,246,243,.93);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+  padding:max(env(safe-area-inset-top),8px) 8px 7px;
+}
+[data-theme=dark] .surf{background:rgba(15,14,26,.93);}
+.surf-row{display:flex;align-items:center;gap:5px;width:100%;}
+.surf-tabs{display:flex;gap:3px;flex:1;min-width:0;}
+.surf-btn{
+  flex:1;min-width:0;padding:6px 2px;border-radius:9px;
+  font-size:10px;font-weight:700;letter-spacing:-.01em;
+  background:transparent;color:var(--t2);border:0;cursor:pointer;text-align:center;font-family:inherit;
+  transition:background .15s,color .15s;
+}
+.surf-btn.active{background:var(--accent);color:var(--fg);}
+.surf-btn .em{display:block;font-size:8px;opacity:.7;font-weight:500;margin-top:1px;letter-spacing:.04em;text-transform:uppercase;}
+.surf-btn.active .em{opacity:.65;}
+.surf-ctrls{display:flex;align-items:center;gap:4px;flex-shrink:0;}
+.icon-btn{
+  width:30px;height:30px;border-radius:8px;border:0;
+  background:var(--surface-2);color:var(--t1);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;
+}
+.lang-btn{
+  padding:5px 7px;border-radius:8px;border:0;
+  background:var(--surface-2);color:var(--t2);
+  font-size:10px;font-weight:700;letter-spacing:.05em;cursor:pointer;font-family:inherit;
+}
+
+/* ── Stage ── */
+.stage{
+  position:absolute;inset:0;
+  padding-top:calc(env(safe-area-inset-top) + 52px);
+  padding-bottom:env(safe-area-inset-bottom);
+  overflow:hidden;background:var(--canvas);
+}
+.frame{width:100%;height:100%;position:relative;overflow:hidden;}
+.frame>.page-in{animation:pin .26s cubic-bezier(.2,.7,.3,1) both;height:100%;}
+@keyframes pin{from{transform:translateX(16px);opacity:0;}to{transform:none;opacity:1;}}
+.page-scroll{height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;background:var(--canvas);}
+.hz{width:100%;height:100%;display:flex;flex-direction:column;background:var(--canvas);overflow:hidden;}
+
+/* ── Cards / Layout ── */
+.card{background:var(--surface);border-radius:var(--r);border:1px solid var(--border);box-shadow:var(--sh);}
+.sec-title{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--t3);margin:0 0 8px;}
+.hero{background:var(--accent);padding:18px 16px 22px;color:var(--fg);}
+.hero h1{margin:0;font-size:19px;font-weight:800;}
+.hero p{margin:4px 0 0;font-size:12px;opacity:.75;}
+
+/* ── Buttons ── */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  padding:11px 16px;border-radius:10px;font-size:14px;font-weight:700;
+  border:0;cursor:pointer;font-family:inherit;transition:opacity .14s;
+}
+.btn:active{opacity:.78;}
+.btn-p{background:var(--accent);color:var(--fg);}
+.btn-s{background:var(--surface-2);color:var(--t1);}
+.btn-d{background:var(--red-bg);color:var(--red);}
+.btn-g{background:var(--green-bg);color:var(--green);}
+.btn-w{width:100%;}
+
+/* ── Fields ── */
+.field{margin-bottom:13px;}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--t2);margin-bottom:4px;}
+.field input,.field select,.field textarea{
+  width:100%;padding:10px 12px;border-radius:9px;
+  border:1.5px solid var(--border);background:var(--surface);
+  color:var(--t1);font-size:14px;font-family:inherit;outline:none;
+  transition:border-color .14s;
+}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent2);}
+
+/* ── Badges ── */
+.badge{display:inline-flex;align-items:center;padding:3px 8px;border-radius:20px;font-size:10.5px;font-weight:700;}
+.b-g{background:var(--green-bg);color:var(--green);}
+.b-a{background:var(--amber-bg);color:var(--amber);}
+.b-r{background:var(--red-bg);color:var(--red);}
+.b-b{background:var(--blue-bg);color:var(--blue);}
+.b-x{background:var(--surface-2);color:var(--t2);}
+
+/* ── Bottom tab bar ── */
+.tab-bar{
+  position:sticky;bottom:0;background:var(--surface);
+  border-top:1px solid var(--border);
+  display:flex;padding:7px 0 calc(env(safe-area-inset-bottom)+7px);
+}
+.tab-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:3px;border:0;background:transparent;cursor:pointer;font-family:inherit;}
+.tab-btn .ti{font-size:19px;}
+.tab-btn .tl{font-size:9px;font-weight:600;color:var(--t3);}
+.tab-btn.active .tl{color:var(--accent);}
+
+/* ── Calendar ── */
+.cal-hdr{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:3px;}
+.cal-hdr-d{text-align:center;font-size:9.5px;font-weight:700;color:var(--t3);padding:3px 0;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}
+.cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:7px;font-size:12.5px;font-weight:600;cursor:pointer;color:var(--t2);border:0;background:transparent;font-family:inherit;}
+.cal-day:hover{background:var(--surface-2);}
+.cal-day.today{color:var(--accent2);font-weight:800;}
+.cal-day.sel{background:var(--accent);color:var(--fg);}
+.cal-day.dis{opacity:.3;cursor:not-allowed;}
+
+/* ── Queue ── */
+.q-row{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--border);}
+.q-row:last-child{border-bottom:0;}
+.ticket{width:38px;height:38px;border-radius:9px;background:var(--accent);color:var(--fg);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;}
+
+/* ── Vault ── */
+.v-item{display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid var(--border);}
+.v-item:last-child{border-bottom:0;}
+.v-name{font-size:13px;font-weight:700;color:var(--t1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.v-sub{font-size:11px;color:var(--t2);margin-top:1px;}
+
+/* ── Scanner ── */
+.scan-frame{position:relative;width:230px;height:230px;margin:20px auto;}
+.scan-border{position:absolute;inset:0;border-radius:14px;border:1px solid rgba(255,255,255,.15);}
+.sc{position:absolute;width:26px;height:26px;border-color:#fff;border-style:solid;border-width:0;}
+.sc.tl{top:0;left:0;border-top-width:3px;border-left-width:3px;border-radius:6px 0 0 0;}
+.sc.tr{top:0;right:0;border-top-width:3px;border-right-width:3px;border-radius:0 6px 0 0;}
+.sc.bl{bottom:0;left:0;border-bottom-width:3px;border-left-width:3px;border-radius:0 0 0 6px;}
+.sc.br{bottom:0;right:0;border-bottom-width:3px;border-right-width:3px;border-radius:0 0 6px 0;}
+.scan-line{position:absolute;left:8%;right:8%;height:2px;background:linear-gradient(90deg,transparent,#6b68ff,transparent);animation:sl 2s ease-in-out infinite;}
+@keyframes sl{0%,100%{top:8%;}50%{top:88%;}}
+
+/* ── Permission table ── */
+.mx-tbl{width:100%;border-collapse:collapse;font-size:12px;}
+.mx-tbl th{padding:8px 10px;background:var(--surface-2);color:var(--t2);font-weight:700;text-align:left;}
+.mx-tbl td{padding:8px 10px;border-top:1px solid var(--border);color:var(--t1);}
+.mx-tbl tr:hover td{background:var(--surface-2);}
+.ck{color:var(--green);} .cx{color:var(--t3);}
+
+/* ── Chatbot ── */
+.chat-bubble{
+  position:fixed;bottom:calc(env(safe-area-inset-bottom)+14px);right:14px;
+  width:50px;height:50px;border-radius:50%;background:var(--accent);color:var(--fg);
+  border:0;cursor:pointer;box-shadow:var(--sh2);display:flex;align-items:center;justify-content:center;
+  font-size:20px;z-index:150;transition:transform .18s;
+}
+[dir=rtl] .chat-bubble{right:auto;left:14px;}
+.chat-bubble:active{transform:scale(.9);}
+.chat-panel{
+  position:fixed;bottom:calc(env(safe-area-inset-bottom)+74px);right:14px;
+  width:min(310px,calc(100vw - 28px));background:var(--surface);
+  border-radius:14px;box-shadow:var(--sh2);border:1px solid var(--border);
+  z-index:149;overflow:hidden;display:flex;flex-direction:column;max-height:400px;
+}
+[dir=rtl] .chat-panel{right:auto;left:14px;}
+.chat-hdr{padding:11px 13px;background:var(--accent);color:var(--fg);display:flex;align-items:center;gap:8px;}
+.chat-hdr h4{margin:0;font-size:13px;font-weight:700;flex:1;}
+.chat-hdr button{background:rgba(255,255,255,.2);border:0;color:#fff;width:22px;height:22px;border-radius:6px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;}
+.chat-msgs{flex:1;overflow-y:auto;padding:10px;display:flex;flex-direction:column;gap:7px;}
+.chat-msg{padding:7px 10px;border-radius:9px;font-size:12px;line-height:1.4;max-width:84%;}
+.chat-msg.bot{background:var(--surface-2);color:var(--t1);align-self:flex-start;}
+.chat-msg.user{background:var(--accent);color:var(--fg);align-self:flex-end;}
+.chat-quick{padding:8px 10px;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:5px;}
+.chat-quick button{padding:4px 9px;border-radius:20px;font-size:10.5px;font-weight:600;background:var(--surface-2);color:var(--t2);border:1px solid var(--border);cursor:pointer;font-family:inherit;}
+.chat-quick button:active{background:var(--accent);color:var(--fg);border-color:var(--accent);}
+.chat-inp{padding:7px 10px;border-top:1px solid var(--border);display:flex;gap:5px;}
+.chat-inp input{flex:1;padding:6px 9px;border-radius:7px;border:1px solid var(--border);background:var(--canvas);color:var(--t1);font-size:12px;font-family:inherit;outline:none;}
+.chat-inp button{padding:6px 11px;border-radius:7px;background:var(--accent);color:var(--fg);border:0;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;}
+
+/* ── Hint ── */
+.hint{
+  position:fixed;left:12px;right:12px;bottom:calc(env(safe-area-inset-bottom)+12px);
+  background:#14132e;color:#fff;padding:10px 13px;border-radius:11px;
+  font-size:12px;line-height:1.4;box-shadow:0 12px 30px -8px rgba(0,0,0,.35);
+  z-index:200;display:flex;align-items:center;gap:9px;
+}
+.hint button{flex-shrink:0;background:rgba(255,255,255,.14);color:#fff;border:0;padding:5px 9px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+<script type="text/babel">
+/* ═══════════════════════════════════════════════════════
+   i18n
+══════════════════════════════════════════════════════════ */
+const LANG = {
+en:{
+  surfaces:{auth:'Auth',citizen:'Citizen',public:'Public',staff:'Staff',admin:'Admin'},
+  surfacesEm:{auth:'Login',citizen:'My Pass',public:'Track',staff:'Queue',admin:'Control'},
+  nav:{home:'Home',appts:'Appts',vault:'Vault',history:'History'},
+  login:{title:'Sign in',email:'Email',pw:'Password',submit:'Sign in',noAcc:"No account?",reg:'Register',demo:'Demo login'},
+  register:{title:'Create account',name:'Full name',email:'Email',pw:'Password',submit:'Create account',hasAcc:'Have an account?',signin:'Sign in'},
+  citizen:{greet:'Good morning',pass:'Civic Pass',book:'Book a visit',next:'Next appointment',noAppt:'No upcoming appointments',vault:'Document Vault',vaultSub:'Secure document storage',history:'Visit History',scan:'Scan Document'},
+  book:{s1:'Choose Service',s2:'Pick Date & Time',s3:'Your Details',next:'Continue',back:'Back',confirm:'Confirm Booking',
+    services:['Passport Renewal','National ID','Birth Certificate','Driving Licence','Business Registration','Marriage Certificate'],
+    morning:'Morning',afternoon:'Afternoon'},
+  receipt:{title:'Booking Confirmed',ref:'Reference',svc:'Service',date:'Date',time:'Time',loc:'Location',done:'Done',track:'Track Status'},
+  track:{title:'Track Appointment',ph:'Enter reference number',search:'Search',notFound:'No appointment found',result:'Appointment Found'},
+  staff:{title:'Queue',checkin:'Check In',skip:'Skip',complete:'Complete',calling:'Now Calling',waiting:'Waiting',empty:'Queue is empty'},
+  admin:{title:'Admin Dashboard',staffMgmt:'Staff Management',roles:{viewer:'Viewer',checker:'Checker',manager:'Manager'},
+    assign:'Assign Role',stats:'Today\'s Stats',appts:'Appointments',served:'Served',waiting:'Waiting',avg:'Avg Wait'},
+  vault:{title:'Document Vault',upload:'Upload',empty:'No documents yet',scan:'Scan'},
+  scanner:{title:'Scanner',inst:'Position document in the frame',scanning:'Scanning…',done:'Document captured!',retry:'Scan Again',save:'Save to Vault',cancel:'Cancel'},
+  chat:{title:'Halzanîn Assistant',greet:'Hi! How can I help you today?'},
+  days:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+  months:['January','February','March','April','May','June','July','August','September','October','November','December'],
+},
+ku:{
+  surfaces:{auth:'چوونەژوورەوە',citizen:'شارمەند',public:'شوێنکەوتن',staff:'ڕیز',admin:'کۆنترۆڵ'},
+  surfacesEm:{auth:'چوونەژوورەوە',citizen:'پاسپۆرتم',public:'شوێنکەوتن',staff:'ڕیز',admin:'کۆنترۆڵ'},
+  nav:{home:'سەرەکی',appts:'کاتەکان',vault:'خەزینە',history:'مێژوو'},
+  login:{title:'چوونەژوورەوە',email:'ئیمەیڵ',pw:'وشەی نهێنی',submit:'چوونەژوورەوە',noAcc:'هەژمارت نییە؟',reg:'تۆمارکردن',demo:'دیمۆ'},
+  register:{title:'دروستکردنی هەژمار',name:'ناوی تەواو',email:'ئیمەیڵ',pw:'وشەی نهێنی',submit:'دروستکردنی هەژمار',hasAcc:'هەژمارت هەیە؟',signin:'چوونەژوورەوە'},
+  citizen:{greet:'بەیانی باش',pass:'پاسی شارمەندی',book:'تۆمارکردنی سەردان',next:'کاتی دواتر',noAppt:'هیچ کاتێک نییە',vault:'خەزینەی بەڵگەنامە',vaultSub:'ئەرشیفی بەڵگەنامەکانت',history:'مێژووی سەردان',scan:'سکانکردن'},
+  book:{s1:'دیاریکردنی خزمەتگوزاری',s2:'دیاریکردنی کات',s3:'زانیاریەکانت',next:'بەردەوامبە',back:'گەڕانەوە',confirm:'پشتڕاستکردنەوە',
+    services:['نوێکردنەوەی پاسپۆرت','ناسنامەی نەتەوەیی','بەڵگەنامەی لەدایکبوون','مۆڵەتی شۆفێری','تۆمارکردنی بازرگانی','بەڵگەنامەی زەواج'],
+    morning:'بەیانی',afternoon:'دوای نیوەڕۆ'},
+  receipt:{title:'تۆمارکراوە',ref:'ژمارەی مەرجع',svc:'خزمەتگوزاری',date:'بەروار',time:'کات',loc:'شوێن',done:'تەواو',track:'شوێنکەوتن'},
+  track:{title:'شوێنکەوتنی کات',ph:'ژمارەی مەرجع بنووسە',search:'گەڕان',notFound:'نەدۆزرایەوە',result:'کات دۆزرایەوە'},
+  staff:{title:'ڕیز',checkin:'داخلکردن',skip:'تێپەڕاندن',complete:'تەواوکردن',calling:'ئێستا داواکراو',waiting:'چاوەڕوان',empty:'ڕیز بەتاڵە'},
+  admin:{title:'داشبۆردی ئەدمین',staffMgmt:'بەڕێوەبردنی ستاف',roles:{viewer:'بینەر',checker:'پشکنین',manager:'بەڕێوەبەر'},
+    assign:'دیاریکردنی ڕۆڵ',stats:'ئامارەکانی ئەمڕۆ',appts:'کاتەکان',served:'خزمەتکراو',waiting:'چاوەڕوان',avg:'مامناوەند'},
+  vault:{title:'خەزینەی بەڵگەنامە',upload:'بارکردن',empty:'هیچ بەڵگەنامەیەک نییە',scan:'سکانکردن'},
+  scanner:{title:'سکانەر',inst:'بەڵگەنامە لەناو فریمەکەدا جێی بدە',scanning:'سکانکردن...',done:'بەڵگەنامە گیرایەوە!',retry:'دووبارە',save:'پاشەکەوتکردن',cancel:'هەڵوەشاندن'},
+  chat:{title:'یاریدەدەری هەڵزانین',greet:'سڵاو! چۆن دەتوانم یارمەتیت بدەم؟'},
+  days:['یەک','دوو','سێ','چوار','پێنج','هەینی','شەم'],
+  months:['کانونی دووەم','شوبات','ئازار','نیسان','ئایار','حوزەیران','تەموز','ئاب','ئەیلوول','تشرینی یەکەم','تشرینی دووەم','کانونی یەکەم'],
+},
+};
+
+const I18nCtx = React.createContext({lang:'en',t:k=>k,setLang:()=>{}});
+function I18nProvider({children}){
+  const [lang,setLangState]=React.useState(()=>localStorage.getItem('hz_lang')||'en');
+  const t=React.useCallback((key)=>{
+    const parts=key.split('.');let v=LANG[lang];
+    for(const p of parts){if(v==null)return key;v=v[p];}return v??key;
+  },[lang]);
+  const setLang=React.useCallback(l=>{
+    localStorage.setItem('hz_lang',l);setLangState(l);
+    document.documentElement.dir=l==='ku'?'rtl':'ltr';
+    document.documentElement.lang=l;
+  },[]);
+  React.useEffect(()=>{
+    document.documentElement.dir=lang==='ku'?'rtl':'ltr';
+    document.documentElement.lang=lang;
+  },[]);
+  return <I18nCtx.Provider value={{lang,t,setLang}}>{children}</I18nCtx.Provider>;
+}
+function useI18n(){return React.useContext(I18nCtx);}
+
+/* ═══════════════════════════════════════════════════════
+   Theme
+══════════════════════════════════════════════════════════ */
+const ThemeCtx=React.createContext({dark:false,toggle:()=>{}});
+function ThemeProvider({children}){
+  const [dark,setDark]=React.useState(()=>localStorage.getItem('hz_dark')==='1');
+  const toggle=React.useCallback(()=>setDark(d=>{
+    const n=!d;localStorage.setItem('hz_dark',n?'1':'0');
+    document.documentElement.setAttribute('data-theme',n?'dark':'');return n;
+  }),[]);
+  React.useEffect(()=>{document.documentElement.setAttribute('data-theme',dark?'dark':'');},[]);
+  return <ThemeCtx.Provider value={{dark,toggle}}>{children}</ThemeCtx.Provider>;
+}
+function useTheme(){return React.useContext(ThemeCtx);}
+
+/* ═══════════════════════════════════════════════════════
+   Role context
+══════════════════════════════════════════════════════════ */
+const RoleCtx=React.createContext({role:'checker',setRole:()=>{}});
+function useRole(){return React.useContext(RoleCtx);}
+
+/* ═══════════════════════════════════════════════════════
+   Persisted state
+══════════════════════════════════════════════════════════ */
+function usePersisted(key,init){
+  const [val,setVal]=React.useState(()=>{
+    try{const s=localStorage.getItem('hz_f_'+key);return s!=null?JSON.parse(s):init;}catch{return init;}
+  });
+  const set=React.useCallback(v=>{
+    setVal(v);try{localStorage.setItem('hz_f_'+key,JSON.stringify(v));}catch{}
+  },[key]);
+  return [val,set];
+}
+
+/* ═══════════════════════════════════════════════════════
+   Date helpers
+══════════════════════════════════════════════════════════ */
+function fmtDate(iso,lang){
+  if(!iso)return '';
+  const d=new Date(iso);
+  const dn=LANG[lang].days[d.getDay()];
+  const mn=LANG[lang].months[d.getMonth()];
+  const n=d.getDate(),y=d.getFullYear();
+  return lang==='ku'?`${dn}، ${n} ${mn} ${y}`:`${dn}, ${mn} ${n}, ${y}`;
+}
+
+/* ═══════════════════════════════════════════════════════
+   Icons (inline SVG)
+══════════════════════════════════════════════════════════ */
+const Ic={
+  Home:()=><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1z"/><path d="M9 21V12h6v9"/></svg>,
+  Cal:()=><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>,
+  Vault:()=><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="4"/><circle cx="12" cy="12" r="4"/><path d="M12 8v1M12 15v1M8 12H7M17 12h-1"/></svg>,
+  Hist:()=><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 8v4l3 3"/><path d="M3.05 11a9 9 0 100 2M3 4v4h4"/></svg>,
+  Up:()=><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>,
+  Scan:()=><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 7V5a2 2 0 012-2h2M17 3h2a2 2 0 012 2v2M21 17v2a2 2 0 01-2 2h-2M7 21H5a2 2 0 01-2-2v-2"/><line x1="3" y1="12" x2="21" y2="12"/></svg>,
+  Chev:({l})=>l?<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>:<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>,
+  Moon:()=><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>,
+  Sun:()=><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>,
+  Chat:()=><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>,
+  X:()=><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>,
+  Ck:()=><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>,
+};
+
+/* ═══════════════════════════════════════════════════════
+   Chatbot
+══════════════════════════════════════════════════════════ */
+const QUICK={
+  citizen:['How do I book?','What documents do I need?','Cancel appointment','Reschedule'],
+  staff:['How to check in?','Skip a citizen','Call next ticket','End of day'],
+  public:['How to track?','What is a reference?','Lost my reference','Status meanings'],
+  admin:['Add staff','View reports','Change permissions','System status'],
+  auth:['How to register?','Forgot password?','Login issues'],
+};
+const ANSWERS={
+  'How do I book?':'Tap "Book a visit" on your Civic Pass, choose a service, pick a date and time, then fill in your details. You\'ll receive a reference number.',
+  'What documents do I need?':'Most services need your national ID and proof of address. Specific requirements appear on the booking summary page.',
+  'Cancel appointment':'Go to your appointment card and tap Cancel. Cancellations must be made at least 24 hours before your slot.',
+  'How to track?':'Enter your reference number (e.g. HZ-2025-1234) in the search box and tap Search.',
+  'Lost my reference':'Your reference was emailed when you booked. Check your inbox or spam folder.',
+  'How to check in?':'Find the citizen in the queue list and tap "Check In". They\'ll be marked as arrived.',
+  'Skip a citizen':'Tap "Skip" on a calling citizen to move them to the end of the queue.',
+};
+
+function Chatbot({surface}){
+  const {t,lang}=useI18n();
+  const [open,setOpen]=React.useState(false);
+  const [msgs,setMsgs]=React.useState([{r:'bot',tx:LANG[lang].chat.greet}]);
+  const [inp,setInp]=React.useState('');
+  const ref=React.useRef(null);
+  React.useEffect(()=>{if(ref.current)ref.current.scrollTop=ref.current.scrollHeight;},[msgs]);
+  const send=tx=>{
+    if(!tx.trim())return;
+    const ans=ANSWERS[tx]||'For detailed help please speak to a staff member at the office.';
+    setMsgs(m=>[...m,{r:'user',tx},{r:'bot',tx:ans}]);setInp('');
+  };
+  const quick=QUICK[surface]||QUICK.citizen;
+  return <>
+    {open&&<div className="chat-panel">
+      <div className="chat-hdr">
+        <span>💬</span>
+        <h4>{t('chat.title')}</h4>
+        <button onClick={()=>setOpen(false)}><Ic.X/></button>
+      </div>
+      <div className="chat-msgs" ref={ref}>
+        {msgs.map((m,i)=><div key={i} className={'chat-msg '+m.r}>{m.tx}</div>)}
+      </div>
+      <div className="chat-quick">{quick.map(q=><button key={q} onClick={()=>send(q)}>{q}</button>)}</div>
+      <div className="chat-inp">
+        <input value={inp} onChange={e=>setInp(e.target.value)} onKeyDown={e=>e.key==='Enter'&&send(inp)} placeholder="Type…"/>
+        <button onClick={()=>send(inp)}>Send</button>
+      </div>
+    </div>}
+    <button className="chat-bubble" onClick={()=>setOpen(o=>!o)}>{open?'✕':<Ic.Chat/>}</button>
+  </>;
+}
+
+/* ═══════════════════════════════════════════════════════
+   Auth
+══════════════════════════════════════════════════════════ */
+function Login({go}){
+  const {t}=useI18n();
+  const [email,setEmail]=usePersisted('login_email','');
+  const [pw,setPw]=React.useState('');
+  return <div className="page-scroll"><div style={{padding:'36px 18px 20px'}}>
+    <div style={{textAlign:'center',marginBottom:28}}>
+      <div style={{fontSize:46,marginBottom:6}}>🏛️</div>
+      <h1 style={{margin:0,fontSize:22,fontWeight:800,color:'var(--t1)'}}>Halzanîn</h1>
+      <p style={{margin:'5px 0 0',color:'var(--t2)',fontSize:13}}>Government Services Portal</p>
+    </div>
+    <div className="card" style={{padding:18}}>
+      <h2 style={{margin:'0 0 18px',fontSize:17,fontWeight:700,color:'var(--t1)'}}>{t('login.title')}</h2>
+      <div className="field"><label>{t('login.email')}</label><input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="you@example.com"/></div>
+      <div className="field"><label>{t('login.pw')}</label><input type="password" value={pw} onChange={e=>setPw(e.target.value)} placeholder="••••••••"/></div>
+      <button className="btn btn-p btn-w" style={{marginTop:6}} onClick={()=>go('citizen.dashboard')}>{t('login.submit')}</button>
+      <button className="btn btn-s btn-w" style={{marginTop:8}} onClick={()=>go('citizen.dashboard')}>{t('login.demo')}</button>
+      <p style={{textAlign:'center',fontSize:12,color:'var(--t2)',marginTop:14}}>
+        {t('login.noAcc')}{' '}
+        <span style={{color:'var(--accent2)',fontWeight:700,cursor:'pointer'}} onClick={()=>go('register')}>{t('login.reg')}</span>
+      </p>
+    </div>
+  </div></div>;
+}
+
+function Register({go}){
+  const {t}=useI18n();
+  const [name,setName]=usePersisted('reg_name','');
+  const [email,setEmail]=usePersisted('reg_email','');
+  const [pw,setPw]=React.useState('');
+  return <div className="page-scroll"><div style={{padding:'36px 18px 20px'}}>
+    <div style={{textAlign:'center',marginBottom:28}}>
+      <div style={{fontSize:46,marginBottom:6}}>🏛️</div>
+      <h1 style={{margin:0,fontSize:22,fontWeight:800,color:'var(--t1)'}}>Halzanîn</h1>
+    </div>
+    <div className="card" style={{padding:18}}>
+      <h2 style={{margin:'0 0 18px',fontSize:17,fontWeight:700,color:'var(--t1)'}}>{t('register.title')}</h2>
+      <div className="field"><label>{t('register.name')}</label><input value={name} onChange={e=>setName(e.target.value)} placeholder="Ahmed Al-Rashid"/></div>
+      <div className="field"><label>{t('register.email')}</label><input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="you@example.com"/></div>
+      <div className="field"><label>{t('register.pw')}</label><input type="password" value={pw} onChange={e=>setPw(e.target.value)} placeholder="••••••••"/></div>
+      <button className="btn btn-p btn-w" style={{marginTop:6}} onClick={()=>go('citizen.dashboard')}>{t('register.submit')}</button>
+      <p style={{textAlign:'center',fontSize:12,color:'var(--t2)',marginTop:14}}>
+        {t('register.hasAcc')}{' '}
+        <span style={{color:'var(--accent2)',fontWeight:700,cursor:'pointer'}} onClick={()=>go('login')}>{t('register.signin')}</span>
+      </p>
+    </div>
+  </div></div>;
+}
+
+/* ═══════════════════════════════════════════════════════
+   Citizen Dashboard
+══════════════════════════════════════════════════════════ */
+function CitizenDashboard({go}){
+  const {t,lang}=useI18n();
+  const [tab,setTab]=React.useState('home');
+  const appt={svc:'Passport Renewal',date:new Date('2025-05-27'),time:'10:30 AM',ref:'HZ-2025-1091'};
+  const history=[
+    {svc:'National ID Renewal',date:new Date('2025-03-14')},
+    {svc:'Birth Certificate Copy',date:new Date('2024-11-02')},
+  ];
+  return <div className="hz">
+    <div style={{flex:1,overflow:'auto',WebkitOverflowScrolling:'touch'}}>
+      {/* Hero */}
+      <div style={{background:'linear-gradient(135deg,var(--accent) 0%,#4338ca 100%)',padding:'18px 16px 36px',color:'var(--fg)'}}>
+        <p style={{margin:'0 0 2px',fontSize:12,opacity:.75}}>{t('citizen.greet')},</p>
+        <h1 style={{margin:0,fontSize:21,fontWeight:800}}>Ahmed Al-Rashid</h1>
+      </div>
+      <div style={{marginTop:-18,padding:'0 14px'}}>
+        {/* Civic Pass card */}
+        <div style={{background:'linear-gradient(135deg,var(--accent) 0%,#4338ca 100%)',borderRadius:14,padding:'18px 16px',color:'#fff',marginBottom:12,position:'relative',overflow:'hidden'}}>
+          <div style={{position:'absolute',top:-18,right:-18,width:90,height:90,borderRadius:'50%',background:'rgba(255,255,255,.07)'}}/>
+          <p style={{margin:'0 0 1px',fontSize:10,fontWeight:600,opacity:.7,textTransform:'uppercase',letterSpacing:'.06em'}}>{t('citizen.pass')}</p>
+          <h2 style={{margin:'0 0 3px',fontSize:18,fontWeight:800}}>Ahmed Al-Rashid</h2>
+          <p style={{margin:'0 0 12px',fontSize:11,opacity:.7}}>ID: KRG-2024-00847</p>
+          <button className="btn" style={{background:'rgba(255,255,255,.2)',color:'#fff',padding:'8px 14px',fontSize:12,backdropFilter:'blur(8px)'}} onClick={()=>go('citizen.book1')}>
+            📅 {t('citizen.book')}
+          </button>
+        </div>
+        {/* Next appointment */}
+        <p className="sec-title">{t('citizen.next')}</p>
+        <div className="card" style={{marginBottom:12}}>
+          <div style={{padding:'13px 14px',display:'flex',alignItems:'center',gap:11}}>
+            <div style={{background:'var(--accent)',borderRadius:11,padding:'9px 11px',color:'var(--fg)',textAlign:'center',minWidth:46}}>
+              <div style={{fontSize:17,fontWeight:800,lineHeight:1}}>{appt.date.getDate()}</div>
+              <div style={{fontSize:8,fontWeight:700,opacity:.8,marginTop:2}}>{LANG[lang].months[appt.date.getMonth()].slice(0,3).toUpperCase()}</div>
+            </div>
+            <div style={{flex:1,minWidth:0}}>
+              <div style={{fontWeight:700,fontSize:13,color:'var(--t1)'}}>{LANG[lang].book.services[0]}</div>
+              <div style={{fontSize:11,color:'var(--t2)',marginTop:2}}>{fmtDate(appt.date.toISOString(),lang)} · {appt.time}</div>
+              <div style={{fontSize:10,color:'var(--t3)',marginTop:1}}>Ref: {appt.ref}</div>
+            </div>
+            <span className="badge b-g">Confirmed</span>
+          </div>
+        </div>
+        {/* Vault tile */}
+        <div className="card" style={{marginBottom:12,padding:'13px 14px',display:'flex',alignItems:'center',gap:11,cursor:'pointer'}} onClick={()=>go('citizen.vault')}>
+          <span style={{fontSize:26}}>🗃️</span>
+          <div style={{flex:1}}>
+            <div style={{fontWeight:700,fontSize:13,color:'var(--t1)'}}>{t('citizen.vault')}</div>
+            <div style={{fontSize:11,color:'var(--t2)',marginTop:1}}>{t('citizen.vaultSub')}</div>
+          </div>
+          <span style={{color:'var(--t3)'}}><Ic.Chev/></span>
+        </div>
+        {/* History */}
+        <p className="sec-title">{t('citizen.history')}</p>
+        <div className="card" style={{marginBottom:16}}>
+          {history.map((h,i)=><div key={i} style={{padding:'11px 13px',borderBottom:i<history.length-1?'1px solid var(--border)':'none',display:'flex',alignItems:'center',gap:9}}>
+            <div style={{flex:1}}>
+              <div style={{fontWeight:600,fontSize:13,color:'var(--t1)'}}>{h.svc}</div>
+              <div style={{fontSize:11,color:'var(--t2)',marginTop:1}}>{fmtDate(h.date.toISOString(),lang)}</div>
+            </div>
+            <span className="badge b-g">Completed</span>
+          </div>)}
+        </div>
+      </div>
+    </div>
+    {/* Tab bar */}
+    <div className="tab-bar">
+      {[
+        {id:'home',label:t('nav.home'),I:Ic.Home,action:()=>setTab('home')},
+        {id:'appts',label:t('nav.appts'),I:Ic.Cal,action:()=>setTab('appts')},
+        {id:'vault',label:t('nav.vault'),I:Ic.Vault,action:()=>go('citizen.vault')},
+        {id:'history',label:t('nav.history'),I:Ic.Hist,action:()=>setTab('history')},
+      ].map(tb=><button key={tb.id} className={'tab-btn'+(tab===tb.id?' active':'')} onClick={tb.action}>
+        <span className="ti"><tb.I/></span>
+        <span className="tl">{tb.label}</span>
+      </button>)}
+    </div>
+  </div>;
+}
+
+/* ═══════════════════════════════════════════════════════
+   Booking — Step 1
+══════════════════════════════════════════════════════════ */
+function BookStep1({go}){
+  const {t}=useI18n();
+  const [sel,setSel]=usePersisted('book_svc',null);
+  const svcs=t('book.services');
+  const em=['🛂','🪪','📋','🚗','🏢','💍'];
+  return <div className="hz">
+    <div className="hero"><p style={{margin:'0 0 1px',fontSize:11,opacity:.7}}>Step 1 / 3</p><h1>{t('book.s1')}</h1></div>
+    <div style={{flex:1,overflow:'auto',padding:'13px 14px'}}>
+      {svcs.map((s,i)=><div key={i} className="card" style={{marginBottom:9,padding:'13px 14px',display:'flex',alignItems:'center',gap:11,cursor:'pointer',border:sel===i?'2px solid var(--accent)':'1px solid var(--border)'}} onClick={()=>setSel(i)}>
+        <span style={{fontSize:21}}>{em[i]}</span>
+        <span style={{flex:1,fontWeight:600,color:'var(--t1)',fontSize:13}}>{s}</span>
+        {sel===i&&<span style={{color:'var(--accent)'}}><Ic.Ck/></span>}
+      </div>)}
+    </div>
+    <div style={{padding:'11px 14px',borderTop:'1px solid var(--border)',background:'var(--surface)'}}>
+      <button className="btn btn-p btn-w" disabled={sel===null} onClick={()=>go('citizen.book2')}>{t('book.next')}</button>
+    </div>
+  </div>;
+}
+
+/* ═══════════════════════════════════════════════════════
+   Mini Calendar
+══════════════════════════════════════════════════════════ */
+function MiniCal({sel,onSel,lang}){
+  const [mo,setMo]=React.useState(()=>new Date());
+  const today=new Date();
+  const y=mo.getFullYear(),m=mo.getMonth();
+  const fd=new Date(y,m,1).getDay();
+  const dim=new Date(y,m+1,0).getDate();
+  const days=LANG[lang].days;
+  const months=LANG[lang].months;
+  const cells=[];
+  for(let i=0;i<fd;i++)cells.push(null);
+  for(let d=1;d<=dim;d++)cells.push(d);
+  return <div>
+    <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:9}}>
+      <button className="icon-btn" onClick={()=>setMo(new Date(y,m-1,1))}><Ic.Chev l/></button>
+      <span style={{fontWeight:700,fontSize:13,color:'var(--t1)'}}>{months[m]} {y}</span>
+      <button className="icon-btn" onClick={()=>setMo(new Date(y,m+1,1))}><Ic.Chev/></button>
+    </div>
+    <div className="cal-hdr">{days.map(d=><div key={d} className="cal-hdr-d">{d}</div>)}</div>
+    <div className="cal-grid">{cells.map((d,i)=>{
+      if(!d)return <div key={i}/>;
+      const date=new Date(y,m,d);
+      const past=date<new Date(today.getFullYear(),today.getMonth(),today.getDate());
+      const isSel=sel&&new Date(sel).toDateString()===date.toDateString();
+      const isToday=date.toDateString()===today.toDateString();
+      return <button key={i} className={'cal-day'+(isSel?' sel':'')+(isToday&&!isSel?' today':'')+(past?' dis':'')} onClick={()=>!past&&onSel(date.toISOString())}>{d}</button>;
+    })}</div>
+  </div>;
+}
+
+/* ═══════════════════════════════════════════════════════
+   Booking — Step 2
+══════════════════════════════════════════════════════════ */
+function BookStep2({go}){
+  const {t,lang}=useI18n();
+  const [date,setDate]=usePersisted('book_date',null);
+  const [slot,setSlot]=usePersisted('book_slot',null);
+  const morn=['9:00 AM','9:30 AM','10:00 AM','10:30 AM','11:00 AM','11:30 AM'];
+  const aftn=['1:00 PM','1:30 PM','2:00 PM','2:30 PM','3:00 PM','3:30 PM'];
+  const SlotGrid=({slots})=><div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:7}}>
+    {slots.map(s=><button key={s} onClick={()=>setSlot(s)} style={{padding:'9px 2px',borderRadius:8,border:slot===s?'2px solid var(--accent)':'1px solid var(--border)',background:slot===s?'var(--accent)':'var(--surface)',color:slot===s?'var(--fg)':'var(--t1)',fontWeight:600,fontSize:12,cursor:'pointer',fontFamily:'inherit'}}>{s}</button>)}
+  </div>;
+  return <div className="hz">
+    <div className="hero"><p style={{margin:'0 0 1px',fontSize:11,opacity:.7}}>Step 2 / 3</p><h1>{t('book.s2')}</h1></div>
+    <div style={{flex:1,overflow:'auto',padding:'13px 14px'}}>
+      <div className="card" style={{padding:'13px 14px',marginBottom:13}}><MiniCal sel={date} onSel={setDate} lang={lang}/></div>
+      {date&&<>
+        <p className="sec-title">{t('book.morning')}</p>
+        <div style={{marginBottom:13}}><SlotGrid slots={morn}/></div>
+        <p className="sec-title">{t('book.afternoon')}</p>
+        <SlotGrid slots={aftn}/>
+      </>}
+      <div style={{height:80}}/>
+    </div>
+    <div style={{padding:'11px 14px',borderTop:'1px solid var(--border)',background:'var(--surface)',display:'flex',gap:8}}>
+      <button className="btn btn-s" style={{flex:1}} onClick={()=>go('citizen.book1')}>{t('book.back')}</button>
+      <button className="btn btn-p" style={{flex:2}} disabled={!date||!slot} onClick={()=>go('citizen.book3')}>{t('book.next')}</button>
+    </div>
+  </div>;
+}
+
+/* ═══════════════════════════════════════════════════════
+   Booking — Step 3
+══════════════════════════════════════════════════════════ */
+function BookStep3({go}){
+  const {t}=useI18n();
+  const [name,setName]=usePersisted('book_name','');
+  const [phone,setPhone]=usePersisted('book_phone','');
+  const [notes,setNotes]=usePersisted('book_notes','');
+  return <div className="hz">
+    <div className="hero"><p style={{margin:'0 0 1px',fontSize:11,opacity:.7}}>Step 3 / 3</p><h1>{t('book.s3')}</h1></div>
+    <div style={{flex:1,overflow:'auto',padding:'13px 14px'}}>
+      <div className="card" style={{padding:15}}>
+        <div className="field"><label>Full Name</label><input value={name} onChange={e=>setName(e.target.value)} placeholder="Ahmed Al-Rashid"/></div>
+        <div className="field"><label>Phone</label><input value={phone} onChange={e=>setPhone(e.target.value)} placeholder="+964 770 000 0000" type="tel"/></div>
+        <div className="field"><label>Notes <span style={{fontWeight:400,color:'var(--t3)'}}>(optional)</span></label><textarea value={notes} onChange={e=>setNotes(e.target.value)} rows={3} placeholder="Any special requirements…"/></div>
+      </div>
+    </div>
+    <div style={{padding:'11px 14px',borderTop:'1px solid var(--border)',background:'var(--surface)',display:'flex',gap:8}}>
+      <button className="btn btn-s" style={{flex:1}} onClick={()=>go('citizen.book2')}>{t('book.back')}</button>
+      <button className="btn btn-p" style={{flex:2}} onClick={()=>go('citizen.receipt')}>{t('book.confirm')}</button>
+    </div>
+  </div>;
+}
+
+/* ═══════════════════════════════════════════════════════
+   Receipt
+══════════════════════════════════════════════════════════ */
+function Receipt({go}){
+  const {t,lang}=useI18n();
+  const svcIdx=JSON.parse(localStorage.getItem('hz_f_book_svc')||'0');
+  const dateISO=JSON.parse(localStorage.getItem('hz_f_book_date')||'null');
+  const slot=JSON.parse(localStorage.getItem('hz_f_book_slot')||'"10:30 AM"');
+  const svcs=LANG[lang].book.services;
+  const ref=React.useRef('HZ-2025-'+Math.floor(1000+Math.random()*9000)).current;
+  const rows=[[t('receipt.ref'),ref],[t('receipt.svc'),svcs[svcIdx]||svcs[0]],[t('receipt.date'),fmtDate(dateISO||new Date('2025-05-27').toISOString(),lang)],[t('receipt.time'),slot||'10:30 AM'],[t('receipt.loc'),'Erbil Civic Centre, Block B']];
+  return <div className="page-scroll"><div style={{padding:'28px 16px'}}>
+    <div style={{textAlign:'center',marginBottom:22}}>
+      <div style={{fontSize:52,marginBottom:6}}>✅</div>
+      <h1 style={{margin:0,fontSize:21,fontWeight:800,color:'var(--t1)'}}>{t('receipt.title')}</h1>
+    </div>
+    <div className="card" style={{padding:'16px 18px',marginBottom:14}}>
+      {rows.map(([l,v])=><div key={l} style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'9px 0',borderBottom:'1px solid var(--border)'}}>
+        <span style={{fontSize:12,color:'var(--t2)'}}>{l}</span>
+        <span style={{fontSize:12,fontWeight:700,color:'var(--t1)',textAlign:'right',maxWidth:'58%'}}>{v}</span>
+      </div>)}
+    </div>
+    <button className="btn btn-p btn-w" style={{marginBottom:9}} onClick={()=>go('citizen.dashboard')}>{t('receipt.done')}</button>
+    <button className="btn btn-s btn-w" onClick={()=>go('public.search')}>{t('receipt.track')}</button>
+  </div></div>;
+}
+
+/* ═══════════════════════════════════════════════════════
+   Public Track
+══════════════════════════════════════════════════════════ */
+function PublicTrackSearch({go}){
+  const {t}=useI18n();
+  const [ref,setRef]=usePersisted('track_ref','');
+  return <div className="page-scroll">
+    <div className="hero"><h1>{t('track.title')}</h1></div>
+    <div style={{padding:'18px 16px'}}>
+      <div className="card" style={{padding:16}}>
+        <div className="field"><label>Reference Number</label><input value={ref} onChange={e=>setRef(e.target.value)} placeholder={t('track.ph')} style={{fontSize:15,letterSpacing:'.04em'}}/></div>
+        <button className="btn btn-p btn-w" onClick={()=>go('public.result')}>{t('track.search')}</button>
+      </div>
+      <p style={{textAlign:'center',fontSize:12,color:'var(--t3)',marginTop:10}}>Try: HZ-2025-1091</p>
+    </div>
+  </div>;
+}
+
+function PublicTrackResult({go}){
+  const {t,lang}=useI18n();
+  const ref=JSON.parse(localStorage.getItem('hz_f_track_ref')||'"HZ-2025-1091"');
+  const steps=[
+    {label:'Booking Confirmed',done:true,date:fmtDate(new Date('2025-05-20').toISOString(),lang)},
+    {label:'Documents Verified',done:true,date:fmtDate(new Date('2025-05-22').toISOString(),lang)},
+    {label:'Appointment Day',done:false,date:fmtDate(new Date('2025-05-27').toISOString(),lang)},
+    {label:'Processing',done:false,date:'—'},
+    {label:'Ready for Collection',done:false,date:'—'},
+  ];
+  return <div className="page-scroll">
+    <div className="hero"><h1>{t('track.result')}</h1><p>Ref: {ref||'HZ-2025-1091'}</p></div>
+    <div style={{padding:'14px 16px'}}>
+      <div className="card" style={{padding:'14px 16px',marginBottom:13}}>
+        {steps.map((s,i)=><div key={i} style={{display:'flex',gap:11,paddingBottom:i<steps.length-1?14:0,position:'relative'}}>
+          {i<steps.length-1&&<div style={{position:'absolute',left:11,top:24,bottom:0,width:2,background:s.done?'var(--accent)':'var(--border)'}}/>}
+          <div style={{width:23,height:23,borderRadius:'50%',flexShrink:0,display:'flex',alignItems:'center',justifyContent:'center',background:s.done?'var(--accent)':'var(--border)',color:s.done?'var(--fg)':'var(--t3)',fontSize:11}}>{s.done?'✓':i+1}</div>
+          <div style={{flex:1,paddingTop:2}}>
+            <div style={{fontWeight:700,fontSize:13,color:s.done?'var(--t1)':'var(--t3)'}}>{s.label}</div>
+            <div style={{fontSize:11,color:'var(--t3)',marginTop:2}}>{s.date}</div>
+          </div>
+        </div>)}
+      </div>
+      <button className="btn btn-s btn-w" onClick={()=>go('public.search')}>{t('book.back')}</button>
+    </div>
+  </div>;
+}
+
+/* ═══════════════════════════════════════════════════════
+   Vault
+══════════════════════════════════════════════════════════ */
+const DEFAULT_DOCS=[
+  {name:'National ID.pdf',type:'PDF',size:'1.2 MB',date:'2025-01-10',em:'🪪'},
+  {name:'Birth Certificate.pdf',type:'PDF',size:'0.8 MB',date:'2024-11-05',em:'📋'},
+  {name:'Proof of Address.jpg',type:'Image',size:'2.1 MB',date:'2025-03-22',em:'🏠'},
+];
+function VaultPage({go}){
+  const {t}=useI18n();
+  const [docs,setDocs]=usePersisted('vault_docs',DEFAULT_DOCS);
+  const [busy,setBusy]=React.useState(false);
+  const upload=()=>{
+    setBusy(true);
+    setTimeout(()=>{
+      setDocs(d=>[...d,{name:'Document_'+Date.now()+'.pdf',type:'PDF',size:'0.5 MB',date:new Date().toISOString().slice(0,10),em:'📄'}]);
+      setBusy(false);
+    },1400);
+  };
+  return <div className="hz">
+    <div className="hero"><h1>{t('vault.title')}</h1></div>
+    <div style={{flex:1,overflow:'auto',padding:'13px 14px'}}>
+      <div style={{display:'flex',gap:8,marginBottom:13}}>
+        <button className="btn btn-p" style={{flex:1,gap:5}} onClick={upload} disabled={busy}><Ic.Up/>{busy?'Uploading…':t('vault.upload')}</button>
+        <button className="btn btn-s" style={{flex:1,gap:5}} onClick={()=>go('citizen.scanner')}><Ic.Scan/>{t('vault.scan')}</button>
+      </div>
+      <div className="card">
+        {docs.length===0&&<div style={{padding:32,textAlign:'center',color:'var(--t3)'}}><div style={{fontSize:34,marginBottom:7}}>📁</div><p style={{margin:0,fontSize:13}}>{t('vault.empty')}</p></div>}
+        {docs.map((d,i)=><div key={i} className="v-item">
+          <span style={{fontSize:22}}>{d.em}</span>
+          <div style={{flex:1,minWidth:0}}><div className="v-name">{d.name}</div><div className="v-sub">{d.type} · {d.size} · {d.date}</div></div>
+          <button style={{background:'var(--red-bg)',color:'var(--red)',border:0,borderRadius:7,padding:'5px 9px',fontSize:11,cursor:'pointer',fontFamily:'inherit',fontWeight:600}} onClick={()=>setDocs(ds=>ds.filter((_,j)=>j!==i))}>Remove</button>
+        </div>)}
+      </div>
+    </div>
+    <div style={{padding:'11px 14px',borderTop:'1px solid var(--border)',background:'var(--surface)'}}>
+      <button className="btn btn-s btn-w" onClick={()=>go('citizen.dashboard')}>← Back to Dashboard</button>
+    </div>
+  </div>;
+}
+
+/* ═══════════════════════════════════════════════════════
+   Scanner
+══════════════════════════════════════════════════════════ */
+function ScannerPage({go}){
+  const {t}=useI18n();
+  const [state,setState]=React.useState('idle');
+  const [,setDocs]=usePersisted('vault_docs',DEFAULT_DOCS);
+  const start=()=>{setState('scanning');setTimeout(()=>setState('done'),3000);};
+  const save=()=>{
+    setDocs(d=>[...d,{name:'Scanned_'+Date.now()+'.pdf',type:'Scan',size:'1.1 MB',date:new Date().toISOString().slice(0,10),em:'📸'}]);
+    go('citizen.vault');
+  };
+  return <div className="hz" style={{background:'#050508'}}>
+    <div style={{background:'#111',padding:'12px 14px',display:'flex',alignItems:'center',gap:9}}>
+      <button onClick={()=>go('citizen.vault')} style={{background:'rgba(255,255,255,.1)',border:0,color:'#fff',borderRadius:7,padding:'5px 11px',cursor:'pointer',fontFamily:'inherit',fontSize:13}}>← Back</button>
+      <h2 style={{margin:0,fontSize:15,fontWeight:700,color:'#fff',flex:1}}>{t('scanner.title')}</h2>
+    </div>
+    <div style={{flex:1,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'}}>
+      <div className="scan-frame">
+        <div style={{width:'100%',height:'100%',background:'linear-gradient(135deg,#111 0%,#1a1a2a 50%,#111 100%)',borderRadius:14,overflow:'hidden',position:'relative',display:'flex',alignItems:'center',justifyContent:'center'}}>
+          <span style={{fontSize:44,opacity:state==='done'?1:.12}}>{state==='done'?'✅':'📄'}</span>
+          {state==='scanning'&&<div className="scan-line"/>}
+        </div>
+        <div className="scan-border"/>
+        <div className="sc tl"/><div className="sc tr"/><div className="sc bl"/><div className="sc br"/>
+      </div>
+      <p style={{color:'rgba(255,255,255,.55)',fontSize:13,textAlign:'center',margin:'10px 20px',lineHeight:1.5}}>
+        {state==='idle'?t('scanner.inst'):state==='scanning'?t('scanner.scanning'):t('scanner.done')}
+      </p>
+    </div>
+    <div style={{padding:'14px 16px calc(env(safe-area-inset-bottom)+14px)',background:'#0a0a0a',display:'flex',gap:9}}>
+      {state==='idle'&&<button className="btn btn-p btn-w" onClick={start} style={{background:'#6b68ff'}}>📷 Start Scan</button>}
+      {state==='scanning'&&<button className="btn btn-w" style={{background:'rgba(255,255,255,.1)',color:'#fff'}} onClick={()=>setState('idle')}>{t('scanner.cancel')}</button>}
+      {state==='done'&&<>
+        <button className="btn" style={{flex:1,background:'rgba(255,255,255,.1)',color:'#fff'}} onClick={()=>setState('idle')}>{t('scanner.retry')}</button>
+        <button className="btn btn-p" style={{flex:2,background:'#6b68ff'}} onClick={save}>{t('scanner.save')}</button>
+      </>}
+    </div>
+  </div>;
+}
+
+/* ═══════════════════════════════════════════════════════
+   Staff Queue  (role-aware)
+══════════════════════════════════════════════════════════ */
+const INIT_QUEUE=[
+  {tk:'A01',name:'Sara Ahmed',  svc:'Passport Renewal', wait:'5 min', st:'calling'},
+  {tk:'A02',name:'Omar Karimi', svc:'National ID',       wait:'12 min',st:'waiting'},
+  {tk:'A03',name:'Layla Hassan',svc:'Birth Certificate', wait:'18 min',st:'waiting'},
+  {tk:'A04',name:'Ali Mahmoud', svc:'Driving Licence',   wait:'25 min',st:'waiting'},
+  {tk:'A05',name:'Nadia Rashid',svc:'Business Reg',      wait:'31 min',st:'waiting'},
+];
+function StaffQueue({go}){
+  const {t}=useI18n();
+  const {role,setRole}=useRole();
+  const [queue,setQueue]=React.useState(INIT_QUEUE);
+  const active=queue.filter(x=>x.st!=='done');
+  const callNext=()=>setQueue(q=>{const u=[...q];const w=u.find(x=>x.st==='waiting');if(w)w.st='calling';return u;});
+  const checkIn=tk=>setQueue(q=>q.map(x=>x.tk===tk?{...x,st:'done'}:x));
+  const skip=tk=>setQueue(q=>{const u=q.filter(x=>x.tk!==tk);const s=q.find(x=>x.tk===tk);if(s)u.push({...s,st:'waiting',wait:'Rescheduled'});return u;});
+  const complete=tk=>setQueue(q=>q.filter(x=>x.tk!==tk));
+  const roles=['viewer','checker','manager'];
+  const roleLabels={viewer:t('admin.roles.viewer'),checker:t('admin.roles.checker'),manager:t('admin.roles.manager')};
+  return <div className="hz">
+    <div className="hero" style={{paddingBottom:14}}>
+      <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between',marginBottom:10}}>
+        <div><h1 style={{margin:0,fontSize:19,fontWeight:800}}>{t('staff.title')}</h1><p style={{margin:'3px 0 0',fontSize:12,opacity:.75}}>{active.length} remaining</p></div>
+        {role==='manager'&&<button className="btn" style={{background:'rgba(255,255,255,.2)',color:'#fff',fontSize:12,padding:'7px 12px'}} onClick={callNext}>Call Next</button>}
+      </div>
+      {/* Role switcher — for demo purposes */}
+      <div style={{display:'flex',gap:5}}>
+        {roles.map(r=><button key={r} onClick={()=>setRole(r)} style={{flex:1,padding:'5px 4px',borderRadius:7,border:role===r?'2px solid rgba(255,255,255,.9)':'1px solid rgba(255,255,255,.3)',background:role===r?'rgba(255,255,255,.25)':'transparent',color:'#fff',fontSize:10.5,fontWeight:700,cursor:'pointer',fontFamily:'inherit'}}>{roleLabels[r]}</button>)}
+      </div>
+    </div>
+    <div style={{flex:1,overflow:'auto'}}>
+      {active.length===0&&<div style={{padding:40,textAlign:'center',color:'var(--t3)'}}><div style={{fontSize:34,marginBottom:7}}>🎉</div><p style={{margin:0}}>{t('staff.empty')}</p></div>}
+      <div className="card" style={{margin:13,overflow:'hidden'}}>
+        {active.map(item=><div key={item.tk} className="q-row" style={{background:item.st==='calling'?'var(--blue-bg)':'var(--surface)'}}>
+          <div className="ticket" style={{background:item.st==='calling'?'var(--blue)':'var(--accent)'}}>{item.tk}</div>
+          <div style={{flex:1,minWidth:0}}>
+            <div style={{fontWeight:700,fontSize:13,color:'var(--t1)'}}>{item.name}</div>
+            <div style={{fontSize:11,color:'var(--t2)',marginTop:1}}>{item.svc}</div>
+            <div style={{fontSize:10,color:item.st==='calling'?'var(--blue)':'var(--t3)',marginTop:1,fontWeight:item.st==='calling'?700:400}}>
+              {item.st==='calling'?'● '+t('staff.calling'):'⏱ '+item.wait}
+            </div>
+          </div>
+          <div style={{display:'flex',gap:4}}>
+            {role!=='viewer'&&item.st==='calling'&&<button className="btn btn-g" style={{padding:'6px 9px',fontSize:11}} onClick={()=>checkIn(item.tk)}>{t('staff.checkin')}</button>}
+            {role==='manager'&&item.st==='waiting'&&<button className="btn btn-s" style={{padding:'6px 9px',fontSize:11}} onClick={()=>skip(item.tk)}>{t('staff.skip')}</button>}
+            {role==='manager'&&item.st==='calling'&&<button className="btn btn-d" style={{padding:'6px 9px',fontSize:11}} onClick={()=>complete(item.tk)}>{t('staff.complete')}</button>}
+          </div>
+        </div>)}
+      </div>
+    </div>
+  </div>;
+}
+
+/* ═══════════════════════════════════════════════════════
+   Admin Dashboard
+══════════════════════════════════════════════════════════ */
+const STAFF0=[
+  {id:1,name:'Hana Aziz',  email:'hana@gov.iq',  role:'manager'},
+  {id:2,name:'Soran Karim',email:'soran@gov.iq', role:'checker'},
+  {id:3,name:'Zainab Nouri',email:'zainab@gov.iq',role:'viewer'},
+  {id:4,name:'Diyar Ali',  email:'diyar@gov.iq', role:'checker'},
+];
+const PERMS=[
+  {action:'View queue',      viewer:true, checker:true, manager:true},
+  {action:'Check in citizens',viewer:false,checker:true, manager:true},
+  {action:'Skip citizens',   viewer:false,checker:false,manager:true},
+  {action:'Mark complete',   viewer:false,checker:false,manager:true},
+  {action:'Call next ticket',viewer:false,checker:false,manager:true},
+  {action:'View reports',    viewer:true, checker:true, manager:true},
+  {action:'Manage staff',    viewer:false,checker:false,manager:true},
+];
+function AdminDashboard({go}){
+  const {t}=useI18n();
+  const {setRole}=useRole();
+  const [staff,setStaff]=usePersisted('admin_staff',STAFF0);
+  const assign=(id,r)=>setStaff(s=>s.map(m=>m.id===id?{...m,role:r}:m));
+  const roleColor={viewer:'b-x',checker:'b-b',manager:'b-g'};
+  const stats=[{l:t('admin.appts'),v:47},{l:t('admin.served'),v:31},{l:t('admin.waiting'),v:5},{l:t('admin.avg'),v:'14m'}];
+  return <div className="page-scroll">
+    <div className="hero"><h1>{t('admin.title')}</h1></div>
+    <div style={{padding:'13px 14px'}}>
+      <div style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:9,marginBottom:14}}>
+        {stats.map(s=><div key={s.l} className="card" style={{padding:13,textAlign:'center'}}><div style={{fontSize:22,fontWeight:800,color:'var(--accent)'}}>{s.v}</div><div style={{fontSize:10.5,color:'var(--t2)',marginTop:2}}>{s.l}</div></div>)}
+      </div>
+
+      <p className="sec-title">{t('admin.staffMgmt')}</p>
+      <div className="card" style={{marginBottom:14,overflow:'hidden'}}>
+        {staff.map(m=><div key={m.id} style={{padding:'12px 13px',borderBottom:'1px solid var(--border)'}}>
+          <div style={{display:'flex',alignItems:'center',gap:9,marginBottom:8}}>
+            <div style={{width:34,height:34,borderRadius:'50%',background:'var(--accent)',color:'var(--fg)',display:'flex',alignItems:'center',justifyContent:'center',fontWeight:800,fontSize:13,flexShrink:0}}>{m.name[0]}</div>
+            <div style={{flex:1,minWidth:0}}>
+              <div style={{fontWeight:700,fontSize:13,color:'var(--t1)'}}>{m.name}</div>
+              <div style={{fontSize:11,color:'var(--t2)'}}>{m.email}</div>
+            </div>
+            <span className={'badge '+roleColor[m.role]}>{t('admin.roles.'+m.role)}</span>
+          </div>
+          <div style={{display:'flex',gap:5}}>
+            {['viewer','checker','manager'].map(r=><button key={r} onClick={()=>assign(m.id,r)} style={{flex:1,padding:'5px 3px',borderRadius:7,fontSize:10.5,fontWeight:600,border:m.role===r?'2px solid var(--accent)':'1px solid var(--border)',background:m.role===r?'var(--accent)':'var(--surface-2)',color:m.role===r?'var(--fg)':'var(--t2)',cursor:'pointer',fontFamily:'inherit'}}>{t('admin.roles.'+r)}</button>)}
+          </div>
+        </div>)}
+      </div>
+
+      <p className="sec-title">Permissions Matrix</p>
+      <div className="card" style={{overflow:'hidden',marginBottom:14}}>
+        <div style={{overflowX:'auto'}}>
+          <table className="mx-tbl">
+            <thead><tr><th>Action</th><th>{t('admin.roles.viewer')}</th><th>{t('admin.roles.checker')}</th><th>{t('admin.roles.manager')}</th></tr></thead>
+            <tbody>{PERMS.map(row=><tr key={row.action}><td style={{fontWeight:600,fontSize:12}}>{row.action}</td><td className={row.viewer?'ck':'cx'}>{row.viewer?'✓':'–'}</td><td className={row.checker?'ck':'cx'}>{row.checker?'✓':'–'}</td><td className={row.manager?'ck':'cx'}>{row.manager?'✓':'–'}</td></tr>)}</tbody>
+          </table>
+        </div>
+      </div>
+
+      <p className="sec-title">Preview Staff Queue as Role</p>
+      <div style={{display:'flex',gap:8,marginBottom:20}}>
+        {['viewer','checker','manager'].map(r=><button key={r} className="btn btn-s" style={{flex:1,fontSize:12}} onClick={()=>{setRole(r);go('staff.queue');}}>{t('admin.roles.'+r)}</button>)}
+      </div>
+    </div>
+  </div>;
+}
+
+/* ═══════════════════════════════════════════════════════
+   App Shell
+══════════════════════════════════════════════════════════ */
+const ROUTES={
+  'login':            {Comp:Login,           surface:'auth'},
+  'register':         {Comp:Register,        surface:'auth'},
+  'citizen.dashboard':{Comp:CitizenDashboard,surface:'citizen'},
+  'citizen.book1':    {Comp:BookStep1,       surface:'citizen'},
+  'citizen.book2':    {Comp:BookStep2,       surface:'citizen'},
+  'citizen.book3':    {Comp:BookStep3,       surface:'citizen'},
+  'citizen.receipt':  {Comp:Receipt,         surface:'citizen'},
+  'citizen.vault':    {Comp:VaultPage,       surface:'citizen'},
+  'citizen.scanner':  {Comp:ScannerPage,     surface:'citizen'},
+  'public.search':    {Comp:PublicTrackSearch,surface:'public'},
+  'public.result':    {Comp:PublicTrackResult,surface:'public'},
+  'staff.queue':      {Comp:StaffQueue,      surface:'staff'},
+  'admin.dashboard':  {Comp:AdminDashboard,  surface:'admin'},
+};
+const SURF_IDS=['auth','citizen','public','staff','admin'];
+const SURF_HOME={auth:'login',citizen:'citizen.dashboard',public:'public.search',staff:'staff.queue',admin:'admin.dashboard'};
+
+function LangToggle(){
+  const {lang,setLang}=useI18n();
+  return <button className="lang-btn" onClick={()=>setLang(lang==='en'?'ku':'en')}>{lang==='en'?'کو':'EN'}</button>;
+}
+
+function AppShell(){
+  const {t}=useI18n();
+  const {dark,toggle}=useTheme();
+  const [role,setRole]=usePersisted('staff_role','checker');
+  const init=(()=>{const h=window.location.hash.slice(1);return ROUTES[h]?h:localStorage.getItem('hz_route')||'citizen.dashboard';})();
+  const [route,setRoute]=React.useState(init);
+  const [hintHidden,setHintHidden]=React.useState(()=>localStorage.getItem('hz_hint')==='1');
+  const go=React.useCallback(next=>{if(!ROUTES[next]){console.warn('Unknown route:',next);return;}setRoute(next);},[]);
+  React.useEffect(()=>{localStorage.setItem('hz_route',route);window.location.hash=route;},[route]);
+  const {Comp,surface}=ROUTES[route];
+  return <>
+    <div className="surf" role="tablist">
+      <div className="surf-row">
+        <div className="surf-tabs">
+          {SURF_IDS.map(id=><button key={id} className={'surf-btn'+(surface===id?' active':'')} onClick={()=>go(SURF_HOME[id])}>
+            {t('surfaces.'+id)}<span className="em">{t('surfacesEm.'+id)}</span>
+          </button>)}
+        </div>
+        <div className="surf-ctrls">
+          <LangToggle/>
+          <button className="icon-btn" onClick={toggle} title={dark?'Light mode':'Dark mode'}>{dark?<Ic.Sun/>:<Ic.Moon/>}</button>
+        </div>
+      </div>
+    </div>
+    <div className="stage">
+      <div className="frame">
+        <div className="page-in" key={route}>
+          <RoleCtx.Provider value={{role,setRole}}>
+            <Comp go={go}/>
+          </RoleCtx.Provider>
+        </div>
+      </div>
+    </div>
+    <Chatbot surface={surface}/>
+    {!hintHidden&&<div className="hint">
+      <span>Pick a surface up top — buttons really navigate.</span>
+      <button onClick={()=>{setHintHidden(true);localStorage.setItem('hz_hint','1');}}>Got it</button>
+    </div>}
+  </>;
+}
+
+function App(){
+  return <I18nProvider><ThemeProvider><AppShell/></ThemeProvider></I18nProvider>;
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

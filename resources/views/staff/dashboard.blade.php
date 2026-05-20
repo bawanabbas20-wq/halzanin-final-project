@@ -2,57 +2,117 @@
 
 @section('content')
     @php
-        $total = \App\Models\Application::count();
-        $pending = \App\Models\Application::whereIn('current_status', ['submitted', 'received'])->count();
+        $total     = \App\Models\Application::count();
+        $pending   = \App\Models\Application::whereIn('current_status', ['submitted', 'received'])->count();
+        $reviewing = \App\Models\Application::where('current_status', 'under_review')->count();
         $completed = \App\Models\Application::whereIn('current_status', ['approved', 'rejected'])->count();
     @endphp
 
     <div class="space-y-6 lg:space-y-8 max-w-4xl mx-auto">
-        
-        <!-- Top Section: Greeting -->
+
+        {{-- ── Greeting ── --}}
         <div class="animate-fade-in">
-            <h2 class="text-2xl font-bold text-brand dark:text-white font-outfit"><span data-i18n="Welcome,">Welcome,</span> {{ explode(' ', auth()->user()->name)[0] }}! 👋</h2>
-            <p class="text-gray-500 dark:text-gray-400 text-sm mt-1" data-i18n="Here's the current overview of the application queue.">Here's the current overview of the application queue.</p>
+            <h2 class="text-2xl font-bold font-outfit text-gradient">
+                <span data-i18n="Welcome,">Welcome,</span>
+                {{ explode(' ', auth()->user()->name)[0] }}! 👋
+            </h2>
+            <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">
+                Here's the current overview of the application queue.
+            </p>
         </div>
 
-        <!-- Stats Row -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6">
-            <!-- Total -->
-            <div class="bg-white dark:bg-[#1e293b] rounded-[16px] p-6 shadow-sm border border-gray-100 dark:border-gray-800 animate-fade-up" style="animation-delay: 0ms">
-                <div class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-4">
-                    <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+        {{-- ── Stats Row ── --}}
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 lg:gap-5">
+            @php
+                $stats = [
+                    ['label' => 'Total',       'value' => $total,     'delay' =>   0, 'icon_bg' => 'bg-indigo-50 dark:bg-indigo-900/30', 'icon_c' => 'text-brand dark:text-indigo-400',  'ring' => 'ring-indigo-100 dark:ring-indigo-900/40', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>'],
+                    ['label' => 'Pending',     'value' => $pending,   'delay' =>  80, 'icon_bg' => 'bg-amber-50 dark:bg-amber-900/30',   'icon_c' => 'text-amber-500 dark:text-amber-400', 'ring' => 'ring-amber-100 dark:ring-amber-900/30', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>'],
+                    ['label' => 'Reviewing',   'value' => $reviewing, 'delay' => 160, 'icon_bg' => 'bg-blue-50 dark:bg-blue-900/30',    'icon_c' => 'text-blue-500 dark:text-blue-400',   'ring' => 'ring-blue-100 dark:ring-blue-900/30',   'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>'],
+                    ['label' => 'Completed',   'value' => $completed, 'delay' => 240, 'icon_bg' => 'bg-emerald-50 dark:bg-emerald-900/30','icon_c' => 'text-emerald-500 dark:text-emerald-400','ring' => 'ring-emerald-100 dark:ring-emerald-900/30','icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>'],
+                ];
+            @endphp
+            @foreach($stats as $s)
+                <div class="bg-white dark:bg-[#1e293b] rounded-xl p-4 lg:p-5 shadow-sm border border-gray-100 dark:border-gray-800 hover-lift animate-fade-up"
+                     style="animation-delay: {{ $s['delay'] }}ms">
+                    <div class="w-9 h-9 rounded-full ring-4 {{ $s['ring'] }} {{ $s['icon_bg'] }} {{ $s['icon_c'] }} flex items-center justify-center mb-3">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">{!! $s['icon'] !!}</svg>
+                    </div>
+                    <p class="text-2xl font-extrabold text-brand dark:text-white font-outfit">{{ number_format($s['value']) }}</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5 font-medium">{{ $s['label'] }}</p>
                 </div>
-                <p class="text-3xl font-bold text-brand dark:text-white font-outfit">{{ $total }}</p>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1" data-i18n="Total Applications">Total Applications</p>
-            </div>
-            <!-- Pending Review -->
-            <div class="bg-white dark:bg-[#1e293b] rounded-[16px] p-6 shadow-sm border border-gray-100 dark:border-gray-800 animate-fade-up" style="animation-delay: 100ms">
-                <div class="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center mb-4">
-                    <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            @endforeach
+        </div>
+
+        {{-- ── Queue CTA ── --}}
+        <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden animate-fade-up"
+             style="animation-delay: 320ms">
+
+            {{-- header strip --}}
+            <div class="h-1.5 bg-gradient-to-r from-brand via-indigo-500 to-accent"></div>
+
+            <div class="p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center gap-6">
+                <div class="w-14 h-14 bg-brand/5 dark:bg-indigo-900/30 rounded-2xl flex items-center justify-center shrink-0 border border-brand/10 dark:border-indigo-800/40">
+                    <svg class="w-7 h-7 text-brand dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
+                    </svg>
                 </div>
-                <p class="text-3xl font-bold text-brand dark:text-white font-outfit">{{ $pending }}</p>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1" data-i18n="Pending Review">Pending Review</p>
-            </div>
-            <!-- Completed -->
-            <div class="bg-white dark:bg-[#1e293b] rounded-[16px] p-6 shadow-sm border border-gray-100 dark:border-gray-800 animate-fade-up" style="animation-delay: 200ms">
-                <div class="w-10 h-10 rounded-full bg-green-50 dark:bg-green-900/30 flex items-center justify-center mb-4">
-                    <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <div class="flex-1">
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1" data-i18n="Application Queue">
+                        Application Queue
+                    </h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed" data-i18n="Review, process, and update the status of all submitted citizen applications in real-time.">
+                        Review, process, and update the status of all submitted citizen applications in real-time.
+                    </p>
+                    @if($pending > 0)
+                        <div class="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-amber-600 dark:text-amber-400">
+                            <div class="w-1.5 h-1.5 rounded-full bg-amber-500 pulse-dot"></div>
+                            {{ $pending }} applications awaiting review
+                        </div>
+                    @endif
                 </div>
-                <p class="text-3xl font-bold text-brand dark:text-white font-outfit">{{ $completed }}</p>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1" data-i18n="Completed">Completed</p>
+                <a href="{{ route('staff.queue') }}"
+                   class="shrink-0 inline-flex items-center gap-2 px-6 py-3 bg-brand text-white rounded-xl font-semibold font-outfit shadow-brand-btn hover:shadow-brand-btn-hover hover:-translate-y-0.5 transition-all text-sm"
+                   data-i18n="View Application Queue">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                    View Queue
+                </a>
             </div>
         </div>
 
-        <!-- Action Section -->
-        <div class="bg-white dark:bg-[#1e293b] rounded-[16px] shadow-sm border border-gray-100 dark:border-gray-800 p-6 sm:p-8 animate-fade-up flex flex-col items-center text-center" style="animation-delay: 300ms">
-            <div class="w-16 h-16 bg-indigo-50 dark:bg-indigo-900/30 rounded-full flex items-center justify-center mb-4">
-                <svg class="w-8 h-8 text-brand dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
-            </div>
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2" data-i18n="Application Queue">Application Queue</h3>
-            <p class="text-gray-500 dark:text-gray-400 mb-8 max-w-md" data-i18n="Review, process, and update the status of all submitted citizen applications in real-time.">Review, process, and update the status of all submitted citizen applications in real-time.</p>
-            
-            <a href="{{ route('staff.queue') }}" class="w-full sm:w-auto px-8 py-3 bg-brand text-white rounded-[10px] font-semibold font-outfit shadow-brand-btn hover:shadow-brand-btn-hover hover:-translate-y-[1px] transition-all inline-block" data-i18n="View Application Queue">
-                View Application Queue
+        {{-- ── Quick Links ── --}}
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 animate-fade-up" style="animation-delay: 400ms">
+            <a href="{{ route('staff.calendar') }}"
+               class="group bg-white dark:bg-[#1e293b] rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-800 hover-lift flex items-center gap-4">
+                <div class="w-10 h-10 bg-blue-50 dark:bg-blue-900/30 rounded-xl flex items-center justify-center text-blue-500 dark:text-blue-400 shrink-0 group-hover:scale-110 transition-transform">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                </div>
+                <div>
+                    <p class="font-semibold text-gray-900 dark:text-white text-sm">Appointments Calendar</p>
+                    <p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5">View day-by-day schedule</p>
+                </div>
+                <svg class="w-4 h-4 text-gray-300 dark:text-gray-600 ltr:ml-auto rtl:mr-auto rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+
+            <a href="{{ route('profile.edit') }}"
+               class="group bg-white dark:bg-[#1e293b] rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-800 hover-lift flex items-center gap-4">
+                <div class="w-10 h-10 bg-purple-50 dark:bg-purple-900/30 rounded-xl flex items-center justify-center text-purple-500 dark:text-purple-400 shrink-0 group-hover:scale-110 transition-transform">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                    </svg>
+                </div>
+                <div>
+                    <p class="font-semibold text-gray-900 dark:text-white text-sm">My Profile</p>
+                    <p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5">Update your account details</p>
+                </div>
+                <svg class="w-4 h-4 text-gray-300 dark:text-gray-600 ltr:ml-auto rtl:mr-auto rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
             </a>
         </div>
 

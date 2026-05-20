@@ -6,71 +6,77 @@
 
     {{-- Page Header --}}
     <div>
-        <h2 class="text-2xl font-bold text-brand dark:text-white font-outfit">Book an Appointment</h2>
-        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Complete the steps below to schedule your visit to the directorate.</p>
+        <h2 class="text-2xl font-bold font-outfit text-gradient" data-i18n="book.title">Book an Appointment</h2>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1" data-i18n="book.subtitle">Complete the steps below to schedule your visit to the directorate.</p>
     </div>
 
     {{-- Step Indicator --}}
-    <div class="flex items-start">
-        <div class="flex flex-col items-center shrink-0">
-            <div id="circle-1" class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold bg-brand text-white transition-all duration-300">1</div>
-            <span id="label-1" class="text-[11px] mt-1.5 font-semibold text-brand dark:text-indigo-400 transition-colors text-center leading-tight">Personal<br>Info</span>
-        </div>
-        <div id="line-1-2" class="flex-1 h-0.5 bg-gray-200 dark:bg-gray-700 mx-3 mt-4 transition-colors duration-300"></div>
-        <div class="flex flex-col items-center shrink-0">
-            <div id="circle-2" class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 transition-all duration-300">2</div>
-            <span id="label-2" class="text-[11px] mt-1.5 font-semibold text-gray-400 dark:text-gray-500 transition-colors text-center leading-tight">Pick<br>Appointment</span>
-        </div>
-        <div id="line-2-3" class="flex-1 h-0.5 bg-gray-200 dark:bg-gray-700 mx-3 mt-4 transition-colors duration-300"></div>
-        <div class="flex flex-col items-center shrink-0">
-            <div id="circle-3" class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 transition-all duration-300">3</div>
-            <span id="label-3" class="text-[11px] mt-1.5 font-semibold text-gray-400 dark:text-gray-500 transition-colors text-center leading-tight">Review &amp;<br>Submit</span>
+    <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 p-4">
+        <div class="flex items-start">
+            <div class="flex flex-col items-center shrink-0">
+                <div id="circle-1" class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold bg-brand text-white transition-all duration-300 shadow-brand-btn">1</div>
+                <span id="label-1" class="text-[11px] mt-1.5 font-semibold text-brand dark:text-indigo-400 transition-colors text-center leading-tight" data-i18n="book.step1">Personal Info</span>
+            </div>
+            <div id="line-1-2" class="flex-1 h-0.5 bg-gray-200 dark:bg-gray-700 mx-3 mt-4 transition-colors duration-300"></div>
+            <div class="flex flex-col items-center shrink-0">
+                <div id="circle-2" class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 transition-all duration-300">2</div>
+                <span id="label-2" class="text-[11px] mt-1.5 font-semibold text-gray-400 dark:text-gray-500 transition-colors text-center leading-tight" data-i18n="book.step2">Pick Appointment</span>
+            </div>
+            <div id="line-2-3" class="flex-1 h-0.5 bg-gray-200 dark:bg-gray-700 mx-3 mt-4 transition-colors duration-300"></div>
+            <div class="flex flex-col items-center shrink-0">
+                <div id="circle-3" class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 transition-all duration-300">3</div>
+                <span id="label-3" class="text-[11px] mt-1.5 font-semibold text-gray-400 dark:text-gray-500 transition-colors text-center leading-tight" data-i18n="book.step3">Review &amp; Submit</span>
+            </div>
         </div>
     </div>
 
     {{-- ═══ STEP 1: Personal Info ═══ --}}
     <div id="step-1" class="animate-fade-up">
-        <div class="bg-white dark:bg-[#1e293b] rounded-[16px] shadow-sm border border-gray-100 dark:border-gray-800 p-6 space-y-5">
+        <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
+        <div class="h-1 bg-gradient-to-r from-brand via-indigo-500 to-accent"></div>
+        <div class="p-6 space-y-5">
             <div>
-                <label for="inp-full-name" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">Full Name</label>
+                <label for="inp-full-name" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5" data-i18n="book.full_name">Full Name</label>
                 <input type="text" id="inp-full-name"
                     class="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#0f172a] text-gray-900 dark:text-gray-100 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand transition"
                     placeholder="Enter your full legal name"
+                    data-i18n-placeholder="book.full_name_placeholder"
                     autocomplete="name"
                     oninput="saveStep1()">
-                <p id="err-full-name" class="text-xs text-red-500 mt-1 hidden">Full name is required.</p>
+                <p id="err-full-name" class="text-xs text-red-500 mt-1 hidden" data-i18n="book.name_required">Full name is required.</p>
             </div>
 
             <div>
-                <label for="inp-national-id" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">National ID Number</label>
+                <label for="inp-national-id" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5" data-i18n="book.national_id">National ID Number</label>
                 <input type="text" id="inp-national-id"
                     class="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#0f172a] text-gray-900 dark:text-gray-100 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand transition font-mono"
                     placeholder="e.g. 1234567890"
                     autocomplete="off"
                     oninput="saveStep1()">
-                <p id="err-national-id" class="text-xs text-red-500 mt-1 hidden">National ID number is required.</p>
+                <p id="err-national-id" class="text-xs text-red-500 mt-1 hidden" data-i18n="book.id_required">National ID number is required.</p>
             </div>
 
             <div>
-                <label for="inp-doc-type" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">Document Type</label>
+                <label for="inp-doc-type" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5" data-i18n="book.doc_type">Document Type</label>
                 <select id="inp-doc-type"
                     class="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#0f172a] text-gray-900 dark:text-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand transition"
                     onchange="saveStep1()">
-                    <option value="">Select a document type...</option>
-                    <option value="Passport Renewal">Passport Renewal</option>
-                    <option value="New Passport">New Passport</option>
-                    <option value="ID Card">ID Card</option>
-                    <option value="Birth Certificate">Birth Certificate</option>
-                    <option value="Other">Other</option>
+                    <option value="" data-i18n="book.select_doc_type">Select a document type...</option>
+                    <option value="Passport Renewal" data-i18n="doc.passport_renewal">Passport Renewal</option>
+                    <option value="New Passport" data-i18n="doc.new_passport">New Passport</option>
+                    <option value="ID Card" data-i18n="doc.id_card">ID Card</option>
+                    <option value="Birth Certificate" data-i18n="doc.birth_cert">Birth Certificate</option>
+                    <option value="Other" data-i18n="doc.other">Other</option>
                 </select>
-                <p id="err-doc-type" class="text-xs text-red-500 mt-1 hidden">Please select a document type.</p>
+                <p id="err-doc-type" class="text-xs text-red-500 mt-1 hidden" data-i18n="book.doc_required">Please select a document type.</p>
             </div>
 
             <button type="button" onclick="step1Continue()"
-                class="w-full py-3 bg-brand text-white font-semibold text-sm rounded-[10px] hover:bg-brand/90 transition-all shadow-md flex items-center justify-center gap-2 mt-2">
-                Continue
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                class="w-full py-3 bg-brand text-white font-semibold text-sm rounded-xl shadow-brand-btn hover:shadow-brand-btn-hover hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 mt-2">
+                <span data-i18n="book.continue">Continue</span>
+                <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
             </button>
+        </div>
         </div>
     </div>
 
@@ -78,7 +84,9 @@
     <div id="step-2" class="hidden space-y-4">
 
         {{-- Calendar Card --}}
-        <div class="bg-white dark:bg-[#1e293b] rounded-[16px] shadow-sm border border-gray-100 dark:border-gray-800 p-5">
+        <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
+        <div class="h-1 bg-gradient-to-r from-brand via-indigo-500 to-accent"></div>
+        <div class="p-5">
 
             {{-- Month Navigation --}}
             <div class="flex items-center justify-between mb-4">
@@ -96,7 +104,7 @@
             {{-- Day-of-week headers (Sun-start; Fri+Sat are off days) --}}
             <div class="grid grid-cols-7 gap-1 mb-1">
                 @foreach(['Sun','Mon','Tue','Wed','Thu','Fri','Sat'] as $dow)
-                    <div class="text-center text-[10px] font-bold py-1 {{ in_array($dow, ['Fri','Sat']) ? 'text-red-400 dark:text-red-500' : 'text-gray-400 dark:text-gray-500' }}">{{ $dow }}</div>
+                    <div class="text-center text-[10px] font-bold py-1 {{ in_array($dow, ['Fri','Sat']) ? 'text-red-400 dark:text-red-500' : 'text-gray-400 dark:text-gray-500' }}" data-i18n="calendar.{{ strtolower($dow) }}">{{ $dow }}</div>
                 @endforeach
             </div>
 
@@ -105,12 +113,13 @@
 
             {{-- Legend --}}
             <div class="flex flex-wrap items-center gap-x-4 gap-y-1.5 mt-4 pt-3 border-t border-gray-100 dark:border-gray-800">
-                <span class="flex items-center gap-1.5 text-[11px] text-gray-400"><span class="w-3 h-3 rounded-sm bg-emerald-200 dark:bg-emerald-800/60 inline-block shrink-0"></span>Available</span>
-                <span class="flex items-center gap-1.5 text-[11px] text-gray-400"><span class="w-3 h-3 rounded-sm bg-yellow-200 dark:bg-yellow-800/60 inline-block shrink-0"></span>Filling up</span>
-                <span class="flex items-center gap-1.5 text-[11px] text-gray-400"><span class="w-3 h-3 rounded-sm bg-orange-200 dark:bg-orange-800/60 inline-block shrink-0"></span>Almost full</span>
-                <span class="flex items-center gap-1.5 text-[11px] text-gray-400"><span class="w-3 h-3 rounded-sm bg-red-200 dark:bg-red-900/60 inline-block shrink-0"></span>Full</span>
-                <span class="flex items-center gap-1.5 text-[11px] text-gray-400"><span class="w-3 h-3 rounded-sm bg-gray-200 dark:bg-gray-700 inline-block shrink-0"></span>Off day</span>
+                <span class="flex items-center gap-1.5 text-[11px] text-gray-400"><span class="w-3 h-3 rounded-sm bg-emerald-200 dark:bg-emerald-800/60 inline-block shrink-0"></span><span data-i18n="book.available">Available</span></span>
+                <span class="flex items-center gap-1.5 text-[11px] text-gray-400"><span class="w-3 h-3 rounded-sm bg-yellow-200 dark:bg-yellow-800/60 inline-block shrink-0"></span><span data-i18n="book.filling">Filling up</span></span>
+                <span class="flex items-center gap-1.5 text-[11px] text-gray-400"><span class="w-3 h-3 rounded-sm bg-orange-200 dark:bg-orange-800/60 inline-block shrink-0"></span><span data-i18n="book.almost_full">Almost full</span></span>
+                <span class="flex items-center gap-1.5 text-[11px] text-gray-400"><span class="w-3 h-3 rounded-sm bg-red-200 dark:bg-red-900/60 inline-block shrink-0"></span><span data-i18n="book.full">Full</span></span>
+                <span class="flex items-center gap-1.5 text-[11px] text-gray-400"><span class="w-3 h-3 rounded-sm bg-gray-200 dark:bg-gray-700 inline-block shrink-0"></span><span data-i18n="book.off_day">Off day</span></span>
             </div>
+        </div>
         </div>
 
         {{-- Time Slot Panel (shown after date selection) --}}
@@ -124,11 +133,11 @@
             <button type="button" onclick="goToStep(1)"
                 class="flex-1 py-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-semibold text-sm rounded-[10px] hover:bg-gray-200 dark:hover:bg-gray-700 transition flex items-center justify-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-                Back
+                <span data-i18n="book.back">Back</span>
             </button>
             <button type="button" id="step2Btn" onclick="step2Continue()" disabled
                 class="flex-1 py-3 bg-brand text-white font-semibold text-sm rounded-[10px] hover:bg-brand/90 transition shadow-md disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2">
-                Continue
+                <span data-i18n="book.continue">Continue</span>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
             </button>
         </div>
@@ -138,42 +147,48 @@
     <div id="step-3" class="hidden space-y-4">
 
         {{-- Summary Card --}}
-        <div class="bg-white dark:bg-[#1e293b] rounded-[16px] shadow-sm border border-gray-100 dark:border-gray-800 p-5">
-            <h4 class="font-bold text-brand dark:text-white font-outfit mb-4 text-sm uppercase tracking-wide">Appointment Summary</h4>
+        <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
+        <div class="h-1 bg-gradient-to-r from-emerald-400 via-brand to-indigo-500"></div>
+        <div class="p-5">
+            <h4 class="font-bold text-brand dark:text-white font-outfit mb-4 text-sm uppercase tracking-wide" data-i18n="book.appointment_summary">Appointment Summary</h4>
             <dl class="space-y-3">
                 <div class="flex justify-between items-baseline gap-4">
-                    <dt class="text-xs font-semibold text-gray-400 uppercase tracking-wide shrink-0">Full Name</dt>
+                    <dt class="text-xs font-semibold text-gray-400 uppercase tracking-wide shrink-0" data-i18n="book.full_name">Full Name</dt>
                     <dd id="rev-name" class="text-sm font-semibold text-gray-800 dark:text-gray-100 text-right truncate max-w-[60%]"></dd>
                 </div>
                 <div class="flex justify-between items-baseline gap-4">
-                    <dt class="text-xs font-semibold text-gray-400 uppercase tracking-wide shrink-0">National ID</dt>
+                    <dt class="text-xs font-semibold text-gray-400 uppercase tracking-wide shrink-0" data-i18n="book.national_id_short">National ID</dt>
                     <dd id="rev-nid" class="text-sm font-semibold text-gray-800 dark:text-gray-100 text-right font-mono"></dd>
                 </div>
                 <div class="flex justify-between items-baseline gap-4">
-                    <dt class="text-xs font-semibold text-gray-400 uppercase tracking-wide shrink-0">Document</dt>
+                    <dt class="text-xs font-semibold text-gray-400 uppercase tracking-wide shrink-0" data-i18n="book.document">Document</dt>
                     <dd id="rev-doctype" class="text-sm font-semibold text-gray-800 dark:text-gray-100 text-right"></dd>
                 </div>
                 <div class="h-px bg-gray-100 dark:bg-gray-800"></div>
                 <div class="flex justify-between items-baseline gap-4">
-                    <dt class="text-xs font-semibold text-gray-400 uppercase tracking-wide shrink-0">Date</dt>
+                    <dt class="text-xs font-semibold text-gray-400 uppercase tracking-wide shrink-0" data-i18n="book.date">Date</dt>
                     <dd id="rev-date" class="text-sm font-bold text-brand dark:text-indigo-400 text-right"></dd>
                 </div>
                 <div class="flex justify-between items-baseline gap-4">
-                    <dt class="text-xs font-semibold text-gray-400 uppercase tracking-wide shrink-0">Time</dt>
+                    <dt class="text-xs font-semibold text-gray-400 uppercase tracking-wide shrink-0" data-i18n="book.time">Time</dt>
                     <dd id="rev-slot" class="text-sm font-bold text-brand dark:text-indigo-400 text-right"></dd>
                 </div>
             </dl>
         </div>
+        </div>
 
         {{-- Required Documents --}}
-        <div class="bg-white dark:bg-[#1e293b] rounded-[16px] shadow-sm border border-gray-100 dark:border-gray-800 p-5">
-            <h4 class="font-bold text-brand dark:text-white font-outfit mb-1 text-sm">Required Documents</h4>
-            <p class="text-xs text-gray-400 dark:text-gray-500 mb-4">For each document, select from your vault, upload a file, or confirm you'll bring it.</p>
+        <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
+        <div class="h-1 bg-gradient-to-r from-indigo-400 via-brand to-accent"></div>
+        <div class="p-5">
+            <h4 class="font-bold text-brand dark:text-white font-outfit mb-1 text-sm" data-i18n="book.required_documents">Required Documents</h4>
+            <p class="text-xs text-gray-400 dark:text-gray-500 mb-4" data-i18n="book.required_documents_help">For each document, select from your vault, upload a file, or confirm you'll bring it.</p>
             <div id="docs-loading" class="flex items-center gap-2 text-sm text-gray-400 py-2">
                 <svg class="w-4 h-4 animate-spin shrink-0" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
-                Loading required documents...
+                <span data-i18n="book.loading_docs">Loading required documents...</span>
             </div>
             <div id="doc-cards" class="space-y-3 hidden"></div>
+        </div>
         </div>
 
         {{-- Step 3 Navigation --}}
@@ -181,11 +196,11 @@
             <button type="button" onclick="goToStep(2)"
                 class="flex-1 py-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-semibold text-sm rounded-[10px] hover:bg-gray-200 dark:hover:bg-gray-700 transition flex items-center justify-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-                Back
+                <span data-i18n="book.back">Back</span>
             </button>
             <button type="button" id="submitBtn" onclick="submitWizard()" disabled
                 class="flex-1 py-3 bg-emerald-600 text-white font-semibold text-sm rounded-[10px] hover:bg-emerald-700 transition shadow-md disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2">
-                Submit Appointment
+                <span data-i18n="book.submit">Submit Appointment</span>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
             </button>
         </div>
@@ -210,6 +225,14 @@ const SLOTS_URL      = @json(route('citizen.appointments.slots'));
 const CSRF_TOKEN     = @json(csrf_token());
 const STORE_URL      = @json(route('citizen.appointments.store'));
 const VAULT_DOCS_URL = @json(route('citizen.appointments.vault-docs'));
+
+function tr(key, replacements = {}) {
+    return typeof window.i18n === 'function' ? window.i18n(key, replacements) : key;
+}
+
+function trDoc(label) {
+    return typeof window.i18nDocument === 'function' ? window.i18nDocument(label) : label;
+}
 
 const TIME_LABELS = {
     '09:00':'9:00 AM','10:00':'10:00 AM','11:00':'11:00 AM',
@@ -349,7 +372,7 @@ function renderCalendar() {
         } else if (isFull) {
             btn.disabled  = true;
             btn.className = `${base} bg-red-100 dark:bg-red-950/40 text-red-400 cursor-not-allowed`;
-            btn.title     = 'Fully booked';
+            btn.title     = tr('book.fully_booked');
         } else if (isSel) {
             btn.className = `${base} bg-brand text-white ring-2 ring-brand ring-offset-1 dark:ring-offset-[#1e293b] scale-105 font-bold`;
         } else {
@@ -396,7 +419,7 @@ async function selectDate(ds) {
         <svg class="w-4 h-4 animate-spin shrink-0" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-        </svg>Loading available time slots...</div>`;
+        </svg>${tr('book.loading_slots')}</div>`;
 
     try {
         const r    = await fetch(`${SLOTS_URL}?date=${ds}`, { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
@@ -406,12 +429,12 @@ async function selectDate(ds) {
             return;
         }
         if (!data.slots?.length) {
-            content.innerHTML = '<p class="text-sm text-gray-500 dark:text-gray-400">No slots available for this date.</p>';
+            content.innerHTML = `<p class="text-sm text-gray-500 dark:text-gray-400">${tr('book.no_slots')}</p>`;
             return;
         }
         renderSlots(data.slots);
     } catch(e) {
-        content.innerHTML = '<p class="text-sm text-red-500">Failed to load slots. Please try again.</p>';
+        content.innerHTML = `<p class="text-sm text-red-500">${tr('book.failed_slots')}</p>`;
     }
 }
 
@@ -453,7 +476,7 @@ function step2Continue() {
 function renderReview() {
     document.getElementById('rev-name').textContent    = ws.fullName;
     document.getElementById('rev-nid').textContent     = ws.nationalId;
-    document.getElementById('rev-doctype').textContent = ws.docType;
+    document.getElementById('rev-doctype').textContent = trDoc(ws.docType);
 
     const dObj = new Date(ws.date + 'T00:00:00');
     document.getElementById('rev-date').textContent = dObj.toLocaleDateString('en-GB', { weekday:'short', year:'numeric', month:'short', day:'numeric' });
@@ -499,7 +522,7 @@ function buildDocCard(i, name, matchingVaultDocs) {
 
     const vaultSection = matchingVaultDocs.length > 0 ? `
         <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-800 bg-indigo-50/40 dark:bg-indigo-900/10">
-            <p class="text-[10px] font-bold text-indigo-500 dark:text-indigo-400 uppercase tracking-wider mb-2">Use from Vault</p>
+            <p class="text-[10px] font-bold text-indigo-500 dark:text-indigo-400 uppercase tracking-wider mb-2">${tr('book.use_from_vault')}</p>
             <div class="space-y-1.5">
                 ${matchingVaultDocs.map(v => `
                     <button type="button" id="vault-btn-${i}-${v.id}"
@@ -507,21 +530,21 @@ function buildDocCard(i, name, matchingVaultDocs) {
                         class="w-full flex items-center justify-between px-3 py-2.5 rounded-lg border border-indigo-200 dark:border-indigo-800 hover:border-brand hover:bg-brand/5 transition text-left group">
                         <div class="min-w-0">
                             <p class="text-xs font-semibold text-gray-800 dark:text-gray-200 group-hover:text-brand truncate">${v.name}</p>
-                            <p class="text-[10px] text-gray-400">Expires in ${v.expires_in} days</p>
+                            <p class="text-[10px] text-gray-400">${tr('book.expires_in_days', { days: v.expires_in })}</p>
                         </div>
-                        <span class="text-xs font-bold text-brand ml-2 shrink-0">Use →</span>
+                        <span class="text-xs font-bold text-brand ml-2 shrink-0">${tr('book.use')} -></span>
                     </button>`).join('')}
             </div>
         </div>` : '';
 
     const uploadSection = `
         <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-800">
-            <p class="text-[10px] font-bold text-blue-500 dark:text-blue-400 uppercase tracking-wider mb-2">Upload file</p>
+            <p class="text-[10px] font-bold text-blue-500 dark:text-blue-400 uppercase tracking-wider mb-2">${tr('book.upload_file')}</p>
             <label id="upload-zone-${i}" class="flex flex-col items-center gap-1.5 py-4 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl cursor-pointer hover:border-brand hover:bg-brand/5 transition">
                 <input type="file" class="hidden" accept=".jpg,.jpeg,.png,.pdf" onchange="handleUpload(event,${i})">
                 <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                <p class="text-xs font-semibold text-gray-500">Upload or take photo</p>
-                <p class="text-[10px] text-gray-400">JPG, PNG, PDF · max 5 MB</p>
+                <p class="text-xs font-semibold text-gray-500">${tr('book.upload_photo')}</p>
+                <p class="text-[10px] text-gray-400">${tr('book.file_help')}</p>
             </label>
             <div id="upload-preview-${i}" class="hidden mt-2 flex items-center gap-2 p-2.5 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg">
                 <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -535,19 +558,19 @@ function buildDocCard(i, name, matchingVaultDocs) {
 
     const confirmSection = `
         <div class="px-4 py-3">
-            <p class="text-[10px] font-bold text-amber-500 dark:text-amber-400 uppercase tracking-wider mb-2">Or confirm</p>
+            <p class="text-[10px] font-bold text-amber-500 dark:text-amber-400 uppercase tracking-wider mb-2">${tr('book.or_confirm')}</p>
             <label class="flex items-start gap-3 p-3 bg-amber-50 dark:bg-amber-900/10 rounded-xl cursor-pointer hover:bg-amber-100 dark:hover:bg-amber-900/20 transition">
                 <input type="checkbox" id="confirm-cb-${i}" class="mt-0.5 w-4 h-4 rounded accent-amber-500 shrink-0" onchange="handleConfirm(event,${i})">
-                <span class="text-xs text-gray-700 dark:text-gray-300 leading-relaxed">I confirm I have this document and will bring it to my appointment</span>
+                <span class="text-xs text-gray-700 dark:text-gray-300 leading-relaxed">${tr('book.confirm_bring')}</span>
             </label>
         </div>`;
 
     card.innerHTML = `
         <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-[#0f172a] border-b border-gray-100 dark:border-gray-800">
-            <span class="text-sm font-semibold text-gray-800 dark:text-gray-100">${name}</span>
+            <span class="text-sm font-semibold text-gray-800 dark:text-gray-100">${trDoc(name)}</span>
             <span id="card-badge-${i}" class="hidden text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
-                Fulfilled
+                ${tr('book.fulfilled')}
             </span>
         </div>
         ${vaultSection}${uploadSection}${confirmSection}`;
@@ -575,7 +598,7 @@ function handleUpload(event, ci) {
     const file = event.target.files[0];
     if (!file) return;
     if (file.size > 5 * 1024 * 1024) {
-        alert('File must be under 5 MB.');
+        alert(tr('book.file_under'));
         event.target.value = '';
         return;
     }
@@ -638,7 +661,7 @@ async function submitWizard() {
     const btn = document.getElementById('submitBtn');
     btn.disabled = true;
     const orig = btn.innerHTML;
-    btn.innerHTML = '<svg class="w-4 h-4 animate-spin inline mr-1.5" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>Submitting...';
+    btn.innerHTML = `<svg class="w-4 h-4 animate-spin inline mr-1.5" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>${tr('book.submitting')}`;
 
     const fd = new FormData();
     fd.append('_token', CSRF_TOKEN);
@@ -672,11 +695,11 @@ async function submitWizard() {
             const validationMessages = data.errors
                 ? Object.values(data.errors).flat().join(' ')
                 : '';
-            if (window.showToast) showToast('error', 'Error', validationMessages || data.message || 'Failed to book. Please try again.');
+            if (window.showToast) showToast('error', tr('book.error_title'), validationMessages || data.message || tr('book.failed_submit'));
         }
     } catch(e) {
         btn.disabled = false; btn.innerHTML = orig;
-        if (window.showToast) showToast('error', 'Error', 'Network error. Please try again.');
+        if (window.showToast) showToast('error', tr('book.error_title'), tr('book.network_error'));
     }
 }
 

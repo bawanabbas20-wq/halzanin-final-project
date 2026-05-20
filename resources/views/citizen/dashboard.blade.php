@@ -9,99 +9,147 @@
 
     <div class="space-y-6 lg:space-y-8">
 
-        <!-- Top Section: Greeting -->
-        <div>
-            <h2 class="text-2xl font-bold text-brand dark:text-white font-outfit">سڵاو، {{ explode(' ', auth()->user()->name)[0] }}! 👋</h2>
-            <p class="text-gray-500 dark:text-gray-400 text-sm mt-1" data-i18n="Here's your upcoming appointments at a glance">Here's your upcoming appointments at a glance</p>
+        {{-- ── Greeting ── --}}
+        <div class="animate-fade-in">
+            <h2 class="text-2xl font-bold font-outfit text-gradient">
+                <span data-i18n="dashboard.greeting">Hello,</span>
+                <span dir="auto" style="unicode-bidi:isolate">{{ explode(' ', auth()->user()->name)[0] }}</span><span style="unicode-bidi:isolate">!</span>
+            </h2>
+            <p class="text-gray-500 dark:text-gray-400 text-sm mt-1" data-i18n="dashboard.subtitle">
+                Here's your upcoming appointments at a glance
+            </p>
         </div>
 
-        <!-- Quick Action Card -->
-        <div class="relative overflow-hidden rounded-[16px] bg-gradient-to-r from-brand to-[#312e81] shadow-lg animate-fade-up">
-            <div class="absolute right-0 bottom-0 opacity-20 pointer-events-none">
-                <svg width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"
-                     stroke-linecap="round" stroke-linejoin="round" class="text-white transform translate-x-4 translate-y-4">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                    <polyline points="14 2 14 8 20 8"></polyline>
-                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                </svg>
-            </div>
-            <div class="p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between relative z-10 gap-4">
+        {{-- ── Hero CTA ── --}}
+        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-brand via-[#2d2a6e] to-[#312e81] shadow-brand-btn animate-fade-up">
+            {{-- decorative rings --}}
+            <div class="absolute -top-10 -right-10 w-48 h-48 bg-white/5 rounded-full pointer-events-none"></div>
+            <div class="absolute -bottom-8 -left-8 w-32 h-32 bg-white/5 rounded-full pointer-events-none"></div>
+            <div class="absolute top-4 right-4 w-3 h-3 bg-accent rounded-full pulse-dot pointer-events-none"></div>
+
+            <div class="relative z-10 p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
                 <div>
-                    <h3 class="text-lg font-bold text-white mb-1" data-i18n="Ready to visit the directorate?">Ready to visit the directorate?</h3>
-                    <p class="text-sm text-white/80" data-i18n="Book a new appointment in minutes">Book a new appointment in minutes</p>
+                    <p class="text-white/60 text-xs font-semibold uppercase tracking-widest mb-1" data-i18n="dashboard.kicker">Civic Services</p>
+                    <h3 class="text-xl font-bold text-white mb-1.5" data-i18n="dashboard.ready">
+                        Ready to visit the directorate?
+                    </h3>
+                    <p class="text-sm text-white/70" data-i18n="dashboard.book_subtitle">
+                        Book a new appointment in minutes
+                    </p>
                 </div>
                 <a href="{{ route('citizen.appointments.calendar') }}"
-                   class="inline-flex items-center px-5 py-2.5 bg-accent text-white font-semibold text-sm rounded-[10px] shadow-brand-btn hover:shadow-brand-btn-hover hover:-translate-y-[1px] transition-all whitespace-nowrap">
-                    <span data-i18n="Book Appointment">Book Appointment</span>
+                   class="shrink-0 inline-flex items-center gap-2 px-5 py-3 bg-white text-brand font-bold text-sm rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all whitespace-nowrap">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                    <span data-i18n="dashboard.book_btn">Book Appointment</span>
                 </a>
             </div>
         </div>
 
-        <!-- Stats Row -->
-        <div class="grid grid-cols-3 gap-3 lg:gap-6">
-            <!-- Total -->
-            <div class="bg-white dark:bg-[#1e293b] rounded-[16px] p-4 lg:p-6 shadow-sm border border-gray-100 dark:border-gray-800 animate-fade-up" style="animation-delay: 0ms">
-                <div class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-3">
-                    <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                    </svg>
+        {{-- ── Stats Row ── --}}
+        <div class="grid grid-cols-3 gap-3 lg:gap-5">
+            @php
+                $statItems = [
+                    [
+                        'value'   => $total,
+                        'label'   => 'Upcoming',
+                        'i18n'    => 'dashboard.stat_upcoming',
+                        'delay'   => 0,
+                        'icon'    => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>',
+                        'ring'    => 'ring-gray-200 dark:ring-gray-700',
+                        'icon_bg' => 'bg-gray-100 dark:bg-gray-800',
+                        'icon_c'  => 'text-gray-500 dark:text-gray-400',
+                    ],
+                    [
+                        'value'   => $confirmed,
+                        'label'   => 'Confirmed',
+                        'i18n'    => 'dashboard.stat_confirmed',
+                        'delay'   => 80,
+                        'icon'    => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>',
+                        'ring'    => 'ring-green-100 dark:ring-green-900/30',
+                        'icon_bg' => 'bg-green-50 dark:bg-green-900/30',
+                        'icon_c'  => 'text-green-600 dark:text-green-400',
+                    ],
+                    [
+                        'value'   => $pending,
+                        'label'   => 'Pending',
+                        'i18n'    => 'dashboard.stat_pending',
+                        'delay'   => 160,
+                        'icon'    => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>',
+                        'ring'    => 'ring-amber-100 dark:ring-amber-900/30',
+                        'icon_bg' => 'bg-amber-50 dark:bg-amber-900/30',
+                        'icon_c'  => 'text-amber-500 dark:text-amber-400',
+                    ],
+                ];
+            @endphp
+
+            @foreach ($statItems as $s)
+                <div class="bg-white dark:bg-[#1e293b] rounded-xl p-4 lg:p-5 shadow-sm border border-gray-100 dark:border-gray-800 hover-lift animate-fade-up"
+                     style="animation-delay: {{ $s['delay'] }}ms">
+                    <div class="w-9 h-9 rounded-full ring-4 {{ $s['ring'] }} {{ $s['icon_bg'] }} {{ $s['icon_c'] }} flex items-center justify-center mb-3">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">{!! $s['icon'] !!}</svg>
+                    </div>
+                    <p class="text-2xl font-bold text-brand dark:text-white font-outfit">{{ $s['value'] }}</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5 truncate" data-i18n="{{ $s['i18n'] }}">{{ $s['label'] }}</p>
                 </div>
-                <p class="text-2xl font-bold text-brand dark:text-white font-outfit">{{ $total }}</p>
-                <p class="text-xs lg:text-sm text-gray-500 dark:text-gray-400 mt-1 truncate" data-i18n="Upcoming">Upcoming</p>
-            </div>
-            <!-- Confirmed -->
-            <div class="bg-white dark:bg-[#1e293b] rounded-[16px] p-4 lg:p-6 shadow-sm border border-gray-100 dark:border-gray-800 animate-fade-up" style="animation-delay: 100ms">
-                <div class="w-10 h-10 rounded-full bg-green-50 dark:bg-green-900/30 flex items-center justify-center mb-3">
-                    <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                </div>
-                <p class="text-2xl font-bold text-brand dark:text-white font-outfit">{{ $confirmed }}</p>
-                <p class="text-xs lg:text-sm text-gray-500 dark:text-gray-400 mt-1 truncate" data-i18n="Confirmed">Confirmed</p>
-            </div>
-            <!-- Pending -->
-            <div class="bg-white dark:bg-[#1e293b] rounded-[16px] p-4 lg:p-6 shadow-sm border border-gray-100 dark:border-gray-800 animate-fade-up" style="animation-delay: 200ms">
-                <div class="w-10 h-10 rounded-full bg-yellow-50 dark:bg-yellow-900/30 flex items-center justify-center mb-3">
-                    <svg class="w-5 h-5 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                </div>
-                <p class="text-2xl font-bold text-brand dark:text-white font-outfit">{{ $pending }}</p>
-                <p class="text-xs lg:text-sm text-gray-500 dark:text-gray-400 mt-1 truncate" data-i18n="Pending">Pending</p>
-            </div>
+            @endforeach
         </div>
 
-        <!-- Upcoming Appointments -->
-        <div>
-            <div class="flex items-center mb-4 space-x-2 rtl:space-x-reverse">
-                <h3 class="text-lg font-bold text-brand dark:text-white font-outfit" data-i18n="Upcoming Appointments">Upcoming Appointments</h3>
-                <span class="px-2 py-0.5 bg-brand/10 dark:bg-[#1e293b] text-brand dark:text-white text-xs font-bold rounded-full">{{ $total }}</span>
+        {{-- ── Upcoming Appointments ── --}}
+        <div class="animate-fade-up" style="animation-delay: 240ms">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-2">
+                    <h3 class="text-base font-bold text-brand dark:text-white font-outfit" data-i18n="dashboard.upcoming">
+                        Upcoming Appointments
+                    </h3>
+                    @if($total > 0)
+                        <span class="px-2 py-0.5 bg-brand/10 dark:bg-indigo-900/30 text-brand dark:text-indigo-400 text-xs font-bold rounded-full">
+                            {{ $total }}
+                        </span>
+                    @endif
+                </div>
+                <a href="{{ route('citizen.appointments.calendar') }}"
+                   class="text-xs font-semibold text-brand dark:text-indigo-400 hover:underline flex items-center gap-1">
+                    <span data-i18n="dashboard.book_new">Book new</span>
+                    <svg class="w-3.5 h-3.5 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </a>
             </div>
 
             @if($upcomingAppointments->isEmpty())
-                <div class="bg-white dark:bg-[#1e293b] rounded-[16px] shadow-sm border border-gray-100 dark:border-gray-800 animate-fade-up">
-                    <div class="flex flex-col items-center justify-center py-16 px-6 text-center">
-                        <svg class="w-16 h-16 text-gray-300 dark:text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                        </svg>
-                        <h4 class="text-base font-semibold text-gray-700 dark:text-gray-300 mb-1" data-i18n="No upcoming appointments">No upcoming appointments</h4>
-                        <p class="text-sm text-gray-400 dark:text-gray-500 mb-5" data-i18n="Book an appointment to visit the directorate.">Book an appointment to visit the directorate.</p>
+                <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800">
+                    <div class="flex flex-col items-center justify-center py-14 px-6 text-center">
+                        <div class="w-16 h-16 bg-gray-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center mb-4 border border-gray-100 dark:border-slate-700">
+                            <svg class="w-8 h-8 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <h4 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1" data-i18n="dashboard.no_appointments">
+                            No appointments yet
+                        </h4>
+                        <p class="text-xs text-gray-400 dark:text-gray-500 mb-5" data-i18n="dashboard.empty_subtitle">
+                            Book an appointment to visit the directorate.
+                        </p>
                         <a href="{{ route('citizen.appointments.calendar') }}"
-                           class="inline-flex items-center px-4 py-2 bg-brand text-white text-sm font-semibold rounded-[10px] hover:bg-brand/90 transition">
-                            <span data-i18n="Book Appointment">Book Appointment</span>
+                           class="inline-flex items-center gap-1.5 px-4 py-2 bg-brand text-white text-sm font-semibold rounded-xl hover:bg-brand-light transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                            </svg>
+                            <span data-i18n="dashboard.book_btn">Book Appointment</span>
                         </a>
                     </div>
                 </div>
             @else
-                <div class="space-y-4">
+                <div class="space-y-3">
                     @php
-                        $statusColors = [
-                            'pending'   => ['border' => 'border-yellow-400', 'badge' => 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'],
-                            'confirmed' => ['border' => 'border-green-400',  'badge' => 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'],
-                            'completed' => ['border' => 'border-blue-400',   'badge' => 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'],
-                            'cancelled' => ['border' => 'border-red-400',    'badge' => 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'],
+                        $statusConfig = [
+                            'pending'   => ['border' => 'border-amber-400',  'badge' => 'bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',  'dot' => 'status-dot-yellow'],
+                            'confirmed' => ['border' => 'border-emerald-400','badge' => 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400','dot' => 'status-dot-green'],
+                            'completed' => ['border' => 'border-blue-400',   'badge' => 'bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',    'dot' => 'status-dot-blue'],
+                            'cancelled' => ['border' => 'border-red-400',    'badge' => 'bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-400',        'dot' => 'status-dot-red'],
                         ];
                         $timeLabels = [
                             '09:00' => '9:00 AM', '10:00' => '10:00 AM', '11:00' => '11:00 AM',
@@ -111,57 +159,78 @@
 
                     @foreach($upcomingAppointments as $index => $appt)
                         @php
-                            $color = $statusColors[$appt->status] ?? $statusColors['pending'];
-                            $delay = 50 * $index;
+                            $cfg   = $statusConfig[$appt->status] ?? $statusConfig['pending'];
+                            $delay = 50 + $index * 60;
+                            $apptDate = \Carbon\Carbon::parse($appt->date);
                         @endphp
-                        <div class="bg-white dark:bg-[#1e293b] rounded-[16px] shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden ltr:border-l-4 rtl:border-r-4 {{ $color['border'] }} animate-fade-up"
+
+                        <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800
+                                    ltr:border-l-4 rtl:border-r-4 {{ $cfg['border'] }} hover-lift overflow-hidden animate-fade-up"
                              style="animation-delay: {{ $delay }}ms">
-                            <div class="p-5">
-                                <div class="flex items-center justify-between mb-3">
-                                    <div class="flex items-center space-x-2 rtl:space-x-reverse">
-                                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                        </svg>
-                                        <span class="font-semibold text-brand dark:text-indigo-400 text-sm">
-                                            {{ \Carbon\Carbon::parse($appt->date)->format('D, M j, Y') }}
-                                        </span>
-                                    </div>
-                                    <span class="px-2.5 py-1 text-[11px] font-bold rounded-full capitalize {{ $color['badge'] }}">
-                                        {{ ucfirst($appt->status) }}
-                                    </span>
+
+                            <div class="p-4 sm:p-5 flex items-start gap-4">
+                                {{-- Date block --}}
+                                <div class="shrink-0 w-12 text-center bg-brand/5 dark:bg-brand/20 rounded-xl py-2 px-1 border border-brand/10 dark:border-indigo-800/40">
+                                    <p class="text-[11px] font-bold text-brand/60 dark:text-indigo-400/80 uppercase tracking-wide leading-none mb-0.5">
+                                        {{ $apptDate->format('M') }}
+                                    </p>
+                                    <p class="text-2xl font-extrabold text-brand dark:text-white leading-none font-outfit">
+                                        {{ $apptDate->format('d') }}
+                                    </p>
+                                    <p class="text-[10px] font-semibold text-gray-400 dark:text-gray-500 mt-0.5">
+                                        {{ $apptDate->format('D') }}
+                                    </p>
                                 </div>
 
-                                <div class="flex items-center text-sm text-gray-600 dark:text-gray-400 mb-4">
-                                    <svg class="w-4 h-4 ltr:mr-1.5 rtl:ml-1.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                    </svg>
-                                    {{ $timeLabels[$appt->time_slot] ?? $appt->time_slot }}
-                                    @if($appt->notes)
-                                        <span class="ltr:ml-3 rtl:mr-3 text-xs text-gray-400">— {{ $appt->notes }}</span>
-                                    @endif
-                                </div>
-
-                                @if($appt->status === 'pending' || $appt->status === 'confirmed')
-                                    <div class="flex items-center justify-between pt-3 border-t border-gray-100 dark:border-gray-800">
-                                        <span class="text-xs text-gray-400">
-                                            <span data-i18n="Booked">Booked</span> {{ $appt->created_at->diffForHumans() }}
+                                {{-- Details --}}
+                                <div class="flex-1 min-w-0">
+                                    <div class="flex items-start justify-between gap-2 mb-1.5">
+                                        <div class="flex items-center gap-2 min-w-0">
+                                            <div class="w-2 h-2 rounded-full shrink-0 {{ $cfg['dot'] }}"></div>
+                                            <p class="text-sm font-bold text-gray-900 dark:text-white truncate">
+                                                {{ $appt->document_type ?? 'Appointment' }}
+                                            </p>
+                                        </div>
+                                        <span class="shrink-0 px-2.5 py-0.5 text-[11px] font-bold rounded-full capitalize {{ $cfg['badge'] }}"
+                                              data-i18n="status.{{ $appt->status }}">
+                                            {{ ucfirst($appt->status) }}
                                         </span>
-                                        <form method="POST"
-                                              action="{{ route('citizen.appointments.cancel', $appt) }}"
-                                              onsubmit="return confirm('Cancel this appointment?')">
-                                            @csrf
-                                            @method('PATCH')
-                                            <button type="submit"
-                                                    class="text-xs text-red-500 hover:text-red-700 font-medium transition"
-                                                    data-i18n="Cancel">
-                                                Cancel
-                                            </button>
-                                        </form>
                                     </div>
-                                @endif
+                                    <div class="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
+                                        <span class="flex items-center gap-1">
+                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                            </svg>
+                                            {{ $timeLabels[$appt->time_slot] ?? $appt->time_slot }}
+                                        </span>
+                                        @if($appt->notes)
+                                            <span class="truncate text-gray-400">{{ $appt->notes }}</span>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
+
+                            @if($appt->status === 'pending' || $appt->status === 'confirmed')
+                                <div class="px-4 sm:px-5 py-2.5 bg-gray-50/70 dark:bg-slate-800/30 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
+                                    <span class="text-[11px] text-gray-400 dark:text-gray-500">
+                                        <span data-i18n="dashboard.booked">Booked</span> {{ $appt->created_at->diffForHumans() }}
+                                    </span>
+                                    <form method="POST"
+                                          action="{{ route('citizen.appointments.cancel', $appt) }}"
+                                          onsubmit="return confirm('Cancel this appointment?')">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit"
+                                                class="text-[11px] font-semibold text-red-400 hover:text-red-600 dark:hover:text-red-300 transition-colors flex items-center gap-1"
+                                                data-i18n="common.cancel">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+                                            </svg>
+                                            Cancel
+                                        </button>
+                                    </form>
+                                </div>
+                            @endif
                         </div>
                     @endforeach
                 </div>
