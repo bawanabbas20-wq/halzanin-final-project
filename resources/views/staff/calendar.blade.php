@@ -14,7 +14,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
         {{-- Calendar Card --}}
-        <div class="lg:col-span-2 bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay: 100ms">
+        <div class="lg:col-span-2 bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-[#2E2E2E] overflow-hidden animate-fade-up" style="animation-delay: 100ms">
             <div class="h-1 bg-gradient-to-r from-brand via-amber-500 to-accent"></div>
             <div class="p-6">
 
@@ -25,14 +25,14 @@
                 @endphp
                 <div class="flex items-center justify-between mb-6">
                     <a href="{{ route('staff.calendar', ['year' => $prevMonth->year, 'month' => $prevMonth->month]) }}"
-                       class="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-600 dark:text-gray-400 transition">
+                       class="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-[#2E2E2E] text-gray-600 dark:text-gray-400 transition">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                         </svg>
                     </a>
                     <h3 class="text-lg font-bold text-gray-900 dark:text-white font-outfit">{{ $current->format('F Y') }}</h3>
                     <a href="{{ route('staff.calendar', ['year' => $nextMonth->year, 'month' => $nextMonth->month]) }}"
-                       class="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-600 dark:text-gray-400 transition">
+                       class="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-[#2E2E2E] text-gray-600 dark:text-gray-400 transition">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                         </svg>
@@ -74,33 +74,29 @@
                             $isFull    = $booked >= $maxSlots;
 
                             if ($isOffDay) {
-                                $bgClass = 'bg-gray-100 dark:bg-[#252525] text-gray-400 dark:text-gray-600 cursor-default';
-                            } elseif ($isFull) {
-                                $bgClass = 'bg-red-500 text-white cursor-pointer hover:bg-red-600';
-                            } elseif ($booked === 0) {
-                                $bgClass = 'bg-emerald-500 text-white cursor-pointer hover:bg-emerald-600';
-                            } elseif ($booked === 1) {
-                                $bgClass = 'bg-emerald-400 text-white cursor-pointer hover:bg-emerald-500';
-                            } elseif ($booked === 2) {
-                                $bgClass = 'bg-yellow-400 text-white cursor-pointer hover:bg-yellow-500';
-                            } elseif ($booked === 3) {
-                                $bgClass = 'bg-orange-400 text-white cursor-pointer hover:bg-orange-500';
+                                $cellCls = 'text-gray-300 dark:text-gray-600 cursor-default';
+                                $dotCls  = '';
+                                $cntCls  = '';
                             } else {
-                                $bgClass = 'bg-orange-500 text-white cursor-pointer hover:bg-orange-600';
+                                $cellCls = 'text-gray-800 dark:text-gray-200 hover:bg-brand/5 dark:hover:bg-brand/10 cursor-pointer';
+                                if ($isFull)          { $dotCls = 'bg-red-500';    $cntCls = 'text-red-500 dark:text-red-400'; }
+                                elseif ($booked >= 3) { $dotCls = 'bg-orange-400'; $cntCls = 'text-orange-500 dark:text-orange-400'; }
+                                elseif ($booked >= 1) { $dotCls = 'bg-yellow-400'; $cntCls = 'text-yellow-600 dark:text-yellow-400'; }
+                                else                  { $dotCls = 'bg-emerald-400'; $cntCls = ''; }
                             }
+                            $todayCls = $isToday ? ($isOffDay ? 'ring-1 ring-inset ring-brand/30' : 'ring-2 ring-inset ring-brand dark:ring-amber-400 bg-brand/10 dark:bg-amber-900/20') : '';
                         @endphp
 
-                        <div class="calendar-day rounded-xl p-1 text-center transition select-none
-                                    {{ $bgClass }}
-                                    {{ $isToday ? 'ring-2 ring-offset-1 ring-brand dark:ring-amber-400' : '' }}"
+                        <div class="calendar-day flex flex-col items-center justify-center py-1.5 min-h-[52px] rounded-xl transition-colors select-none {{ $cellCls }} {{ $todayCls }}"
                              data-date="{{ $dateStr }}"
                              data-off="{{ $isOffDay ? '1' : '0' }}"
                              @if(!$isOffDay) onclick="selectDay(this)" @endif>
-                            <span class="text-sm font-semibold">{{ $day }}</span>
-                            @if($isOffDay)
-                                <div style="font-size:9px" class="opacity-60 font-medium">off</div>
-                            @elseif($booked > 0)
-                                <div style="font-size:9px" class="opacity-90 font-medium">{{ $booked }}/5</div>
+                            <span class="text-sm font-semibold leading-none">{{ $day }}</span>
+                            @if(!$isOffDay)
+                                <div class="mt-1 w-1.5 h-1.5 rounded-full {{ $dotCls }}"></div>
+                                @if($booked > 0)
+                                    <span class="text-[9px] font-bold mt-0.5 leading-none {{ $cntCls }}">{{ $booked }}</span>
+                                @endif
                             @endif
                         </div>
                     @endfor
@@ -112,13 +108,13 @@
                     <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-md bg-yellow-400 inline-block"></span> <span data-i18n="cal.filling">Filling</span></div>
                     <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-md bg-orange-500 inline-block"></span> <span data-i18n="cal.almost">Almost full</span></div>
                     <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-md bg-red-500 inline-block"></span> <span data-i18n="cal.full">Full</span></div>
-                    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-md bg-gray-300 dark:bg-slate-600 inline-block"></span> <span data-i18n="cal.off">Off day</span></div>
+                    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-md bg-gray-300 dark:bg-[#4A4A4A] inline-block"></span> <span data-i18n="cal.off">Off day</span></div>
                 </div>
             </div>
         </div>
 
         {{-- Day panel --}}
-        <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay: 200ms">
+        <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-[#2E2E2E] overflow-hidden animate-fade-up" style="animation-delay: 200ms">
             <div class="h-1 bg-gradient-to-r from-amber-400 via-purple-500 to-brand"></div>
             <div class="p-6">
                 <div id="panel-empty" class="text-center py-12 text-gray-400 dark:text-gray-500">
@@ -213,13 +209,13 @@ function renderAppointments(appointments) {
 
     list.innerHTML = '';
     appointments.forEach(appt => {
-        const s = statusLabels[appt.status] || { key: appt.status, cls: 'bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300' };
+        const s = statusLabels[appt.status] || { key: appt.status, cls: 'bg-gray-100 dark:bg-[#2E2E2E] text-gray-600 dark:text-gray-300' };
         const card = document.createElement('div');
-        card.className = 'border border-gray-100 dark:border-slate-700 rounded-xl p-3 hover:border-brand/30 dark:hover:border-indigo-500/30 transition-colors';
+        card.className = 'border border-gray-100 dark:border-[#2E2E2E] rounded-xl p-3 hover:border-brand/30 dark:hover:border-indigo-500/30 transition-colors';
         card.id = 'appt-' + appt.id;
 
         const docBadges = appt.documents && appt.documents.length > 0
-            ? `<div class="mt-2 pt-2 border-t border-gray-100 dark:border-slate-700">
+            ? `<div class="mt-2 pt-2 border-t border-gray-100 dark:border-[#2E2E2E]">
                 <p class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1.5">${tr('staff.documents')}</p>
                 <div class="flex flex-wrap gap-1.5">
                     ${appt.documents.map(d => {

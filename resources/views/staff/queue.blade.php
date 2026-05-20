@@ -18,7 +18,7 @@
                 <button type="button"
                         data-view-toggle="queue"
                         aria-pressed="{{ $viewMode === 'queue' ? 'true' : 'false' }}"
-                        class="view-toggle flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-colors {{ $viewMode === 'queue' ? 'bg-brand text-white shadow-sm' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700' }}">
+                        class="view-toggle flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-colors {{ $viewMode === 'queue' ? 'bg-brand text-white shadow-sm' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#2E2E2E]' }}">
                     <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                     </svg>
@@ -27,7 +27,7 @@
                 <button type="button"
                         data-view-toggle="calendar"
                         aria-pressed="{{ $viewMode === 'calendar' ? 'true' : 'false' }}"
-                        class="view-toggle flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-colors {{ $viewMode === 'calendar' ? 'bg-brand text-white shadow-sm' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700' }}">
+                        class="view-toggle flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-colors {{ $viewMode === 'calendar' ? 'bg-brand text-white shadow-sm' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#2E2E2E]' }}">
                     <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                     </svg>
@@ -61,27 +61,27 @@
             </div>
 
             {{-- Filter Chips --}}
-            <div class="flex flex-wrap gap-2 items-center" id="filterChips">
+            <div class="flex gap-2 items-center overflow-x-auto pb-0.5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden [&>button]:shrink-0" id="filterChips">
                 <button data-filter="all"
                         class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-brand text-white border border-brand shadow-sm"
                         data-i18n="All">All</button>
                 <button data-filter="submitted"
-                        class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-[#252525] text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-slate-700"
+                        class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-[#252525] text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#2E2E2E]"
                         data-i18n="Submitted">Submitted</button>
                 <button data-filter="received"
-                        class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-[#252525] text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-slate-700"
+                        class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-[#252525] text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#2E2E2E]"
                         data-i18n="Received">Received</button>
                 <button data-filter="under_review"
-                        class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-[#252525] text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-slate-700"
+                        class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-[#252525] text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#2E2E2E]"
                         data-i18n="Under Review">Under Review</button>
                 <button data-filter="approved"
-                        class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-[#252525] text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-slate-700"
+                        class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-[#252525] text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#2E2E2E]"
                         data-i18n="Approved">Approved</button>
                 <button data-filter="checked_in"
-                        class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-[#252525] text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-slate-700"
+                        class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-[#252525] text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#2E2E2E]"
                         data-i18n="Checked In">Checked In</button>
                 <button data-filter="rejected"
-                        class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-[#252525] text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-slate-700"
+                        class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-[#252525] text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#2E2E2E]"
                         data-i18n="Rejected">Rejected</button>
             </div>
         </div>
@@ -179,7 +179,7 @@
                                     $color   = $colors[$app->current_status] ?? $colors['submitted'];
                                     $appName = $app->appointment->full_name ?? $app->user->name;
                                 @endphp
-                                <tr class="app-item hover:bg-gray-50/70 dark:hover:bg-slate-800/40 transition-colors"
+                                <tr class="app-item hover:bg-gray-50/70 dark:hover:bg-white/[0.04] transition-colors"
                                     data-status="{{ $app->current_status }}"
                                     data-search="{{ strtolower($appName . ' ' . $app->tracking_code) }}">
                                     <td class="px-6 py-4 text-sm text-gray-400 dark:text-gray-500 font-mono">{{ $index + 1 }}</td>
@@ -256,7 +256,7 @@
                     <div class="p-5 sm:p-6">
                         <div class="flex items-center justify-between mb-6">
                             <a href="{{ route('staff.queue', ['view' => 'calendar', 'year' => $prevMonth->year, 'month' => $prevMonth->month]) }}"
-                               class="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-600 dark:text-gray-400 transition"
+                               class="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-[#2E2E2E] text-gray-600 dark:text-gray-400 transition"
                                aria-label="Previous month">
                                 <svg class="w-5 h-5 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
@@ -267,7 +267,7 @@
                                 <p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5" data-i18n="staff.calendar_hint">Select a day to review appointments</p>
                             </div>
                             <a href="{{ route('staff.queue', ['view' => 'calendar', 'year' => $nextMonth->year, 'month' => $nextMonth->month]) }}"
-                               class="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-600 dark:text-gray-400 transition"
+                               class="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-[#2E2E2E] text-gray-600 dark:text-gray-400 transition"
                                aria-label="Next month">
                                 <svg class="w-5 h-5 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -283,7 +283,7 @@
 
                         <div class="grid grid-cols-7 gap-2" id="calendar-grid">
                             @for($i = 0; $i < $startPad; $i++)
-                                <div class="aspect-[1.8]"></div>
+                                <div></div>
                             @endfor
 
                             @for($day = 1; $day <= $totalDays; $day++)
@@ -297,30 +297,30 @@
                                     $isFull = $booked >= $maxSlots;
 
                                     if ($isOffDay) {
-                                        $bgClass = 'bg-gray-100 dark:bg-[#252525] text-gray-400 dark:text-gray-600 cursor-default';
-                                    } elseif ($isFull) {
-                                        $bgClass = 'bg-red-500 text-white cursor-pointer hover:bg-red-600';
-                                    } elseif ($booked === 0) {
-                                        $bgClass = 'bg-emerald-500 text-white cursor-pointer hover:bg-emerald-600';
-                                    } elseif ($booked <= 2) {
-                                        $bgClass = 'bg-emerald-400 text-white cursor-pointer hover:bg-emerald-500';
-                                    } elseif ($booked === 3) {
-                                        $bgClass = 'bg-yellow-400 text-white cursor-pointer hover:bg-yellow-500';
+                                        $cellCls = 'text-gray-300 dark:text-gray-600 cursor-default';
+                                        $dotCls  = '';
+                                        $cntCls  = '';
                                     } else {
-                                        $bgClass = 'bg-orange-500 text-white cursor-pointer hover:bg-orange-600';
+                                        $cellCls = 'text-gray-800 dark:text-gray-200 hover:bg-brand/5 dark:hover:bg-brand/10 cursor-pointer';
+                                        if ($isFull)          { $dotCls = 'bg-red-500';    $cntCls = 'text-red-500 dark:text-red-400'; }
+                                        elseif ($booked >= 3) { $dotCls = 'bg-orange-400'; $cntCls = 'text-orange-500 dark:text-orange-400'; }
+                                        elseif ($booked >= 1) { $dotCls = 'bg-yellow-400'; $cntCls = 'text-yellow-600 dark:text-yellow-400'; }
+                                        else                  { $dotCls = 'bg-emerald-400'; $cntCls = ''; }
                                     }
+                                    $todayCls = $isToday ? ($isOffDay ? 'ring-1 ring-inset ring-brand/30' : 'ring-2 ring-inset ring-brand dark:ring-amber-400 bg-brand/10 dark:bg-amber-900/20') : '';
                                 @endphp
 
                                 <button type="button"
-                                        class="calendar-day aspect-[1.8] rounded-2xl px-2 text-center transition select-none {{ $bgClass }} {{ $isToday ? 'ring-2 ring-offset-1 ring-brand dark:ring-amber-400' : '' }}"
+                                        class="calendar-day flex flex-col items-center justify-center py-1.5 min-h-[52px] rounded-xl transition-colors select-none {{ $cellCls }} {{ $todayCls }}"
                                         data-date="{{ $dateStr }}"
                                         data-off="{{ $isOffDay ? '1' : '0' }}"
                                         @if(!$isOffDay) onclick="selectDay(this)" @else disabled @endif>
-                                    <span class="text-sm font-bold">{{ $day }}</span>
-                                    @if($isOffDay)
-                                        <div class="text-[9px] opacity-60 font-medium" data-i18n="cal.off">off</div>
-                                    @elseif($booked > 0)
-                                        <div class="text-[9px] opacity-90 font-medium">{{ $booked }}/{{ $maxSlots }}</div>
+                                    <span class="text-sm font-bold leading-none">{{ $day }}</span>
+                                    @if(!$isOffDay)
+                                        <div class="mt-1 w-1.5 h-1.5 rounded-full {{ $dotCls }}"></div>
+                                        @if($booked > 0)
+                                            <span class="text-[9px] font-bold mt-0.5 leading-none {{ $cntCls }}">{{ $booked }}</span>
+                                        @endif
                                     @endif
                                 </button>
                             @endfor
@@ -331,7 +331,7 @@
                             <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-md bg-yellow-400 inline-block"></span> <span data-i18n="cal.filling">Filling</span></div>
                             <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-md bg-orange-500 inline-block"></span> <span data-i18n="cal.almost">Almost full</span></div>
                             <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-md bg-red-500 inline-block"></span> <span data-i18n="cal.full">Full</span></div>
-                            <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-md bg-gray-300 dark:bg-slate-600 inline-block"></span> <span data-i18n="cal.off">Off day</span></div>
+                            <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-md bg-gray-300 dark:bg-[#4A4A4A] inline-block"></span> <span data-i18n="cal.off">Off day</span></div>
                         </div>
                     </div>
                 </div>
@@ -440,12 +440,12 @@
 
             list.innerHTML = '';
             appointments.forEach((appt) => {
-                const status = appointmentStatusLabels[appt.status] || { key: appt.status, cls: 'bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300' };
+                const status = appointmentStatusLabels[appt.status] || { key: appt.status, cls: 'bg-gray-100 dark:bg-[#2E2E2E] text-gray-600 dark:text-gray-300' };
                 const card = document.createElement('div');
-                card.className = 'border border-gray-100 dark:border-slate-700 rounded-xl p-3 hover:border-brand/30 dark:hover:border-indigo-500/30 transition-colors';
+                card.className = 'border border-gray-100 dark:border-[#2E2E2E] rounded-xl p-3 hover:border-brand/30 dark:hover:border-indigo-500/30 transition-colors';
 
                 const documents = appt.documents && appt.documents.length ? `
-                    <div class="mt-2 pt-2 border-t border-gray-100 dark:border-slate-700">
+                    <div class="mt-2 pt-2 border-t border-gray-100 dark:border-[#2E2E2E]">
                         <p class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1.5">${tr('staff.documents')}</p>
                         <div class="flex flex-wrap gap-1.5">
                             ${appt.documents.map((doc) => {
@@ -504,7 +504,7 @@
             const queueView = document.getElementById('queueView');
             const calendarView = document.getElementById('calendarView');
             const activeToggleClass = 'bg-brand text-white shadow-sm';
-            const inactiveToggleClass = 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700';
+            const inactiveToggleClass = 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#2E2E2E]';
 
             function setWorkspaceView(view) {
                 const showCalendar = view === 'calendar';
@@ -559,7 +559,7 @@
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     filterBtns.forEach(b => {
-                        b.className = 'filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-[#252525] text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-slate-700';
+                        b.className = 'filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-[#252525] text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#2E2E2E]';
                     });
                     e.target.className = 'filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-brand text-white border border-brand shadow-sm';
                     currentFilter = e.target.getAttribute('data-filter');

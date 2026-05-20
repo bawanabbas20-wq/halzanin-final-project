@@ -52,7 +52,7 @@
                 {{-- Appointment Info Card --}}
                 <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden animate-fade-up" style="animation-delay: 100ms">
                     <div class="h-1 bg-gradient-to-r from-brand via-amber-500 to-accent"></div>
-                    <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-slate-800/50 flex items-center gap-2">
+                    <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-white/[0.03] flex items-center gap-2">
                         <div class="w-1.5 h-5 rounded-full bg-brand dark:bg-indigo-400"></div>
                         <h3 class="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider" data-i18n="staff.appointment_info">Appointment Information</h3>
                     </div>
@@ -98,12 +98,12 @@
 
                 {{-- Documents Section --}}
                 <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden animate-fade-up" style="animation-delay: 200ms">
-                    <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-slate-800/50 flex justify-between items-center">
+                    <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-white/[0.03] flex justify-between items-center">
                         <div class="flex items-center gap-2">
                             <div class="w-1.5 h-5 rounded-full bg-blue-500 dark:bg-blue-400"></div>
                             <h3 class="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider" data-i18n="staff.uploaded_documents">Uploaded Documents</h3>
                         </div>
-                        <span class="text-xs font-bold bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 px-2.5 py-1 rounded-full">
+                        <span class="text-xs font-bold bg-gray-100 dark:bg-[#2E2E2E] text-gray-600 dark:text-gray-300 px-2.5 py-1 rounded-full">
                             {{ $application->documents->count() }} <span data-i18n="common.files">Files</span>
                         </span>
                     </div>
@@ -113,7 +113,7 @@
                         @else
                             <div class="space-y-2.5">
                                 @foreach($application->documents as $doc)
-                                    <div class="flex items-center justify-between p-3.5 border border-gray-100 dark:border-gray-700 rounded-xl bg-gray-50/50 dark:bg-slate-800/30 hover:border-brand/20 dark:hover:border-indigo-700/40 transition-colors">
+                                    <div class="flex items-center justify-between p-3.5 border border-gray-100 dark:border-gray-700 rounded-xl bg-gray-50/50 dark:bg-white/[0.02] hover:border-brand/20 dark:hover:border-indigo-700/40 transition-colors">
                                         <div class="flex items-center gap-3 rtl:space-x-reverse min-w-0">
                                             <div class="w-10 h-10 bg-amber-50 dark:bg-amber-900/30 rounded-xl flex items-center justify-center text-brand dark:text-amber-400 shrink-0">
                                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -156,7 +156,7 @@
 
                 {{-- Timeline --}}
                 <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden animate-fade-up" style="animation-delay: 300ms">
-                    <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-slate-800/50 flex items-center gap-2">
+                    <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-white/[0.03] flex items-center gap-2">
                         <div class="w-1.5 h-5 rounded-full bg-emerald-500 dark:bg-emerald-400"></div>
                         <h3 class="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider" data-i18n="track.timeline">Status Timeline</h3>
                     </div>
@@ -179,7 +179,7 @@
                                 @endphp
                                 <div class="relative flex">
                                     @if(!$isLast)
-                                        <div class="absolute ltr:left-[19px] rtl:right-[19px] top-10 bottom-0 w-0.5 bg-gray-100 dark:bg-slate-700"></div>
+                                        <div class="absolute ltr:left-[19px] rtl:right-[19px] top-10 bottom-0 w-0.5 bg-gray-100 dark:bg-[#2E2E2E]"></div>
                                     @endif
                                     <div class="w-[40px] shrink-0 flex flex-col items-center pt-1 relative z-10">
                                         <div class="w-10 h-10 rounded-full flex items-center justify-center {{ $tc['bg'] }} {{ $tc['icon_c'] }} shadow-sm ring-4 ring-white dark:ring-[#1F1F1F]">
@@ -196,7 +196,7 @@
                                             {{ $log->created_at->format('M d, Y h:i A') }}
                                         </p>
                                         @if($log->notes)
-                                            <div class="mt-2 text-sm text-gray-600 dark:text-gray-300 italic bg-gray-50 dark:bg-slate-800/30 p-3 rounded-xl border border-gray-100 dark:border-slate-700">
+                                            <div class="mt-2 text-sm text-gray-600 dark:text-gray-300 italic bg-gray-50 dark:bg-white/[0.02] p-3 rounded-xl border border-gray-100 dark:border-[#2E2E2E]">
                                                 "{{ $log->notes }}"
                                             </div>
                                         @endif
@@ -226,7 +226,7 @@
 
                     <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden animate-fade-up" style="animation-delay: 400ms">
                         <div class="h-1 bg-gradient-to-r from-brand via-amber-500 to-accent"></div>
-                        <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-slate-800/50">
+                        <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-white/[0.03]">
                             <h3 class="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider text-center" data-i18n="staff.update_status">Update Status</h3>
                         </div>
 
@@ -295,7 +295,7 @@
                                             </p>
                                             <div class="flex items-center justify-end gap-3">
                                                 <button type="button" x-on:click="$dispatch('close')"
-                                                        class="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-gray-700 dark:text-gray-200 rounded-xl font-semibold transition-colors text-sm">
+                                                        class="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 dark:bg-[#2E2E2E] dark:hover:bg-[#3A3A3A] text-gray-700 dark:text-gray-200 rounded-xl font-semibold transition-colors text-sm">
                                                     <span data-i18n="common.cancel">Cancel</span>
                                                 </button>
                                                 <button type="button" x-on:click="confirmed = true; $refs.submitBtn.click()"
@@ -332,7 +332,7 @@
                                             </div>
                                             <div class="flex items-center justify-end gap-3">
                                                 <button type="button" x-on:click="$dispatch('close-modal', 'confirm-rejection')"
-                                                        class="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-gray-700 dark:text-gray-200 rounded-xl font-semibold transition-colors text-sm">
+                                                        class="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 dark:bg-[#2E2E2E] dark:hover:bg-[#3A3A3A] text-gray-700 dark:text-gray-200 rounded-xl font-semibold transition-colors text-sm">
                                                     <span data-i18n="common.cancel">Cancel</span>
                                                 </button>
                                                 <button type="button"
@@ -345,7 +345,7 @@
                                     </x-modal>
                                 </form>
                             @else
-                                <div class="w-full bg-gray-50 dark:bg-slate-800/50 border border-gray-200 dark:border-slate-700 rounded-2xl p-6 text-center">
+                                <div class="w-full bg-gray-50 dark:bg-white/[0.03] border border-gray-200 dark:border-[#2E2E2E] rounded-2xl p-6 text-center">
                                     <div class="w-12 h-12 bg-white dark:bg-[#141414] rounded-full mx-auto flex items-center justify-center mb-3 shadow-sm border border-gray-100 dark:border-gray-800">
                                         <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
