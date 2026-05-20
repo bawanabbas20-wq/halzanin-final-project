@@ -1,4 +1,4 @@
-<section>
+﻿<section>
     <header>
         <h2 class="text-lg font-bold text-gray-900 dark:text-white" data-i18n="profile.info">
             {{ __('Profile Information') }}
@@ -18,7 +18,7 @@
 
         <div>
             <label for="name" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1" data-i18n="profile.name">{{ __('Name') }}</label>
-            <input id="name" name="name" type="text" class="block w-full h-[48px] rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#e0e7ff] dark:focus:shadow-[0_0_0_3px_rgba(49,46,129,0.5)] transition-all" value="{{ old('name', $user->name) }}" required autofocus autocomplete="name" />
+            <input id="name" name="name" type="text" class="block w-full h-[48px] rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#141414] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#e0e7ff] dark:focus:shadow-[0_0_0_3px_rgba(49,46,129,0.5)] transition-all" value="{{ old('name', $user->name) }}" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
 
@@ -26,14 +26,14 @@
             <label for="phone_number" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1" data-i18n="profile.phone">
                 {{ __('Phone Number (WhatsApp)') }} 🇮🇶
             </label>
-            <input id="phone_number" name="phone_number" type="tel" placeholder="07XX XXX XXXX" class="block w-full h-[48px] rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#e0e7ff] dark:focus:shadow-[0_0_0_3px_rgba(49,46,129,0.5)] transition-all" value="{{ old('phone_number', $user->phone_number) }}" autocomplete="tel" />
+            <input id="phone_number" name="phone_number" type="tel" placeholder="07XX XXX XXXX" class="block w-full h-[48px] rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#141414] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#e0e7ff] dark:focus:shadow-[0_0_0_3px_rgba(49,46,129,0.5)] transition-all" value="{{ old('phone_number', $user->phone_number) }}" autocomplete="tel" />
             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400" data-i18n="profile.phone_help">Required to receive WhatsApp updates about your applications.</p>
             <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
         </div>
 
         <div>
             <label for="email" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1" data-i18n="profile.email">{{ __('Email') }}</label>
-            <input id="email" name="email" type="email" class="block w-full h-[48px] rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#e0e7ff] dark:focus:shadow-[0_0_0_3px_rgba(49,46,129,0.5)] transition-all" value="{{ old('email', $user->email) }}" required autocomplete="username" />
+            <input id="email" name="email" type="email" class="block w-full h-[48px] rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#141414] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#e0e7ff] dark:focus:shadow-[0_0_0_3px_rgba(49,46,129,0.5)] transition-all" value="{{ old('email', $user->email) }}" required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())

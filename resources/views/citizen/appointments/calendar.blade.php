@@ -11,7 +11,7 @@
     </div>
 
     {{-- Step Indicator --}}
-    <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 p-4">
+    <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 p-4">
         <div class="flex items-start">
             <div class="flex flex-col items-center shrink-0">
                 <div id="circle-1" class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold bg-brand text-white transition-all duration-300 shadow-brand-btn">1</div>
@@ -32,13 +32,13 @@
 
     {{-- ═══ STEP 1: Personal Info ═══ --}}
     <div id="step-1" class="animate-fade-up">
-        <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
+        <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
         <div class="h-1 bg-gradient-to-r from-brand via-amber-500 to-accent"></div>
         <div class="p-6 space-y-5">
             <div>
                 <label for="inp-full-name" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5" data-i18n="book.full_name">Full Name</label>
                 <input type="text" id="inp-full-name"
-                    class="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#0f172a] text-gray-900 dark:text-gray-100 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand transition"
+                    class="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#141414] text-gray-900 dark:text-gray-100 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand transition"
                     placeholder="Enter your full legal name"
                     data-i18n-placeholder="book.full_name_placeholder"
                     autocomplete="name"
@@ -49,7 +49,7 @@
             <div>
                 <label for="inp-national-id" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5" data-i18n="book.national_id">National ID Number</label>
                 <input type="text" id="inp-national-id"
-                    class="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#0f172a] text-gray-900 dark:text-gray-100 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand transition font-mono"
+                    class="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#141414] text-gray-900 dark:text-gray-100 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand transition font-mono"
                     placeholder="e.g. 1234567890"
                     autocomplete="off"
                     oninput="saveStep1()">
@@ -59,7 +59,7 @@
             <div>
                 <label for="inp-doc-type" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5" data-i18n="book.doc_type">Document Type</label>
                 <select id="inp-doc-type"
-                    class="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#0f172a] text-gray-900 dark:text-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand transition"
+                    class="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#141414] text-gray-900 dark:text-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand transition"
                     onchange="saveStep1()">
                     <option value="" data-i18n="book.select_doc_type">Select a document type...</option>
                     <option value="Passport Renewal" data-i18n="doc.passport_renewal">Passport Renewal</option>
@@ -84,7 +84,7 @@
     <div id="step-2" class="hidden space-y-4">
 
         {{-- Calendar Card --}}
-        <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
+        <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
         <div class="h-1 bg-gradient-to-r from-brand via-amber-500 to-accent"></div>
         <div class="p-5">
 
@@ -123,7 +123,7 @@
         </div>
 
         {{-- Time Slot Panel (shown after date selection) --}}
-        <div id="slotPanel" class="hidden bg-white dark:bg-[#1e293b] rounded-[16px] shadow-sm border border-gray-100 dark:border-gray-800 p-5">
+        <div id="slotPanel" class="hidden bg-white dark:bg-[#1F1F1F] rounded-[16px] shadow-sm border border-gray-100 dark:border-gray-800 p-5">
             <p id="slotDate" class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-3"></p>
             <div id="slotContent"></div>
         </div>
@@ -147,7 +147,7 @@
     <div id="step-3" class="hidden space-y-4">
 
         {{-- Summary Card --}}
-        <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
+        <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
         <div class="h-1 bg-gradient-to-r from-emerald-400 via-brand to-indigo-500"></div>
         <div class="p-5">
             <h4 class="font-bold text-brand dark:text-white font-outfit mb-4 text-sm uppercase tracking-wide" data-i18n="book.appointment_summary">Appointment Summary</h4>
@@ -178,7 +178,7 @@
         </div>
 
         {{-- Required Documents --}}
-        <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
+        <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
         <div class="h-1 bg-gradient-to-r from-amber-400 via-brand to-accent"></div>
         <div class="p-5">
             <h4 class="font-bold text-brand dark:text-white font-outfit mb-1 text-sm" data-i18n="book.required_documents">Required Documents</h4>
@@ -374,7 +374,7 @@ function renderCalendar() {
             btn.className = `${base} bg-red-100 dark:bg-red-950/40 text-red-400 cursor-not-allowed`;
             btn.title     = tr('book.fully_booked');
         } else if (isSel) {
-            btn.className = `${base} bg-brand text-white ring-2 ring-brand ring-offset-1 dark:ring-offset-[#1e293b] scale-105 font-bold`;
+            btn.className = `${base} bg-brand text-white ring-2 ring-brand ring-offset-1 dark:ring-offset-[#1F1F1F] scale-105 font-bold`;
         } else {
             let clr;
             if (cnt === 0)     clr = 'bg-emerald-100 dark:bg-emerald-900/25 text-emerald-700 dark:text-emerald-400 hover:scale-105 hover:shadow-sm';
@@ -457,7 +457,7 @@ function renderSlots(slots) {
 function slotCls(active) {
     return active
         ? 'py-2.5 px-3 rounded-xl text-sm font-bold transition-all bg-brand text-white border-2 border-brand shadow-sm'
-        : 'py-2.5 px-3 rounded-xl text-sm font-medium transition-all bg-gray-50 dark:bg-[#0f172a] border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-brand hover:text-brand hover:bg-brand/5';
+        : 'py-2.5 px-3 rounded-xl text-sm font-medium transition-all bg-gray-50 dark:bg-[#141414] border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-brand hover:text-brand hover:bg-brand/5';
 }
 
 function selectSlot(s) {
@@ -566,7 +566,7 @@ function buildDocCard(i, name, matchingVaultDocs) {
         </div>`;
 
     card.innerHTML = `
-        <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-[#0f172a] border-b border-gray-100 dark:border-gray-800">
+        <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-[#141414] border-b border-gray-100 dark:border-gray-800">
             <span class="text-sm font-semibold text-gray-800 dark:text-gray-100">${trDoc(name)}</span>
             <span id="card-badge-${i}" class="hidden text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>

@@ -1,4 +1,4 @@
-@extends('layouts.halzanin-app')
+﻿@extends('layouts.halzanin-app')
 
 @section('content')
 <div class="max-w-6xl mx-auto pb-10 space-y-8" x-data="{}">
@@ -24,7 +24,7 @@
     @endif
 
     {{-- Permissions Matrix --}}
-    <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay:100ms">
+    <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay:100ms">
         <div class="h-1 bg-gradient-to-r from-brand via-indigo-500 to-accent"></div>
         <div class="px-6 py-4 border-b border-gray-100 dark:border-slate-800 flex items-center gap-2">
             <svg class="w-5 h-5 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
@@ -115,7 +115,7 @@
     </div>
 
     {{-- Staff Assignment Panel --}}
-    <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay:200ms">
+    <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay:200ms">
         <div class="h-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500"></div>
         <div class="px-6 py-4 border-b border-gray-100 dark:border-slate-800 flex items-center gap-2">
             <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
@@ -163,7 +163,7 @@
                     <div x-show="open" x-transition class="mt-3 pl-12">
                         <form method="POST" action="{{ route('admin.sub-roles.assign', $staff->id) }}" class="flex items-center gap-2">
                             @csrf
-                            <select name="sub_role_id" class="flex-1 h-[36px] text-sm rounded-xl border-gray-200 dark:border-gray-700 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0">
+                            <select name="sub_role_id" class="flex-1 h-[36px] text-sm rounded-xl border-gray-200 dark:border-gray-700 dark:bg-[#141414] dark:text-white focus:border-brand focus:ring-0">
                                 @foreach($subRoles as $sr)
                                     <option value="{{ $sr->id }}">{{ $sr->name }}</option>
                                 @endforeach

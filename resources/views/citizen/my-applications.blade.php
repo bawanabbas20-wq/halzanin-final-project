@@ -1,4 +1,4 @@
-@extends('layouts.halzanin-app')
+﻿@extends('layouts.halzanin-app')
 
 @section('content')
 @php
@@ -20,7 +20,7 @@
     </div>
 
     @if($applications->isEmpty())
-        <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800">
+        <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800">
             <div class="flex flex-col items-center justify-center py-20 px-6 text-center">
                 <div class="w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-4">
                     <svg class="w-8 h-8 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -44,7 +44,7 @@
                     $lastLog = $app->statusLogs->first();
                     $appt = $app->appointment;
                 @endphp
-                <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden animate-fade-up">
+                <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden animate-fade-up">
                     <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100 dark:border-gray-800">
                         <div class="flex items-center gap-3 min-w-0">
                             <div class="flex items-center gap-2">

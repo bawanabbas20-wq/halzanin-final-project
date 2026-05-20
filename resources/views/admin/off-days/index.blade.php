@@ -1,4 +1,4 @@
-@extends('layouts.halzanin-app')
+﻿@extends('layouts.halzanin-app')
 
 @section('content')
 <div class="max-w-4xl mx-auto space-y-6">
@@ -14,7 +14,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
         {{-- Add off days form --}}
-        <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay: 100ms">
+        <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay: 100ms">
             <div class="h-1 bg-gradient-to-r from-brand via-indigo-500 to-accent"></div>
             <div class="p-6">
                 <h3 class="text-base font-bold text-gray-900 dark:text-white mb-1" data-i18n="offdays.add">Add Off Days</h3>
@@ -66,7 +66,7 @@
                             <span class="text-gray-400 font-normal" data-i18n="offdays.optional">(optional)</span>
                         </label>
                         <input type="text" name="reason" maxlength="255"
-                               class="w-full h-[44px] rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#e0e7ff] dark:focus:shadow-[0_0_0_3px_rgba(49,46,129,0.5)] text-sm transition-all px-3"
+                               class="w-full h-[44px] rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#141414] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#e0e7ff] dark:focus:shadow-[0_0_0_3px_rgba(49,46,129,0.5)] text-sm transition-all px-3"
                                placeholder="e.g. National Holiday, Emergency closure…"
                                data-i18n-placeholder="offdays.reason_placeholder">
                     </div>
@@ -82,7 +82,7 @@
         </div>
 
         {{-- Existing off days list --}}
-        <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay: 200ms">
+        <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay: 200ms">
             <div class="h-1 bg-gradient-to-r from-indigo-400 via-purple-500 to-brand"></div>
             <div class="p-6">
                 <div class="flex items-center justify-between mb-5">
@@ -104,7 +104,7 @@
 
                 @if($offDays->isEmpty())
                     <div class="text-center py-10 text-gray-400 dark:text-gray-500">
-                        <div class="w-12 h-12 bg-gray-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <div class="w-12 h-12 bg-gray-100 dark:bg-[#252525] rounded-full flex items-center justify-center mx-auto mb-3">
                             <svg class="w-6 h-6 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                                       d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>

@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="w-full max-w-[580px] mx-auto">
-    <div class="bg-white dark:bg-[#1e293b] rounded-[16px] shadow-sm border border-gray-100 dark:border-slate-800 relative overflow-hidden">
+    <div class="bg-white dark:bg-[#1F1F1F] rounded-[16px] shadow-sm border border-gray-100 dark:border-slate-800 relative overflow-hidden">
         <div class="h-1 bg-gradient-to-r from-brand via-amber-500 to-accent"></div>
         <div class="p-6 lg:p-8">
         <h2 class="text-2xl font-bold text-gradient font-outfit text-center mb-8" data-i18n="book.short_title">Book Appointment</h2>
@@ -13,7 +13,7 @@
             <div id="progress-line" class="absolute top-4 left-0 h-0.5 bg-accent transition-all duration-300 -z-10 w-0"></div>
             @foreach([1=>['book.step1','Personal Info'], 2=>['book.step2','Appointment'], 3=>['book.step_documents','Documents'], 4=>['book.step_review','Review']] as $n => $step)
             <div class="flex flex-col items-center w-1/4">
-                <div id="indicator-{{ $n }}" class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-colors {{ $n === 1 ? 'bg-brand text-white shadow-md' : 'bg-white dark:bg-[#1e293b] border-2 border-gray-300 dark:border-gray-600 text-gray-400' }}">
+                <div id="indicator-{{ $n }}" class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-colors {{ $n === 1 ? 'bg-brand text-white shadow-md' : 'bg-white dark:bg-[#1F1F1F] border-2 border-gray-300 dark:border-gray-600 text-gray-400' }}">
                     <span class="step-num">{{ $n }}</span>
                     <svg class="step-check hidden w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                 </div>
@@ -39,14 +39,14 @@
                             <div class="absolute inset-y-0 left-0 mt-6 flex items-center pl-4 pointer-events-none">
                                 <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                             </div>
-                            <input id="full_name" type="text" name="full_name" value="{{ old('full_name', session('appointment_draft.full_name')) }}" required class="block w-full h-[48px] pl-11 pr-4 rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#e0e7ff] transition-all">
+                            <input id="full_name" type="text" name="full_name" value="{{ old('full_name', session('appointment_draft.full_name')) }}" required class="block w-full h-[48px] pl-11 pr-4 rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#141414] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#e0e7ff] transition-all">
                         </div>
                         <div class="relative">
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" data-i18n="book.national_id">National ID Number</label>
                             <div class="absolute inset-y-0 left-0 mt-6 flex items-center pl-4 pointer-events-none">
                                 <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/></svg>
                             </div>
-                            <input id="national_id_number" type="text" name="national_id_number" value="{{ old('national_id_number', session('appointment_draft.national_id_number')) }}" required class="block w-full h-[48px] pl-11 pr-4 rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#e0e7ff] transition-all">
+                            <input id="national_id_number" type="text" name="national_id_number" value="{{ old('national_id_number', session('appointment_draft.national_id_number')) }}" required class="block w-full h-[48px] pl-11 pr-4 rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#141414] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#e0e7ff] transition-all">
                         </div>
                         <div class="pt-6">
                             <button type="button" onclick="nextStep(2)" class="w-full h-[52px] bg-brand text-white rounded-[10px] font-semibold shadow-brand-btn hover:shadow-brand-btn-hover hover:-translate-y-[1px] transition-all" data-i18n="book.continue">Continue</button>
@@ -62,14 +62,14 @@
                             <div class="absolute inset-y-0 left-0 mt-6 flex items-center pl-4 pointer-events-none">
                                 <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                             </div>
-                            <input id="preferred_date" type="date" name="preferred_date" value="{{ old('preferred_date', session('appointment_draft.preferred_date')) }}" required class="block w-full h-[48px] pl-11 pr-4 rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 transition-all">
+                            <input id="preferred_date" type="date" name="preferred_date" value="{{ old('preferred_date', session('appointment_draft.preferred_date')) }}" required class="block w-full h-[48px] pl-11 pr-4 rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#141414] dark:text-white focus:border-brand focus:ring-0 transition-all">
                         </div>
                         <div class="relative">
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" data-i18n="book.time_slot">Time Slot</label>
                             <div class="absolute inset-y-0 left-0 mt-6 flex items-center pl-4 pointer-events-none">
                                 <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                             </div>
-                            <select id="time_slot" name="time_slot" required class="block w-full h-[48px] pl-11 pr-4 rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 transition-all">
+                            <select id="time_slot" name="time_slot" required class="block w-full h-[48px] pl-11 pr-4 rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#141414] dark:text-white focus:border-brand focus:ring-0 transition-all">
                                 <option value="" data-i18n="book.select_time">Select a time slot</option>
                                 @foreach(['9:00 AM','10:00 AM','11:00 AM','2:00 PM','3:00 PM'] as $slot)
                                     <option value="{{ $slot }}" {{ old('time_slot', session('appointment_draft.time_slot')) == $slot ? 'selected' : '' }}>{{ $slot }}</option>
@@ -81,7 +81,7 @@
                             <div class="absolute inset-y-0 left-0 mt-6 flex items-center pl-4 pointer-events-none">
                                 <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                             </div>
-                            <select id="document_type" name="document_type" required class="block w-full h-[48px] pl-11 pr-4 rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 transition-all">
+                            <select id="document_type" name="document_type" required class="block w-full h-[48px] pl-11 pr-4 rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#141414] dark:text-white focus:border-brand focus:ring-0 transition-all">
                                 <option value="" data-i18n="book.select_doc_type">Select document type</option>
                                 @foreach(['Passport Renewal','New Passport','ID Card','Birth Certificate','Other'] as $dt)
                                     <option value="{{ $dt }}" {{ old('document_type', session('appointment_draft.document_type')) == $dt ? 'selected' : '' }} data-i18n="{{ ['Passport Renewal'=>'doc.passport_renewal', 'New Passport'=>'doc.new_passport', 'ID Card'=>'doc.id_card', 'Birth Certificate'=>'doc.birth_cert', 'Other'=>'doc.other'][$dt] }}">{{ $dt }}</option>
@@ -90,7 +90,7 @@
                         </div>
                         <div class="relative">
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" data-i18n="book.notes">Notes (Optional)</label>
-                            <textarea id="notes" name="notes" rows="3" class="block w-full pl-4 pr-4 rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 transition-all">{{ old('notes', session('appointment_draft.notes')) }}</textarea>
+                            <textarea id="notes" name="notes" rows="3" class="block w-full pl-4 pr-4 rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#141414] dark:text-white focus:border-brand focus:ring-0 transition-all">{{ old('notes', session('appointment_draft.notes')) }}</textarea>
                         </div>
                         <div class="pt-4 flex space-x-3">
                             <button type="button" onclick="nextStep(1)" class="w-1/3 h-[52px] bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-[10px] font-semibold transition-all" data-i18n="book.back">Back</button>
@@ -150,7 +150,7 @@
         <div class="p-6">
             <h2 class="text-xl font-bold font-outfit mb-2 text-gray-900 dark:text-white" data-i18n="book.confirm_title">Confirm Submission</h2>
             <p class="text-sm text-gray-600 dark:text-gray-400 mb-5" data-i18n="book.confirm_body">Please confirm your appointment details are correct. All uploaded documents and details will be sent for review.</p>
-            <div class="bg-gray-50 dark:bg-[#0f172a] p-4 rounded-[12px] mb-6 border border-gray-100 dark:border-gray-800">
+            <div class="bg-gray-50 dark:bg-[#141414] p-4 rounded-[12px] mb-6 border border-gray-100 dark:border-gray-800">
                 <p class="text-[13px] text-gray-500 dark:text-gray-400 font-semibold mb-1" id="modal-name"></p>
                 <p class="text-[13px] text-gray-500 dark:text-gray-400 font-semibold" id="modal-datetime"></p>
             </div>
@@ -242,7 +242,7 @@ function updateIndicators(target) {
         const num   = ind.querySelector('.step-num');
         const check = ind.querySelector('.step-check');
         const lbl   = ind.nextElementSibling;
-        ind.className = 'w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-colors bg-white dark:bg-[#1e293b] border-2 border-gray-300 dark:border-gray-600 text-gray-400';
+        ind.className = 'w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-colors bg-white dark:bg-[#1F1F1F] border-2 border-gray-300 dark:border-gray-600 text-gray-400';
         lbl.className = 'text-xs font-semibold mt-2 text-center text-gray-400';
         num.classList.remove('hidden'); check.classList.add('hidden');
         if (i < target) {

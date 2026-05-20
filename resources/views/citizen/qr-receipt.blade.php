@@ -1,4 +1,4 @@
-@extends('layouts.halzanin-app')
+﻿@extends('layouts.halzanin-app')
 
 @section('content')
 <style>
@@ -61,7 +61,7 @@
             <h1 class="text-xl font-bold text-gray-900" data-i18n="qr.receipt">Appointment Receipt</h1>
         </div>
 
-        <div class="ticket-inner bg-white dark:bg-[#1e293b] rounded-[24px] w-full flex flex-col overflow-hidden">
+        <div class="ticket-inner bg-white dark:bg-[#1F1F1F] rounded-[24px] w-full flex flex-col overflow-hidden">
 
             {{-- Top: Brand + Date + Details --}}
             <div class="p-6">
@@ -106,8 +106,8 @@
             {{-- Dashed Divider --}}
             <div class="relative">
                 <div class="print-divider border-t-2 border-dashed border-[#e2e8f0] dark:border-slate-700"></div>
-                <div class="absolute -left-3 -top-3 w-6 h-6 bg-[#f8fafc] dark:bg-[#0f172a] rounded-full"></div>
-                <div class="absolute -right-3 -top-3 w-6 h-6 bg-[#f8fafc] dark:bg-[#0f172a] rounded-full"></div>
+                <div class="absolute -left-3 -top-3 w-6 h-6 bg-[#f8fafc] dark:bg-[#141414] rounded-full"></div>
+                <div class="absolute -right-3 -top-3 w-6 h-6 bg-[#f8fafc] dark:bg-[#141414] rounded-full"></div>
             </div>
 
             {{-- QR Code --}}
@@ -126,8 +126,8 @@
             {{-- Dashed Divider --}}
             <div class="relative">
                 <div class="print-divider border-t-2 border-dashed border-[#e2e8f0] dark:border-slate-700"></div>
-                <div class="absolute -left-3 -top-3 w-6 h-6 bg-[#f8fafc] dark:bg-[#0f172a] rounded-full"></div>
-                <div class="absolute -right-3 -top-3 w-6 h-6 bg-[#f8fafc] dark:bg-[#0f172a] rounded-full"></div>
+                <div class="absolute -left-3 -top-3 w-6 h-6 bg-[#f8fafc] dark:bg-[#141414] rounded-full"></div>
+                <div class="absolute -right-3 -top-3 w-6 h-6 bg-[#f8fafc] dark:bg-[#141414] rounded-full"></div>
             </div>
 
             {{-- Footer --}}

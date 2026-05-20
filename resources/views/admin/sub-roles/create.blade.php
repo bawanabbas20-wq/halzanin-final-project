@@ -1,4 +1,4 @@
-@extends('layouts.halzanin-app')
+﻿@extends('layouts.halzanin-app')
 
 @section('content')
 <div class="max-w-2xl mx-auto pb-10">
@@ -15,7 +15,7 @@
         </a>
     </div>
 
-    <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay:100ms">
+    <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay:100ms">
         <div class="h-1 bg-gradient-to-r from-brand via-indigo-500 to-accent"></div>
         <form method="POST" action="{{ route('admin.sub-roles.store') }}" class="p-6 space-y-6">
             @csrf
@@ -24,14 +24,14 @@
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">Sub-Role Name <span class="text-red-500">*</span></label>
                     <input type="text" name="name" value="{{ old('name') }}" required
-                           class="block w-full h-[48px] px-4 rounded-xl border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 transition-all"
+                           class="block w-full h-[48px] px-4 rounded-xl border-gray-300 dark:border-gray-600 dark:bg-[#141414] dark:text-white focus:border-brand focus:ring-0 transition-all"
                            placeholder="e.g. Document Reviewer, Front Desk">
                     @error('name')<p class="mt-1 text-xs text-red-500">{{ $message }}</p>@enderror
                 </div>
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">Description</label>
                     <textarea name="description" rows="2"
-                              class="block w-full px-4 py-3 rounded-xl border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 transition-all resize-none"
+                              class="block w-full px-4 py-3 rounded-xl border-gray-300 dark:border-gray-600 dark:bg-[#141414] dark:text-white focus:border-brand focus:ring-0 transition-all resize-none"
                               placeholder="Optional: describe what this role does">{{ old('description') }}</textarea>
                 </div>
             </div>
@@ -44,7 +44,7 @@
                         <label class="relative cursor-pointer select-none">
                             <input type="checkbox" name="permissions[]" value="{{ $perm }}" class="peer sr-only" {{ $checked ? 'checked' : '' }}>
                             <div class="flex items-start gap-3 p-4 rounded-xl border-2 transition-all
-                                        border-gray-200 dark:border-slate-700 bg-white dark:bg-[#0f172a]
+                                        border-gray-200 dark:border-slate-700 bg-white dark:bg-[#141414]
                                         peer-checked:border-brand peer-checked:bg-brand/5 dark:peer-checked:bg-indigo-900/20 dark:peer-checked:border-indigo-500">
                                 <div class="mt-0.5 w-5 h-5 rounded-md border-2 border-current flex items-center justify-center shrink-0 text-gray-300 dark:text-slate-600 peer-checked:text-brand transition-colors">
                                     <svg class="w-3 h-3 hidden peer-checked:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>

@@ -1,4 +1,4 @@
-<x-halzanin-auth-layout>
+﻿<x-halzanin-auth-layout>
     <x-slot name="illustration">
         <svg viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto drop-shadow-xl">
             <path d="M200 280C285 280 348 228 352 153C356 78 288 30 204 23C120 16 50 67 37 142C24 217 115 280 200 280Z" fill="#312e81" opacity="0.3"/>
@@ -37,14 +37,14 @@
         <div class="space-y-3">
             <form method="POST" action="{{ route('verification.send') }}">
                 @csrf
-                <button type="submit" class="w-full h-[52px] bg-brand text-white rounded-[10px] font-semibold font-outfit shadow-brand-btn hover:shadow-brand-btn-hover hover:-translate-y-[1px] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand dark:focus:ring-offset-[#1e293b]" data-i18n="auth.resend_email">
+                <button type="submit" class="w-full h-[52px] bg-brand text-white rounded-[10px] font-semibold font-outfit shadow-brand-btn hover:shadow-brand-btn-hover hover:-translate-y-[1px] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand dark:focus:ring-offset-[#1F1F1F]" data-i18n="auth.resend_email">
                     Resend Verification Email
                 </button>
             </form>
 
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <button type="submit" class="w-full h-[48px] bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-slate-700 rounded-[10px] font-semibold transition-all duration-200" data-i18n="auth.logout">
+                <button type="submit" class="w-full h-[48px] bg-gray-100 dark:bg-[#252525] text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-slate-700 rounded-[10px] font-semibold transition-all duration-200" data-i18n="auth.logout">
                     Log Out
                 </button>
             </form>

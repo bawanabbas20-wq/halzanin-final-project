@@ -1,4 +1,4 @@
-@extends('layouts.halzanin-app')
+﻿@extends('layouts.halzanin-app')
 
 @section('content')
 <div class="max-w-5xl mx-auto pb-10 space-y-6" x-data="{ showForm: false, deletingId: null }">
@@ -23,19 +23,19 @@
     @endif
 
     {{-- Create form --}}
-    <div x-show="showForm" x-transition class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden">
+    <div x-show="showForm" x-transition class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden">
         <div class="h-1 bg-gradient-to-r from-brand via-indigo-500 to-accent"></div>
         <form method="POST" action="{{ route('admin.task-types.store') }}" class="p-6 flex flex-col sm:flex-row gap-4 items-end">
             @csrf
             <div class="flex-1">
                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">Name</label>
                 <input type="text" name="name" required placeholder="e.g. NIC Processing" value="{{ old('name') }}"
-                       class="block w-full h-[44px] px-4 rounded-xl border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0">
+                       class="block w-full h-[44px] px-4 rounded-xl border-gray-300 dark:border-gray-600 dark:bg-[#141414] dark:text-white focus:border-brand focus:ring-0">
                 @error('name')<p class="mt-1 text-xs text-red-500">{{ $message }}</p>@enderror
             </div>
             <div>
                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">Color</label>
-                <select name="color" class="block h-[44px] px-3 pr-8 rounded-xl border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 text-sm">
+                <select name="color" class="block h-[44px] px-3 pr-8 rounded-xl border-gray-300 dark:border-gray-600 dark:bg-[#141414] dark:text-white focus:border-brand focus:ring-0 text-sm">
                     @foreach(['indigo','green','blue','amber','rose','purple'] as $c)
                         <option value="{{ $c }}" {{ old('color') === $c ? 'selected' : '' }}>{{ ucfirst($c) }}</option>
                     @endforeach
@@ -46,7 +46,7 @@
     </div>
 
     {{-- Task types list --}}
-    <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay:100ms">
+    <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay:100ms">
         <div class="h-1 bg-gradient-to-r from-brand via-indigo-500 to-accent"></div>
         <div class="overflow-x-auto">
             <table class="w-full text-sm border-collapse">
@@ -84,7 +84,7 @@
 
     {{-- Staff Assignment --}}
     @if($staffUsers->isNotEmpty())
-    <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay:200ms">
+    <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay:200ms">
         <div class="h-1 bg-gradient-to-r from-emerald-500 to-teal-500"></div>
         <div class="px-6 py-4 border-b border-gray-100 dark:border-slate-800">
             <h3 class="font-bold text-gray-900 dark:text-white text-sm">Staff Task Type Assignments</h3>

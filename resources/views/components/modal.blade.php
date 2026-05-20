@@ -1,4 +1,4 @@
-@props([
+﻿@props([
     'name',
     'show' => false,
     'maxWidth' => '2xl'
@@ -65,7 +65,7 @@ $maxWidth = [
 
     <div
         x-show="show"
-        class="bg-white dark:bg-[#1e293b] rounded-[16px] overflow-hidden shadow-xl transform transition-all w-full max-w-[440px] mx-auto z-[101] relative"
+        class="bg-white dark:bg-[#1F1F1F] rounded-[16px] overflow-hidden shadow-xl transform transition-all w-full max-w-[440px] mx-auto z-[101] relative"
         x-transition:enter="ease-out duration-200"
         x-transition:enter-start="opacity-0 scale-90"
         x-transition:enter-end="opacity-100 scale-100"

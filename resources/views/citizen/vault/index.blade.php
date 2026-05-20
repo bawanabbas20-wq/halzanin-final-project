@@ -1,4 +1,4 @@
-@extends('layouts.halzanin-app')
+﻿@extends('layouts.halzanin-app')
 
 @section('content')
 <div class="space-y-6 lg:space-y-8">
@@ -29,7 +29,7 @@
     @endif
 
     @if($documents->isEmpty())
-        <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 animate-fade-up">
+        <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 animate-fade-up">
             <x-empty-state
                 type="no-uploads"
                 title="Your vault is empty"
@@ -53,7 +53,7 @@
                     $expiresColor = $isUrgent ? 'text-red-500 dark:text-red-400' : 'text-orange-500 dark:text-orange-400';
                     $stripColor   = $isUrgent ? 'from-red-400 to-red-500' : ($isWarning ? 'from-orange-400 to-amber-400' : 'from-brand via-indigo-500 to-accent');
                 @endphp
-                <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden flex flex-col hover-lift animate-fade-up"
+                <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden flex flex-col hover-lift animate-fade-up"
                      style="animation-delay: {{ $index * 80 }}ms">
 
                     {{-- Gradient top strip --}}

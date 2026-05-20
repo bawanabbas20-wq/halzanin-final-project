@@ -1,4 +1,4 @@
-<div id="toast-container" class="fixed top-4 ltr:right-4 rtl:left-4 z-[9999] flex flex-col gap-3 pointer-events-none"></div>
+﻿<div id="toast-container" class="fixed top-4 ltr:right-4 rtl:left-4 z-[9999] flex flex-col gap-3 pointer-events-none"></div>
 
 <style>
     .toast-item {
@@ -63,7 +63,7 @@
         const v = variants[type] || variants.info;
 
         const toast = document.createElement('div');
-        toast.className = 'toast-item w-80 bg-white dark:bg-[#1e293b] border border-gray-100 dark:border-gray-800 rounded-[12px] shadow-xl pointer-events-auto overflow-hidden flex flex-col';
+        toast.className = 'toast-item w-80 bg-white dark:bg-[#1F1F1F] border border-gray-100 dark:border-gray-800 rounded-[12px] shadow-xl pointer-events-auto overflow-hidden flex flex-col';
 
         toast.innerHTML = [
             '<div class="flex items-start">',

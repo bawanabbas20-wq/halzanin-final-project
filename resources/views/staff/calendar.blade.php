@@ -14,7 +14,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
         {{-- Calendar Card --}}
-        <div class="lg:col-span-2 bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay: 100ms">
+        <div class="lg:col-span-2 bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay: 100ms">
             <div class="h-1 bg-gradient-to-r from-brand via-amber-500 to-accent"></div>
             <div class="p-6">
 
@@ -74,7 +74,7 @@
                             $isFull    = $booked >= $maxSlots;
 
                             if ($isOffDay) {
-                                $bgClass = 'bg-gray-100 dark:bg-slate-800 text-gray-400 dark:text-gray-600 cursor-default';
+                                $bgClass = 'bg-gray-100 dark:bg-[#252525] text-gray-400 dark:text-gray-600 cursor-default';
                             } elseif ($isFull) {
                                 $bgClass = 'bg-red-500 text-white cursor-pointer hover:bg-red-600';
                             } elseif ($booked === 0) {
@@ -118,11 +118,11 @@
         </div>
 
         {{-- Day panel --}}
-        <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay: 200ms">
+        <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay: 200ms">
             <div class="h-1 bg-gradient-to-r from-amber-400 via-purple-500 to-brand"></div>
             <div class="p-6">
                 <div id="panel-empty" class="text-center py-12 text-gray-400 dark:text-gray-500">
-                    <div class="w-14 h-14 bg-gray-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <div class="w-14 h-14 bg-gray-100 dark:bg-[#252525] rounded-full flex items-center justify-center mx-auto mb-3">
                         <svg class="w-7 h-7 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                                   d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>

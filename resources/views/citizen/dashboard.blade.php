@@ -85,7 +85,7 @@
             @endphp
 
             @foreach ($statItems as $s)
-                <div class="bg-white dark:bg-[#1e293b] rounded-xl p-4 lg:p-5 shadow-sm border border-gray-100 dark:border-gray-800 hover-lift animate-fade-up"
+                <div class="bg-white dark:bg-[#1F1F1F] rounded-xl p-4 lg:p-5 shadow-sm border border-gray-100 dark:border-gray-800 hover-lift animate-fade-up"
                      style="animation-delay: {{ $s['delay'] }}ms">
                     <div class="w-9 h-9 rounded-full ring-4 {{ $s['ring'] }} {{ $s['icon_bg'] }} {{ $s['icon_c'] }} flex items-center justify-center mb-3">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">{!! $s['icon'] !!}</svg>
@@ -119,9 +119,9 @@
             </div>
 
             @if($upcomingAppointments->isEmpty())
-                <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800">
+                <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800">
                     <div class="flex flex-col items-center justify-center py-14 px-6 text-center">
-                        <div class="w-16 h-16 bg-gray-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center mb-4 border border-gray-100 dark:border-slate-700">
+                        <div class="w-16 h-16 bg-gray-50 dark:bg-[#252525] rounded-2xl flex items-center justify-center mb-4 border border-gray-100 dark:border-slate-700">
                             <svg class="w-8 h-8 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                                       d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
@@ -164,7 +164,7 @@
                             $apptDate = \Carbon\Carbon::parse($appt->date);
                         @endphp
 
-                        <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800
+                        <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800
                                     ltr:border-l-4 rtl:border-r-4 {{ $cfg['border'] }} hover-lift overflow-hidden animate-fade-up"
                              style="animation-delay: {{ $delay }}ms">
 

@@ -1,4 +1,4 @@
-@extends('layouts.halzanin-app')
+﻿@extends('layouts.halzanin-app')
 
 @section('content')
     <div class="space-y-6 lg:space-y-8 max-w-7xl mx-auto pb-10">
@@ -9,7 +9,7 @@
                 <h2 class="text-2xl font-bold font-outfit text-gradient" data-i18n="Admin Dashboard">Admin Dashboard</h2>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-1" data-i18n="admin.subtitle">System overview and application statistics</p>
             </div>
-            <span class="self-start sm:self-auto text-sm font-semibold text-gray-500 dark:text-gray-400 bg-white dark:bg-slate-800 px-4 py-2 rounded-full border border-gray-100 dark:border-slate-700 shadow-sm">
+            <span class="self-start sm:self-auto text-sm font-semibold text-gray-500 dark:text-gray-400 bg-white dark:bg-[#252525] px-4 py-2 rounded-full border border-gray-100 dark:border-slate-700 shadow-sm">
                 {{ \Carbon\Carbon::now()->format('l, F j, Y') }}
             </span>
         </div>
@@ -49,7 +49,7 @@
                 <div class="p-6">
                     <div class="flex items-center justify-between mb-6">
                         <h3 class="text-base font-bold text-gray-900 dark:text-white font-outfit" data-i18n="Applications This Week">Applications This Week</h3>
-                        <span class="text-xs font-semibold text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-slate-800 px-3 py-1 rounded-full border border-gray-100 dark:border-slate-700" data-i18n="admin.last_7_days">Last 7 days</span>
+                        <span class="text-xs font-semibold text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-[#252525] px-3 py-1 rounded-full border border-gray-100 dark:border-slate-700" data-i18n="admin.last_7_days">Last 7 days</span>
                     </div>
 
                     @php
@@ -104,7 +104,7 @@
                             <span data-i18n="View All Applications">View All Applications</span>
                         </a>
                         <a href="{{ route('admin.users') }}"
-                           class="w-full py-3.5 bg-white dark:bg-slate-800 text-brand dark:text-blue-400 border-2 border-brand/20 dark:border-brand/40 text-center rounded-xl font-semibold font-outfit hover:border-brand dark:hover:border-blue-500 hover:bg-brand/5 dark:hover:bg-slate-700 transition-all flex items-center justify-center gap-2">
+                           class="w-full py-3.5 bg-white dark:bg-[#252525] text-brand dark:text-blue-400 border-2 border-brand/20 dark:border-brand/40 text-center rounded-xl font-semibold font-outfit hover:border-brand dark:hover:border-blue-500 hover:bg-brand/5 dark:hover:bg-slate-700 transition-all flex items-center justify-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
                             </svg>

@@ -33,7 +33,12 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://127.0.0.1:8000/admin/dashboard)",
       "Bash(grep -v \"csrf_token\\\\|remember_token\\\\|_token\\\\|password_confirmation\\\\|password_reset\\\\|current_password\\\\|password_hash\\\\|password_column\\\\|password =>\\\\|'password'\\\\|\\\\\"password\\\\\"\\\\|password =\\\\|password_confirmation\\\\|api_token\\\\|access_token\\\\b.*\\\\$\\\\|personal_access_tokens\\\\|HasApiTokens\\\\|sanctum\\\\|dd\\(\\\\|dump\\(\\\\|var_dump\\(\")",
       "Bash(grep -i \"=\\\\s*['\\\\\"][a-zA-Z0-9+/=_-]\\\\{8,\\\\}['\\\\\"]\")",
-      "Bash(grep -rn \"window\\\\.\\\\|const.*=.*['\\\\\"][a-zA-Z0-9_\\\\-]\\\\{20,\\\\}['\\\\\"]\" --include=\"*.blade.php\" --include=\"*.js\" resources/)"
+      "Bash(grep -rn \"window\\\\.\\\\|const.*=.*['\\\\\"][a-zA-Z0-9_\\\\-]\\\\{20,\\\\}['\\\\\"]\" --include=\"*.blade.php\" --include=\"*.js\" resources/)",
+      "Bash(Copy-Item \"D:\\\\final project\\\\Iraqi_passport.png\" \"D:\\\\final project\\\\public\\\\images\\\\passport-dark.png\" -Force)",
+      "Bash(Copy-Item \"D:\\\\final project\\\\IraqiPassport23 blue.png\" \"D:\\\\final project\\\\public\\\\images\\\\passport-blue.png\" -Force)",
+      "Bash(Copy-Item \"D:\\\\final project\\\\ServiceIraqiPassport red.png\" \"D:\\\\final project\\\\public\\\\images\\\\passport-red.png\" -Force)",
+      "Bash(Write-Host \"Done\")",
+      "Bash(powershell -Command ' *)"
     ]
   }
 }

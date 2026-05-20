@@ -1,4 +1,4 @@
-@extends('layouts.halzanin-app')
+﻿@extends('layouts.halzanin-app')
 
 @push('scripts')
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
@@ -23,7 +23,7 @@
     </div>
 
     {{-- Camera Viewfinder Card --}}
-    <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay:100ms">
+    <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay:100ms">
         <div class="h-1 bg-gradient-to-r from-brand via-indigo-500 to-accent"></div>
         <div class="p-6">
             <div id="qr-reader" class="rounded-xl overflow-hidden w-full"></div>
@@ -50,7 +50,7 @@
             </div>
             <form x-on:submit.prevent="checkin(manualCode)" class="mt-3 flex gap-2">
                 <input type="text" x-model="manualCode" placeholder="TRK-XXXXXXXX"
-                       class="flex-1 h-[42px] px-4 rounded-xl border-gray-200 dark:border-slate-600 dark:bg-[#0f172a] dark:text-white text-sm focus:border-brand focus:ring-0 transition-all font-mono">
+                       class="flex-1 h-[42px] px-4 rounded-xl border-gray-200 dark:border-slate-600 dark:bg-[#141414] dark:text-white text-sm focus:border-brand focus:ring-0 transition-all font-mono">
                 <button type="submit"
                         class="px-4 h-[42px] bg-brand text-white text-sm font-semibold rounded-xl hover:bg-brand-light transition-colors shrink-0">
                     Check In
@@ -64,7 +64,7 @@
          x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0"
          class="rounded-2xl shadow-lg border overflow-hidden"
          :class="{
-             'bg-white dark:bg-[#1e293b] border-gray-100 dark:border-slate-800': result?.status === 'success',
+             'bg-white dark:bg-[#1F1F1F] border-gray-100 dark:border-slate-800': result?.status === 'success',
              'bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800': result?.status === 'already_checked_in' || result?.status === 'wrong_date',
              'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800': result?.status === 'not_found' || result?.status === 'error',
          }">

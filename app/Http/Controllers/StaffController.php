@@ -17,25 +17,11 @@ class StaffController extends Controller
 
     public function calendar(Request $request)
     {
-        $year  = (int) $request->get('year', now()->year);
-        $month = (int) $request->get('month', now()->month);
-
-        $current = Carbon::createFromDate($year, $month, 1);
-
-        $year  = $current->year;
-        $month = $current->month;
-
-        // Per-day booking counts
-        $counts = Appointment::where('date', 'like', $current->format('Y-m') . '-%')
-            ->whereNotIn('status', ['cancelled'])
-            ->selectRaw('date, COUNT(*) as count')
-            ->groupBy('date')
-            ->pluck('count', 'date')
-            ->toArray();
-
-        $offDates = OffDay::offDatesForMonth($year, $month);
-
-        return view('staff.calendar', compact('year', 'month', 'current', 'counts', 'offDates'));
+        return redirect()->route('staff.queue', [
+            'view' => 'calendar',
+            'year' => $request->get('year', now()->year),
+            'month' => $request->get('month', now()->month),
+        ]);
     }
 
     public function dayAppointments(Request $request)

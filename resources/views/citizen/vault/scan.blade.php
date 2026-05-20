@@ -1,4 +1,4 @@
-@extends('layouts.halzanin-app')
+﻿@extends('layouts.halzanin-app')
 
 @section('content')
 <div class="max-w-2xl mx-auto space-y-6" x-data="documentScanner()" x-init="initLang()">
@@ -15,7 +15,7 @@
     </div>
 
     <!-- Step 1: Choose document type BEFORE opening camera -->
-    <div x-show="step === 'choose'" class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
+    <div x-show="step === 'choose'" class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
         <div class="h-1 bg-gradient-to-r from-brand via-indigo-500 to-accent"></div>
         <div class="p-6 space-y-5">
         <div>
@@ -26,7 +26,7 @@
             <template x-for="dt in docTypes" :key="dt.value">
                 <button type="button"
                     @click="selectType(dt.value)"
-                    :class="documentType === dt.value ? 'ring-2 ring-brand bg-indigo-50 dark:bg-indigo-900/30' : 'bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700'"
+                    :class="documentType === dt.value ? 'ring-2 ring-brand bg-indigo-50 dark:bg-indigo-900/30' : 'bg-gray-50 dark:bg-[#252525] hover:bg-gray-100 dark:hover:bg-slate-700'"
                     class="p-4 rounded-[12px] border border-gray-200 dark:border-gray-700 text-left transition-all">
                     <div class="text-2xl mb-1" x-text="dt.icon"></div>
                     <div class="font-semibold text-sm text-gray-900 dark:text-white" x-text="t(dt.labelKey)"></div>
@@ -105,10 +105,10 @@
         </div>
 
         <!-- Filter strip -->
-        <div x-show="isCaptured" class="bg-white dark:bg-[#1e293b] p-4 rounded-[16px] shadow-sm border border-gray-100 dark:border-gray-800 flex justify-around gap-2 mt-4" style="display:none;">
-            <button type="button" @click="applyFilter('original')" :class="activeFilter==='original'?'bg-brand text-white':'bg-gray-100 text-gray-700 dark:bg-slate-800 dark:text-gray-300'" class="flex-1 px-3 py-2 text-xs font-bold rounded-lg transition-all" x-text="t('vault.original')">Original</button>
-            <button type="button" @click="applyFilter('magic')"    :class="activeFilter==='magic'   ?'bg-brand text-white':'bg-gray-100 text-gray-700 dark:bg-slate-800 dark:text-gray-300'" class="flex-1 px-3 py-2 text-xs font-bold rounded-lg transition-all" x-text="t('vault.magic_scan')">Magic Scan</button>
-            <button type="button" @click="applyFilter('bw')"       :class="activeFilter==='bw'      ?'bg-brand text-white':'bg-gray-100 text-gray-700 dark:bg-slate-800 dark:text-gray-300'" class="flex-1 px-3 py-2 text-xs font-bold rounded-lg transition-all" x-text="t('vault.bw_doc')">B&amp;W Doc</button>
+        <div x-show="isCaptured" class="bg-white dark:bg-[#1F1F1F] p-4 rounded-[16px] shadow-sm border border-gray-100 dark:border-gray-800 flex justify-around gap-2 mt-4" style="display:none;">
+            <button type="button" @click="applyFilter('original')" :class="activeFilter==='original'?'bg-brand text-white':'bg-gray-100 text-gray-700 dark:bg-[#252525] dark:text-gray-300'" class="flex-1 px-3 py-2 text-xs font-bold rounded-lg transition-all" x-text="t('vault.original')">Original</button>
+            <button type="button" @click="applyFilter('magic')"    :class="activeFilter==='magic'   ?'bg-brand text-white':'bg-gray-100 text-gray-700 dark:bg-[#252525] dark:text-gray-300'" class="flex-1 px-3 py-2 text-xs font-bold rounded-lg transition-all" x-text="t('vault.magic_scan')">Magic Scan</button>
+            <button type="button" @click="applyFilter('bw')"       :class="activeFilter==='bw'      ?'bg-brand text-white':'bg-gray-100 text-gray-700 dark:bg-[#252525] dark:text-gray-300'" class="flex-1 px-3 py-2 text-xs font-bold rounded-lg transition-all" x-text="t('vault.bw_doc')">B&amp;W Doc</button>
         </div>
 
         <div x-show="errorMessage" class="mt-3 bg-red-50 text-red-600 p-3 rounded-lg text-sm" x-text="errorMessage" style="display:none;"></div>
@@ -116,7 +116,7 @@
 
     <!-- Step 3: Back-side prompt -->
     <div x-show="step === 'back-prompt'" style="display:none"
-         class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
+         class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
         <div class="h-1 bg-gradient-to-r from-indigo-400 via-purple-500 to-brand"></div>
         <div class="p-8 text-center space-y-5">
         <div class="w-16 h-16 mx-auto bg-indigo-100 dark:bg-indigo-900/30 rounded-full flex items-center justify-center">

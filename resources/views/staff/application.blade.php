@@ -50,7 +50,7 @@
             <div class="w-full lg:w-[60%] flex flex-col space-y-6">
 
                 {{-- Appointment Info Card --}}
-                <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden animate-fade-up" style="animation-delay: 100ms">
+                <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden animate-fade-up" style="animation-delay: 100ms">
                     <div class="h-1 bg-gradient-to-r from-brand via-amber-500 to-accent"></div>
                     <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-slate-800/50 flex items-center gap-2">
                         <div class="w-1.5 h-5 rounded-full bg-brand dark:bg-indigo-400"></div>
@@ -97,7 +97,7 @@
                 </div>
 
                 {{-- Documents Section --}}
-                <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden animate-fade-up" style="animation-delay: 200ms">
+                <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden animate-fade-up" style="animation-delay: 200ms">
                     <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-slate-800/50 flex justify-between items-center">
                         <div class="flex items-center gap-2">
                             <div class="w-1.5 h-5 rounded-full bg-blue-500 dark:bg-blue-400"></div>
@@ -155,7 +155,7 @@
                 </div>
 
                 {{-- Timeline --}}
-                <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden animate-fade-up" style="animation-delay: 300ms">
+                <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden animate-fade-up" style="animation-delay: 300ms">
                     <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-slate-800/50 flex items-center gap-2">
                         <div class="w-1.5 h-5 rounded-full bg-emerald-500 dark:bg-emerald-400"></div>
                         <h3 class="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider" data-i18n="track.timeline">Status Timeline</h3>
@@ -182,7 +182,7 @@
                                         <div class="absolute ltr:left-[19px] rtl:right-[19px] top-10 bottom-0 w-0.5 bg-gray-100 dark:bg-slate-700"></div>
                                     @endif
                                     <div class="w-[40px] shrink-0 flex flex-col items-center pt-1 relative z-10">
-                                        <div class="w-10 h-10 rounded-full flex items-center justify-center {{ $tc['bg'] }} {{ $tc['icon_c'] }} shadow-sm ring-4 ring-white dark:ring-[#1e293b]">
+                                        <div class="w-10 h-10 rounded-full flex items-center justify-center {{ $tc['bg'] }} {{ $tc['icon_c'] }} shadow-sm ring-4 ring-white dark:ring-[#1F1F1F]">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">{!! $tc['icon'] !!}</svg>
                                         </div>
                                     </div>
@@ -224,7 +224,7 @@
                         $currBadge = $badgeColors[$application->current_status] ?? $badgeColors['submitted'];
                     @endphp
 
-                    <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden animate-fade-up" style="animation-delay: 400ms">
+                    <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden animate-fade-up" style="animation-delay: 400ms">
                         <div class="h-1 bg-gradient-to-r from-brand via-amber-500 to-accent"></div>
                         <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-slate-800/50">
                             <h3 class="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider text-center" data-i18n="staff.update_status">Update Status</h3>
@@ -258,7 +258,7 @@
                                                 </svg>
                                             </div>
                                             <select id="new_status" name="new_status" required x-model="status"
-                                                    class="block w-full h-[48px] ltr:pl-9 rtl:pr-9 rtl:pl-3 ltr:pr-3 rounded-xl border-gray-200 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 transition-all font-semibold text-sm">
+                                                    class="block w-full h-[48px] ltr:pl-9 rtl:pr-9 rtl:pl-3 ltr:pr-3 rounded-xl border-gray-200 dark:border-gray-600 dark:bg-[#141414] dark:text-white focus:border-brand focus:ring-0 transition-all font-semibold text-sm">
                                                 <option value="" data-i18n="common.choose">Choose...</option>
                                                 @foreach ($nextStatuses as $value => $label)
                                                     <option value="{{ $value }}" data-i18n="status.{{ $value }}">{{ $label }}</option>
@@ -270,7 +270,7 @@
                                     <div class="mb-5" x-show="status !== 'rejected'">
                                         <label for="notes" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5" data-i18n="staff.notes_for_citizen">Notes for the citizen</label>
                                         <textarea id="notes" name="notes" rows="3" x-model="notes"
-                                                  class="block w-full p-3 rounded-xl border-gray-200 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 transition-all text-sm resize-none"></textarea>
+                                                  class="block w-full p-3 rounded-xl border-gray-200 dark:border-gray-600 dark:bg-[#141414] dark:text-white focus:border-brand focus:ring-0 transition-all text-sm resize-none"></textarea>
                                         <p class="text-xs text-gray-400 dark:text-gray-500 mt-1" data-i18n="staff.notes_help">Visible on the citizen's public tracking page.</p>
                                     </div>
 
@@ -328,7 +328,7 @@
                                                 <textarea rows="4" x-model="notes" required x-ref="rejectNotes"
                                                           placeholder="Please explain why this application is being rejected..."
                                                           data-i18n-placeholder="staff.rejection_placeholder"
-                                                          class="block w-full p-3 rounded-xl border-gray-200 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-red-500 focus:ring-0 transition-all text-sm resize-none"></textarea>
+                                                          class="block w-full p-3 rounded-xl border-gray-200 dark:border-gray-600 dark:bg-[#141414] dark:text-white focus:border-red-500 focus:ring-0 transition-all text-sm resize-none"></textarea>
                                             </div>
                                             <div class="flex items-center justify-end gap-3">
                                                 <button type="button" x-on:click="$dispatch('close-modal', 'confirm-rejection')"
@@ -346,7 +346,7 @@
                                 </form>
                             @else
                                 <div class="w-full bg-gray-50 dark:bg-slate-800/50 border border-gray-200 dark:border-slate-700 rounded-2xl p-6 text-center">
-                                    <div class="w-12 h-12 bg-white dark:bg-[#0f172a] rounded-full mx-auto flex items-center justify-center mb-3 shadow-sm border border-gray-100 dark:border-gray-800">
+                                    <div class="w-12 h-12 bg-white dark:bg-[#141414] rounded-full mx-auto flex items-center justify-center mb-3 shadow-sm border border-gray-100 dark:border-gray-800">
                                         <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                                         </svg>

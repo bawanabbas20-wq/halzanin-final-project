@@ -17,7 +17,7 @@
     </div>
 
     {{-- Context banner --}}
-    <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-indigo-100 dark:border-amber-900/40 overflow-hidden animate-fade-up" style="animation-delay: 100ms">
+    <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-indigo-100 dark:border-amber-900/40 overflow-hidden animate-fade-up" style="animation-delay: 100ms">
         <div class="h-1 bg-gradient-to-r from-brand via-amber-500 to-accent"></div>
         <div class="p-5 flex items-center gap-4">
             <div class="w-10 h-10 bg-indigo-100 dark:bg-amber-900/30 rounded-xl flex items-center justify-center shrink-0">
@@ -44,7 +44,7 @@
     @endif
 
     {{-- Upload Form --}}
-    <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay: 200ms">
+    <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay: 200ms">
         <div class="h-1 bg-gradient-to-r from-amber-400 via-purple-500 to-brand"></div>
 
         <div class="px-6 py-4 border-b border-gray-100 dark:border-slate-800">

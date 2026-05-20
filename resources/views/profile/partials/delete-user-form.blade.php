@@ -1,4 +1,4 @@
-<section class="space-y-6">
+﻿<section class="space-y-6">
     <header>
         <h2 class="text-lg font-bold text-red-600 dark:text-red-400" data-i18n="profile.delete_account">
             {{ __('Delete Account') }}
@@ -16,7 +16,7 @@
     >{{ __('Delete Account') }}</button>
 
     <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
-        <form method="post" action="{{ route('profile.destroy') }}" class="p-6 bg-white dark:bg-[#1e293b]">
+        <form method="post" action="{{ route('profile.destroy') }}" class="p-6 bg-white dark:bg-[#1F1F1F]">
             @csrf
             @method('delete')
 
@@ -34,7 +34,7 @@
                     id="password"
                     name="password"
                     type="password"
-                    class="block w-3/4 h-[48px] rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-red-500 focus:ring-0 focus:shadow-[0_0_0_3px_rgba(239,68,68,0.2)] transition-all"
+                    class="block w-3/4 h-[48px] rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#141414] dark:text-white focus:border-red-500 focus:ring-0 focus:shadow-[0_0_0_3px_rgba(239,68,68,0.2)] transition-all"
                     placeholder="{{ __('Password') }}"
                     data-i18n-placeholder="auth.password"
                 />

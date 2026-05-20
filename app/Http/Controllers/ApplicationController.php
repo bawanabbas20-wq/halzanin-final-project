@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Application;
+use App\Models\Appointment;
+use App\Models\OffDay;
 use App\Models\StatusLog;
 use App\Notifications\ApplicationStatusChanged;
 use App\Services\WhatsAppService;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -33,13 +36,27 @@ class ApplicationController extends Controller
         return view('citizen.my-applications', compact('applications'));
     }
 
-    public function queue()
+    public function queue(Request $request)
     {
         $applications = Application::with(['user', 'appointment'])
             ->latest()
             ->paginate(15);
 
-        return view('staff.queue', compact('applications'));
+        $year = (int) $request->get('year', now()->year);
+        $month = (int) $request->get('month', now()->month);
+        $current = Carbon::createFromDate($year, $month, 1);
+        $viewMode = $request->get('view') === 'calendar' ? 'calendar' : 'queue';
+
+        $counts = Appointment::where('date', 'like', $current->format('Y-m') . '-%')
+            ->whereNotIn('status', ['cancelled'])
+            ->selectRaw('date, COUNT(*) as count')
+            ->groupBy('date')
+            ->pluck('count', 'date')
+            ->toArray();
+
+        $offDates = OffDay::offDatesForMonth($current->year, $current->month);
+
+        return view('staff.queue', compact('applications', 'current', 'counts', 'offDates', 'viewMode'));
     }
 
     public function show(Application $application)

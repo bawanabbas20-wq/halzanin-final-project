@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="font-outfit">
 <head>
     <meta charset="utf-8">
@@ -36,10 +36,10 @@
         }
     </script>
 </head>
-<body class="bg-[#f8fafc] dark:bg-[#0f172a] text-gray-900 dark:text-[#f1f5f9] antialiased transition-colors duration-200 min-h-screen flex flex-col">
+<body class="bg-[#f8fafc] dark:bg-[#141414] text-gray-900 dark:text-[#f1f5f9] antialiased transition-colors duration-200 min-h-screen flex flex-col">
 
     <!-- Header -->
-    <header class="bg-white dark:bg-[#1e293b] border-b border-gray-200 dark:border-slate-700 animate-fade-in z-50 sticky top-0">
+    <header class="bg-white dark:bg-[#1F1F1F] border-b border-gray-200 dark:border-slate-700 animate-fade-in z-50 sticky top-0">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
             <!-- Left: Logo & Brand -->
             <div class="flex items-center space-x-3 rtl:space-x-reverse">
@@ -50,7 +50,7 @@
             </div>
 
             <!-- Right: Toggles -->
-            <div class="flex items-center space-x-3 rtl:space-x-reverse bg-gray-50 dark:bg-[#0f172a] px-2 py-1 rounded-full border border-gray-200 dark:border-slate-700">
+            <div class="flex items-center space-x-3 rtl:space-x-reverse bg-gray-50 dark:bg-[#141414] px-2 py-1 rounded-full border border-gray-200 dark:border-slate-700">
                 <!-- Dark Mode Toggle -->
                 <button id="theme-toggle" class="p-1.5 rounded-full text-brand dark:text-[#f1f5f9] hover:bg-brand/10 dark:hover:bg-[#f1f5f9]/10 transition">
                     <svg id="theme-toggle-light-icon" class="hidden w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
@@ -77,7 +77,7 @@
 
         @if(!$application)
             <!-- Search & Scan Section -->
-            <div class="w-full max-w-[600px] bg-white dark:bg-[#1e293b] rounded-[16px] shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay: 200ms;">
+            <div class="w-full max-w-[600px] bg-white dark:bg-[#1F1F1F] rounded-[16px] shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-up" style="animation-delay: 200ms;">
                 <div class="h-1 bg-gradient-to-r from-brand via-indigo-500 to-accent"></div>
                 <div class="p-6">
                 <form action="javascript:void(0)" onsubmit="manualTrack()" class="flex flex-col gap-4">
@@ -114,7 +114,7 @@
         @endphp
 
         <!-- Application Info Card -->
-        <div class="w-full max-w-[600px] bg-white dark:bg-[#1e293b] rounded-[16px] shadow-sm border border-gray-100 dark:border-slate-800 mb-10 overflow-hidden animate-fade-up" style="animation-delay: 200ms;">
+        <div class="w-full max-w-[600px] bg-white dark:bg-[#1F1F1F] rounded-[16px] shadow-sm border border-gray-100 dark:border-slate-800 mb-10 overflow-hidden animate-fade-up" style="animation-delay: 200ms;">
             <div class="h-1 bg-gradient-to-r from-brand via-indigo-500 to-accent"></div>
             <div class="p-6">
                 <!-- Top Row -->
@@ -212,7 +212,7 @@
 
                         <!-- Left Column (Icon) -->
                         <div class="w-[40px] sm:w-[48px] shrink-0 flex flex-col items-center pt-1 relative z-10">
-                            <div class="w-9 h-9 sm:w-12 sm:h-12 rounded-full flex items-center justify-center {{ $bgColorClass }} {{ $iconColorClass }} shadow-sm ring-4 ring-[#f8fafc] dark:ring-[#0f172a]">
+                            <div class="w-9 h-9 sm:w-12 sm:h-12 rounded-full flex items-center justify-center {{ $bgColorClass }} {{ $iconColorClass }} shadow-sm ring-4 ring-[#f8fafc] dark:ring-[#141414]">
                                 <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">{!! $iconSvg !!}</svg>
                             </div>
                         </div>
@@ -226,7 +226,7 @@
                                 {{ $log->created_at->format('M d, Y h:i A') }}
                             </p>
                             @if($log->notes)
-                                <div class="mt-2 text-sm text-gray-600 dark:text-gray-300 italic bg-white dark:bg-[#1e293b] p-3 rounded-[8px] border border-gray-100 dark:border-slate-700 shadow-sm">
+                                <div class="mt-2 text-sm text-gray-600 dark:text-gray-300 italic bg-white dark:bg-[#1F1F1F] p-3 rounded-[8px] border border-gray-100 dark:border-slate-700 shadow-sm">
                                     "{{ $log->notes }}"
                                 </div>
                             @endif
@@ -261,7 +261,7 @@
                     <p class="text-brand dark:text-indigo-300 text-sm font-medium text-center sm:text-left sm:rtl:text-right mb-3 sm:mb-0">
                         <span data-i18n="track.processing">Your application is being processed. Check back later for updates.</span>
                     </p>
-                    <button onclick="window.location.reload()" class="shrink-0 px-4 py-2 bg-white dark:bg-[#1e293b] border border-indigo-200 dark:border-indigo-700 rounded-[8px] text-xs font-semibold text-brand dark:text-indigo-300 hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors flex items-center">
+                    <button onclick="window.location.reload()" class="shrink-0 px-4 py-2 bg-white dark:bg-[#1F1F1F] border border-indigo-200 dark:border-indigo-700 rounded-[8px] text-xs font-semibold text-brand dark:text-indigo-300 hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors flex items-center">
                         <svg class="w-3.5 h-3.5 ltr:mr-1.5 rtl:ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
                         <span data-i18n="track.refresh">Refresh Status</span>
                     </button>
@@ -283,7 +283,7 @@
 
     <!-- QR Code Scanner Modal -->
     <div id="qrModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
-        <div class="bg-white dark:bg-[#1e293b] rounded-[24px] shadow-2xl p-6 w-[90%] max-w-[400px] transform scale-95 transition-transform duration-300 relative" id="qrModalContent">
+        <div class="bg-white dark:bg-[#1F1F1F] rounded-[24px] shadow-2xl p-6 w-[90%] max-w-[400px] transform scale-95 transition-transform duration-300 relative" id="qrModalContent">
             <button type="button" onclick="stopScanner()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors z-10">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>

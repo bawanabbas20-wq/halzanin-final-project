@@ -1,4 +1,4 @@
-<x-halzanin-auth-layout>
+﻿<x-halzanin-auth-layout>
 
     <div class="w-full">
         <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-brand/5 dark:bg-brand/10 rounded-full mb-4">
@@ -20,11 +20,11 @@
                 </div>
                 <input id="password" type="password" name="password" required autocomplete="current-password"
                        placeholder="Password" data-i18n-placeholder="auth.password"
-                       class="block w-full h-[48px] ltr:pl-11 rtl:pr-11 rtl:pl-4 ltr:pr-4 rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#0f172a] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#D6E4F5] dark:focus:shadow-[0_0_0_3px_rgba(74,130,196,0.3)] transition-all duration-200">
+                       class="block w-full h-[48px] ltr:pl-11 rtl:pr-11 rtl:pl-4 ltr:pr-4 rounded-[10px] border-gray-300 dark:border-gray-600 dark:bg-[#141414] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#D6E4F5] dark:focus:shadow-[0_0_0_3px_rgba(74,130,196,0.3)] transition-all duration-200">
                 <x-input-error :messages="$errors->get('password')" class="mt-1" />
             </div>
 
-            <button type="submit" class="w-full h-[52px] bg-brand text-white rounded-[10px] font-semibold font-outfit shadow-brand-btn hover:shadow-brand-btn-hover hover:-translate-y-[1px] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand dark:focus:ring-offset-[#1e293b]" data-i18n="auth.confirm_btn">
+            <button type="submit" class="w-full h-[52px] bg-brand text-white rounded-[10px] font-semibold font-outfit shadow-brand-btn hover:shadow-brand-btn-hover hover:-translate-y-[1px] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand dark:focus:ring-offset-[#1F1F1F]" data-i18n="auth.confirm_btn">
                 Confirm Password
             </button>
         </form>

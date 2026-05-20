@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="font-outfit">
     <head>
         <meta charset="utf-8">
@@ -88,10 +88,6 @@
                         <a href="{{ route('staff.queue') }}" class="{{ request()->routeIs('staff.queue') ? $navActive : $navInactive }} {{ $navBase }}">
                             <svg class="w-5 h-5 shrink-0 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                             <span data-i18n="nav.queue">Application Queue</span>
-                        </a>
-                        <a href="{{ route('staff.calendar') }}" class="{{ request()->routeIs('staff.calendar') ? $navActive : $navInactive }} {{ $navBase }}">
-                            <svg class="w-5 h-5 shrink-0 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                            <span data-i18n="nav.calendar">Appointments Calendar</span>
                         </a>
                         @if(auth()->user()->hasPermission('scan_qr_checkin'))
                         <a href="{{ route('staff.scan') }}" class="{{ request()->routeIs('staff.scan') ? $navActive : $navInactive }} {{ $navBase }}">
@@ -325,7 +321,7 @@
             </div>
 
             <!-- Mobile Bottom Nav -->
-            <div class="lg:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-800 border-t border-gray-200 dark:border-slate-700 flex items-center justify-around pb-safe pt-2 px-2 z-50 h-[68px] shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+            <div class="lg:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-[#1F1F1F] border-t border-gray-200 dark:border-[#2E2E2E] flex items-center justify-around pb-safe pt-2 px-2 z-50 h-[68px] shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
                 @if(auth()->user()->role === 'admin')
                     <a href="{{ route('admin.dashboard') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('admin.dashboard') ? 'text-brand dark:text-blue-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
@@ -351,10 +347,6 @@
                     <a href="{{ route('staff.queue') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('staff.queue') ? 'text-brand dark:text-blue-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                         <span class="text-[10px] font-semibold" data-i18n="nav.queue">Queue</span>
-                    </a>
-                    <a href="{{ route('staff.calendar') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('staff.calendar') ? 'text-brand dark:text-blue-400' : 'text-gray-400 hover:text-brand' }}">
-                        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                        <span class="text-[10px] font-semibold" data-i18n="nav.calendar_short">Calendar</span>
                     </a>
                     <a href="{{ route('profile.edit') }}" class="flex flex-col items-center justify-center w-full h-full {{ request()->routeIs('profile.edit') ? 'text-brand dark:text-blue-400' : 'text-gray-400 hover:text-brand' }}">
                         <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
@@ -543,7 +535,7 @@
             {{-- Chat Window (hidden by default) --}}
             <div id="chatbot-window"
                  style="display:none;width:340px;max-width:90vw;height:480px;background:#ffffff;border-radius:16px;box-shadow:0 25px 50px -12px rgba(0,0,0,0.25);display:none;flex-direction:column;overflow:hidden;border:1px solid rgba(0,0,0,0.06);"
-                 class="dark:[background:#1e293b] animate-fade-in">
+                 class="dark:[background:#1F1F1F] animate-fade-in">
 
                 {{-- Header --}}
                 <div style="background:#1B4F8A;padding:14px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0;">
@@ -585,7 +577,7 @@
                                   rows="1"
                                   onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChatMessage();}"
                                   oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,88)+'px';"
-                                  style="flex:1;resize:none;border:1.5px solid #e2e8f0;border-radius:10px;padding:10px 12px;font-size:13px;font-family:Outfit,sans-serif;outline:none;background:#f8fafc;color:#1e293b;max-height:88px;line-height:1.4;transition:border-color 0.2s;"
+                                  style="flex:1;resize:none;border:1.5px solid #e2e8f0;border-radius:10px;padding:10px 12px;font-size:13px;font-family:Outfit,sans-serif;outline:none;background:#f8fafc;color:#1F1F1F;max-height:88px;line-height:1.4;transition:border-color 0.2s;"
                                   onfocus="this.style.borderColor='#1B4F8A'" onblur="this.style.borderColor='#e2e8f0'"></textarea>
                         <button onclick="sendChatMessage()" id="chatbot-send"
                                 style="width:40px;height:40px;border-radius:10px;background:#1B4F8A;border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform 0.15s,opacity 0.15s;"
@@ -637,7 +629,7 @@
             .chat-msg-ai {
                 align-self: flex-start;
                 background: #f1f5f9;
-                color: #1e293b;
+                color: #1F1F1F;
                 padding: 9px 13px;
                 border-radius: 14px 14px 14px 4px;
                 font-size: 13px;
@@ -667,7 +659,7 @@
             html.dark #chatbot-window { background:#1F1F1F !important; }
             html.dark #chatbot-input  { background:#141414 !important; border-color:#2E2E2E !important; color:#f1f5f9 !important; }
             html.dark .chat-quick-btn {
-                background: #0f172a;
+                background: #141414;
                 border-color: #334155;
                 color: #cbd5e1;
             }
