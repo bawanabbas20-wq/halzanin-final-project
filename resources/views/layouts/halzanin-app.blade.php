@@ -6,6 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'Halzanîn') }}</title>
+        <link rel="icon" type="image/png" href="{{ asset('images/halzanin-logo.png') }}">
 
         <!-- Google Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,7 +46,7 @@
             <aside class="hidden lg:flex lg:flex-col w-56 bg-white dark:bg-[#1F1F1F] border-r border-stone-200 dark:border-slate-800 flex-shrink-0 relative z-30">
                 <!-- Logo -->
                 <div class="flex items-center gap-3 px-5 py-4 border-b border-stone-100 dark:border-slate-800">
-                    <img src="{{ asset('images/halzanin-logo.png') }}" alt="Halzanîn" class="h-10 w-auto">
+                    <img src="{{ asset('images/halzanin-logo.png') }}" alt="Halzanîn" class="h-14 w-auto">
                 </div>
 
                 <!-- Navigation Links -->
