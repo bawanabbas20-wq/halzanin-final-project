@@ -1,10 +1,10 @@
 /.phpunit.cache
 /node_modules
 # /public/build  — committed so Hostinger gets compiled assets without Node.js
+# /vendor        — committed so Hostinger gets dependencies without needing composer via SSH
 /public/hot
 /public/storage
 /storage/*.key
-/vendor
 .env
 .env.backup
 .env.production
