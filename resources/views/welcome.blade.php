@@ -1,16 +1,17 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Halzanin | Passport Services</title>
+    <meta name="description" content="Halzanîn — Kurdistan Government Services Portal. Submit applications, book appointments, and track your status for all government services online.">
+    <title>Halzanîn | Kurdistan Government Services Portal</title>
     <link rel="icon" type="image/png" href="{{ asset('images/halzanin-logo.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
 
-    {{-- Apply theme & language before first paint to prevent flash --}}
+    {{-- Apply theme & language before first paint --}}
     <script>
         (function() {
             if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -28,26 +29,28 @@
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --bg:          #EFEDE8;
-            --card:        #ffffff;
-            --text:        #111111;
-            --muted:       #6B6860;
-            --brand:       #1B4F8A;
-            --brand-dark:  #163F6E;
-            --brand-light: #4A82C4;
-            --line:        #DDD9D0;
-            --brand-glow:  rgba(27,79,138,0.30);
+            --bg:           #EFEDE8;
+            --card:         #ffffff;
+            --text:         #111111;
+            --muted:        #6B6860;
+            --brand:        #1B4F8A;
+            --brand-dark:   #163F6E;
+            --brand-light:  #4A82C4;
+            --line:         #DDD9D0;
+            --brand-glow:   rgba(27,79,138,0.28);
+            --card-shadow:  0 2px 16px rgba(0,0,0,0.05);
         }
         html.dark {
-            --bg:          #141414;
-            --card:        #1F1F1F;
-            --text:        #F0EEE9;
-            --muted:       #9E9B94;
-            --brand:       #4A82C4;
-            --brand-dark:  #3A6BA8;
-            --brand-light: #6B9FD4;
-            --line:        #2E2E2E;
-            --brand-glow:  rgba(74,130,196,0.30);
+            --bg:           #141414;
+            --card:         #1F1F1F;
+            --text:         #F0EEE9;
+            --muted:        #9E9B94;
+            --brand:        #4A82C4;
+            --brand-dark:   #3A6BA8;
+            --brand-light:  #6B9FD4;
+            --line:         #2E2E2E;
+            --brand-glow:   rgba(74,130,196,0.28);
+            --card-shadow:  0 2px 16px rgba(0,0,0,0.3);
         }
 
         html { scroll-behavior: smooth; }
@@ -61,7 +64,7 @@
         }
         html[lang="ku"] body, html[dir="rtl"] body { font-family: "Noto Naskh Arabic", serif; }
 
-        /* ─── Layout container ─── */
+        /* ─── Layout ─── */
         .w-container { width: min(1200px, calc(100% - 48px)); margin: 0 auto; }
 
         /* ─── Topbar ─── */
@@ -69,318 +72,350 @@
             position: sticky; top: 0; z-index: 40;
             background: rgba(239,237,232,0.92);
             backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             border-bottom: 1px solid var(--line);
             transition: background 0.2s, border-color 0.2s;
         }
         html.dark .w-topbar { background: rgba(20,20,20,0.92); }
 
-        .w-nav {
-            min-height: 72px;
-            display: flex; align-items: center; gap: 24px;
-        }
+        .w-nav { min-height: 72px; display: flex; align-items: center; gap: 24px; }
 
-        /* Brand */
         .w-brand { display: inline-flex; align-items: center; gap: 14px; text-decoration: none; flex-shrink: 0; }
         .w-brand img { height: 48px; width: auto; transition: transform 0.2s; }
         .w-brand:hover img { transform: scale(1.04); }
         .w-brand-text { font-family: "Outfit", sans-serif; line-height: 1.15; }
         .w-brand-text strong { display: block; font-size: 22px; font-weight: 800; letter-spacing: -0.01em; color: var(--text); }
-        .w-brand-text small { display: block; font-size: 11px; color: var(--muted); font-weight: 600; }
+        .w-brand-text small { display: block; font-size: 11px; color: var(--muted); font-weight: 600; letter-spacing: 0.02em; }
 
-        /* Nav links */
-        .w-menu { display: flex; gap: 28px; align-items: center; font-size: 14px; font-weight: 700; }
+        .w-menu { display: flex; gap: 28px; align-items: center; font-size: 14px; font-weight: 600; }
         .w-menu a { color: var(--muted); text-decoration: none; transition: color .15s; }
         .w-menu a:hover { color: var(--brand); }
 
-        /* Right side */
         .w-nav-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+        html[dir="rtl"] .w-nav-right { margin-left: unset; margin-right: auto; }
 
         /* ─── Toggles ─── */
         .w-toggles {
             display: flex; align-items: center; gap: 4px;
-            background: var(--card);
-            border: 1.5px solid var(--line);
-            border-radius: 999px;
-            padding: 4px 5px;
+            background: var(--card); border: 1.5px solid var(--line);
+            border-radius: 999px; padding: 4px 5px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.07);
             transition: background 0.2s, border-color 0.2s;
         }
-
-        /* Dark-mode toggle button */
         .w-theme-btn {
             width: 34px; height: 34px; border-radius: 50%;
             background: none; border: none; cursor: pointer;
             display: flex; align-items: center; justify-content: center;
-            color: var(--muted);
-            transition: background 0.18s, color 0.18s;
-            flex-shrink: 0;
+            color: var(--muted); transition: background 0.18s, color 0.18s; flex-shrink: 0;
         }
         .w-theme-btn:hover { background: rgba(27,79,138,0.1); color: #1B4F8A; }
         html.dark .w-theme-btn:hover { background: rgba(74,130,196,0.15); color: #4A82C4; }
-        html.dark .w-theme-btn { color: #9E9B94; }
         .w-theme-btn svg { width: 17px; height: 17px; }
 
-        /* Divider */
         .w-divider { width: 1px; height: 20px; background: var(--line); margin: 0 2px; flex-shrink: 0; }
 
-        /* Language segmented control */
-        .w-lang-seg {
-            display: flex; align-items: center;
-            background: rgba(27,79,138,0.06);
-            border-radius: 999px; padding: 3px; gap: 2px;
-        }
+        .w-lang-seg { display: flex; align-items: center; background: rgba(27,79,138,0.06); border-radius: 999px; padding: 3px; gap: 2px; }
         html.dark .w-lang-seg { background: rgba(74,130,196,0.1); }
-
-        .w-lang-opt {
-            border: none; cursor: pointer; border-radius: 999px;
-            padding: 5px 11px; font-size: 12px; font-weight: 700;
-            transition: all 0.2s; color: var(--muted); background: none;
-            line-height: 1; white-space: nowrap;
-        }
-        .w-lang-opt.w-lang-active {
-            background: #1B4F8A; color: #fff;
-            box-shadow: 0 2px 8px rgba(27,79,138,0.35);
-        }
+        .w-lang-opt { border: none; cursor: pointer; border-radius: 999px; padding: 5px 11px; font-size: 12px; font-weight: 700; transition: all 0.2s; color: var(--muted); background: none; line-height: 1; white-space: nowrap; }
+        .w-lang-opt.w-lang-active { background: #1B4F8A; color: #fff; box-shadow: 0 2px 8px rgba(27,79,138,0.35); }
         html.dark .w-lang-opt.w-lang-active { background: #4A82C4; box-shadow: 0 2px 8px rgba(74,130,196,0.35); }
         .w-lang-opt:not(.w-lang-active):hover { color: #1B4F8A; background: rgba(27,79,138,0.08); }
         html.dark .w-lang-opt:not(.w-lang-active):hover { color: #4A82C4; background: rgba(74,130,196,0.1); }
 
-        /* Action buttons */
         .w-btn {
             border-radius: 999px; padding: 10px 22px;
             font-family: "Outfit", sans-serif; font-size: 14px; font-weight: 700;
             text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
-            cursor: pointer; transition: all .2s ease; border: none;
+            cursor: pointer; transition: all .2s ease; border: none; white-space: nowrap;
         }
-        .w-btn-outline {
-            background: var(--card); border: 1.5px solid var(--line); color: var(--text);
-        }
+        .w-btn-outline { background: var(--card); border: 1.5px solid var(--line); color: var(--text); }
         .w-btn-outline:hover { border-color: var(--brand); color: var(--brand); }
-        .w-btn-primary {
-            background: #1B4F8A; color: #fff;
-            box-shadow: 0 6px 18px rgba(27,79,138,0.32);
-        }
+        .w-btn-primary { background: #1B4F8A; color: #fff; box-shadow: 0 6px 18px rgba(27,79,138,0.32); }
         html.dark .w-btn-primary { background: #4A82C4; box-shadow: 0 6px 18px rgba(74,130,196,0.32); }
         .w-btn-primary:hover { background: #163F6E; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(27,79,138,0.40); }
         html.dark .w-btn-primary:hover { background: #3A6BA8; }
 
-        /* ─── Hero ─── */
-        .w-hero-wrap { padding: 48px 0 40px; }
+        /* ─── Section base ─── */
+        .w-section { padding: 72px 0; }
+        .w-section-sm { padding: 56px 0; }
+        .w-section-head { margin-bottom: 48px; }
+        .w-section-head h2 { font-size: clamp(26px, 3vw, 38px); font-weight: 800; letter-spacing: -0.025em; color: var(--text); margin-bottom: 10px; }
+        .w-section-sub { color: var(--muted); max-width: 60ch; line-height: 1.8; font-size: 16px; }
+        .w-alt-bg { background: var(--card); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 
-        .w-hero {
-            position: relative;
-            border-radius: 28px;
-            background: var(--card);
-            border: 1px solid var(--line);
-            overflow: hidden;
-            box-shadow: 0 4px 32px rgba(0,0,0,0.05);
-        }
-        html.dark .w-hero { box-shadow: 0 4px 32px rgba(0,0,0,0.3); }
-
-        /* Subtle dot pattern */
-        .w-hero::before {
-            content: "";
-            position: absolute; inset: 0;
-            background-image: radial-gradient(circle, rgba(27,79,138,0.65) 1px, transparent 1px);
-            background-size: 28px 28px;
-            opacity: 0.06;
-            pointer-events: none;
-        }
-
-        /* Split layout */
-        .w-hero-grid {
-            display: grid;
-            grid-template-columns: 1fr 420px;
-            align-items: center;
-            min-height: 500px;
-        }
-
-        /* Left: text */
-        .w-hero-text { padding: 68px 60px 60px; position: relative; z-index: 2; }
-
-        /* Right: passport visual */
-        .w-hero-visual {
-            position: relative;
-            display: flex; align-items: center; justify-content: center;
-            min-height: 500px;
-            padding: 40px;
-            overflow: hidden;
-        }
-        /* Background glow behind passports */
-        .w-hero-visual::before {
-            content: "";
-            position: absolute;
-            width: 320px; height: 320px;
-            background: radial-gradient(circle, rgba(27,79,138,0.12) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-        }
-        html.dark .w-hero-visual::before { background: radial-gradient(circle, rgba(74,130,196,0.15) 0%, transparent 70%); }
-
-        /* Passport showcase */
-        .w-passport-stage { position: relative; width: 290px; height: 390px; }
-
-        .w-passport-img {
-            position: absolute;
-            border-radius: 8px;
-            object-fit: cover;
-            box-shadow: 0 20px 56px rgba(0,0,0,0.28), 0 4px 12px rgba(0,0,0,0.12);
-            transition: transform 0.3s ease;
-        }
-        /* Blue (main) — center, front */
-        .w-passport-blue {
-            width: 188px; height: 265px;
-            top: 62px; left: 51px; z-index: 3;
-        }
-        /* Dark — left, rotated back */
-        .w-passport-dark {
-            width: 152px; height: 215px;
-            top: 108px; left: -12px; z-index: 2;
-            transform: rotate(-11deg);
-            opacity: 0.85;
-        }
-        /* Red — right, rotated back */
-        .w-passport-red {
-            width: 152px; height: 215px;
-            top: 95px; right: -14px; z-index: 2;
-            transform: rotate(10deg);
-            opacity: 0.85;
-        }
-        .w-passport-stage:hover .w-passport-dark { transform: rotate(-14deg) translateX(-6px); }
-        .w-passport-stage:hover .w-passport-red  { transform: rotate(13deg)  translateX(6px);  }
-        .w-passport-stage:hover .w-passport-blue { transform: translateY(-4px); }
-
-        /* Badge */
         .w-kicker {
             display: inline-flex; align-items: center; gap: 8px;
             background: rgba(27,79,138,0.08); border: 1px solid rgba(27,79,138,0.18);
             border-radius: 999px; padding: 6px 14px;
             font-size: 12px; font-weight: 700; letter-spacing: .3px; text-transform: uppercase;
-            color: #1B4F8A; margin-bottom: 20px;
+            color: #1B4F8A; margin-bottom: 18px;
         }
         html.dark .w-kicker { color: #4A82C4; background: rgba(74,130,196,0.1); border-color: rgba(74,130,196,0.25); }
-        .w-kicker-dot { width: 6px; height: 6px; border-radius: 50%; background: #1B4F8A; animation: kickerPulse 2s ease-in-out infinite; flex-shrink: 0; }
-        html.dark .w-kicker-dot { background: #4A82C4; }
-        @keyframes kickerPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.35;transform:scale(1.6)} }
+        .w-kicker-icon { flex-shrink: 0; color: #1B4F8A; display: block; }
+        html.dark .w-kicker-icon { color: #4A82C4; }
 
-        /* Hero heading */
-        .w-h1 {
-            font-size: clamp(36px, 4.2vw, 58px);
-            font-weight: 800; line-height: 1.06; letter-spacing: -0.025em;
-            color: var(--text); max-width: 14ch; margin-bottom: 20px;
+        /* ─── Announcement bar ─── */
+        .w-announce {
+            background: #1B4F8A; color: rgba(255,255,255,0.93);
+            padding: 10px 52px; text-align: center; font-size: 12.5px; font-weight: 600;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            position: relative; line-height: 1.45; letter-spacing: 0.01em;
         }
+        html.dark .w-announce { background: #122f52; }
+        .w-announce-dismiss {
+            position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+            background: none; border: none; color: rgba(255,255,255,0.6); cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            width: 26px; height: 26px; border-radius: 50%;
+            transition: background 0.15s, color 0.15s;
+        }
+        .w-announce-dismiss:hover { background: rgba(255,255,255,0.18); color: #fff; }
+        @media (max-width: 640px) { .w-announce { padding-left: 14px; font-size: 11.5px; } }
+
+        /* ─── Hero ─── */
+        .w-hero-wrap { padding: 44px 0 36px; }
+        .w-hero {
+            position: relative; border-radius: 28px;
+            background: var(--card); border: 1px solid var(--line); overflow: hidden;
+            box-shadow: 0 4px 40px rgba(0,0,0,0.06);
+        }
+        html.dark .w-hero { box-shadow: 0 4px 40px rgba(0,0,0,0.35); }
+        .w-hero::before {
+            content: ""; position: absolute; inset: 0;
+            background-image: radial-gradient(circle, rgba(27,79,138,0.6) 1px, transparent 1px);
+            background-size: 28px 28px; opacity: 0.055; pointer-events: none;
+        }
+        .w-hero-grid { display: grid; grid-template-columns: 1fr 460px; align-items: center; min-height: 520px; }
+        .w-hero-text { padding: 68px 60px 60px; position: relative; z-index: 2; }
+
+        /* Hero image panel */
+        .w-hero-visual {
+            position: relative; min-height: 520px; overflow: hidden;
+            background: linear-gradient(155deg, #0B2545 0%, #1B4F8A 52%, #0d3a6e 100%);
+        }
+        .w-hero-visual::before {
+            content: ""; position: absolute; inset: 0;
+            background-image: radial-gradient(circle, rgba(255,255,255,0.055) 1px, transparent 1px);
+            background-size: 22px 22px; pointer-events: none; z-index: 0;
+        }
+        .w-hero-img-wrap { position: absolute; inset: 0; z-index: 1; }
+        .w-hero-img {
+            width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;
+            opacity: 0.4;
+        }
+        html.dark .w-hero-img { opacity: 0.24; }
+        .w-hero-img-fade {
+            position: absolute; inset: 0; pointer-events: none;
+            background: linear-gradient(to right, var(--card) 0%, transparent 44%),
+                        linear-gradient(to top, rgba(11,37,69,0.52) 0%, transparent 38%);
+        }
+        html.dark .w-hero-img-fade {
+            background: linear-gradient(to right, #1F1F1F 0%, transparent 44%),
+                        linear-gradient(to top, rgba(5,16,32,0.72) 0%, transparent 38%);
+        }
+        .w-hero-img-badge {
+            position: absolute; bottom: 22px; right: 22px; z-index: 3;
+            background: rgba(255,255,255,0.11); backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 999px;
+            padding: 7px 14px; display: flex; align-items: center; gap: 7px;
+            color: rgba(255,255,255,0.88); font-size: 11.5px; font-weight: 600; pointer-events: none;
+        }
+
+        /* ─── Trust strip ─── */
+        .w-trust-strip {
+            border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+            background: var(--card);
+        }
+        .w-trust-items { display: flex; align-items: stretch; justify-content: center; }
+        .w-trust-item {
+            display: flex; align-items: center; gap: 10px;
+            padding: 15px 36px; font-size: 13px; font-weight: 600; color: var(--muted);
+            white-space: nowrap;
+        }
+        .w-trust-item svg { flex-shrink: 0; color: #1B4F8A; }
+        html.dark .w-trust-item svg { color: #4A82C4; }
+        .w-trust-item strong { color: var(--text); font-weight: 700; margin-right: 2px; }
+        .w-trust-sep { width: 1px; background: var(--line); margin: 10px 0; flex-shrink: 0; }
+
+        /* Hero typography */
+        .w-h1 { font-size: clamp(34px, 4vw, 56px); font-weight: 800; line-height: 1.06; letter-spacing: -0.025em; color: var(--text); max-width: 16ch; margin-bottom: 18px; }
         .w-h1 .accent { color: #1B4F8A; }
         html.dark .w-h1 .accent { color: #4A82C4; }
+        .w-subtitle { font-size: 16px; line-height: 1.8; color: var(--muted); max-width: 48ch; }
+        .w-cta { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 10px; }
 
-        .w-subtitle { font-size: 16px; line-height: 1.78; color: var(--muted); max-width: 50ch; }
-
-        .w-cta { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 12px; }
-
-        /* Stats strip */
-        .w-stats {
-            margin-top: 44px;
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 440px;
-        }
-        .w-stat {
-            background: var(--bg); border: 1px solid var(--line);
-            border-radius: 14px; padding: 16px 18px;
-        }
-        .w-stat strong { display: block; font-size: 22px; font-weight: 800; color: #1B4F8A; margin-bottom: 3px; }
+        /* Hero stats */
+        .w-stats { margin-top: 40px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .w-stat { background: var(--bg); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
+        .w-stat strong { display: block; font-size: 20px; font-weight: 800; color: #1B4F8A; margin-bottom: 3px; }
         html.dark .w-stat strong { color: #4A82C4; }
-        .w-stat span { font-size: 12px; color: var(--muted); font-weight: 600; }
+        .w-stat span { font-size: 11px; color: var(--muted); font-weight: 600; line-height: 1.3; display: block; }
 
-        /* ─── Sections ─── */
-        .w-section { padding: 64px 0; }
-        .w-section h2 { font-size: clamp(26px, 3vw, 38px); font-weight: 800; letter-spacing: -0.025em; color: var(--text); margin-bottom: 10px; }
-        .w-section-sub { color: var(--muted); max-width: 62ch; line-height: 1.75; font-size: 16px; margin-bottom: 40px; }
+        /* ─── Ministries ─── */
+        .w-min-grid { display: grid; gap: 20px; grid-template-columns: repeat(3, 1fr); }
+        .w-min-card {
+            background: var(--card); border: 1px solid var(--line); border-radius: 20px;
+            overflow: hidden; box-shadow: var(--card-shadow);
+            transition: box-shadow .25s, transform .25s;
+        }
+        .w-min-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.1); transform: translateY(-3px); }
+        html.dark .w-min-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.4); }
+        .w-min-header {
+            padding: 22px 22px 16px;
+            border-bottom: 1px solid var(--line);
+            display: flex; align-items: flex-start; gap: 14px;
+        }
+        .w-min-icon {
+            width: 46px; height: 46px; border-radius: 13px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .w-min-icon svg { width: 22px; height: 22px; }
+        .w-min-title { flex: 1; min-width: 0; }
+        .w-min-title h3 { font-size: 16px; font-weight: 700; color: var(--text); letter-spacing: -0.01em; line-height: 1.3; }
+        .w-min-title span { font-size: 12px; color: var(--muted); font-weight: 500; font-family: "Noto Naskh Arabic", serif; }
+        .w-min-services { padding: 16px 22px 20px; display: flex; flex-direction: column; gap: 8px; }
+        .w-svc-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--line); }
+        .w-svc-row:last-child { border-bottom: none; }
+        .w-svc-name { font-size: 13px; color: var(--text); font-weight: 500; flex: 1; min-width: 0; }
+        .w-soon-pill {
+            display: inline-flex; align-items: center; gap: 4px;
+            background: rgba(107,104,96,0.08); border: 1px solid var(--line);
+            border-radius: 999px; padding: 3px 9px;
+            font-size: 10px; font-weight: 700; letter-spacing: .3px; text-transform: uppercase;
+            color: var(--muted); flex-shrink: 0; white-space: nowrap;
+        }
+        html.dark .w-soon-pill { background: rgba(255,255,255,0.05); }
+        .w-min-footer { padding: 14px 22px; background: var(--bg); border-top: 1px solid var(--line); }
+        .w-min-count { font-size: 12px; color: var(--muted); font-weight: 600; }
 
-        /* ─── Service cards ─── */
-        .w-card-grid { display: grid; gap: 16px; grid-template-columns: repeat(3, 1fr); }
-        .w-card {
-            background: var(--card); border: 1px solid var(--line);
-            border-radius: 20px; padding: 28px 24px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-            transition: box-shadow .2s, transform .2s;
+        /* ─── How It Works ─── */
+        .w-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; position: relative; }
+        .w-steps::before {
+            content: ""; position: absolute; top: 26px; left: 52px; right: 52px; height: 2px;
+            background: linear-gradient(to right, rgba(27,79,138,0.25), rgba(27,79,138,0.05));
+            pointer-events: none;
         }
-        .w-card:hover { box-shadow: 0 10px 32px rgba(27,79,138,0.12); transform: translateY(-3px); }
-        html.dark .w-card:hover { box-shadow: 0 10px 32px rgba(74,130,196,0.15); }
-        .w-card-icon {
-            width: 44px; height: 44px; border-radius: 12px;
-            background: rgba(27,79,138,0.08);
-            display: flex; align-items: center; justify-content: center; margin-bottom: 16px;
-        }
-        html.dark .w-card-icon { background: rgba(74,130,196,0.12); }
-        .w-card-icon svg { width: 22px; height: 22px; stroke: #1B4F8A; }
-        html.dark .w-card-icon svg { stroke: #4A82C4; }
-        .w-tag {
-            display: inline-block;
-            background: rgba(27,79,138,0.08); color: #163F6E;
-            border-radius: 999px; padding: 3px 10px;
-            font-size: 11px; font-weight: 700; letter-spacing: .3px; text-transform: uppercase;
-            margin-bottom: 12px;
-        }
-        html.dark .w-tag { color: #6B9FD4; background: rgba(74,130,196,0.1); }
-        .w-card h3 { font-size: 18px; font-weight: 700; color: var(--text); letter-spacing: -0.01em; margin-bottom: 10px; }
-        .w-card p  { color: var(--muted); line-height: 1.75; font-size: 14px; }
-
-        /* ─── Alt section (How It Works) ─── */
-        .w-alt-bg {
-            background: var(--card);
-            border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
-        }
-
-        /* Timeline */
-        .w-timeline { display: flex; flex-direction: column; max-width: 680px; }
-        .w-timeline-item { display: flex; gap: 28px; padding-bottom: 36px; }
-        .w-timeline-item:last-child { padding-bottom: 0; }
-        .w-timeline-left { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; width: 52px; }
-        .w-timeline-num {
+        html[dir="rtl"] .w-steps::before { background: linear-gradient(to left, rgba(27,79,138,0.25), rgba(27,79,138,0.05)); }
+        html.dark .w-steps::before { background: linear-gradient(to right, rgba(74,130,196,0.25), rgba(74,130,196,0.05)); }
+        .w-step { text-align: center; position: relative; }
+        .w-step-num {
             width: 52px; height: 52px; border-radius: 50%;
             background: #1B4F8A; color: #fff;
             display: flex; align-items: center; justify-content: center;
             font-size: 20px; font-weight: 800;
-            box-shadow: 0 4px 14px rgba(27,79,138,0.35);
-            flex-shrink: 0; position: relative; z-index: 1;
+            box-shadow: 0 4px 16px rgba(27,79,138,0.35);
+            margin: 0 auto 16px; position: relative; z-index: 1;
         }
-        html.dark .w-timeline-num { background: #4A82C4; box-shadow: 0 4px 14px rgba(74,130,196,0.35); }
-        .w-timeline-line { width: 2px; flex: 1; min-height: 24px; margin-top: 6px; background: linear-gradient(to bottom, rgba(27,79,138,0.4), rgba(27,79,138,0.04)); }
-        html.dark .w-timeline-line { background: linear-gradient(to bottom, rgba(74,130,196,0.4), rgba(74,130,196,0.04)); }
-        .w-timeline-item:last-child .w-timeline-line { display: none; }
-        .w-timeline-content { flex: 1; padding-top: 12px; }
-        .w-timeline-content h3 { font-size: 18px; font-weight: 700; color: var(--text); letter-spacing: -0.01em; margin-bottom: 6px; }
-        .w-timeline-content p  { color: var(--muted); line-height: 1.75; font-size: 15px; }
+        html.dark .w-step-num { background: #4A82C4; box-shadow: 0 4px 16px rgba(74,130,196,0.35); }
+        .w-step h3 { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+        .w-step p  { font-size: 13px; color: var(--muted); line-height: 1.7; }
 
-        /* ─── Updates / News ─── */
-        .w-news-grid { display: grid; gap: 16px; grid-template-columns: repeat(3, 1fr); }
-        .w-news { background: var(--card); border-radius: 20px; overflow: hidden; border: 1px solid var(--line); }
-        .w-news-media {
-            height: 140px;
-            background: linear-gradient(145deg, rgba(27,79,138,0.08), rgba(27,79,138,0.02));
-            display: flex; align-items: center; justify-content: center;
+        /* ─── Features ─── */
+        .w-feat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .w-feat-card {
+            background: var(--card); border: 1px solid var(--line); border-radius: 20px;
+            padding: 28px 26px; box-shadow: var(--card-shadow);
+            transition: box-shadow .2s, transform .2s;
         }
-        html.dark .w-news-media { background: linear-gradient(145deg, rgba(74,130,196,0.1), rgba(74,130,196,0.02)); }
-        .w-news-icon { width: 52px; height: 52px; border-radius: 14px; background: rgba(27,79,138,0.1); display: flex; align-items: center; justify-content: center; }
-        html.dark .w-news-icon { background: rgba(74,130,196,0.12); }
-        .w-news-icon svg { width: 26px; height: 26px; stroke: #1B4F8A; }
-        html.dark .w-news-icon svg { stroke: #4A82C4; }
-        .w-news-body { padding: 18px 20px 22px; }
-        .w-news h4 { font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
-        .w-news p  { color: var(--muted); line-height: 1.65; font-size: 13px; }
+        .w-feat-card:hover { box-shadow: 0 10px 32px rgba(27,79,138,0.1); transform: translateY(-2px); }
+        html.dark .w-feat-card:hover { box-shadow: 0 10px 32px rgba(74,130,196,0.12); }
+        .w-feat-icon {
+            width: 48px; height: 48px; border-radius: 14px;
+            background: rgba(27,79,138,0.08);
+            display: flex; align-items: center; justify-content: center; margin-bottom: 16px;
+        }
+        html.dark .w-feat-icon { background: rgba(74,130,196,0.12); }
+        .w-feat-icon svg { width: 24px; height: 24px; stroke: #1B4F8A; }
+        html.dark .w-feat-icon svg { stroke: #4A82C4; }
+        .w-feat-card h3 { font-size: 18px; font-weight: 700; color: var(--text); letter-spacing: -0.01em; margin-bottom: 8px; }
+        .w-feat-card p  { color: var(--muted); line-height: 1.75; font-size: 14px; }
+
+        /* ─── Track widget ─── */
+        .w-track-panel {
+            max-width: 640px; margin: 0 auto; background: var(--card);
+            border: 1px solid var(--line); border-radius: 24px; padding: 44px 48px;
+            box-shadow: var(--card-shadow); text-align: center;
+        }
+        .w-track-icon-wrap {
+            width: 64px; height: 64px; border-radius: 50%;
+            background: rgba(27,79,138,0.08); border: 1px solid rgba(27,79,138,0.14);
+            display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;
+        }
+        html.dark .w-track-icon-wrap { background: rgba(74,130,196,0.1); border-color: rgba(74,130,196,0.2); }
+        .w-track-icon-wrap svg { width: 28px; height: 28px; stroke: #1B4F8A; }
+        html.dark .w-track-icon-wrap svg { stroke: #4A82C4; }
+        .w-track-panel h2 { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; color: var(--text); margin-bottom: 8px; }
+        .w-track-panel p  { font-size: 15px; color: var(--muted); margin-bottom: 28px; line-height: 1.7; }
+        .w-track-form { display: flex; gap: 10px; }
+        .w-track-input {
+            flex: 1; height: 50px; padding: 0 18px;
+            border: 1.5px solid var(--line); border-radius: 12px;
+            background: var(--bg); color: var(--text);
+            font-family: "Outfit", sans-serif; font-size: 14px; font-weight: 500;
+            transition: border-color 0.2s, box-shadow 0.2s; outline: none;
+        }
+        .w-track-input:focus { border-color: #1B4F8A; box-shadow: 0 0 0 3px rgba(27,79,138,0.12); }
+        html.dark .w-track-input:focus { border-color: #4A82C4; box-shadow: 0 0 0 3px rgba(74,130,196,0.15); }
+        .w-track-input::placeholder { color: var(--muted); }
+        .w-track-btn {
+            height: 50px; padding: 0 24px; border-radius: 12px;
+            background: #1B4F8A; color: #fff; border: none;
+            font-family: "Outfit", sans-serif; font-size: 14px; font-weight: 700;
+            cursor: pointer; transition: all .2s; white-space: nowrap; flex-shrink: 0;
+        }
+        html.dark .w-track-btn { background: #4A82C4; }
+        .w-track-btn:hover { background: #163F6E; transform: translateY(-1px); box-shadow: 0 6px 18px rgba(27,79,138,0.35); }
+        html.dark .w-track-btn:hover { background: #3A6BA8; }
+        .w-track-note { margin-top: 14px; font-size: 12px; color: var(--muted); }
+
+        /* ─── FAQ ─── */
+        .w-faq-list { display: flex; flex-direction: column; gap: 10px; max-width: 800px; }
+        details.w-faq-item {
+            background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+            overflow: hidden; transition: box-shadow 0.2s;
+        }
+        details.w-faq-item[open] { box-shadow: 0 4px 20px rgba(27,79,138,0.08); }
+        html.dark details.w-faq-item[open] { box-shadow: 0 4px 20px rgba(74,130,196,0.1); }
+        details.w-faq-item summary {
+            padding: 20px 24px; font-size: 15px; font-weight: 700; color: var(--text);
+            cursor: pointer; list-style: none; display: flex; align-items: center;
+            justify-content: space-between; gap: 16px; user-select: none;
+            transition: color 0.15s;
+        }
+        details.w-faq-item summary::-webkit-details-marker { display: none; }
+        details.w-faq-item[open] summary { color: #1B4F8A; border-bottom: 1px solid var(--line); }
+        html.dark details.w-faq-item[open] summary { color: #4A82C4; }
+        .w-faq-arrow {
+            width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--line);
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+            transition: transform 0.25s, background 0.2s, border-color 0.2s;
+        }
+        details.w-faq-item[open] .w-faq-arrow { transform: rotate(180deg); background: rgba(27,79,138,0.08); border-color: rgba(27,79,138,0.2); }
+        html.dark details.w-faq-item[open] .w-faq-arrow { background: rgba(74,130,196,0.1); border-color: rgba(74,130,196,0.25); }
+        .w-faq-arrow svg { width: 14px; height: 14px; stroke: var(--muted); }
+        details.w-faq-item[open] .w-faq-arrow svg { stroke: #1B4F8A; }
+        html.dark details.w-faq-item[open] .w-faq-arrow svg { stroke: #4A82C4; }
+        .w-faq-body { padding: 20px 24px; font-size: 14px; color: var(--muted); line-height: 1.8; }
+        .w-faq-body strong { color: var(--text); font-weight: 600; }
 
         /* ─── Footer ─── */
-        .w-footer { border-top: 1px solid var(--line); padding: 28px 0 44px; }
-        .w-foot { display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
-        .w-foot span { font-size: 13px; color: var(--muted); }
+        .w-footer { border-top: 1px solid var(--line); padding: 56px 0 36px; }
+        .w-foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 40px; }
+        .w-foot-brand img { height: 42px; margin-bottom: 14px; }
+        .w-foot-brand p { font-size: 13px; color: var(--muted); line-height: 1.75; max-width: 36ch; }
+        .w-foot-col h4 { font-size: 13px; font-weight: 800; color: var(--text); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 16px; }
+        .w-foot-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .w-foot-col ul li a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color .15s; }
+        .w-foot-col ul li a:hover { color: var(--brand); }
+        .w-foot-bottom { padding-top: 28px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .w-foot-bottom span { font-size: 12px; color: var(--muted); }
 
-        /* ─── Page-out transition overlay ─── */
-        #page-out {
-            position: fixed; inset: 0; background: var(--bg);
-            opacity: 0; pointer-events: none;
-            z-index: 9999; transition: opacity 0.22s ease;
-        }
+        /* ─── Page transition ─── */
+        #page-out { position: fixed; inset: 0; background: var(--bg); opacity: 0; pointer-events: none; z-index: 9999; transition: opacity 0.22s ease; }
         #page-out.active { opacity: 1; pointer-events: all; }
 
-        /* ─── Chatbot (same as app layout) ─── */
+        /* ─── Chatbot ─── */
         @keyframes chatPulse { 0%,100%{transform:scale(1);opacity:.7} 50%{transform:scale(1.3);opacity:0} }
         #chatbot-messages::-webkit-scrollbar { width: 4px; }
         #chatbot-messages::-webkit-scrollbar-track { background: transparent; }
@@ -391,7 +426,6 @@
         html.dark .chat-msg-ai { background:#334155; color:#f1f5f9; }
         .chat-quick-btn { border:1px solid #cbd5e1; background:#f8fafc; color:#334155; border-radius:9999px; padding:6px 10px; font-size:11px; font-weight:600; line-height:1.2; cursor:pointer; transition:all .15s; }
         .chat-quick-btn:hover { border-color:#1B4F8A; color:#163F6E; background:#EEF3FA; }
-        html.dark .chat-msg-ai { background:#334155; color:#f1f5f9; }
         html.dark #chatbot-window { background:#1F1F1F !important; }
         html.dark #chatbot-input  { background:#141414 !important; border-color:#2E2E2E !important; color:#f1f5f9 !important; }
         html.dark .chat-quick-btn { background:#141414; border-color:#334155; color:#cbd5e1; }
@@ -404,35 +438,58 @@
         /* ─── Responsive ─── */
         @media (max-width: 1050px) {
             .w-menu { display: none; }
-            .w-card-grid, .w-news-grid { grid-template-columns: 1fr 1fr; }
             .w-hero-grid { grid-template-columns: 1fr; min-height: unset; }
             .w-hero-visual { display: none; }
             .w-hero-text { padding: 48px 40px 44px; }
-            .w-stats { max-width: 500px; }
+            .w-stats { grid-template-columns: repeat(2, 1fr); }
+            .w-min-grid { grid-template-columns: 1fr 1fr; }
+            .w-steps { grid-template-columns: 1fr 1fr; gap: 32px; }
+            .w-steps::before { display: none; }
+            .w-feat-grid { grid-template-columns: 1fr 1fr; }
+            .w-foot-grid { grid-template-columns: 1fr 1fr; }
+            .w-foot-brand { grid-column: 1 / -1; }
         }
         @media (max-width: 760px) {
             .w-container { width: min(1200px, calc(100% - 28px)); }
-            .w-nav { min-height: 68px; }
-            /* Hide ONLY navbar action buttons, never the hero CTA buttons */
+            .w-nav { min-height: 64px; }
             .w-nav-right .w-btn { display: none; }
-            .w-h1 { font-size: 32px; }
-            /* 3 equal columns so no orphaned stat */
-            .w-stats { grid-template-columns: repeat(3, 1fr); max-width: none; gap: 8px; }
-            .w-stat { padding: 12px 10px; }
-            .w-stat strong { font-size: 18px; }
-            .w-stat span { font-size: 11px; }
-            .w-card-grid, .w-news-grid { grid-template-columns: 1fr; }
-            .w-timeline-item { gap: 18px; }
             .w-hero-text { padding: 36px 20px 32px; }
-            .w-cta { gap: 10px; }
-            .w-cta .w-btn { padding: 10px 18px; font-size: 13px; }
+            .w-h1 { font-size: 30px; }
+            .w-stats { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+            .w-stat { padding: 12px 12px; }
+            .w-stat strong { font-size: 18px; }
+            .w-min-grid { grid-template-columns: 1fr; }
+            .w-steps { grid-template-columns: 1fr; }
+            .w-feat-grid { grid-template-columns: 1fr; }
+            .w-track-panel { padding: 28px 22px; }
+            .w-track-form { flex-direction: column; }
+            .w-track-btn { width: 100%; justify-content: center; height: 48px; }
+            .w-foot-grid { grid-template-columns: 1fr; gap: 28px; }
+            .w-foot-bottom { flex-direction: column; align-items: flex-start; gap: 6px; }
+            .w-section { padding: 52px 0; }
+            .w-section-sm { padding: 40px 0; }
+            .w-trust-items { flex-wrap: wrap; }
+            .w-trust-item { padding: 10px 16px; font-size: 12px; }
+            .w-trust-sep { display: none; }
+        }
+        @media (max-width: 420px) {
+            .w-brand-text strong { font-size: 18px; }
+            .w-brand-text small { font-size: 10px; }
         }
     </style>
 </head>
 <body>
 
-    {{-- Page transition overlay --}}
     <div id="page-out"></div>
+
+    {{-- ── Announcement bar ── --}}
+    <div id="announce-bar" class="w-announce" role="status" aria-label="Site announcement">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span data-i18n="announce.text">Official Kurdistan Region Government Portal &mdash; Digital services are being prepared and will launch soon. Register now to be among the first notified.</span>
+        <button class="w-announce-dismiss" onclick="dismissAnnounce()" aria-label="Dismiss announcement">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+    </div>
 
     {{-- ── Navbar ── --}}
     <header class="w-topbar">
@@ -441,48 +498,40 @@
             <a href="{{ url('/') }}" class="w-brand">
                 <img src="{{ asset('images/halzanin-logo.png') }}" alt="Halzanîn">
                 <span class="w-brand-text">
-                    <strong>Halzanin</strong>
-                    <small data-i18n="Kurdistan Passport Directorate">Kurdistan Passport Directorate</small>
+                    <strong>Halzanîn</strong>
+                    <small data-i18n="Kurdistan Government Portal">Kurdistan Government Portal</small>
                 </span>
             </a>
 
-            <nav class="w-menu">
-                <a href="#services" data-i18n="Services">Services</a>
-                <a href="#process"  data-i18n="Process">Process</a>
-                <a href="#updates"  data-i18n="Updates">Updates</a>
+            <nav class="w-menu" aria-label="Main navigation">
+                <a href="#ministries" data-i18n="Services">Services</a>
+                <a href="#how-it-works" data-i18n="How It Works">How It Works</a>
+                <a href="#track" data-i18n="Track Application">Track</a>
+                <a href="#faq" data-i18n="FAQ">FAQ</a>
             </nav>
 
             <div class="w-nav-right">
-                {{-- Dark mode + language toggles --}}
                 <div class="w-toggles">
-
-                    {{-- Dark mode: icon button --}}
-                    <button id="theme-toggle" class="w-theme-btn" title="Toggle dark mode">
-                        {{-- Sun = shown when currently in dark mode (click → go light) --}}
-                        <svg id="theme-icon-sun" style="display:none;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <button id="theme-toggle" class="w-theme-btn" title="Toggle dark mode" aria-label="Toggle dark mode">
+                        <svg id="theme-icon-sun" style="display:none;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
                             <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
                             <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
                             <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
                             <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
                         </svg>
-                        {{-- Moon = shown when currently in light mode (click → go dark) --}}
-                        <svg id="theme-icon-moon" style="display:none;" fill="currentColor" viewBox="0 0 24 24">
+                        <svg id="theme-icon-moon" style="display:none;" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
                         </svg>
                     </button>
-
-                    <div class="w-divider"></div>
-
-                    {{-- Language: segmented control --}}
-                    <div class="w-lang-seg">
-                        <button id="lang-en-btn" class="w-lang-opt" onclick="setLang('en')">EN</button>
-                        <button id="lang-ku-btn" class="w-lang-opt" onclick="setLang('ku')" style="font-family:'Noto Naskh Arabic',serif;">کوردی</button>
+                    <div class="w-divider" aria-hidden="true"></div>
+                    <div class="w-lang-seg" role="group" aria-label="Language selection">
+                        <button id="lang-en-btn" class="w-lang-opt" onclick="setLang('en')" aria-label="Switch to English">EN</button>
+                        <button id="lang-ku-btn" class="w-lang-opt" onclick="setLang('ku')" style="font-family:'Noto Naskh Arabic',serif;" aria-label="Switch to Kurdish">کوردی</button>
                     </div>
-
                 </div>
 
                 @auth
-                    <a href="{{ url('/dashboard') }}" class="w-btn w-btn-outline" data-i18n="Dashboard">Dashboard</a>
+                    <a href="{{ url('/dashboard') }}" class="w-btn w-btn-outline" data-i18n="My Dashboard">My Dashboard</a>
                 @else
                     @if (Route::has('login'))
                         <a href="{{ route('login') }}" class="w-btn w-btn-outline" data-i18n="Log In">Log In</a>
@@ -498,74 +547,78 @@
     <main>
 
         {{-- ── Hero ── --}}
-        <section class="w-hero-wrap">
+        <section class="w-hero-wrap" aria-label="Portal introduction">
             <div class="w-container">
                 <div class="w-hero">
                     <div class="w-hero-grid">
 
-                        {{-- Left: text --}}
                         <div class="w-hero-text">
                             <div class="w-kicker">
-                                <span class="w-kicker-dot"></span>
-                                <span data-i18n="Public Service Portal">Public Service Portal</span>
+                                <svg class="w-kicker-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                <span data-i18n="Kurdistan Region e-Government Portal">Kurdistan Region e-Government Portal</span>
                             </div>
 
                             <h1 class="w-h1">
-                                <span data-i18n="Digital Passport Services for the Kurdistan Region">Digital Passport<br><span class="accent">Services</span> for the<br>Kurdistan Region</span>
+                                <span data-i18n="All Your Government Services, Online">
+                                    All Your<br>Government<br><span class="accent">Services,</span> Online
+                                </span>
                             </h1>
 
-                            <p class="w-subtitle" data-i18n="Submit applications, upload required documents, and track your request status in one place. Designed to reduce waiting time and make government service access clear, secure, and fast.">
-                                Submit applications, upload required documents, and track your request status in one place.
-                                Designed to reduce waiting time and make government service access clear, secure, and fast.
+                            <p class="w-subtitle" data-i18n="hero.subtitle">
+                                Submit applications, upload documents, book appointments, and track your request — for any government service — from the comfort of your home. No queuing. No multiple visits.
                             </p>
 
                             <div class="w-cta">
                                 @auth
                                     <a class="w-btn w-btn-primary" href="{{ url('/dashboard') }}" data-i18n="Go To Dashboard">
-                                        <svg style="width:16px;height:16px;flex-shrink:0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-                                        Go To Dashboard
+                                        <svg style="width:16px;height:16px;flex-shrink:0;" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                                        <span data-i18n="Go To Dashboard">Go To Dashboard</span>
                                     </a>
                                 @else
-                                    @if (Route::has('login'))
-                                        <a class="w-btn w-btn-primary" href="{{ route('login') }}" data-i18n="Start Application">Start Application</a>
-                                    @endif
                                     @if (Route::has('register'))
-                                        <a class="w-btn w-btn-outline" href="{{ route('register') }}" data-i18n="Register Account">Register Account</a>
+                                        <a class="w-btn w-btn-primary" href="{{ route('register') }}" data-i18n="Create Free Account">Create Free Account</a>
+                                    @endif
+                                    @if (Route::has('login'))
+                                        <a class="w-btn w-btn-outline" href="{{ route('login') }}" data-i18n="Sign In">Sign In</a>
                                     @endif
                                 @endauth
-                                @if (Route::has('track'))
-                                    <a class="w-btn w-btn-outline" href="{{ route('track') }}" data-i18n="Track Application">Track Application</a>
-                                @endif
+                                <a class="w-btn w-btn-outline" href="#track" data-i18n="Track Application">Track Application</a>
                             </div>
 
-                            <div class="w-stats">
-                                <div class="w-stat">
+                            <div class="w-stats" role="list" aria-label="Portal statistics">
+                                <div class="w-stat" role="listitem">
+                                    <strong>5</strong>
+                                    <span data-i18n="Government Ministries">Government Ministries</span>
+                                </div>
+                                <div class="w-stat" role="listitem">
+                                    <strong>15+</strong>
+                                    <span data-i18n="Services Available">Services Available</span>
+                                </div>
+                                <div class="w-stat" role="listitem">
                                     <strong>24/7</strong>
-                                    <span data-i18n="Tracking Access">Tracking Access</span>
+                                    <span data-i18n="Online Access">Online Access</span>
                                 </div>
-                                <div class="w-stat">
-                                    <strong>1 Portal</strong>
-                                    <span data-i18n="For Citizens And Staff">Citizens & Staff</span>
-                                </div>
-                                <div class="w-stat">
-                                    <strong data-i18n="Fast">Fast</strong>
-                                    <span data-i18n="Digital Document Review">Digital Review</span>
+                                <div class="w-stat" role="listitem">
+                                    <strong data-i18n="Free">Free</strong>
+                                    <span data-i18n="For All Citizens">For All Citizens</span>
                                 </div>
                             </div>
                         </div>
 
-                        {{-- Right: passport photo showcase --}}
-                        <div class="w-hero-visual">
-                            <div class="w-passport-stage">
-                                <img src="{{ asset('images/passport-dark.png') }}"
-                                     alt="Iraqi Passport"
-                                     class="w-passport-img w-passport-dark">
-                                <img src="{{ asset('images/passport-blue.png') }}"
-                                     alt="Iraqi Passport 2023"
-                                     class="w-passport-img w-passport-blue">
-                                <img src="{{ asset('images/passport-red.png') }}"
-                                     alt="Service Passport"
-                                     class="w-passport-img w-passport-red">
+                        {{-- Hero image panel (desktop only) --}}
+                        <div class="w-hero-visual" aria-hidden="true">
+                            <div class="w-hero-img-wrap">
+                                <img
+                                    src="{{ asset('images/hero-building.png') }}"
+                                    alt=""
+                                    class="w-hero-img"
+                                    onerror="this.style.display='none';"
+                                >
+                                <div class="w-hero-img-fade"></div>
+                            </div>
+                            <div class="w-hero-img-badge">
+                                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                <span>Kurdistan Region</span>
                             </div>
                         </div>
 
@@ -574,137 +627,462 @@
             </div>
         </section>
 
-        {{-- ── Services ── --}}
-        <section class="w-section" id="services">
+        {{-- ── Trust strip ── --}}
+        <div class="w-trust-strip" aria-label="Platform trust indicators">
             <div class="w-container">
-                <h2 data-i18n="Main Services">Main Services</h2>
-                <p class="w-section-sub" data-i18n="Halzanin is built around practical citizen workflows. From scheduling appointments to document upload and status tracking, each step is structured for clarity.">
-                    Halzanin is built around practical citizen workflows. From scheduling appointments to document upload
-                    and status tracking, each step is structured for clarity.
-                </p>
-                <div class="w-card-grid">
-                    <article class="w-card">
-                        <div class="w-card-icon">
-                            <svg fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                <div class="w-trust-items">
+                    <div class="w-trust-item">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                        <span><strong>OTP-Secured</strong> Accounts</span>
+                    </div>
+                    <div class="w-trust-sep" aria-hidden="true"></div>
+                    <div class="w-trust-item">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                        <span><strong>Official</strong> Government Portal</span>
+                    </div>
+                    <div class="w-trust-sep" aria-hidden="true"></div>
+                    <div class="w-trust-item">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"/></svg>
+                        <span>Available <strong>24 / 7</strong></span>
+                    </div>
+                    <div class="w-trust-sep" aria-hidden="true"></div>
+                    <div class="w-trust-item">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                        <span><strong>Free</strong> for All Citizens</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- ── Ministries & Services ── --}}
+        <section class="w-section" id="ministries" aria-labelledby="ministries-heading">
+            <div class="w-container">
+                <div class="w-section-head">
+                    <div class="w-kicker">
+                        <svg class="w-kicker-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <span data-i18n="Government Services">Government Services</span>
+                    </div>
+                    <h2 id="ministries-heading" data-i18n="ministries.title">Browse by Ministry</h2>
+                    <p class="w-section-sub" data-i18n="ministries.subtitle">
+                        Select your ministry below to see available services. We are actively expanding — more services are being launched soon.
+                    </p>
+                </div>
+
+                <div class="w-min-grid">
+
+                    {{-- Civil Registry --}}
+                    <article class="w-min-card" style="border-top: 3px solid #1B4F8A;">
+                        <div class="w-min-header">
+                            <div class="w-min-icon" style="background:rgba(27,79,138,0.1);">
+                                <svg fill="none" stroke="#1B4F8A" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c0 1.657 1.343 3 3 3s3-1.343 3-3"/></svg>
+                            </div>
+                            <div class="w-min-title">
+                                <h3 data-i18n="Civil Registry">Civil Registry</h3>
+                                <span>تۆماری مەدەنی</span>
+                            </div>
                         </div>
-                        <span class="w-tag" data-i18n="Appointments">Appointments</span>
-                        <h3 data-i18n="Book With Calendar Slots">Book With Calendar Slots</h3>
-                        <p data-i18n="Choose available dates and times, submit requests, and manage appointments through your citizen dashboard.">Choose available dates and times, submit requests, and manage appointments through your citizen dashboard.</p>
-                    </article>
-                    <article class="w-card">
-                        <div class="w-card-icon">
-                            <svg fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        <div class="w-min-services">
+                            <div class="w-svc-row">
+                                <span class="w-svc-name" data-i18n="Passport Application">Passport Application</span>
+                                <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
+                            </div>
+                            <div class="w-svc-row">
+                                <span class="w-svc-name" data-i18n="National ID Card">National ID Card</span>
+                                <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
+                            </div>
+                            <div class="w-svc-row">
+                                <span class="w-svc-name" data-i18n="Birth Certificate">Birth Certificate</span>
+                                <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
+                            </div>
+                            <div class="w-svc-row">
+                                <span class="w-svc-name" data-i18n="Marriage Certificate">Marriage Certificate</span>
+                                <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
+                            </div>
                         </div>
-                        <span class="w-tag" data-i18n="Tracking">Tracking</span>
-                        <h3 data-i18n="Follow Progress By Code">Follow Progress By Code</h3>
-                        <p data-i18n="Use your tracking code to check each status update from submission through review and final decision.">Use your tracking code to check each status update from submission through review and final decision.</p>
-                    </article>
-                    <article class="w-card">
-                        <div class="w-card-icon">
-                            <svg fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                        <div class="w-min-footer">
+                            <span class="w-min-count" data-i18n="4 services">4 services · launching soon</span>
                         </div>
-                        <span class="w-tag" data-i18n="Document Vault">Document Vault</span>
-                        <h3 data-i18n="Secure Upload And Storage">Secure Upload And Storage</h3>
-                        <p data-i18n="Store required files in your vault and reuse them in supported application workflows.">Store required files in your vault and reuse them in supported application workflows.</p>
                     </article>
+
+                    {{-- Traffic Police --}}
+                    <article class="w-min-card" style="border-top: 3px solid #dc2626;">
+                        <div class="w-min-header">
+                            <div class="w-min-icon" style="background:rgba(220,38,38,0.08);">
+                                <svg fill="none" stroke="#dc2626" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            </div>
+                            <div class="w-min-title">
+                                <h3 data-i18n="Traffic Police">Traffic Police</h3>
+                                <span>پۆلیسی ترافیک</span>
+                            </div>
+                        </div>
+                        <div class="w-min-services">
+                            <div class="w-svc-row">
+                                <span class="w-svc-name" data-i18n="Driving License">Driving License</span>
+                                <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
+                            </div>
+                            <div class="w-svc-row">
+                                <span class="w-svc-name" data-i18n="Vehicle Registration">Vehicle Registration</span>
+                                <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
+                            </div>
+                            <div class="w-svc-row">
+                                <span class="w-svc-name" data-i18n="Traffic Fine Payment">Traffic Fine Payment</span>
+                                <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
+                            </div>
+                        </div>
+                        <div class="w-min-footer">
+                            <span class="w-min-count" data-i18n="3 services">3 services · launching soon</span>
+                        </div>
+                    </article>
+
+                    {{-- Electricity --}}
+                    <article class="w-min-card" style="border-top: 3px solid #d97706;">
+                        <div class="w-min-header">
+                            <div class="w-min-icon" style="background:rgba(217,119,6,0.08);">
+                                <svg fill="none" stroke="#d97706" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            </div>
+                            <div class="w-min-title">
+                                <h3 data-i18n="Electricity Directorate">Electricity Directorate</h3>
+                                <span>بەرپرسایەتی کارەبا</span>
+                            </div>
+                        </div>
+                        <div class="w-min-services">
+                            <div class="w-svc-row">
+                                <span class="w-svc-name" data-i18n="New Connection Application">New Connection Application</span>
+                                <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
+                            </div>
+                            <div class="w-svc-row">
+                                <span class="w-svc-name" data-i18n="Service Complaint">Service Complaint</span>
+                                <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
+                            </div>
+                            <div class="w-svc-row">
+                                <span class="w-svc-name" data-i18n="Meter Reading Issue">Meter Reading Issue</span>
+                                <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
+                            </div>
+                        </div>
+                        <div class="w-min-footer">
+                            <span class="w-min-count" data-i18n="3 services">3 services · launching soon</span>
+                        </div>
+                    </article>
+
+                    {{-- Water --}}
+                    <article class="w-min-card" style="border-top: 3px solid #0284c7;">
+                        <div class="w-min-header">
+                            <div class="w-min-icon" style="background:rgba(2,132,199,0.08);">
+                                <svg fill="none" stroke="#0284c7" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 22c5.523 0 10-4.477 10-10S12 2 12 2 2 7.477 2 12s4.477 10 10 10z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 22c0-5.523-2.239-10-5-10s-5 4.477-5 10"/></svg>
+                            </div>
+                            <div class="w-min-title">
+                                <h3 data-i18n="Water Directorate">Water Directorate</h3>
+                                <span>بەرپرسایەتی ئاو</span>
+                            </div>
+                        </div>
+                        <div class="w-min-services">
+                            <div class="w-svc-row">
+                                <span class="w-svc-name" data-i18n="New Connection Application">New Connection Application</span>
+                                <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
+                            </div>
+                            <div class="w-svc-row">
+                                <span class="w-svc-name" data-i18n="Service Complaint">Service Complaint</span>
+                                <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
+                            </div>
+                        </div>
+                        <div class="w-min-footer">
+                            <span class="w-min-count" data-i18n="2 services">2 services · launching soon</span>
+                        </div>
+                    </article>
+
+                    {{-- Business Registration --}}
+                    <article class="w-min-card" style="border-top: 3px solid #059669;">
+                        <div class="w-min-header">
+                            <div class="w-min-icon" style="background:rgba(5,150,105,0.08);">
+                                <svg fill="none" stroke="#059669" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                            </div>
+                            <div class="w-min-title">
+                                <h3 data-i18n="Business Registration">Business Registration</h3>
+                                <span>تۆماری بازرگانی</span>
+                            </div>
+                        </div>
+                        <div class="w-min-services">
+                            <div class="w-svc-row">
+                                <span class="w-svc-name" data-i18n="Business License">Business License</span>
+                                <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
+                            </div>
+                            <div class="w-svc-row">
+                                <span class="w-svc-name" data-i18n="Trade License Renewal">Trade License Renewal</span>
+                                <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
+                            </div>
+                        </div>
+                        <div class="w-min-footer">
+                            <span class="w-min-count" data-i18n="2 services">2 services · launching soon</span>
+                        </div>
+                    </article>
+
+                    {{-- Placeholder: More Coming --}}
+                    <article class="w-min-card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:220px;background:var(--bg);border-style:dashed;text-align:center;padding:36px 24px;">
+                        <div style="width:48px;height:48px;border-radius:50%;background:var(--card);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;margin-bottom:14px;">
+                            <svg width="22" height="22" fill="none" stroke="var(--muted)" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+                        </div>
+                        <h3 style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px;" data-i18n="More Ministries Coming">More Ministries Coming</h3>
+                        <p style="font-size:13px;color:var(--muted);line-height:1.7;" data-i18n="We are expanding to cover all government departments">We are expanding to cover all government departments in the Kurdistan Region.</p>
+                    </article>
+
                 </div>
             </div>
         </section>
 
         {{-- ── How It Works ── --}}
-        <section class="w-section w-alt-bg" id="process">
+        <section class="w-section w-alt-bg" id="how-it-works" aria-labelledby="hiw-heading">
             <div class="w-container">
-                <h2 data-i18n="How It Works">How It Works</h2>
-                <p class="w-section-sub" data-i18n="Three simple steps to complete your passport application digitally.">
-                    Three simple steps to complete your passport application digitally.
-                </p>
-                <div class="w-timeline">
-                    <div class="w-timeline-item">
-                        <div class="w-timeline-left">
-                            <div class="w-timeline-num">1</div>
-                            <div class="w-timeline-line"></div>
-                        </div>
-                        <div class="w-timeline-content">
-                            <h3 data-i18n="Create Your Account">Create Your Account</h3>
-                            <p data-i18n="Register once, then access your dashboard to begin passport-related submissions and updates.">Register once, then access your dashboard to begin passport-related submissions and updates.</p>
-                        </div>
+                <div class="w-section-head">
+                    <div class="w-kicker">
+                        <svg class="w-kicker-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <span data-i18n="Simple Process">Simple Process</span>
                     </div>
-                    <div class="w-timeline-item">
-                        <div class="w-timeline-left">
-                            <div class="w-timeline-num">2</div>
-                            <div class="w-timeline-line"></div>
-                        </div>
-                        <div class="w-timeline-content">
-                            <h3 data-i18n="Submit Application">Submit Application</h3>
-                            <p data-i18n="Complete appointment details, attach required documents, and confirm your request.">Complete appointment details, attach required documents, and confirm your request.</p>
-                        </div>
+                    <h2 id="hiw-heading" data-i18n="How It Works">How It Works</h2>
+                    <p class="w-section-sub" data-i18n="hiw.subtitle">
+                        Four steps is all it takes to submit any government service application — no queuing, no paper forms, no multiple office visits.
+                    </p>
+                </div>
+                <div class="w-steps" role="list">
+                    <div class="w-step" role="listitem">
+                        <div class="w-step-num" aria-hidden="true">1</div>
+                        <h3 data-i18n="Create Your Account">Create Your Account</h3>
+                        <p data-i18n="hiw.step1">Register once with your email. Verify with a one-time code sent to your inbox to keep your account secure.</p>
                     </div>
-                    <div class="w-timeline-item">
-                        <div class="w-timeline-left">
-                            <div class="w-timeline-num">3</div>
-                            <div class="w-timeline-line"></div>
-                        </div>
-                        <div class="w-timeline-content">
-                            <h3 data-i18n="Track And Receive Updates">Track And Receive Updates</h3>
-                            <p data-i18n="Monitor application status changes from staff review through final processing outcomes.">Monitor application status changes from staff review through final processing outcomes.</p>
-                        </div>
+                    <div class="w-step" role="listitem">
+                        <div class="w-step-num" aria-hidden="true">2</div>
+                        <h3 data-i18n="Choose a Service">Choose a Service</h3>
+                        <p data-i18n="hiw.step2">Browse the ministries above and select the service you need. Each service page lists exactly what documents are required.</p>
+                    </div>
+                    <div class="w-step" role="listitem">
+                        <div class="w-step-num" aria-hidden="true">3</div>
+                        <h3 data-i18n="Submit & Book">Submit & Book</h3>
+                        <p data-i18n="hiw.step3">Fill the form, upload your documents, and book an appointment — all in one flow. You receive a QR tracking code instantly.</p>
+                    </div>
+                    <div class="w-step" role="listitem">
+                        <div class="w-step-num" aria-hidden="true">4</div>
+                        <h3 data-i18n="Track Your Status">Track Your Status</h3>
+                        <p data-i18n="hiw.step4">Monitor every status update from your dashboard or using your tracking code — no login required for tracking.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        {{-- ── Latest Updates ── --}}
-        <section class="w-section" id="updates">
+        {{-- ── Platform Features ── --}}
+        <section class="w-section" aria-labelledby="features-heading">
             <div class="w-container">
-                <h2 data-i18n="Latest Updates">Latest Updates</h2>
-                <div class="w-news-grid" style="margin-top:40px;">
-                    <article class="w-news">
-                        <div class="w-news-media">
-                            <div class="w-news-icon">
-                                <svg fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            </div>
+                <div class="w-section-head">
+                    <div class="w-kicker">
+                        <svg class="w-kicker-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <span data-i18n="Platform Features">Platform Features</span>
+                    </div>
+                    <h2 id="features-heading" data-i18n="Built for Citizens">Built for Citizens</h2>
+                    <p class="w-section-sub" data-i18n="features.subtitle">
+                        Every feature is designed to make government services easier, faster, and more transparent for every citizen in the Kurdistan Region.
+                    </p>
+                </div>
+                <div class="w-feat-grid">
+                    <article class="w-feat-card">
+                        <div class="w-feat-icon">
+                            <svg fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                         </div>
-                        <div class="w-news-body">
-                            <h4 data-i18n="Service Availability">Service Availability</h4>
-                            <p data-i18n="Citizen portal is available daily for account access, application tracking, and profile updates.">Citizen portal is available daily for account access, application tracking, and profile updates.</p>
-                        </div>
+                        <h3 data-i18n="Smart Appointment Booking">Smart Appointment Booking</h3>
+                        <p data-i18n="feature.appointments">Choose from available calendar slots for each ministry. Our system prevents double-booking and automatically sends you reminders before your appointment.</p>
                     </article>
-                    <article class="w-news">
-                        <div class="w-news-media">
-                            <div class="w-news-icon">
-                                <svg fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                            </div>
+                    <article class="w-feat-card">
+                        <div class="w-feat-icon">
+                            <svg fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
                         </div>
-                        <div class="w-news-body">
-                            <h4 data-i18n="Staff Review Queue">Staff Review Queue</h4>
-                            <p data-i18n="Applications are reviewed according to queue status and required documents submitted by citizens.">Applications are reviewed according to queue status and required documents submitted by citizens.</p>
-                        </div>
+                        <h3 data-i18n="Secure Document Vault">Secure Document Vault</h3>
+                        <p data-i18n="feature.vault">Upload your documents once and reuse them across multiple applications. Your files are stored securely and are only accessible by you and the relevant ministry staff.</p>
                     </article>
-                    <article class="w-news">
-                        <div class="w-news-media">
-                            <div class="w-news-icon">
-                                <svg fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>
-                            </div>
+                    <article class="w-feat-card">
+                        <div class="w-feat-icon">
+                            <svg fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                         </div>
-                        <div class="w-news-body">
-                            <h4 data-i18n="Digital Workflow">Digital Workflow</h4>
-                            <p data-i18n="Ongoing improvements continue to reduce manual handling and speed up passport-related processing.">Ongoing improvements continue to reduce manual handling and speed up passport-related processing.</p>
-                        </div>
+                        <h3 data-i18n="Live Application Tracking">Live Application Tracking</h3>
+                        <p data-i18n="feature.tracking">Every application gets a unique QR tracking code. Check your status anytime — from the portal or by sharing your code — with no login required for public lookups.</p>
                     </article>
+                    <article class="w-feat-card">
+                        <div class="w-feat-icon">
+                            <svg fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+                        </div>
+                        <h3 data-i18n="AI-Powered Assistant">AI-Powered Assistant</h3>
+                        <p data-i18n="feature.chatbot">Not sure which service you need or what documents to prepare? Our AI assistant — available 24/7 — answers your questions in both English and Kurdish.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        {{-- ── Track Application ── --}}
+        <section class="w-section-sm w-alt-bg" id="track" aria-labelledby="track-heading">
+            <div class="w-container">
+                <div class="w-track-panel">
+                    <div class="w-track-icon-wrap" aria-hidden="true">
+                        <svg fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    </div>
+                    <h2 id="track-heading" data-i18n="Track Your Application">Track Your Application</h2>
+                    <p data-i18n="track.subtitle">Enter your tracking code below to check your application status in real time. No login required.</p>
+                    <form class="w-track-form" onsubmit="handleTrack(event)" role="search" aria-label="Application tracking">
+                        <label for="track-code" class="sr-only" data-i18n="Tracking Code">Tracking Code</label>
+                        <input
+                            type="text"
+                            id="track-code"
+                            class="w-track-input"
+                            placeholder="e.g. HZ-XXXXXXXX"
+                            data-i18n-placeholder="track.placeholder"
+                            autocomplete="off"
+                            spellcheck="false"
+                            aria-label="Enter tracking code"
+                        >
+                        <button type="submit" class="w-track-btn" data-i18n="Track Now">Track Now</button>
+                    </form>
+                    <p class="w-track-note" data-i18n="track.note">Your tracking code was provided when you submitted your application. Check your email or your dashboard.</p>
+                </div>
+            </div>
+        </section>
+
+        {{-- ── FAQ ── --}}
+        <section class="w-section" id="faq" aria-labelledby="faq-heading">
+            <div class="w-container">
+                <div class="w-section-head">
+                    <div class="w-kicker">
+                        <svg class="w-kicker-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <span data-i18n="FAQ">Frequently Asked Questions</span>
+                    </div>
+                    <h2 id="faq-heading" data-i18n="Common Questions">Common Questions</h2>
+                    <p class="w-section-sub" data-i18n="faq.subtitle">Everything citizens need to know before using the portal. Can't find your answer? Use our AI assistant.</p>
+                </div>
+
+                <div class="w-faq-list" role="list">
+
+                    <details class="w-faq-item" role="listitem">
+                        <summary>
+                            <span data-i18n="faq.q1">What is the Halzanîn portal?</span>
+                            <span class="w-faq-arrow" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+                        </summary>
+                        <div class="w-faq-body" data-i18n="faq.a1">
+                            Halzanîn is the official digital government services portal for the Kurdistan Region. It allows citizens to apply for government services, upload required documents, book appointments at government offices, and track their application status — all from one place, without needing to queue at a physical office for the initial paperwork.
+                        </div>
+                    </details>
+
+                    <details class="w-faq-item" role="listitem">
+                        <summary>
+                            <span data-i18n="faq.q2">Which government services are currently available?</span>
+                            <span class="w-faq-arrow" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+                        </summary>
+                        <div class="w-faq-body" data-i18n="faq.a2">
+                            We are currently in the launch phase of the portal. Services from five ministries — <strong>Civil Registry, Traffic Police, Electricity Directorate, Water Directorate,</strong> and <strong>Business Registration</strong> — are being prepared and will be available very soon. Sign up now to be notified as each service goes live.
+                        </div>
+                    </details>
+
+                    <details class="w-faq-item" role="listitem">
+                        <summary>
+                            <span data-i18n="faq.q3">Do I need to create an account to use the portal?</span>
+                            <span class="w-faq-arrow" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+                        </summary>
+                        <div class="w-faq-body" data-i18n="faq.a3">
+                            You need an account to <strong>submit applications</strong>, upload documents, and book appointments. However, you can <strong>track any application</strong> by entering your tracking code on this page — no login required. Creating an account is free and only takes a few minutes.
+                        </div>
+                    </details>
+
+                    <details class="w-faq-item" role="listitem">
+                        <summary>
+                            <span data-i18n="faq.q4">Will I still need to visit a government office?</span>
+                            <span class="w-faq-arrow" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+                        </summary>
+                        <div class="w-faq-body" data-i18n="faq.a4">
+                            For most services, the portal <strong>significantly reduces</strong> the number of office visits required. You handle all paperwork, document submission, and scheduling online. A physical visit is still required in specific cases — for example, picking up a physical document like an ID card, or for services that require in-person verification such as driving tests. The portal tells you exactly when and why a visit is needed.
+                        </div>
+                    </details>
+
+                    <details class="w-faq-item" role="listitem">
+                        <summary>
+                            <span data-i18n="faq.q5">How do I know what documents I need to prepare?</span>
+                            <span class="w-faq-arrow" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+                        </summary>
+                        <div class="w-faq-body" data-i18n="faq.a5">
+                            Each service has a dedicated page that lists the <strong>exact documents required</strong> before you begin your application. Documents accepted include scanned copies as JPG, PNG, or PDF files up to 5MB each. You can also store your frequently used documents in your secure <strong>Document Vault</strong> and reuse them across multiple applications without re-uploading.
+                        </div>
+                    </details>
+
+                    <details class="w-faq-item" role="listitem">
+                        <summary>
+                            <span data-i18n="faq.q6">How long does processing take?</span>
+                            <span class="w-faq-arrow" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+                        </summary>
+                        <div class="w-faq-body" data-i18n="faq.a6">
+                            Processing time varies by service type and the completeness of your submitted documents. Each service page shows an estimated processing time. You will receive <strong>email notifications</strong> at every stage — when your documents are received, when they are under review, and when your application is approved or requires additional information.
+                        </div>
+                    </details>
+
+                    <details class="w-faq-item" role="listitem">
+                        <summary>
+                            <span data-i18n="faq.q7">Is my personal information secure?</span>
+                            <span class="w-faq-arrow" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+                        </summary>
+                        <div class="w-faq-body" data-i18n="faq.a7">
+                            Yes. Your account is protected by <strong>email OTP two-factor authentication</strong>. All documents are stored securely and only accessible by you and the assigned ministry staff handling your case. Staff from one ministry cannot access data submitted to a different ministry. We follow OWASP security standards throughout the platform.
+                        </div>
+                    </details>
+
+                    <details class="w-faq-item" role="listitem">
+                        <summary>
+                            <span data-i18n="faq.q8">What do I do if my application is rejected?</span>
+                            <span class="w-faq-arrow" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+                        </summary>
+                        <div class="w-faq-body" data-i18n="faq.a8">
+                            If your application is rejected, you will receive an <strong>email notification with the reason</strong> for the rejection. You can view the staff's notes directly in your dashboard, correct the issue (such as providing a clearer document scan or a missing file), and resubmit your application. Our AI assistant can also help you understand what went wrong.
+                        </div>
+                    </details>
+
                 </div>
             </div>
         </section>
 
     </main>
 
-    <footer class="w-footer">
-        <div class="w-container w-foot">
-            <span data-i18n="Halzanin | Kurdistan Passport Directorate">Halzanin | Kurdistan Passport Directorate</span>
-            <span data-i18n="Built for transparent and efficient public service delivery">Built for transparent and efficient public service delivery</span>
+    {{-- ── Footer ── --}}
+    <footer class="w-footer" aria-label="Site footer">
+        <div class="w-container">
+            <div class="w-foot-grid">
+                <div class="w-foot-brand">
+                    <img src="{{ asset('images/halzanin-logo.png') }}" alt="Halzanîn">
+                    <p data-i18n="footer.about">Halzanîn is the Kurdistan Region's unified e-government portal — bringing all government services online so citizens can access them quickly, securely, and from anywhere.</p>
+                </div>
+                <div class="w-foot-col">
+                    <h4 data-i18n="Quick Links">Quick Links</h4>
+                    <ul>
+                        <li><a href="#ministries" data-i18n="Browse Services">Browse Services</a></li>
+                        <li><a href="#how-it-works" data-i18n="How It Works">How It Works</a></li>
+                        <li><a href="#track" data-i18n="Track Application">Track Application</a></li>
+                        <li><a href="#faq" data-i18n="FAQ">FAQ</a></li>
+                        @if (Route::has('login'))
+                            <li><a href="{{ route('login') }}" data-i18n="Log In">Log In</a></li>
+                        @endif
+                        @if (Route::has('register'))
+                            <li><a href="{{ route('register') }}" data-i18n="Create Account">Create Account</a></li>
+                        @endif
+                    </ul>
+                </div>
+                <div class="w-foot-col">
+                    <h4 data-i18n="Ministries">Ministries</h4>
+                    <ul>
+                        <li><a href="#ministries" data-i18n="Civil Registry">Civil Registry</a></li>
+                        <li><a href="#ministries" data-i18n="Traffic Police">Traffic Police</a></li>
+                        <li><a href="#ministries" data-i18n="Electricity Directorate">Electricity</a></li>
+                        <li><a href="#ministries" data-i18n="Water Directorate">Water</a></li>
+                        <li><a href="#ministries" data-i18n="Business Registration">Business Registration</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="w-foot-bottom">
+                <span data-i18n="footer.copyright">© 2025 Halzanîn — Kurdistan Government Services Portal</span>
+                <span data-i18n="footer.tagline">Built for transparent and efficient public service delivery</span>
+            </div>
         </div>
     </footer>
 
-    {{-- ── Chatbot widget (visible to all; guests get a login prompt) ── --}}
+    {{-- ── Chatbot widget (visible to guests; prompts login for chat) ── --}}
     <div id="chatbot-wrapper" style="position:fixed;bottom:88px;right:20px;z-index:10000;display:flex;flex-direction:column;align-items:flex-end;gap:12px;">
 
         <div id="chatbot-window"
@@ -714,19 +1092,17 @@
                     <svg xmlns="http://www.w3.org/2000/svg" style="width:20px;height:20px;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-4l-4 4z"/></svg>
                 </div>
                 <div style="flex:1;min-width:0;">
-                    <p style="color:#fff;font-weight:700;font-size:14px;margin:0;font-family:Outfit,sans-serif;" data-i18n="chat.assistant">Halzanin Assistant</p>
+                    <p style="color:#fff;font-weight:700;font-size:14px;margin:0;font-family:Outfit,sans-serif;" data-i18n="chat.assistant">Halzanîn Assistant</p>
                     <div style="display:flex;align-items:center;gap:5px;margin-top:2px;">
                         <div style="width:7px;height:7px;background:#4ade80;border-radius:50%;"></div>
                         <span style="color:rgba(255,255,255,0.8);font-size:11px;font-weight:600;" data-i18n="chat.online">Online</span>
                     </div>
                 </div>
-                <button onclick="toggleChat()" style="background:rgba(255,255,255,0.15);border:none;width:28px;height:28px;border-radius:50%;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">
+                <button onclick="toggleChat()" style="background:rgba(255,255,255,0.15);border:none;width:28px;height:28px;border-radius:50%;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'" aria-label="Close chat">
                     <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
-
             <div id="chatbot-messages" style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;background:inherit;"></div>
-
             <div style="padding:12px;border-top:1px solid rgba(0,0,0,0.07);background:inherit;flex-shrink:0;">
                 @php($chatQuickQuestions = config('chatbot.quick_questions', []))
                 <div id="chatbot-quick-questions" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
@@ -745,10 +1121,12 @@
                               onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChatMessage();}"
                               oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,88)+'px';"
                               style="flex:1;resize:none;border:1.5px solid #e2e8f0;border-radius:10px;padding:10px 12px;font-size:13px;font-family:Outfit,sans-serif;outline:none;background:#f8fafc;color:#1F1F1F;max-height:88px;line-height:1.4;transition:border-color 0.2s;"
-                              onfocus="this.style.borderColor='#1B4F8A'" onblur="this.style.borderColor='#e2e8f0'"></textarea>
+                              onfocus="this.style.borderColor='#1B4F8A'" onblur="this.style.borderColor='#e2e8f0'"
+                              aria-label="Chat message input"></textarea>
                     <button onclick="sendChatMessage()" id="chatbot-send"
                             style="width:40px;height:40px;border-radius:10px;background:#1B4F8A;border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform 0.15s,opacity 0.15s;"
-                            onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                            onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"
+                            aria-label="Send message">
                         <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
                     </button>
                 </div>
@@ -756,34 +1134,49 @@
         </div>
 
         <div style="position:relative;">
-            <div id="chatbot-pulse" style="position:absolute;inset:-6px;border-radius:50%;background:rgba(27,79,138,0.3);animation:chatPulse 2s ease-in-out infinite;pointer-events:none;"></div>
+            <div id="chatbot-pulse" style="position:absolute;inset:-6px;border-radius:50%;background:rgba(27,79,138,0.3);animation:chatPulse 2s ease-in-out infinite;pointer-events:none;" aria-hidden="true"></div>
             <button id="chatbot-btn" onclick="toggleChat()"
                     style="width:56px;height:56px;border-radius:50%;background:#1B4F8A;border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 25px -5px rgba(27,79,138,0.5);transition:transform 0.2s,box-shadow 0.2s;position:relative;z-index:1;"
                     onmouseover="this.style.transform='scale(1.08)';this.style.boxShadow='0 15px 30px -5px rgba(27,79,138,0.6)'"
-                    onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 10px 25px -5px rgba(27,79,138,0.5)'">
+                    onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 10px 25px -5px rgba(27,79,138,0.5)'"
+                    aria-label="Open AI assistant">
                 <svg id="chatbot-icon-open" width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
                 <svg id="chatbot-icon-close" width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display:none;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
-                <div id="chatbot-badge" style="position:absolute;top:-2px;right:-2px;width:14px;height:14px;background:#ef4444;border-radius:50%;border:2px solid #fff;display:none;"></div>
+                <div id="chatbot-badge" style="position:absolute;top:-2px;right:-2px;width:14px;height:14px;background:#ef4444;border-radius:50%;border:2px solid #fff;display:none;" aria-hidden="true"></div>
             </button>
         </div>
     </div>
 
+    {{-- Screen-reader only helper --}}
+    <style>.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0;}</style>
+
     {{-- ── Scripts ── --}}
     <script>
+        /* ── Announcement bar ── */
+        function dismissAnnounce() {
+            var bar = document.getElementById('announce-bar');
+            if (bar) { bar.style.display = 'none'; }
+            try { sessionStorage.setItem('announceDismissed', '1'); } catch(e) {}
+        }
+        (function() {
+            try { if (sessionStorage.getItem('announceDismissed') === '1') {
+                var bar = document.getElementById('announce-bar');
+                if (bar) bar.style.display = 'none';
+            } } catch(e) {}
+        })();
+
         /* ── Theme toggle ── */
         (function() {
             var sunIcon  = document.getElementById('theme-icon-sun');
             var moonIcon = document.getElementById('theme-icon-moon');
             var btn      = document.getElementById('theme-toggle');
             if (!btn) return;
-
             function applyIcon() {
                 var isDark = document.documentElement.classList.contains('dark');
-                sunIcon.style.display  = isDark  ? 'block' : 'none';
-                moonIcon.style.display = isDark  ? 'none'  : 'block';
+                sunIcon.style.display  = isDark ? 'block' : 'none';
+                moonIcon.style.display = isDark ? 'none'  : 'block';
             }
             applyIcon();
-
             btn.addEventListener('click', function() {
                 var isDark = document.documentElement.classList.contains('dark');
                 document.documentElement.classList.toggle('dark', !isDark);
@@ -813,18 +1206,25 @@
             if (typeof applyTranslations === 'function') applyTranslations(lang);
             if (typeof window.updateChatQuickPrompts === 'function') window.updateChatQuickPrompts(lang);
         }
-        /* Apply active state on page load */
         (function() {
             var saved = localStorage.lang || 'en';
             var enBtn = document.getElementById('lang-en-btn');
             var kuBtn = document.getElementById('lang-ku-btn');
             if (!enBtn || !kuBtn) return;
-            if (saved === 'ku') {
-                kuBtn.classList.add('w-lang-active');
-            } else {
-                enBtn.classList.add('w-lang-active');
-            }
+            if (saved === 'ku') { kuBtn.classList.add('w-lang-active'); }
+            else                { enBtn.classList.add('w-lang-active'); }
         })();
+
+        /* ── Application tracker ── */
+        function handleTrack(e) {
+            e.preventDefault();
+            var code = document.getElementById('track-code').value.trim();
+            if (!code) {
+                document.getElementById('track-code').focus();
+                return;
+            }
+            window.location.href = '{{ url("/track") }}/' + encodeURIComponent(code);
+        }
 
         /* ── Page transition ── */
         (function() {
@@ -836,7 +1236,7 @@
                 var href = a.getAttribute('href');
                 if (!href || href === '#' || href[0] === '#' || href.startsWith('javascript') || href.startsWith('mailto') || href.startsWith('tel')) return;
                 if (a.getAttribute('target') === '_blank') return;
-                try { var u = new URL(href, location.origin); if (u.origin !== location.origin) return; } catch(e) { return; }
+                try { var u = new URL(href, location.origin); if (u.origin !== location.origin) return; } catch(err) { return; }
                 overlay.classList.add('active');
             });
             window.addEventListener('pageshow', function(e) { if (e.persisted) overlay.classList.remove('active'); });
@@ -847,8 +1247,13 @@
         var IS_GUEST   = {{ auth()->check() ? 'false' : 'true' }};
 
         var WELCOME_MSG = function() {
-            if (IS_GUEST) return "Hello! I'm the Halzanin Assistant. Please sign in to ask questions about your application.";
-            return window.i18n ? i18n('chat.welcome') : "Hello! I'm your Halzanin Assistant. Ask me anything about your documents or application process!";
+            var lang = document.documentElement.lang === 'ku' ? 'ku' : 'en';
+            if (IS_GUEST) {
+                return lang === 'ku'
+                    ? 'سڵاو! من یاریدەدەری هەڵزانینم. تکایە چوونەژوورەوە بکەرەوە بۆ ئەوەی پرسیارەکانت بدەیت.'
+                    : "Hello! I'm the Halzanîn Assistant. Please sign in to ask questions about your applications or the portal's services.";
+            }
+            return window.i18n ? i18n('chat.welcome') : "Hello! I'm your Halzanîn Assistant. Ask me anything about government services, required documents, or how to use the portal!";
         };
 
         function getCurrentUiLang() { return document.documentElement.lang === 'ku' ? 'ku' : 'en'; }
@@ -861,17 +1266,13 @@
         };
 
         function sendQuickQuestion(button) {
-            if (IS_GUEST) { openLoginPrompt(); return; }
+            if (IS_GUEST) { appendMsg('ai', WELCOME_MSG()); return; }
             var lang = getCurrentUiLang();
             var q    = lang === 'ku' ? button.dataset.ku : button.dataset.en;
             if (!q) return;
             var inp = document.getElementById('chatbot-input');
             inp.value = q; inp.dispatchEvent(new Event('input'));
             sendChatMessage();
-        }
-
-        function openLoginPrompt() {
-            appendMsg('ai', 'Please sign in to chat with the Halzanin Assistant. Click "Log In" in the top right corner.');
         }
 
         function toggleChat() {
@@ -909,7 +1310,7 @@
 
         function showTyping() {
             var msgs = document.getElementById('chatbot-messages');
-            var el = document.createElement('div');
+            var el   = document.createElement('div');
             el.className = 'chat-msg-ai'; el.id = 'chatbot-typing';
             el.style.cssText = 'display:flex;gap:4px;align-items:center;padding:10px 14px;';
             el.innerHTML = '<span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>';
@@ -918,7 +1319,7 @@
         function removeTyping() { var el = document.getElementById('chatbot-typing'); if (el) el.remove(); }
 
         async function sendChatMessage() {
-            if (IS_GUEST) { openLoginPrompt(); return; }
+            if (IS_GUEST) { appendMsg('ai', WELCOME_MSG()); return; }
             var input = document.getElementById('chatbot-input');
             var msg   = input.value.trim();
             if (!msg) return;
@@ -933,18 +1334,14 @@
                     headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': csrf, 'Accept': 'application/json' },
                     body: JSON.stringify({ message: msg }),
                 });
-                if (res.status === 401) {
-                    removeTyping();
-                    appendMsg('ai', 'Please sign in to use the Halzanin Assistant.');
-                    return;
-                }
+                if (res.status === 401) { removeTyping(); appendMsg('ai', WELCOME_MSG()); return; }
                 var data = await res.json();
                 removeTyping();
-                appendMsg('ai', data.reply || 'Sorry, something went wrong.');
+                appendMsg('ai', data.reply || 'Sorry, something went wrong. Please try again.');
                 if (!chatOpened) document.getElementById('chatbot-badge').style.display = 'block';
             } catch(e) {
                 removeTyping();
-                appendMsg('ai', 'Connection error. Please try again.');
+                appendMsg('ai', 'Connection error. Please check your internet and try again.');
             } finally {
                 sendBtn.disabled = false; sendBtn.style.opacity = '1';
             }
