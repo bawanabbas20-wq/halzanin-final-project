@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Application;
 use App\Models\Ministry;
 use App\Models\OffDay;
+use App\Models\Service;
 use App\Models\TaskType;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -185,5 +186,30 @@ class AdminController extends Controller
             : "Application unassigned.";
 
         return redirect()->back()->with('success', $msg);
+    }
+
+    public function services()
+    {
+        $ministries = Ministry::with(['services' => fn ($q) => $q->orderBy('name')])
+            ->orderBy('order')
+            ->get();
+
+        $stats = [
+            'total'    => Service::count(),
+            'active'   => Service::where('is_active', true)->count(),
+            'inactive' => Service::where('is_active', false)->count(),
+        ];
+
+        return view('admin.services.index', compact('ministries', 'stats'));
+    }
+
+    public function toggleService(Service $service)
+    {
+        $service->update(['is_active' => !$service->is_active]);
+
+        $state = $service->is_active ? 'activated' : 'deactivated';
+
+        return redirect()->route('admin.services')
+            ->with('success', "\"{$service->name}\" has been {$state}.");
     }
 }

@@ -7,22 +7,26 @@
 | Phase | Name | Status |
 |---|---|---|
 | 1 | Portal homepage + planning | ✅ Complete |
-| 2 | Database + 5 service forms | ⏳ Waiting for supervisor (meeting ~May 24) |
-| 3 | Polish + Kurdish + Admin UI | ⏳ Not started |
+| 2 | Database + 5 service forms | ✅ Complete |
+| 3 | Polish + Kurdish + Admin UI | ✅ Complete (4/5 — PDF receipts pending) |
 
-**Current phase: 1 is done. Do NOT start Phase 2 until the user confirms their supervisor approved the plan.**
+**Current phase: Phase 3 is nearly done. Only remaining item is service-specific PDF receipt templates. Final submission due 2026-06-01.**
 
 ---
 
 ## Key Files — Know Before You Touch Anything
 | File | Status | Rule |
 |---|---|---|
-| `resources/views/welcome.blade.php` | Phase 1 ✅ | Portal homepage — can improve design |
+| `resources/views/welcome.blade.php` | ✅ Phase 1–3 done | Portal homepage — Office Locator added; can improve design |
 | `resources/views/citizen/appointment.blade.php` | Existing ✅ | Passport booking — DO NOT TOUCH |
+| `resources/views/services/show.blade.php` | ✅ Phase 2 done | Service detail page — full nav/footer, rewritten |
+| `resources/views/admin/services/index.blade.php` | ✅ Phase 3 done | Admin services management UI |
+| `app/Http/Controllers/ChatbotController.php` | ✅ Phase 3 done | Full 5-ministry knowledge base |
+| `app/Http/Controllers/AdminController.php` | ✅ Phase 3 done | `services()` + `toggleService()` added |
 | `routes/web.php` | Existing ✅ | All routes working — only add, never remove |
+| `public/js/translations.js` | ✅ Phase 2–3 done | Full Kurdish portal translations added |
 | `PORTAL_PLAN.md` | Reference doc | Full architecture, workflows, decisions |
-| `public/images/` | Has passport images | Add new images here — do not remove existing |
-| `public/js/translations.js` | Existing | Add new translation keys, never remove existing ones |
+| `public/images/` | Has logo + hero image | Add new images here — do not remove existing |
 
 ---
 
@@ -31,8 +35,8 @@ Everything below is done and working.
 
 - [x] Portal homepage (`welcome.blade.php`) — full rewrite as government portal
 - [x] Official announcement bar at top of page
-- [x] Hero section with image panel (accepts `hero-building.jpg`)
-- [x] 5 ministry cards — all services marked "Coming Soon"
+- [x] Hero section with image panel (`hero-building.png`)
+- [x] 5 ministry cards — all services initially marked "Coming Soon"
 - [x] How It Works (4 steps)
 - [x] Platform Features (4 cards)
 - [x] Inline application tracker (submits to `/track/{code}`)
@@ -41,88 +45,65 @@ Everything below is done and working.
 - [x] Dark mode, Kurdish RTL, all screen sizes
 - [x] Chatbot widget (guest-aware welcome message)
 - [x] `PORTAL_PLAN.md` created with full architecture doc
-- [x] `PHASE_TRACKER.md` created (this file)
 - [x] Memory saved for future sessions
 
 ---
 
-## Phase 2 — After Supervisor Approval
-**Before starting:** User must confirm supervisor approved the portal idea and the specific service flows in `PORTAL_PLAN.md`.
+## Phase 2 — Complete ✅
 
-### Step 1 — Database (do all at once)
-- [ ] `php artisan make:migration create_ministries_table`
-- [ ] `php artisan make:migration create_services_table`
-- [ ] `php artisan make:migration add_ministry_id_to_users_table`
-- [ ] `php artisan make:migration add_service_id_to_appointments_table`
-- [ ] `php artisan make:migration add_service_id_to_applications_table`
-- [ ] Run migrations
-- [ ] Create `Ministry` model + `Service` model
-- [ ] Create `database/seeders/MinistriesAndServicesSeeder.php` with all data from PORTAL_PLAN.md
-- [ ] Run seeder
+### Step 1 — Database ✅
+- [x] `ministries` table + migration
+- [x] `services` table + migration (with `form_schema`, `statuses`, `required_documents` JSON columns)
+- [x] `ministry_id` on `users` table (staff scoping)
+- [x] `service_id` on `applications` / `appointments` tables
+- [x] `Ministry` model + `Service` model
+- [x] `MinistriesAndServicesSeeder` — all 5 ministries, 15 services seeded (6 active)
+- [x] Migrations run, seeder run
 
-### Step 2 — Ministry Admin role
-- [ ] Add `'ministry_admin'` to valid roles (or use sub-role system — see PORTAL_PLAN.md)
-- [ ] Scope admin queries by `ministry_id` for non-super-admins
-- [ ] Add ministry assignment UI in admin user management page
+### Step 2 — Ministry staff role ✅
+- [x] 3-tier staff system: staff + sub-roles + task-types
+- [x] `ministry_id` scoping — staff see only their ministry's applications
+- [x] Ministry assignment UI in admin user management page
+- [x] Sub-roles system (`SubRole` model, pivot)
 
-### Step 3 — Build 5 service forms (one per ministry)
-Each service needs: form fields, required docs list, status flow
+### Step 3 — 5 service forms ✅
+- [x] **Civil Registry: National ID Card** — statuses, required docs, dynamic form
+- [x] **Civil Registry: Birth Certificate** — statuses, required docs, dynamic form
+- [x] **Traffic Police: Driving License** — 7-step status flow, theory/practical test stages
+- [x] **Electricity: New Connection** — 7-step flow incl. inspection + fee + install
+- [x] **Water: New Connection** — 6-step flow
+- [x] **Business Registration: Business License** — name check + legal review flow
 
-**3a — Civil Registry: National ID Card**
-- Statuses: Submitted → Documents Verified → Under Processing → Ready for Pickup → Completed
-- Required docs: Birth cert scan, Family registry scan, Photo
-- Form fields: Full name, DOB, Reason (new/renewal/lost), Address
+### Step 4 — Wire services to portal ✅
+- [x] Service detail page (`/services/{slug}`) — standalone HTML with full nav + footer
+- [x] "Apply" links on homepage (active services only — from DB query)
+- [x] "Coming Soon" pills remain for inactive services
+- [x] Ministry card footer shows live active-service count
+- [x] Logo in authenticated app navbar links back to portal homepage (`/`)
 
-**3b — Traffic Police: Driving License**
-- Statuses: Submitted → Docs Verified → Theory Test Scheduled → Theory Passed → Practical Test Scheduled → License Ready → Collected
-- Required docs: National ID, Medical certificate, Photo, Old license (if renewal)
-- Form fields: License type (motorcycle/car/heavy), New or renewal, Medical clinic name
-
-**3c — Electricity: New Connection**
-- Statuses: Submitted → Docs Reviewed → Inspection Scheduled → Inspection Completed → Fee Assessed → Installation Scheduled → Connected
-- Required docs: National ID, Property deed or rental contract, Building completion certificate
-- Form fields: Address, Property type, Requested KW load, Owner/tenant
-
-**3d — Water: New Connection**
-- Statuses: Submitted → Docs Reviewed → Inspection Scheduled → Approved → Installation Scheduled → Connected
-- Required docs: National ID, Property deed or rental contract
-- Form fields: Address, Property type, Water usage type
-
-**3e — Business Registration: Business License**
-- Statuses: Submitted → Name Check → Under Legal Review → Approved → Fee Pending → License Ready → Completed
-- Required docs: National ID (all owners), Lease agreement, Criminal record clearance
-- Form fields: Business name (EN + KU), Business type, Activity description, Address, Capital amount
-
-### Step 4 — Wire services to portal
-- [ ] Service detail page (`/services/{slug}`) — shows requirements, "Apply Now" button
-- [ ] Citizen appointment form: pre-select service from portal click
-- [ ] Update existing passport to use new `service_id` system
-- [ ] Flip Civil Registry passport service from Coming Soon → Active on portal
-
-### Step 5 — Kurdish translations
-- [ ] Add all new service names, ministry names, form labels to `public/js/translations.js`
-- [ ] Test RTL layout on all new pages
+### Step 5 — Kurdish translations ✅
+- [x] All service names, ministry names added to `translations.js`
+- [x] Portal homepage keys (hero, stats, ministries, steps, features, FAQ, footer) translated
+- [x] Office locator keys translated (ku + en)
+- [x] RTL layout tested on all portal sections
 
 ---
 
-## Phase 3 — Polish
-- [ ] Admin: services management UI (toggle active/inactive, edit names)
-- [ ] Homepage statistics bar with seeded real-looking numbers
-- [ ] Chatbot updated to know about all services and their requirements
-- [ ] Office locator section (addresses per ministry)
-- [ ] Service-specific PDF receipt templates
+## Phase 3 — Complete ✅ (4/5)
+
+- [x] **Admin: Services Management UI** — `/admin/services` — toggle active/inactive per service, per ministry; summary cards; preview links to public service pages
+- [x] **Homepage live statistics** — `portalStats` passed from route; `Ministry::count()`, `Service::count()`, `Application::count()`, `User::where('role','citizen')->count()` all live from DB
+- [x] **Chatbot full knowledge base** — System prompt updated to all-portal assistant; `$krgPassportRulesPrompt` covers all 5 ministries (6 active services, required docs, process steps, rules); `fallbackReply()` handles all service types in English + Kurdish
+- [x] **Office Locator section** — `#offices` section on homepage; 5 ministry cards with address, working hours (Sun–Thu 8:00–15:00), phone; color-coded by ministry; responsive (3-col → 2-col → 1-col); linked in navbar + footer
+- [ ] **Service-specific PDF receipt templates** — Per-service PDF with QR code, service name, and ministry branding *(still to do)*
 
 ---
 
-## Images Still Needed
-The following images should be placed in `public/images/` when available:
-
-| Filename | Where used | What it should be |
+## Images — Status
+| Filename | Where used | Status |
 |---|---|---|
-| `hero-building.jpg` | Hero section right panel | Kurdistan government/parliament building or Sulaymaniyah Citadel. Landscape, min 900×700px. Professional photo. |
-| `portal-citizen.jpg` | Features section (optional) | Person using phone/laptop for online services. Middle Eastern appearance preferred. From Unsplash or similar. |
-
-The page works and looks great without these images. Adding them makes the hero section much more impactful.
+| `hero-building.png` | Hero section right panel | ✅ Added |
+| `halzanin-logo.png` | Navbar + footer | ✅ Added |
 
 ---
 
@@ -131,12 +112,11 @@ The page works and looks great without these images. Adding them makes the hero 
 2. Never remove existing routes from `web.php`
 3. Never remove existing translation keys from `translations.js`
 4. Never change the design system colors/fonts (PORTAL_PLAN.md has the tokens)
-5. Never start Phase 2 work without user confirming supervisor approval
-6. Mobile-first always — test on 375px width first
-7. No emoji Unicode characters in any view files — SVG icons only
+5. Mobile-first always — test on 375px width first
+6. No emoji Unicode characters in any view files — SVG icons only
 
 ---
 
 ## Deadlines
-- **2026-05-24 (Sunday)** — Report due to supervisor. Portal homepage must be demo-ready. ✅ Done.
-- **2026-06-01** — Final project submission. All of Phase 2 should be complete.
+- **2026-05-24 (Sunday)** — Report due to supervisor. Portal homepage demo-ready. ✅ Done.
+- **2026-06-01** — Final project submission. Phase 3 PDF receipts is the only remaining item.

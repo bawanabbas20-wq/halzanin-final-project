@@ -17,7 +17,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     $activeServices = \App\Models\Service::where('is_active', true)->pluck('slug')->all();
-    return view('welcome', compact('activeServices'));
+    $portalStats = [
+        'ministries'   => \App\Models\Ministry::count() ?: 5,
+        'services'     => \App\Models\Service::count() ?: 15,
+        'applications' => \App\Models\Application::count(),
+        'citizens'     => \App\Models\User::where('role', 'citizen')->count(),
+    ];
+    return view('welcome', compact('activeServices', 'portalStats'));
 });
 
 // Public service detail pages (no auth required)
@@ -96,6 +102,10 @@ Route::middleware(['auth', 'verified.otp', 'role:admin', 'throttle:authenticated
     Route::post('/admin/task-types', [AdminController::class, 'storeTaskType'])->name('admin.task-types.store');
     Route::delete('/admin/task-types/{taskType}', [AdminController::class, 'destroyTaskType'])->name('admin.task-types.destroy');
     Route::patch('/admin/applications/{application}/assign', [AdminController::class, 'assignApplication'])->name('admin.applications.assign');
+
+    // Services management
+    Route::get('/admin/services', [AdminController::class, 'services'])->name('admin.services');
+    Route::patch('/admin/services/{service}/toggle', [AdminController::class, 'toggleService'])->name('admin.services.toggle');
 
     // Sub-roles
     Route::prefix('admin/sub-roles')->group(function () {

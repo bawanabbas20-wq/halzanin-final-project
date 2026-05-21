@@ -55,11 +55,30 @@
 
         @php
             $badgeColors = [
-                'submitted'    => ['bg' => 'bg-gray-100 dark:bg-gray-800',          'text' => 'text-gray-700 dark:text-gray-300'],
-                'checked_in'   => ['bg' => 'bg-purple-100 dark:bg-purple-900/30',   'text' => 'text-purple-700 dark:text-purple-400'],
-                'under_review' => ['bg' => 'bg-yellow-100 dark:bg-yellow-900/30',   'text' => 'text-yellow-700 dark:text-yellow-400'],
-                'approved'     => ['bg' => 'bg-green-100 dark:bg-green-900/30',     'text' => 'text-green-700 dark:text-green-400'],
-                'rejected'     => ['bg' => 'bg-red-100 dark:bg-red-900/30',         'text' => 'text-red-700 dark:text-red-400'],
+                'submitted'              => ['bg' => 'bg-gray-100 dark:bg-gray-800',           'text' => 'text-gray-700 dark:text-gray-300'],
+                'received'               => ['bg' => 'bg-blue-100 dark:bg-blue-900/30',        'text' => 'text-blue-700 dark:text-blue-400'],
+                'docs_verified'          => ['bg' => 'bg-blue-100 dark:bg-blue-900/30',        'text' => 'text-blue-700 dark:text-blue-400'],
+                'docs_reviewed'          => ['bg' => 'bg-blue-100 dark:bg-blue-900/30',        'text' => 'text-blue-700 dark:text-blue-400'],
+                'under_processing'       => ['bg' => 'bg-indigo-100 dark:bg-indigo-900/30',   'text' => 'text-indigo-700 dark:text-indigo-400'],
+                'under_review'           => ['bg' => 'bg-yellow-100 dark:bg-yellow-900/30',    'text' => 'text-yellow-700 dark:text-yellow-400'],
+                'theory_scheduled'       => ['bg' => 'bg-purple-100 dark:bg-purple-900/30',   'text' => 'text-purple-700 dark:text-purple-400'],
+                'theory_passed'          => ['bg' => 'bg-emerald-100 dark:bg-emerald-900/30', 'text' => 'text-emerald-700 dark:text-emerald-400'],
+                'practical_scheduled'    => ['bg' => 'bg-purple-100 dark:bg-purple-900/30',   'text' => 'text-purple-700 dark:text-purple-400'],
+                'license_ready'          => ['bg' => 'bg-emerald-100 dark:bg-emerald-900/30', 'text' => 'text-emerald-700 dark:text-emerald-400'],
+                'inspection_scheduled'   => ['bg' => 'bg-amber-100 dark:bg-amber-900/30',     'text' => 'text-amber-700 dark:text-amber-400'],
+                'inspection_completed'   => ['bg' => 'bg-blue-100 dark:bg-blue-900/30',       'text' => 'text-blue-700 dark:text-blue-400'],
+                'fee_assessed'           => ['bg' => 'bg-orange-100 dark:bg-orange-900/30',   'text' => 'text-orange-700 dark:text-orange-400'],
+                'fee_pending'            => ['bg' => 'bg-orange-100 dark:bg-orange-900/30',   'text' => 'text-orange-700 dark:text-orange-400'],
+                'installation_scheduled' => ['bg' => 'bg-indigo-100 dark:bg-indigo-900/30',   'text' => 'text-indigo-700 dark:text-indigo-400'],
+                'name_check'             => ['bg' => 'bg-amber-100 dark:bg-amber-900/30',     'text' => 'text-amber-700 dark:text-amber-400'],
+                'legal_review'           => ['bg' => 'bg-amber-100 dark:bg-amber-900/30',     'text' => 'text-amber-700 dark:text-amber-400'],
+                'approved'               => ['bg' => 'bg-green-100 dark:bg-green-900/30',     'text' => 'text-green-700 dark:text-green-400'],
+                'ready_for_pickup'       => ['bg' => 'bg-emerald-100 dark:bg-emerald-900/30', 'text' => 'text-emerald-700 dark:text-emerald-400'],
+                'completed'              => ['bg' => 'bg-green-100 dark:bg-green-900/30',     'text' => 'text-green-700 dark:text-green-400'],
+                'collected'              => ['bg' => 'bg-green-100 dark:bg-green-900/30',     'text' => 'text-green-700 dark:text-green-400'],
+                'connected'              => ['bg' => 'bg-green-100 dark:bg-green-900/30',     'text' => 'text-green-700 dark:text-green-400'],
+                'checked_in'             => ['bg' => 'bg-purple-100 dark:bg-purple-900/30',   'text' => 'text-purple-700 dark:text-purple-400'],
+                'rejected'               => ['bg' => 'bg-red-100 dark:bg-red-900/30',         'text' => 'text-red-700 dark:text-red-400'],
             ];
             $currentBadge = $badgeColors[$application->current_status] ?? $badgeColors['submitted'];
             $statusLabel  = str_replace('_', ' ', $application->current_status);
@@ -154,22 +173,25 @@
         {{-- Status CTA --}}
         <div class="animate-fade-up" style="animation-delay:{{ 300 + ($application->statusLogs->count() * 100) }}ms;">
             @if($application->current_status === 'checked_in')
-                <div class="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-2xl p-4 text-center">
-                    <p class="text-purple-800 dark:text-purple-300 font-semibold text-sm">
-                        📍 <span data-i18n="track.checked_in">You have been checked in. Please take a seat and wait for your number to be called.</span>
-                    </p>
+                <div class="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-2xl p-4">
+                    <div class="flex items-center justify-center gap-3">
+                        <svg class="w-5 h-5 text-purple-600 dark:text-purple-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        <p class="text-purple-800 dark:text-purple-300 font-semibold text-sm" data-i18n="track.checked_in">You have been checked in. Please take a seat and wait for your number to be called.</p>
+                    </div>
                 </div>
-            @elseif($application->current_status === 'approved')
-                <div class="bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 rounded-2xl p-4 text-center">
-                    <p class="text-green-800 dark:text-green-300 font-semibold text-sm">
-                        🎉 <span data-i18n="track.ready">Your document is ready! Please visit the Passport Directorate to collect it.</span>
-                    </p>
+            @elseif(in_array($application->current_status, ['approved', 'ready_for_pickup', 'license_ready', 'connected', 'completed', 'collected']))
+                <div class="bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 rounded-2xl p-4">
+                    <div class="flex items-center justify-center gap-3">
+                        <svg class="w-5 h-5 text-green-600 dark:text-green-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <p class="text-green-800 dark:text-green-300 font-semibold text-sm" data-i18n="track.ready">Your application has been approved. Please visit the relevant directorate to collect your document.</p>
+                    </div>
                 </div>
             @elseif($application->current_status === 'rejected')
-                <div class="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-2xl p-4 text-center">
-                    <p class="text-red-800 dark:text-red-300 font-semibold text-sm">
-                        ⚠️ <span data-i18n="track.rejected">Your application was rejected. Please review the notes above and resubmit.</span>
-                    </p>
+                <div class="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-2xl p-4">
+                    <div class="flex items-center justify-center gap-3">
+                        <svg class="w-5 h-5 text-red-500 dark:text-red-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <p class="text-red-800 dark:text-red-300 font-semibold text-sm" data-i18n="track.rejected">Your application was rejected. Please review the notes above and resubmit if needed.</p>
+                    </div>
                 </div>
             @else
                 <div class="bg-brand/5 dark:bg-brand/10 border border-brand/15 dark:border-brand/20 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
