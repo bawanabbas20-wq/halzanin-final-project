@@ -39,7 +39,15 @@
       "Bash(Copy-Item \"D:\\\\final project\\\\ServiceIraqiPassport red.png\" \"D:\\\\final project\\\\public\\\\images\\\\passport-red.png\" -Force)",
       "Bash(Write-Host \"Done\")",
       "Bash(powershell -Command ' *)",
-      "Bash(findstr -i \"mail\\\\|whatsapp\\\\|twilio\\\\|sms\\\\|otp\")"
+      "Bash(findstr -i \"mail\\\\|whatsapp\\\\|twilio\\\\|sms\\\\|otp\")",
+      "Bash(composer install *)",
+      "Bash(Get-ChildItem -Path \"d:\\\\final project\" -Force)",
+      "Bash(Select-Object Name, BaseName, Extension)",
+      "Bash(Format-Table -AutoSize)",
+      "PowerShell(Start-Process -FilePath \"php\" -ArgumentList \"artisan\", \"serve\", \"--host=127.0.0.1\", \"--port=8000\" -WorkingDirectory \"d:\\\\final project\" -WindowStyle Minimized)",
+      "PowerShell(Start-Process -FilePath \"npm\" -ArgumentList \"run\", \"dev\" -WorkingDirectory \"d:\\\\final project\" -WindowStyle Minimized)",
+      "PowerShell(Start-Sleep -Seconds 3; try { $r = Invoke-WebRequest -Uri \"http://127.0.0.1:8000\" -TimeoutSec 5 -UseBasicParsing; Write-Output \"HTTP $\\($r.StatusCode\\) — Laravel is up\" } catch { Write-Output \"Not reachable yet: $_\" })",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://127.0.0.1:8000/)"
     ]
   }
 }

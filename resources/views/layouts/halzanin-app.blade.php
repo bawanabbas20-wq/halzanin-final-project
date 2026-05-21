@@ -46,7 +46,9 @@
             <aside class="hidden lg:flex lg:flex-col w-56 bg-white dark:bg-[#1F1F1F] border-r border-stone-200 dark:border-slate-800 flex-shrink-0 relative z-30">
                 <!-- Logo -->
                 <div class="flex items-center gap-3 px-5 py-4 border-b border-stone-100 dark:border-slate-800">
-                    <img src="{{ asset('images/halzanin-logo.png') }}" alt="Halzanîn" class="h-14 w-auto">
+                    <a href="{{ url('/') }}" class="block focus:outline-none focus:ring-2 focus:ring-brand/40 rounded-lg">
+                        <img src="{{ asset('images/halzanin-logo.png') }}" alt="Halzanîn — Back to portal" class="h-14 w-auto">
+                    </a>
                 </div>
 
                 <!-- Navigation Links -->

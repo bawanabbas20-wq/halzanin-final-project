@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Application;
+use App\Models\Ministry;
 use App\Models\OffDay;
 use App\Models\TaskType;
 use App\Models\User;
@@ -45,12 +46,13 @@ class AdminController extends Controller
 
     public function users()
     {
-        $users = User::with(['taskTypes', 'subRoles'])->latest()->paginate(15);
-        $taskTypes = TaskType::orderBy('name')->get();
-        $subRoles = \App\Models\SubRole::orderBy('name')->get();
-        $staffUsers = User::where('role', 'staff')->with(['taskTypes', 'subRoles'])->get();
+        $users      = User::with(['taskTypes', 'subRoles', 'ministry'])->latest()->paginate(15);
+        $taskTypes  = TaskType::orderBy('name')->get();
+        $subRoles   = \App\Models\SubRole::orderBy('name')->get();
+        $staffUsers = User::where('role', 'staff')->with(['taskTypes', 'subRoles', 'ministry'])->get();
+        $ministries = Ministry::orderBy('order')->get();
 
-        return view('admin.users', compact('users', 'taskTypes', 'subRoles', 'staffUsers'));
+        return view('admin.users', compact('users', 'taskTypes', 'subRoles', 'staffUsers', 'ministries'));
     }
 
     public function updateUserRole(Request $request, User $user)
@@ -68,6 +70,18 @@ class AdminController extends Controller
 
         return redirect()->route('admin.users')
             ->with('success', 'User role updated successfully.');
+    }
+
+    public function updateUserMinistry(Request $request, User $user)
+    {
+        $request->validate([
+            'ministry_id' => 'nullable|exists:ministries,id',
+        ]);
+
+        $user->update(['ministry_id' => $request->ministry_id ?: null]);
+
+        return redirect()->route('admin.users')
+            ->with('success', 'Ministry assignment updated.');
     }
 
     public function addOffDay(Request $request)

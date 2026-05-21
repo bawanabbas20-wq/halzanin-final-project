@@ -12,10 +12,21 @@ use App\Http\Controllers\VaultController;
 use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\TrackController;
+use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    $activeServices = \App\Models\Service::where('is_active', true)->pluck('slug')->all();
+    return view('welcome', compact('activeServices'));
+});
+
+// Public service detail pages (no auth required)
+Route::get('/services/{slug}', [ServiceController::class, 'show'])->name('services.show');
+
+// Service apply form + submit (auth + citizen role required)
+Route::middleware(['auth', 'verified.otp', 'role:citizen', 'throttle:authenticated'])->group(function () {
+    Route::get('/apply/{slug}', [ServiceController::class, 'applyForm'])->name('services.apply');
+    Route::post('/apply/{slug}', [ServiceController::class, 'store'])->name('services.store');
 });
 
 // SECURITY (OWASP A07): public track endpoints capped at 10 req/min per IP.
@@ -76,6 +87,7 @@ Route::middleware(['auth', 'verified.otp', 'role:admin', 'throttle:authenticated
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
     Route::patch('/admin/users/{user}/role', [AdminController::class, 'updateUserRole'])->name('admin.users.update-role');
+    Route::patch('/admin/users/{user}/ministry', [AdminController::class, 'updateUserMinistry'])->name('admin.users.update-ministry');
     Route::patch('/admin/users/{user}/task-types', [AdminController::class, 'updateStaffTaskTypes'])->name('admin.users.update-task-types');
     Route::get('/admin/off-days', [AdminController::class, 'offDays'])->name('admin.offdays');
     Route::post('/admin/off-days', [AdminController::class, 'addOffDay'])->name('admin.offdays.store');

@@ -118,29 +118,53 @@
                                     @if($isSelf)
                                         <span class="text-[11px] text-gray-400 dark:text-gray-500 italic uppercase tracking-wider font-semibold" data-i18n="Cannot change own role">Cannot change own role</span>
                                     @else
-                                        <form method="POST"
-                                              action="{{ route('admin.users.update-role', $user->id) }}"
-                                              data-user-name="{{ $user->name }}"
-                                              class="inline-flex items-center gap-2">
-                                            @csrf
-                                            @method('PATCH')
-                                            <select name="role"
-                                                    class="block w-28 h-[34px] text-xs font-semibold ltr:pl-3 ltr:pr-8 rtl:pr-3 rtl:pl-8 rounded-xl border-gray-200 dark:border-gray-700 dark:bg-[#141414] dark:text-white focus:border-brand focus:ring-0 transition-all">
-                                                <option value="citizen" {{ $user->role === 'citizen' ? 'selected' : '' }}>Citizen</option>
-                                                <option value="staff"   {{ $user->role === 'staff'   ? 'selected' : '' }}>Staff</option>
-                                                <option value="admin"   {{ $user->role === 'admin'   ? 'selected' : '' }}>Admin</option>
-                                            </select>
-                                            <button type="button"
-                                                    x-on:click="
-                                                        pendingForm = $el.closest('form');
-                                                        pendingName = pendingForm.dataset.userName;
-                                                        pendingRole = pendingForm.querySelector('[name=role]').value;
-                                                        $dispatch('open-modal', 'confirm-role-update')
-                                                    "
-                                                    class="h-[34px] px-3 bg-brand text-white text-xs font-semibold rounded-xl hover:bg-brand-light transition-colors shadow-sm">
-                                                <span data-i18n="Update">Update</span>
-                                            </button>
-                                        </form>
+                                        <div class="flex flex-col gap-2 items-end">
+                                            <form method="POST"
+                                                  action="{{ route('admin.users.update-role', $user->id) }}"
+                                                  data-user-name="{{ $user->name }}"
+                                                  class="inline-flex items-center gap-2">
+                                                @csrf
+                                                @method('PATCH')
+                                                <select name="role"
+                                                        class="block w-28 h-[34px] text-xs font-semibold ltr:pl-3 ltr:pr-8 rtl:pr-3 rtl:pl-8 rounded-xl border-gray-200 dark:border-gray-700 dark:bg-[#141414] dark:text-white focus:border-brand focus:ring-0 transition-all">
+                                                    <option value="citizen" {{ $user->role === 'citizen' ? 'selected' : '' }}>Citizen</option>
+                                                    <option value="staff"   {{ $user->role === 'staff'   ? 'selected' : '' }}>Staff</option>
+                                                    <option value="admin"   {{ $user->role === 'admin'   ? 'selected' : '' }}>Admin</option>
+                                                </select>
+                                                <button type="button"
+                                                        x-on:click="
+                                                            pendingForm = $el.closest('form');
+                                                            pendingName = pendingForm.dataset.userName;
+                                                            pendingRole = pendingForm.querySelector('[name=role]').value;
+                                                            $dispatch('open-modal', 'confirm-role-update')
+                                                        "
+                                                        class="h-[34px] px-3 bg-brand text-white text-xs font-semibold rounded-xl hover:bg-brand-light transition-colors shadow-sm">
+                                                    <span data-i18n="Update">Update</span>
+                                                </button>
+                                            </form>
+
+                                            @if($user->role === 'staff')
+                                            <form method="POST"
+                                                  action="{{ route('admin.users.update-ministry', $user->id) }}"
+                                                  class="inline-flex items-center gap-2">
+                                                @csrf
+                                                @method('PATCH')
+                                                <select name="ministry_id"
+                                                        class="block w-36 h-[34px] text-xs font-semibold ltr:pl-3 ltr:pr-8 rtl:pr-3 rtl:pl-8 rounded-xl border-gray-200 dark:border-gray-700 dark:bg-[#141414] dark:text-white focus:border-brand focus:ring-0 transition-all">
+                                                    <option value="">No Ministry</option>
+                                                    @foreach($ministries as $ministry)
+                                                        <option value="{{ $ministry->id }}" {{ $user->ministry_id === $ministry->id ? 'selected' : '' }}>
+                                                            {{ $ministry->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <button type="submit"
+                                                        class="h-[34px] px-3 bg-gray-600 text-white text-xs font-semibold rounded-xl hover:bg-gray-700 transition-colors shadow-sm">
+                                                    Assign
+                                                </button>
+                                            </form>
+                                            @endif
+                                        </div>
                                     @endif
                                 </td>
                             </tr>

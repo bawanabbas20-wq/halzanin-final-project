@@ -17,15 +17,26 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ApplicationController extends Controller
 {
-    private const NEXT_STATUSES = [
+    // Used for the legacy passport flow (no service_id)
+    private const PASSPORT_NEXT_STATUSES = [
         'submitted'    => ['under_review' => 'Move to Review'],
         'under_review' => ['approved' => 'Approve', 'rejected' => 'Reject'],
+        'checked_in'   => ['under_review' => 'Move to Review'],
     ];
+
+    private function resolveNextStatuses(Application $application): array
+    {
+        if ($application->service_id && $application->service) {
+            return $application->service->allowedNextStatuses($application->current_status);
+        }
+        return self::PASSPORT_NEXT_STATUSES[$application->current_status] ?? [];
+    }
 
     public function index()
     {
         $applications = Application::with([
             'appointment',
+            'service.ministry',
             'statusLogs' => fn ($query) => $query->latest(),
         ])
             ->where('user_id', Auth::id())
@@ -38,9 +49,22 @@ class ApplicationController extends Controller
 
     public function queue(Request $request)
     {
-        $applications = Application::with(['user', 'appointment'])
-            ->latest()
-            ->paginate(15);
+        $user  = Auth::user();
+        $query = Application::with(['user', 'appointment', 'service.ministry']);
+
+        // Ministry-scoped staff only see their ministry's applications
+        if ($user->role === 'staff' && $user->ministry_id) {
+            $query->whereHas('service', fn ($q) => $q->where('ministry_id', $user->ministry_id))
+                  ->orWhereHas('appointment', fn ($q) => $q->whereNull('service_id'));
+            // For backward-compat: show unassigned (passport) apps to all staff
+            $query = Application::with(['user', 'appointment', 'service.ministry'])
+                ->where(function ($q) use ($user) {
+                    $q->whereHas('service', fn ($sq) => $sq->where('ministry_id', $user->ministry_id))
+                      ->orWhereNull('service_id');
+                });
+        }
+
+        $applications = $query->latest()->paginate(15);
 
         $year = (int) $request->get('year', now()->year);
         $month = (int) $request->get('month', now()->month);
@@ -64,18 +88,20 @@ class ApplicationController extends Controller
         $application->load([
             'user',
             'appointment',
+            'service.ministry',
             'documents.vaultDocument',
             'statusLogs' => fn ($query) => $query->oldest(),
         ]);
 
-        $nextStatuses = self::NEXT_STATUSES[$application->current_status] ?? [];
+        $nextStatuses = $this->resolveNextStatuses($application);
 
         return view('staff.application', compact('application', 'nextStatuses'));
     }
 
     public function updateStatus(Request $request, Application $application, WhatsAppService $whatsApp)
     {
-        $allowedNextStatuses = array_keys(self::NEXT_STATUSES[$application->current_status] ?? []);
+        $application->loadMissing('service');
+        $allowedNextStatuses = array_keys($this->resolveNextStatuses($application));
 
         $request->validate([
             'new_status' => ['required', 'in:' . implode(',', $allowedNextStatuses)],

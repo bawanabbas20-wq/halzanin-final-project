@@ -12,6 +12,8 @@ class Application extends Model
     protected $fillable = [
         'user_id',
         'appointment_id',
+        'service_id',
+        'form_data',
         'tracking_code',
         'current_status',
         'submitted_at',
@@ -20,6 +22,7 @@ class Application extends Model
 
     protected $casts = [
         'submitted_at' => 'datetime',
+        'form_data'    => 'array',
     ];
 
     public function user()
@@ -45,5 +48,10 @@ class Application extends Model
     public function assignedStaff()
     {
         return $this->belongsTo(User::class, 'assigned_to');
+    }
+
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
     }
 }

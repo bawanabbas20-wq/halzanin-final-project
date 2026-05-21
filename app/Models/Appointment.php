@@ -11,6 +11,7 @@ class Appointment extends Model
 
     protected $fillable = [
         'citizen_id',
+        'service_id',
         'full_name',
         'national_id_number',
         'document_type',
@@ -40,6 +41,11 @@ class Appointment extends Model
     public function application()
     {
         return $this->hasOne(Application::class);
+    }
+
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
     }
 
     public static function bookedSlotsForDate(string $date): array

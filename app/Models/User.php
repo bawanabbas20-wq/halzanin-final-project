@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'ministry_id',
         'phone_number',
         'otp_code',
         'otp_expires_at',
@@ -88,5 +89,15 @@ class User extends Authenticatable
     public function vaultDocuments()
     {
         return $this->hasMany(VaultDocument::class);
+    }
+
+    public function ministry()
+    {
+        return $this->belongsTo(Ministry::class);
+    }
+
+    public function isMinistryScoped(): bool
+    {
+        return $this->role === 'staff' && $this->ministry_id !== null;
     }
 }

@@ -286,6 +286,17 @@
             color: var(--muted); flex-shrink: 0; white-space: nowrap;
         }
         html.dark .w-soon-pill { background: rgba(255,255,255,0.05); }
+        .w-apply-link {
+            display: inline-flex; align-items: center; gap: 4px;
+            font-size: 11px; font-weight: 700; letter-spacing: .3px;
+            color: #1B4F8A; background: rgba(27,79,138,0.07); border: 1px solid rgba(27,79,138,0.2);
+            border-radius: 999px; padding: 3px 11px;
+            text-decoration: none; transition: background .15s, color .15s, border-color .15s;
+            flex-shrink: 0; white-space: nowrap;
+        }
+        .w-apply-link:hover { background: #1B4F8A; color: #fff; border-color: #1B4F8A; }
+        html.dark .w-apply-link { color: #93b8e8; background: rgba(147,184,232,0.08); border-color: rgba(147,184,232,0.2); }
+        html.dark .w-apply-link:hover { background: #1B4F8A; color: #fff; border-color: #1B4F8A; }
         .w-min-footer { padding: 14px 22px; background: var(--bg); border-top: 1px solid var(--line); }
         .w-min-count { font-size: 12px; color: var(--muted); font-weight: 600; }
 
@@ -688,19 +699,28 @@
                             </div>
                             <div class="w-svc-row">
                                 <span class="w-svc-name" data-i18n="National ID Card">National ID Card</span>
-                                <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
+                                @if(!empty($activeServices) && in_array('national-id', $activeServices))
+                                    <a href="{{ route('services.show', 'national-id') }}" class="w-apply-link">Apply</a>
+                                @else
+                                    <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
+                                @endif
                             </div>
                             <div class="w-svc-row">
                                 <span class="w-svc-name" data-i18n="Birth Certificate">Birth Certificate</span>
-                                <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
+                                @if(!empty($activeServices) && in_array('birth-certificate', $activeServices))
+                                    <a href="{{ route('services.show', 'birth-certificate') }}" class="w-apply-link">Apply</a>
+                                @else
+                                    <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
+                                @endif
                             </div>
                             <div class="w-svc-row">
                                 <span class="w-svc-name" data-i18n="Marriage Certificate">Marriage Certificate</span>
                                 <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
                             </div>
                         </div>
+                        @php $civilActive = !empty($activeServices) ? count(array_intersect(['national-id','birth-certificate'], $activeServices)) : 0; @endphp
                         <div class="w-min-footer">
-                            <span class="w-min-count" data-i18n="4 services">4 services · launching soon</span>
+                            <span class="w-min-count">4 services{{ $civilActive > 0 ? " · {$civilActive} available" : " · launching soon" }}</span>
                         </div>
                     </article>
 
@@ -718,7 +738,11 @@
                         <div class="w-min-services">
                             <div class="w-svc-row">
                                 <span class="w-svc-name" data-i18n="Driving License">Driving License</span>
-                                <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
+                                @if(!empty($activeServices) && in_array('driving-license', $activeServices))
+                                    <a href="{{ route('services.show', 'driving-license') }}" class="w-apply-link">Apply</a>
+                                @else
+                                    <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
+                                @endif
                             </div>
                             <div class="w-svc-row">
                                 <span class="w-svc-name" data-i18n="Vehicle Registration">Vehicle Registration</span>
@@ -729,8 +753,9 @@
                                 <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
                             </div>
                         </div>
+                        @php $trafficActive = !empty($activeServices) && in_array('driving-license', $activeServices) ? 1 : 0; @endphp
                         <div class="w-min-footer">
-                            <span class="w-min-count" data-i18n="3 services">3 services · launching soon</span>
+                            <span class="w-min-count">3 services{{ $trafficActive > 0 ? " · {$trafficActive} available" : " · launching soon" }}</span>
                         </div>
                     </article>
 
@@ -748,7 +773,11 @@
                         <div class="w-min-services">
                             <div class="w-svc-row">
                                 <span class="w-svc-name" data-i18n="New Connection Application">New Connection Application</span>
-                                <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
+                                @if(!empty($activeServices) && in_array('electricity-connection', $activeServices))
+                                    <a href="{{ route('services.show', 'electricity-connection') }}" class="w-apply-link">Apply</a>
+                                @else
+                                    <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
+                                @endif
                             </div>
                             <div class="w-svc-row">
                                 <span class="w-svc-name" data-i18n="Service Complaint">Service Complaint</span>
@@ -759,8 +788,9 @@
                                 <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
                             </div>
                         </div>
+                        @php $elecActive = !empty($activeServices) && in_array('electricity-connection', $activeServices) ? 1 : 0; @endphp
                         <div class="w-min-footer">
-                            <span class="w-min-count" data-i18n="3 services">3 services · launching soon</span>
+                            <span class="w-min-count">3 services{{ $elecActive > 0 ? " · {$elecActive} available" : " · launching soon" }}</span>
                         </div>
                     </article>
 
@@ -778,15 +808,20 @@
                         <div class="w-min-services">
                             <div class="w-svc-row">
                                 <span class="w-svc-name" data-i18n="New Connection Application">New Connection Application</span>
-                                <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
+                                @if(!empty($activeServices) && in_array('water-connection', $activeServices))
+                                    <a href="{{ route('services.show', 'water-connection') }}" class="w-apply-link">Apply</a>
+                                @else
+                                    <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
+                                @endif
                             </div>
                             <div class="w-svc-row">
                                 <span class="w-svc-name" data-i18n="Service Complaint">Service Complaint</span>
                                 <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
                             </div>
                         </div>
+                        @php $waterActive = !empty($activeServices) && in_array('water-connection', $activeServices) ? 1 : 0; @endphp
                         <div class="w-min-footer">
-                            <span class="w-min-count" data-i18n="2 services">2 services · launching soon</span>
+                            <span class="w-min-count">2 services{{ $waterActive > 0 ? " · {$waterActive} available" : " · launching soon" }}</span>
                         </div>
                     </article>
 
@@ -804,15 +839,20 @@
                         <div class="w-min-services">
                             <div class="w-svc-row">
                                 <span class="w-svc-name" data-i18n="Business License">Business License</span>
-                                <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
+                                @if(!empty($activeServices) && in_array('business-license', $activeServices))
+                                    <a href="{{ route('services.show', 'business-license') }}" class="w-apply-link">Apply</a>
+                                @else
+                                    <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
+                                @endif
                             </div>
                             <div class="w-svc-row">
                                 <span class="w-svc-name" data-i18n="Trade License Renewal">Trade License Renewal</span>
                                 <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
                             </div>
                         </div>
+                        @php $bizActive = !empty($activeServices) && in_array('business-license', $activeServices) ? 1 : 0; @endphp
                         <div class="w-min-footer">
-                            <span class="w-min-count" data-i18n="2 services">2 services · launching soon</span>
+                            <span class="w-min-count">2 services{{ $bizActive > 0 ? " · {$bizActive} available" : " · launching soon" }}</span>
                         </div>
                     </article>
 
