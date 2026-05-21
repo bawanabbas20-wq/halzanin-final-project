@@ -38,7 +38,8 @@
       "Bash(Copy-Item \"D:\\\\final project\\\\IraqiPassport23 blue.png\" \"D:\\\\final project\\\\public\\\\images\\\\passport-blue.png\" -Force)",
       "Bash(Copy-Item \"D:\\\\final project\\\\ServiceIraqiPassport red.png\" \"D:\\\\final project\\\\public\\\\images\\\\passport-red.png\" -Force)",
       "Bash(Write-Host \"Done\")",
-      "Bash(powershell -Command ' *)"
+      "Bash(powershell -Command ' *)",
+      "Bash(findstr -i \"mail\\\\|whatsapp\\\\|twilio\\\\|sms\\\\|otp\")"
     ]
   }
 }
