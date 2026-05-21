@@ -685,7 +685,7 @@
                     <article class="w-min-card" style="border-top: 3px solid #1B4F8A;">
                         <div class="w-min-header">
                             <div class="w-min-icon" style="background:rgba(27,79,138,0.1);">
-                                <svg fill="none" stroke="#1B4F8A" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c0 1.657 1.343 3 3 3s3-1.343 3-3"/></svg>
+                                <svg fill="none" stroke="#1B4F8A" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857m0 0a5.002 5.002 0 00-9.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                             </div>
                             <div class="w-min-title">
                                 <h3 data-i18n="Civil Registry">Civil Registry</h3>
@@ -728,7 +728,7 @@
                     <article class="w-min-card" style="border-top: 3px solid #dc2626;">
                         <div class="w-min-header">
                             <div class="w-min-icon" style="background:rgba(220,38,38,0.08);">
-                                <svg fill="none" stroke="#dc2626" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                <svg fill="none" stroke="#dc2626" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="17" r="2"/></svg>
                             </div>
                             <div class="w-min-title">
                                 <h3 data-i18n="Traffic Police">Traffic Police</h3>
@@ -798,7 +798,7 @@
                     <article class="w-min-card" style="border-top: 3px solid #0284c7;">
                         <div class="w-min-header">
                             <div class="w-min-icon" style="background:rgba(2,132,199,0.08);">
-                                <svg fill="none" stroke="#0284c7" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 22c5.523 0 10-4.477 10-10S12 2 12 2 2 7.477 2 12s4.477 10 10 10z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 22c0-5.523-2.239-10-5-10s-5 4.477-5 10"/></svg>
+                                <svg fill="none" stroke="#0284c7" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg>
                             </div>
                             <div class="w-min-title">
                                 <h3 data-i18n="Water Directorate">Water Directorate</h3>
