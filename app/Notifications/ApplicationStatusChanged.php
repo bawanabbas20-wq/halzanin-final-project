@@ -4,6 +4,7 @@ namespace App\Notifications;
 
 use App\Models\Application;
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 class ApplicationStatusChanged extends Notification
@@ -14,7 +15,23 @@ class ApplicationStatusChanged extends Notification
 
     public function via(object $notifiable): array
     {
-        return ['database'];
+        $channels = ['database'];
+
+        if (in_array($this->application->current_status, ['approved', 'rejected'], true)
+            && filled($notifiable->email)) {
+            $channels[] = 'mail';
+        }
+
+        return $channels;
+    }
+
+    public function toMail(object $notifiable): MailMessage
+    {
+        $status = ucfirst(str_replace('_', ' ', $this->application->current_status));
+
+        return (new MailMessage)
+            ->subject("Your application has been {$status} — {$this->application->tracking_code}")
+            ->view('emails.status-updated', ['application' => $this->application]);
     }
 
     public function toDatabase(object $notifiable): array

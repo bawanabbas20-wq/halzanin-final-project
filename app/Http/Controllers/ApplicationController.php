@@ -93,7 +93,7 @@ class ApplicationController extends Controller
             'notes'          => $request->notes,
         ]);
 
-        $application->loadMissing(['user', 'appointment']);
+        $application->loadMissing(['user', 'appointment', 'statusLogs']);
         $application->user?->notify(new ApplicationStatusChanged($application));
 
         if (in_array($request->new_status, ['approved', 'rejected'], true) && filled($application->user?->phone_number)) {

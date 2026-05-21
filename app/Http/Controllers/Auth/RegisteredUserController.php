@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
@@ -39,16 +40,28 @@ class RegisteredUserController extends Controller
         ]);
 
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
+            'name'         => $request->name,
+            'email'        => $request->email,
             'phone_number' => $request->phone_number,
-            'password' => Hash::make($request->password),
+            'password'     => Hash::make($request->password),
         ]);
 
         event(new Registered($user));
 
+        // Generate and send OTP
+        $otp = str_pad((string) random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+        $user->forceFill([
+            'otp_code'       => Hash::make($otp),
+            'otp_expires_at' => now()->addMinutes(10),
+        ])->save();
+
+        Mail::send('emails.otp', ['otp' => $otp, 'user' => $user], function ($message) use ($user) {
+            $message->to($user->email)
+                    ->subject('Your verification code — ' . config('app.name'));
+        });
+
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect()->route('otp.verify');
     }
 }

@@ -35,7 +35,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Citizen routes
-Route::middleware(['auth', 'role:citizen', 'throttle:authenticated'])->group(function () {
+Route::middleware(['auth', 'verified.otp', 'role:citizen', 'throttle:authenticated'])->group(function () {
     Route::get('/citizen/dashboard', [CitizenController::class, 'index'])->name('citizen.dashboard');
     Route::get('/citizen/applications', [ApplicationController::class, 'index'])->name('citizen.applications.index');
 
@@ -58,7 +58,7 @@ Route::middleware(['auth', 'role:citizen', 'throttle:authenticated'])->group(fun
 });
 
 // Staff routes
-Route::middleware(['auth', 'role:staff,admin', 'throttle:authenticated'])->group(function () {
+Route::middleware(['auth', 'verified.otp', 'role:staff,admin', 'throttle:authenticated'])->group(function () {
     Route::get('/staff/dashboard', [StaffController::class, 'index'])->name('staff.dashboard');
     Route::get('/staff/queue', [ApplicationController::class, 'queue'])->middleware('permission:view_queue')->name('staff.queue');
     Route::get('/staff/applications/{application}', [ApplicationController::class, 'show'])->middleware('permission:view_documents')->name('staff.applications.show');
@@ -72,7 +72,7 @@ Route::middleware(['auth', 'role:staff,admin', 'throttle:authenticated'])->group
 });
 
 // Admin routes
-Route::middleware(['auth', 'role:admin', 'throttle:authenticated'])->group(function () {
+Route::middleware(['auth', 'verified.otp', 'role:admin', 'throttle:authenticated'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
     Route::patch('/admin/users/{user}/role', [AdminController::class, 'updateUserRole'])->name('admin.users.update-role');
@@ -99,7 +99,7 @@ Route::middleware(['auth', 'role:admin', 'throttle:authenticated'])->group(funct
 });
 
 // Profile (all authenticated)
-Route::middleware(['auth', 'throttle:authenticated'])->group(function () {
+Route::middleware(['auth', 'verified.otp', 'throttle:authenticated'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

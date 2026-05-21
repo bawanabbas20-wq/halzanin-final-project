@@ -23,6 +23,8 @@ class User extends Authenticatable
         'password',
         'role',
         'phone_number',
+        'otp_code',
+        'otp_expires_at',
     ];
 
     /**
@@ -42,7 +44,8 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
+        'otp_expires_at'    => 'datetime',
+        'password'          => 'hashed',
     ];
 
     public function taskTypes()
