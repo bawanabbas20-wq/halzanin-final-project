@@ -488,6 +488,99 @@
             .w-brand-text small { font-size: 10px; }
         }
 
+        /* ─── Ministry Navigation Cards ─── */
+        .w-min-nav-grid {
+            display: grid;
+            gap: 22px;
+            grid-template-columns: repeat(3, 1fr);
+        }
+        .w-min-nav-card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: box-shadow .3s ease, transform .28s ease;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            color: inherit;
+        }
+        .w-min-nav-card:hover {
+            box-shadow: 0 20px 56px rgba(0,0,0,0.13);
+            transform: translateY(-5px);
+        }
+        html.dark .w-min-nav-card:hover { box-shadow: 0 20px 56px rgba(0,0,0,0.52); }
+        .w-min-nav-hero {
+            padding: 26px 24px 22px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            min-height: 130px;
+            justify-content: flex-end;
+        }
+        .w-min-nav-hero::before {
+            content: "";
+            position: absolute; inset: 0;
+            background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+            background-size: 18px 18px;
+            pointer-events: none;
+        }
+        .w-min-nav-icon-box {
+            width: 50px; height: 50px;
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.18);
+            border: 1px solid rgba(255,255,255,0.22);
+            flex-shrink: 0;
+        }
+        .w-min-nav-icon-box svg { width: 22px; height: 22px; stroke: #fff; }
+        .w-min-nav-name-en {
+            font-size: 19px; font-weight: 800; letter-spacing: -0.015em;
+            color: #fff; line-height: 1.2;
+            text-shadow: 0 1px 6px rgba(0,0,0,0.25);
+        }
+        .w-min-nav-name-ku {
+            font-size: 13px; color: rgba(255,255,255,0.72);
+            font-family: "Noto Naskh Arabic", serif; font-weight: 600;
+            margin-top: 2px;
+        }
+        .w-min-nav-body {
+            padding: 18px 24px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .w-min-nav-desc {
+            font-size: 13.5px; color: var(--muted); line-height: 1.72; flex: 1;
+        }
+        .w-min-nav-services { display: flex; flex-wrap: wrap; gap: 6px; }
+        .w-min-nav-svc-tag {
+            font-size: 11px; font-weight: 600;
+            padding: 3px 10px; border-radius: 6px;
+            background: var(--bg); border: 1px solid var(--line);
+            color: var(--muted); white-space: nowrap;
+        }
+        .w-min-nav-footer {
+            padding: 14px 24px;
+            border-top: 1px solid var(--line);
+            background: var(--bg);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .w-min-nav-count { font-size: 12px; font-weight: 600; color: var(--muted); }
+        .w-min-nav-link {
+            display: inline-flex; align-items: center; gap: 5px;
+            font-size: 13px; font-weight: 700;
+            text-decoration: none;
+        }
+        .w-min-nav-link svg { width: 14px; height: 14px; transition: transform .18s ease; }
+        .w-min-nav-card:hover .w-min-nav-link svg { transform: translateX(4px); }
+        @media (max-width: 1050px) { .w-min-nav-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 600px)  { .w-min-nav-grid { grid-template-columns: 1fr; } }
+
         /* ─── Office Locator ─── */
         .w-office-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
         .w-office-card {
@@ -693,205 +786,161 @@
             </div>
         </div>
 
-        {{-- ── Ministries & Services ── --}}
+        {{-- ── Ministries ── --}}
         <section class="w-section" id="ministries" aria-labelledby="ministries-heading">
             <div class="w-container">
                 <div class="w-section-head">
                     <div class="w-kicker">
-                        <svg class="w-kicker-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        <span data-i18n="Government Services">Government Services</span>
+                        <svg class="w-kicker-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1"/></svg>
+                        <span data-i18n="Government Ministries">Government Ministries</span>
                     </div>
-                    <h2 id="ministries-heading" data-i18n="ministries.title">Browse by Ministry</h2>
+                    <h2 id="ministries-heading" data-i18n="ministries.title">Select a ministry</h2>
                     <p class="w-section-sub" data-i18n="ministries.subtitle">
-                        Select your ministry below to see available services. We are actively expanding — more services are being launched soon.
+                        Each ministry has a dedicated page with full service descriptions, required documents, and guided applications. Select one to get started.
                     </p>
                 </div>
 
-                <div class="w-min-grid">
+                <div class="w-min-nav-grid">
 
                     {{-- Civil Registry --}}
-                    <article class="w-min-card" style="border-top: 3px solid #1B4F8A;">
-                        <div class="w-min-header">
-                            <div class="w-min-icon" style="background:rgba(27,79,138,0.1);">
-                                <svg fill="none" stroke="#1B4F8A" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857m0 0a5.002 5.002 0 00-9.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                    <a href="{{ route('ministry.civil-registry') }}" class="w-min-nav-card" aria-label="Civil Registry — تۆماری مەدەنی">
+                        <div class="w-min-nav-hero" style="background:linear-gradient(148deg,#0b1f38 0%,#1A3A5C 55%,#1e4876 100%);">
+                            <div class="w-min-nav-icon-box">
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c0 1.306.834 2.417 2 2.83M19 17c-1.166-.413-2-1.524-2-2.83"/></svg>
                             </div>
-                            <div class="w-min-title">
-                                <h3 data-i18n="Civil Registry">Civil Registry</h3>
-                                <span>تۆماری مەدەنی</span>
-                            </div>
-                        </div>
-                        <div class="w-min-services">
-                            <div class="w-svc-row">
-                                <span class="w-svc-name" data-i18n="Passport Application">Passport Application</span>
-                                <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
-                            </div>
-                            <div class="w-svc-row">
-                                <span class="w-svc-name" data-i18n="National ID Card">National ID Card</span>
-                                @if(!empty($activeServices) && in_array('national-id', $activeServices))
-                                    <a href="{{ route('services.show', 'national-id') }}" class="w-apply-link">Apply</a>
-                                @else
-                                    <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
-                                @endif
-                            </div>
-                            <div class="w-svc-row">
-                                <span class="w-svc-name" data-i18n="Birth Certificate">Birth Certificate</span>
-                                @if(!empty($activeServices) && in_array('birth-certificate', $activeServices))
-                                    <a href="{{ route('services.show', 'birth-certificate') }}" class="w-apply-link">Apply</a>
-                                @else
-                                    <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
-                                @endif
-                            </div>
-                            <div class="w-svc-row">
-                                <span class="w-svc-name" data-i18n="Marriage Certificate">Marriage Certificate</span>
-                                <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
+                            <div>
+                                <div class="w-min-nav-name-en">Civil Registry</div>
+                                <div class="w-min-nav-name-ku">تۆماری مەدەنی</div>
                             </div>
                         </div>
-                        @php $civilActive = !empty($activeServices) ? count(array_intersect(['national-id','birth-certificate'], $activeServices)) : 0; @endphp
-                        <div class="w-min-footer">
-                            <span class="w-min-count">4 services{{ $civilActive > 0 ? " · {$civilActive} available" : " · launching soon" }}</span>
+                        <div class="w-min-nav-body">
+                            <p class="w-min-nav-desc" data-i18n="min.civil.desc">Passports, national ID cards, birth certificates, and marriage registration for all Kurdistan Region citizens.</p>
+                            <div class="w-min-nav-services">
+                                <span class="w-min-nav-svc-tag">Passport</span>
+                                <span class="w-min-nav-svc-tag">National ID</span>
+                                <span class="w-min-nav-svc-tag">Birth Certificate</span>
+                            </div>
                         </div>
-                    </article>
+                        <div class="w-min-nav-footer">
+                            <span class="w-min-nav-count">4 services</span>
+                            <span class="w-min-nav-link" style="color:#1A3A5C;">
+                                Explore services
+                                <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                            </span>
+                        </div>
+                    </a>
 
                     {{-- Traffic Police --}}
-                    <article class="w-min-card" style="border-top: 3px solid #dc2626;">
-                        <div class="w-min-header">
-                            <div class="w-min-icon" style="background:rgba(220,38,38,0.08);">
-                                <svg fill="none" stroke="#dc2626" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="17" r="2"/></svg>
+                    <a href="{{ route('ministry.traffic-police') }}" class="w-min-nav-card" aria-label="Traffic Police — پۆلیسی ترافیک">
+                        <div class="w-min-nav-hero" style="background:linear-gradient(148deg,#111118 0%,#2C2C3E 55%,#3a1a1e 100%);">
+                            <div class="w-min-nav-icon-box" style="background:rgba(220,38,38,0.28);border-color:rgba(220,38,38,0.4);">
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10l2.5.5M13 16H3m10 0l.5.5M13 6l3 5h4v5h-2.5"/></svg>
                             </div>
-                            <div class="w-min-title">
-                                <h3 data-i18n="Traffic Police">Traffic Police</h3>
-                                <span>پۆلیسی ترافیک</span>
-                            </div>
-                        </div>
-                        <div class="w-min-services">
-                            <div class="w-svc-row">
-                                <span class="w-svc-name" data-i18n="Driving License">Driving License</span>
-                                @if(!empty($activeServices) && in_array('driving-license', $activeServices))
-                                    <a href="{{ route('services.show', 'driving-license') }}" class="w-apply-link">Apply</a>
-                                @else
-                                    <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
-                                @endif
-                            </div>
-                            <div class="w-svc-row">
-                                <span class="w-svc-name" data-i18n="Vehicle Registration">Vehicle Registration</span>
-                                <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
-                            </div>
-                            <div class="w-svc-row">
-                                <span class="w-svc-name" data-i18n="Traffic Fine Payment">Traffic Fine Payment</span>
-                                <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
+                            <div>
+                                <div class="w-min-nav-name-en">Traffic Police</div>
+                                <div class="w-min-nav-name-ku">پۆلیسی ترافیک</div>
                             </div>
                         </div>
-                        @php $trafficActive = !empty($activeServices) && in_array('driving-license', $activeServices) ? 1 : 0; @endphp
-                        <div class="w-min-footer">
-                            <span class="w-min-count">3 services{{ $trafficActive > 0 ? " · {$trafficActive} available" : " · launching soon" }}</span>
+                        <div class="w-min-nav-body">
+                            <p class="w-min-nav-desc" data-i18n="min.traffic.desc">Driving licenses, vehicle registration, and traffic fine payments for motorists across the Kurdistan Region.</p>
+                            <div class="w-min-nav-services">
+                                <span class="w-min-nav-svc-tag">Driving License</span>
+                                <span class="w-min-nav-svc-tag">Vehicle Reg.</span>
+                                <span class="w-min-nav-svc-tag">Traffic Fines</span>
+                            </div>
                         </div>
-                    </article>
+                        <div class="w-min-nav-footer">
+                            <span class="w-min-nav-count">3 services</span>
+                            <span class="w-min-nav-link" style="color:#2C2C3E;">
+                                Explore services
+                                <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                            </span>
+                        </div>
+                    </a>
 
                     {{-- Electricity --}}
-                    <article class="w-min-card" style="border-top: 3px solid #d97706;">
-                        <div class="w-min-header">
-                            <div class="w-min-icon" style="background:rgba(217,119,6,0.08);">
-                                <svg fill="none" stroke="#d97706" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    <a href="{{ route('ministry.electricity') }}" class="w-min-nav-card" aria-label="Electricity Directorate — بەرپرسایەتی کارەبا">
+                        <div class="w-min-nav-hero" style="background:linear-gradient(148deg,#4a2900 0%,#D97706 55%,#b45309 100%);">
+                            <div class="w-min-nav-icon-box">
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                             </div>
-                            <div class="w-min-title">
-                                <h3 data-i18n="Electricity Directorate">Electricity Directorate</h3>
-                                <span>بەرپرسایەتی کارەبا</span>
-                            </div>
-                        </div>
-                        <div class="w-min-services">
-                            <div class="w-svc-row">
-                                <span class="w-svc-name" data-i18n="New Connection Application">New Connection Application</span>
-                                @if(!empty($activeServices) && in_array('electricity-connection', $activeServices))
-                                    <a href="{{ route('services.show', 'electricity-connection') }}" class="w-apply-link">Apply</a>
-                                @else
-                                    <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
-                                @endif
-                            </div>
-                            <div class="w-svc-row">
-                                <span class="w-svc-name" data-i18n="Service Complaint">Service Complaint</span>
-                                <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
-                            </div>
-                            <div class="w-svc-row">
-                                <span class="w-svc-name" data-i18n="Meter Reading Issue">Meter Reading Issue</span>
-                                <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
+                            <div>
+                                <div class="w-min-nav-name-en">Electricity Directorate</div>
+                                <div class="w-min-nav-name-ku">بەرپرسایەتی کارەبا</div>
                             </div>
                         </div>
-                        @php $elecActive = !empty($activeServices) && in_array('electricity-connection', $activeServices) ? 1 : 0; @endphp
-                        <div class="w-min-footer">
-                            <span class="w-min-count">3 services{{ $elecActive > 0 ? " · {$elecActive} available" : " · launching soon" }}</span>
+                        <div class="w-min-nav-body">
+                            <p class="w-min-nav-desc" data-i18n="min.electricity.desc">New electricity connections, service complaints, and meter-related requests for homes and businesses.</p>
+                            <div class="w-min-nav-services">
+                                <span class="w-min-nav-svc-tag">New Connection</span>
+                                <span class="w-min-nav-svc-tag">Complaints</span>
+                                <span class="w-min-nav-svc-tag">Meter Issues</span>
+                            </div>
                         </div>
-                    </article>
+                        <div class="w-min-nav-footer">
+                            <span class="w-min-nav-count">3 services</span>
+                            <span class="w-min-nav-link" style="color:#D97706;">
+                                Explore services
+                                <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                            </span>
+                        </div>
+                    </a>
 
-                    {{-- Water --}}
-                    <article class="w-min-card" style="border-top: 3px solid #0284c7;">
-                        <div class="w-min-header">
-                            <div class="w-min-icon" style="background:rgba(2,132,199,0.08);">
-                                <svg fill="none" stroke="#0284c7" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg>
+                    {{-- Water Authority --}}
+                    <a href="{{ route('ministry.water') }}" class="w-min-nav-card" aria-label="Water Authority — بەرپرسایەتی ئاو">
+                        <div class="w-min-nav-hero" style="background:linear-gradient(148deg,#032a1e 0%,#0E7C5A 55%,#0a6a4d 100%);">
+                            <div class="w-min-nav-icon-box">
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg>
                             </div>
-                            <div class="w-min-title">
-                                <h3 data-i18n="Water Directorate">Water Directorate</h3>
-                                <span>بەرپرسایەتی ئاو</span>
-                            </div>
-                        </div>
-                        <div class="w-min-services">
-                            <div class="w-svc-row">
-                                <span class="w-svc-name" data-i18n="New Connection Application">New Connection Application</span>
-                                @if(!empty($activeServices) && in_array('water-connection', $activeServices))
-                                    <a href="{{ route('services.show', 'water-connection') }}" class="w-apply-link">Apply</a>
-                                @else
-                                    <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
-                                @endif
-                            </div>
-                            <div class="w-svc-row">
-                                <span class="w-svc-name" data-i18n="Service Complaint">Service Complaint</span>
-                                <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
+                            <div>
+                                <div class="w-min-nav-name-en">Water Authority</div>
+                                <div class="w-min-nav-name-ku">بەرپرسایەتی ئاو</div>
                             </div>
                         </div>
-                        @php $waterActive = !empty($activeServices) && in_array('water-connection', $activeServices) ? 1 : 0; @endphp
-                        <div class="w-min-footer">
-                            <span class="w-min-count">2 services{{ $waterActive > 0 ? " · {$waterActive} available" : " · launching soon" }}</span>
+                        <div class="w-min-nav-body">
+                            <p class="w-min-nav-desc" data-i18n="min.water.desc">Water supply connections, maintenance requests, and complaint submissions for residential and commercial properties.</p>
+                            <div class="w-min-nav-services">
+                                <span class="w-min-nav-svc-tag">New Connection</span>
+                                <span class="w-min-nav-svc-tag">Maintenance</span>
+                                <span class="w-min-nav-svc-tag">Complaints</span>
+                            </div>
                         </div>
-                    </article>
+                        <div class="w-min-nav-footer">
+                            <span class="w-min-nav-count">2 services</span>
+                            <span class="w-min-nav-link" style="color:#0E7C5A;">
+                                Explore services
+                                <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                            </span>
+                        </div>
+                    </a>
 
-                    {{-- Business Registration --}}
-                    <article class="w-min-card" style="border-top: 3px solid #059669;">
-                        <div class="w-min-header">
-                            <div class="w-min-icon" style="background:rgba(5,150,105,0.08);">
-                                <svg fill="none" stroke="#059669" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                    {{-- Health Ministry --}}
+                    <a href="{{ route('ministry.health') }}" class="w-min-nav-card" aria-label="Health Ministry — وەزارەتی تەندروستی">
+                        <div class="w-min-nav-hero" style="background:linear-gradient(148deg,#072a1b 0%,#1A6B4A 55%,#155a3f 100%);">
+                            <div class="w-min-nav-icon-box">
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
                             </div>
-                            <div class="w-min-title">
-                                <h3 data-i18n="Business Registration">Business Registration</h3>
-                                <span>تۆماری بازرگانی</span>
-                            </div>
-                        </div>
-                        <div class="w-min-services">
-                            <div class="w-svc-row">
-                                <span class="w-svc-name" data-i18n="Business License">Business License</span>
-                                @if(!empty($activeServices) && in_array('business-license', $activeServices))
-                                    <a href="{{ route('services.show', 'business-license') }}" class="w-apply-link">Apply</a>
-                                @else
-                                    <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
-                                @endif
-                            </div>
-                            <div class="w-svc-row">
-                                <span class="w-svc-name" data-i18n="Trade License Renewal">Trade License Renewal</span>
-                                <span class="w-soon-pill" data-i18n="Coming Soon">Coming Soon</span>
+                            <div>
+                                <div class="w-min-nav-name-en">Health Ministry</div>
+                                <div class="w-min-nav-name-ku">وەزارەتی تەندروستی</div>
                             </div>
                         </div>
-                        @php $bizActive = !empty($activeServices) && in_array('business-license', $activeServices) ? 1 : 0; @endphp
-                        <div class="w-min-footer">
-                            <span class="w-min-count">2 services{{ $bizActive > 0 ? " · {$bizActive} available" : " · launching soon" }}</span>
+                        <div class="w-min-nav-body">
+                            <p class="w-min-nav-desc" data-i18n="min.health.desc">Health cards, medical certificates, hospital referrals, and healthcare registrations for residents of the Kurdistan Region.</p>
+                            <div class="w-min-nav-services">
+                                <span class="w-min-nav-svc-tag">Health Card</span>
+                                <span class="w-min-nav-svc-tag">Certificates</span>
+                                <span class="w-min-nav-svc-tag">Referrals</span>
+                            </div>
                         </div>
-                    </article>
-
-                    {{-- Placeholder: More Coming --}}
-                    <article class="w-min-card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:220px;background:var(--bg);border-style:dashed;text-align:center;padding:36px 24px;">
-                        <div style="width:48px;height:48px;border-radius:50%;background:var(--card);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;margin-bottom:14px;">
-                            <svg width="22" height="22" fill="none" stroke="var(--muted)" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+                        <div class="w-min-nav-footer">
+                            <span class="w-min-nav-count">3 services</span>
+                            <span class="w-min-nav-link" style="color:#1A6B4A;">
+                                Explore services
+                                <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                            </span>
                         </div>
-                        <h3 style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px;" data-i18n="More Ministries Coming">More Ministries Coming</h3>
-                        <p style="font-size:13px;color:var(--muted);line-height:1.7;" data-i18n="We are expanding to cover all government departments">We are expanding to cover all government departments in the Kurdistan Region.</p>
-                    </article>
+                    </a>
 
                 </div>
             </div>
@@ -1316,11 +1365,11 @@
                 <div class="w-foot-col">
                     <h4 data-i18n="Ministries">Ministries</h4>
                     <ul>
-                        <li><a href="#ministries" data-i18n="Civil Registry">Civil Registry</a></li>
-                        <li><a href="#ministries" data-i18n="Traffic Police">Traffic Police</a></li>
-                        <li><a href="#ministries" data-i18n="Electricity Directorate">Electricity</a></li>
-                        <li><a href="#ministries" data-i18n="Water Directorate">Water</a></li>
-                        <li><a href="#ministries" data-i18n="Business Registration">Business Registration</a></li>
+                        <li><a href="{{ route('ministry.civil-registry') }}" data-i18n="Civil Registry">Civil Registry</a></li>
+                        <li><a href="{{ route('ministry.traffic-police') }}" data-i18n="Traffic Police">Traffic Police</a></li>
+                        <li><a href="{{ route('ministry.electricity') }}" data-i18n="Electricity Directorate">Electricity</a></li>
+                        <li><a href="{{ route('ministry.water') }}" data-i18n="Water Directorate">Water Authority</a></li>
+                        <li><a href="{{ route('ministry.health') }}" data-i18n="Health Ministry">Health Ministry</a></li>
                     </ul>
                 </div>
             </div>

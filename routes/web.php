@@ -26,6 +26,13 @@ Route::get('/', function () {
     return view('welcome', compact('activeServices', 'portalStats'));
 });
 
+// Ministry overview pages (standalone, no controller logic)
+Route::get('/ministry/civil-registry', fn() => view('ministries.civil-registry'))->name('ministry.civil-registry');
+Route::get('/ministry/traffic-police', fn() => view('ministries.traffic-police'))->name('ministry.traffic-police');
+Route::get('/ministry/electricity',    fn() => view('ministries.electricity'))->name('ministry.electricity');
+Route::get('/ministry/water',          fn() => view('ministries.water'))->name('ministry.water');
+Route::get('/ministry/health',         fn() => view('ministries.health'))->name('ministry.health');
+
 // Public service detail pages (no auth required)
 Route::get('/services/{slug}', [ServiceController::class, 'show'])->name('services.show');
 

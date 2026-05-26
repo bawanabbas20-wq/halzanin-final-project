@@ -47,7 +47,9 @@
       "PowerShell(Start-Process -FilePath \"php\" -ArgumentList \"artisan\", \"serve\", \"--host=127.0.0.1\", \"--port=8000\" -WorkingDirectory \"d:\\\\final project\" -WindowStyle Minimized)",
       "PowerShell(Start-Process -FilePath \"npm\" -ArgumentList \"run\", \"dev\" -WorkingDirectory \"d:\\\\final project\" -WindowStyle Minimized)",
       "PowerShell(Start-Sleep -Seconds 3; try { $r = Invoke-WebRequest -Uri \"http://127.0.0.1:8000\" -TimeoutSec 5 -UseBasicParsing; Write-Output \"HTTP $\\($r.StatusCode\\) — Laravel is up\" } catch { Write-Output \"Not reachable yet: $_\" })",
-      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://127.0.0.1:8000/)"
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://127.0.0.1:8000/)",
+      "Bash(dir \"d:/final project/resources/views/\")",
+      "Bash(python3 -u -c ' *)"
     ]
   }
 }
