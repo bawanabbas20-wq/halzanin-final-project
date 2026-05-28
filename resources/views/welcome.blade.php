@@ -639,7 +639,6 @@
                 <a href="#how-it-works" data-i18n="How It Works">How It Works</a>
                 <a href="#track" data-i18n="Track Application">Track</a>
                 <a href="#faq" data-i18n="FAQ">FAQ</a>
-                <a href="#offices" data-i18n="Offices">Offices</a>
             </nav>
 
             <div class="w-nav-right">
@@ -727,12 +726,12 @@
                                     <span data-i18n="Services Available">Services Available</span>
                                 </div>
                                 <div class="w-stat" role="listitem">
-                                    <strong>{{ number_format($portalStats['applications'] ?? 0) }}</strong>
-                                    <span data-i18n="Applications Processed">Applications Processed</span>
+                                    <strong>100%</strong>
+                                    <span data-i18n="Digital Processing">Digital Processing</span>
                                 </div>
                                 <div class="w-stat" role="listitem">
-                                    <strong>{{ number_format($portalStats['citizens'] ?? 0) }}</strong>
-                                    <span data-i18n="Registered Citizens">Registered Citizens</span>
+                                    <strong>24/7</strong>
+                                    <span data-i18n="System Availability">System Availability</span>
                                 </div>
                             </div>
                         </div>
@@ -1156,186 +1155,6 @@
             </div>
         </section>
 
-        {{-- ── Office Locator ── --}}
-        <section class="w-section" id="offices" aria-labelledby="offices-heading">
-            <div class="w-container">
-                <div class="w-section-head">
-                    <div class="w-kicker">
-                        <svg class="w-kicker-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                        <span data-i18n="offices.kicker">Ministry Offices</span>
-                    </div>
-                    <h2 id="offices-heading" data-i18n="offices.title">Find a Government Office</h2>
-                    <p class="w-section-sub" data-i18n="offices.subtitle">
-                        Visit any of the five ministries in Erbil for in-person document pickup or services that require a physical presence.
-                    </p>
-                </div>
-
-                <div class="w-office-grid">
-
-                    {{-- Civil Registry --}}
-                    <article class="w-office-card" style="border-top: 3px solid #1B4F8A;">
-                        <div class="w-office-header">
-                            <div class="w-office-icon" style="background: rgba(27,79,138,0.1);">
-                                <svg fill="none" stroke="#1B4F8A" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857m0 0a5.002 5.002 0 00-9.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                            </div>
-                            <div class="w-office-name">
-                                <h3 data-i18n="Civil Registry">Civil Registry</h3>
-                                <span>تۆماری مەدەنی</span>
-                            </div>
-                        </div>
-                        <div class="w-office-body">
-                            <div class="w-office-row">
-                                <svg fill="none" stroke="var(--muted)" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                                <div class="w-office-info"><strong data-i18n="offices.address">Address</strong>Erbil, Gulan Street, Civil Registry Directorate</div>
-                            </div>
-                            <div class="w-office-row">
-                                <svg fill="none" stroke="var(--muted)" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"/></svg>
-                                <div class="w-office-info"><strong data-i18n="offices.hours">Working Hours</strong>Sun &ndash; Thu &nbsp;&nbsp; 8:00 AM &ndash; 3:00 PM</div>
-                            </div>
-                            <div class="w-office-row">
-                                <svg fill="none" stroke="var(--muted)" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                                <div class="w-office-info"><strong data-i18n="offices.phone">Phone</strong>+964 66 216 1234</div>
-                            </div>
-                        </div>
-                        <div class="w-office-footer">
-                            <a href="#offices" class="w-office-link" data-i18n="offices.directions">Get Directions
-                                <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                            </a>
-                        </div>
-                    </article>
-
-                    {{-- Traffic Police --}}
-                    <article class="w-office-card" style="border-top: 3px solid #dc2626;">
-                        <div class="w-office-header">
-                            <div class="w-office-icon" style="background: rgba(220,38,38,0.08);">
-                                <svg fill="none" stroke="#dc2626" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="17" r="2"/></svg>
-                            </div>
-                            <div class="w-office-name">
-                                <h3 data-i18n="Traffic Police">Traffic Police</h3>
-                                <span>پۆلیسی ترافیک</span>
-                            </div>
-                        </div>
-                        <div class="w-office-body">
-                            <div class="w-office-row">
-                                <svg fill="none" stroke="var(--muted)" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                                <div class="w-office-info"><strong data-i18n="offices.address">Address</strong>Erbil, 100 Meter Road, Traffic Police HQ</div>
-                            </div>
-                            <div class="w-office-row">
-                                <svg fill="none" stroke="var(--muted)" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"/></svg>
-                                <div class="w-office-info"><strong data-i18n="offices.hours">Working Hours</strong>Sun &ndash; Thu &nbsp;&nbsp; 8:00 AM &ndash; 3:00 PM</div>
-                            </div>
-                            <div class="w-office-row">
-                                <svg fill="none" stroke="var(--muted)" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                                <div class="w-office-info"><strong data-i18n="offices.phone">Phone</strong>+964 66 222 5678</div>
-                            </div>
-                        </div>
-                        <div class="w-office-footer">
-                            <a href="#offices" class="w-office-link" data-i18n="offices.directions">Get Directions
-                                <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                            </a>
-                        </div>
-                    </article>
-
-                    {{-- Electricity --}}
-                    <article class="w-office-card" style="border-top: 3px solid #d97706;">
-                        <div class="w-office-header">
-                            <div class="w-office-icon" style="background: rgba(217,119,6,0.08);">
-                                <svg fill="none" stroke="#d97706" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                            </div>
-                            <div class="w-office-name">
-                                <h3 data-i18n="Electricity Directorate">Electricity Directorate</h3>
-                                <span>بەرپرسایەتی کارەبا</span>
-                            </div>
-                        </div>
-                        <div class="w-office-body">
-                            <div class="w-office-row">
-                                <svg fill="none" stroke="var(--muted)" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                                <div class="w-office-info"><strong data-i18n="offices.address">Address</strong>Erbil, Airport Road, Electricity Directorate</div>
-                            </div>
-                            <div class="w-office-row">
-                                <svg fill="none" stroke="var(--muted)" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"/></svg>
-                                <div class="w-office-info"><strong data-i18n="offices.hours">Working Hours</strong>Sun &ndash; Thu &nbsp;&nbsp; 8:00 AM &ndash; 3:00 PM</div>
-                            </div>
-                            <div class="w-office-row">
-                                <svg fill="none" stroke="var(--muted)" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                                <div class="w-office-info"><strong data-i18n="offices.phone">Phone</strong>+964 66 225 9012</div>
-                            </div>
-                        </div>
-                        <div class="w-office-footer">
-                            <a href="#offices" class="w-office-link" data-i18n="offices.directions">Get Directions
-                                <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                            </a>
-                        </div>
-                    </article>
-
-                    {{-- Water --}}
-                    <article class="w-office-card" style="border-top: 3px solid #0284c7;">
-                        <div class="w-office-header">
-                            <div class="w-office-icon" style="background: rgba(2,132,199,0.08);">
-                                <svg fill="none" stroke="#0284c7" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg>
-                            </div>
-                            <div class="w-office-name">
-                                <h3 data-i18n="Water Directorate">Water Directorate</h3>
-                                <span>بەرپرسایەتی ئاو</span>
-                            </div>
-                        </div>
-                        <div class="w-office-body">
-                            <div class="w-office-row">
-                                <svg fill="none" stroke="var(--muted)" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                                <div class="w-office-info"><strong data-i18n="offices.address">Address</strong>Erbil, 60 Meter Street, Water Authority Building</div>
-                            </div>
-                            <div class="w-office-row">
-                                <svg fill="none" stroke="var(--muted)" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"/></svg>
-                                <div class="w-office-info"><strong data-i18n="offices.hours">Working Hours</strong>Sun &ndash; Thu &nbsp;&nbsp; 8:00 AM &ndash; 3:00 PM</div>
-                            </div>
-                            <div class="w-office-row">
-                                <svg fill="none" stroke="var(--muted)" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                                <div class="w-office-info"><strong data-i18n="offices.phone">Phone</strong>+964 66 218 3456</div>
-                            </div>
-                        </div>
-                        <div class="w-office-footer">
-                            <a href="#offices" class="w-office-link" data-i18n="offices.directions">Get Directions
-                                <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                            </a>
-                        </div>
-                    </article>
-
-                    {{-- Business Registration --}}
-                    <article class="w-office-card" style="border-top: 3px solid #059669;">
-                        <div class="w-office-header">
-                            <div class="w-office-icon" style="background: rgba(5,150,105,0.08);">
-                                <svg fill="none" stroke="#059669" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
-                            </div>
-                            <div class="w-office-name">
-                                <h3 data-i18n="Business Registration">Business Registration</h3>
-                                <span>تۆماری بازرگانی</span>
-                            </div>
-                        </div>
-                        <div class="w-office-body">
-                            <div class="w-office-row">
-                                <svg fill="none" stroke="var(--muted)" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                                <div class="w-office-info"><strong data-i18n="offices.address">Address</strong>Erbil, Kirkuk Road, Chamber of Commerce Building</div>
-                            </div>
-                            <div class="w-office-row">
-                                <svg fill="none" stroke="var(--muted)" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"/></svg>
-                                <div class="w-office-info"><strong data-i18n="offices.hours">Working Hours</strong>Sun &ndash; Thu &nbsp;&nbsp; 8:00 AM &ndash; 3:00 PM</div>
-                            </div>
-                            <div class="w-office-row">
-                                <svg fill="none" stroke="var(--muted)" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                                <div class="w-office-info"><strong data-i18n="offices.phone">Phone</strong>+964 66 212 7890</div>
-                            </div>
-                        </div>
-                        <div class="w-office-footer">
-                            <a href="#offices" class="w-office-link" data-i18n="offices.directions">Get Directions
-                                <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                            </a>
-                        </div>
-                    </article>
-
-                </div>
-            </div>
-        </section>
-
     </main>
 
     {{-- ── Footer ── --}}
@@ -1353,7 +1172,6 @@
                         <li><a href="#how-it-works" data-i18n="How It Works">How It Works</a></li>
                         <li><a href="#track" data-i18n="Track Application">Track Application</a></li>
                         <li><a href="#faq" data-i18n="FAQ">FAQ</a></li>
-                        <li><a href="#offices" data-i18n="Offices">Offices</a></li>
                         @if (Route::has('login'))
                             <li><a href="{{ route('login') }}" data-i18n="Log In">Log In</a></li>
                         @endif
