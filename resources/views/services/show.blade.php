@@ -60,42 +60,33 @@
         body { background: var(--bg); color: var(--text); }
 
         /* ── Navbar ─────────────────────────────────────────── */
-        .sp-nav {
-            position: sticky; top: 0; z-index: 200;
-            background: var(--nav-bg);
-            backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-            border-bottom: 1px solid var(--border);
-        }
-        .sp-nav-inner {
-            display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-            width: min(var(--max), calc(100% - 2.5rem)); margin: 0 auto; height: 62px;
-        }
-        .sp-brand { display: flex; align-items: center; gap: .65rem; text-decoration: none; color: inherit; }
-        .sp-brand img { height: 34px; width: auto; }
-        .sp-brand-name { font-size: .9rem; font-weight: 800; letter-spacing: -.01em; }
-        .sp-brand-sub { font-size: .65rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); }
-        .sp-nav-right { display: flex; align-items: center; gap: .5rem; }
-        .sp-icon-btn {
-            width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--border);
-            background: transparent; color: var(--text-sub); cursor: pointer;
-            display: flex; align-items: center; justify-content: center; font-size: 1rem;
-            transition: background .2s, color .2s;
-        }
-        .sp-icon-btn:hover { background: var(--surface2); color: var(--text); }
-        .sp-lang-seg { display: flex; border: 1px solid var(--border); border-radius: 20px; overflow: hidden; }
-        .sp-lang-opt { padding: 4px 10px; font-size: .7rem; font-weight: 700; background: transparent; border: none; cursor: pointer; color: var(--text-muted); transition: all .15s; }
-        .sp-lang-opt.active { background: var(--brand); color: #fff; }
-        .sp-btn {
-            display: inline-flex; align-items: center; gap: .4rem;
-            height: 34px; padding: 0 .9rem; border-radius: 8px;
-            font-size: .78rem; font-weight: 600; text-decoration: none;
-            transition: all .2s; border: 1px solid transparent; cursor: pointer;
-        }
-        .sp-btn-outline { background: transparent; border-color: var(--border); color: var(--text); }
-        .sp-btn-outline:hover { border-color: var(--brand); color: var(--brand); }
-        .sp-btn-primary { background: var(--brand); color: #fff; border-color: var(--brand); }
-        .sp-btn-primary:hover { opacity: .88; }
-        @media (max-width: 600px) { .sp-btn { display: none; } }
+        .mn-bar{position:sticky;top:0;z-index:200;background:var(--nav-bg);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--border);}
+        .mn-nav{display:flex;align-items:center;height:68px;gap:20px;width:min(var(--max),calc(100% - 48px));margin:0 auto;}
+        .mn-brand{display:inline-flex;align-items:center;gap:12px;flex-shrink:0;text-decoration:none;color:inherit;}
+        .mn-brand img{height:44px;width:auto;}
+        .mn-brand-text strong{display:block;font-size:17px;font-weight:800;letter-spacing:-.3px;color:var(--text);}
+        .mn-brand-text small{display:block;font-size:10px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em;}
+        .mn-breadcrumb{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-muted);font-weight:500;}
+        .mn-breadcrumb a{color:var(--text-muted);transition:color .15s;text-decoration:none;}
+        .mn-breadcrumb a:hover{color:var(--brand);}
+        .mn-breadcrumb-sep{opacity:.4;font-size:11px;}
+        .mn-breadcrumb-current{color:var(--brand);font-weight:700;}
+        .mn-nav-right{margin-left:auto;display:flex;align-items:center;gap:10px;}
+        html[dir="rtl"] .mn-nav-right{margin-left:unset;margin-right:auto;}
+        .mn-toggles{display:flex;align-items:center;gap:4px;background:var(--surface);border:1.5px solid var(--border);border-radius:999px;padding:4px 5px;}
+        .mn-theme-btn{width:32px;height:32px;border-radius:50%;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-muted);transition:background .18s,color .18s;}
+        .mn-theme-btn:hover{background:rgba(var(--brand-rgb),.08);color:var(--brand);}
+        .mn-theme-btn svg{width:16px;height:16px;}
+        .mn-divider{width:1px;height:18px;background:var(--border);margin:0 2px;}
+        .mn-lang{display:flex;align-items:center;background:rgba(var(--brand-rgb),.07);border-radius:999px;padding:3px;gap:2px;}
+        .mn-lang-btn{border:none;cursor:pointer;border-radius:999px;padding:4px 10px;font-size:11.5px;font-weight:700;transition:all .2s;color:var(--text-muted);background:none;line-height:1;}
+        .mn-lang-btn.active{background:var(--brand);color:#fff;box-shadow:0 2px 8px rgba(var(--brand-rgb),.35);}
+        .mn-navbtn{border-radius:999px;padding:9px 20px;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:6px;cursor:pointer;transition:all .2s;border:1.5px solid transparent;white-space:nowrap;text-decoration:none;}
+        .mn-navbtn-primary{background:var(--brand);color:#fff;border-color:var(--brand);box-shadow:0 4px 14px rgba(var(--brand-rgb),.3);}
+        .mn-navbtn-primary:hover{opacity:.9;transform:translateY(-1px);}
+        .mn-navbtn-outline{background:var(--surface);border-color:var(--border);color:var(--text);}
+        .mn-navbtn-outline:hover{border-color:var(--brand);color:var(--brand);}
+        @media(max-width:820px){.mn-breadcrumb,.mn-navbtn{display:none;}}
 
         /* ── Hero banner ────────────────────────────────────── */
         .sv-hero {
@@ -306,30 +297,40 @@
 <body>
 
 {{-- ── Navbar ── --}}
-<header class="sp-nav">
-    <div class="sp-nav-inner">
-        <a href="{{ url('/') }}" class="sp-brand">
+<header class="mn-bar">
+    <div class="mn-nav">
+        <a href="{{ url('/') }}" class="mn-brand" aria-label="Back to Halzanîn portal">
             <img src="{{ asset('images/halzanin-logo.png') }}" alt="Halzanîn">
-            <div>
-                <div class="sp-brand-name">Halzanîn</div>
-                <div class="sp-brand-sub">Kurdistan Government Portal</div>
-            </div>
+            <span class="mn-brand-text">
+                <strong>Halzanîn</strong>
+                <small>Kurdistan Government Portal</small>
+            </span>
         </a>
-        <div class="sp-nav-right">
-            <div class="sp-lang-seg" role="group" aria-label="Language selection">
-                <button id="lang-en-btn" class="sp-lang-opt" onclick="setLang('en')" aria-label="Switch to English">EN</button>
-                <button id="lang-ku-btn" class="sp-lang-opt" onclick="setLang('ku')" style="font-family:'Noto Naskh Arabic',serif;" aria-label="Switch to Kurdish">کوردی</button>
+
+        <nav class="mn-breadcrumb" aria-label="Breadcrumb">
+            <a href="{{ url('/') }}">Home</a>
+            <span class="mn-breadcrumb-sep" aria-hidden="true">›</span>
+            <a href="{{ url('/ministry/' . $service->ministry->slug) }}">{{ $service->ministry->name }}</a>
+            <span class="mn-breadcrumb-sep" aria-hidden="true">›</span>
+            <span class="mn-breadcrumb-current">{{ $service->name }}</span>
+        </nav>
+
+        <div class="mn-nav-right">
+            <div class="mn-toggles">
+                <button id="theme-toggle" class="mn-theme-btn" aria-label="Toggle dark mode">
+                    <svg class="icon-sun" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+                    <svg class="icon-moon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+                </button>
+                <div class="mn-divider" aria-hidden="true"></div>
+                <div class="mn-lang" role="group" aria-label="Language selection">
+                    <button id="lang-ku-btn" class="mn-lang-btn" onclick="setLang('ku')" style="font-family:'Noto Naskh Arabic',serif;" aria-label="Switch to Kurdish">کوردی</button>
+                    <button id="lang-en-btn" class="mn-lang-btn" onclick="setLang('en')" aria-label="Switch to English">EN</button>
+                </div>
             </div>
-            <button id="theme-toggle" class="sp-icon-btn" aria-label="Toggle dark mode"><svg class="icon-sun" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg><svg class="icon-moon" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></button>
             @auth
-                <a href="{{ url('/dashboard') }}" class="sp-btn sp-btn-outline">Dashboard</a>
+                <a href="{{ url('/dashboard') }}" class="mn-navbtn mn-navbtn-outline">My Dashboard</a>
             @else
-                @if (Route::has('login'))
-                    <a href="{{ route('login') }}" class="sp-btn sp-btn-outline">Log In</a>
-                @endif
-                @if (Route::has('register'))
-                    <a href="{{ route('register') }}" class="sp-btn sp-btn-primary">Register Free</a>
-                @endif
+                <a href="{{ route('login') }}" class="mn-navbtn mn-navbtn-primary">Sign In</a>
             @endauth
         </div>
     </div>
