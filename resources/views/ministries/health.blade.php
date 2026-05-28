@@ -59,25 +59,36 @@ html.dark{
 .lang-ku [data-en]{display:none}.lang-ku [data-ku]{display:block}
 
 /* ── Navbar ──────────────────────────────────────────────────*/
-.mn-nav{position:sticky;top:0;z-index:200;background:var(--nav-bg);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--nav-border);padding:0 clamp(1rem,4vw,2.5rem);height:60px;display:flex;align-items:center;justify-content:space-between;gap:1rem}
-.mn-nav-left{display:flex;align-items:center;gap:.75rem}
-.mn-nav-logo{font-size:.85rem;font-weight:700;letter-spacing:.03em;color:var(--m);text-decoration:none;white-space:nowrap}
-.mn-nav-sep{color:var(--text-muted);font-size:.8rem}
-.mn-breadcrumb{display:flex;align-items:center;gap:.35rem;font-size:.78rem;color:var(--text-muted)}
-.mn-breadcrumb a{color:var(--text-muted);text-decoration:none;transition:color .2s}
-.mn-breadcrumb a:hover{color:var(--m)}
-.mn-breadcrumb-cur{color:var(--text-sub);font-weight:500}
-.mn-nav-right{display:flex;align-items:center;gap:.5rem}
-.mn-nav-btn{height:34px;padding:0 .9rem;border:1px solid var(--m-border);border-radius:7px;background:var(--m-light);color:var(--text);font-size:.78rem;font-weight:500;cursor:pointer;transition:background .2s,border-color .2s,color .2s;white-space:nowrap;text-decoration:none;display:flex;align-items:center}
-.mn-nav-btn:hover{background:var(--m);color:#fff;border-color:var(--m)}
-.mn-nav-btn.primary{background:var(--m);color:#fff;border-color:var(--m)}
-.mn-nav-btn.primary:hover{background:var(--m-mid)}
-.mn-icon-btn{width:34px;height:34px;border-radius:7px;border:1px solid var(--border);background:transparent;color:var(--text-sub);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,color .2s;font-size:1rem}
-.mn-icon-btn:hover{background:var(--surface2);color:var(--text)}
+.mn-bar{position:sticky;top:0;z-index:200;background:var(--nav-bg);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--nav-border);}
+.mn-nav{display:flex;align-items:center;height:68px;gap:20px;max-width:1200px;margin:0 auto;padding:0 clamp(1.25rem,5vw,3rem);}
+.mn-brand{display:inline-flex;align-items:center;gap:12px;flex-shrink:0;text-decoration:none;color:inherit;}
+.mn-brand img{height:44px;width:auto;}
+.mn-brand-text strong{display:block;font-size:17px;font-weight:800;letter-spacing:-.3px;color:var(--text);}
+.mn-brand-text small{display:block;font-size:10px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em;}
+.mn-breadcrumb{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-muted);font-weight:500;}
+.mn-breadcrumb a{color:var(--text-muted);transition:color .15s;text-decoration:none;}
+.mn-breadcrumb a:hover{color:var(--m);}
+.mn-breadcrumb-sep{opacity:.4;font-size:11px;}
+.mn-breadcrumb-current{color:var(--m);font-weight:700;}
+.mn-nav-right{margin-left:auto;display:flex;align-items:center;gap:10px;}
+.mn-toggles{display:flex;align-items:center;gap:4px;background:var(--surface);border:1.5px solid var(--border);border-radius:999px;padding:4px 5px;}
+.mn-theme-btn{width:32px;height:32px;border-radius:50%;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-muted);transition:background .18s,color .18s;}
+.mn-theme-btn:hover{background:var(--m-light);color:var(--m);}
+.mn-theme-btn svg{width:16px;height:16px;}
+.mn-divider{width:1px;height:18px;background:var(--border);margin:0 2px;}
+.mn-lang{display:flex;align-items:center;background:var(--m-light);border-radius:999px;padding:3px;gap:2px;}
+.mn-lang-btn{border:none;cursor:pointer;border-radius:999px;padding:4px 10px;font-size:11.5px;font-weight:700;transition:all .2s;color:var(--text-muted);background:none;line-height:1;}
+.mn-lang-btn.active{background:var(--m);color:#fff;box-shadow:0 2px 8px rgba(26,107,74,.35);}
+.mn-navbtn{border-radius:999px;padding:9px 20px;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:6px;cursor:pointer;transition:all .2s;border:1.5px solid transparent;white-space:nowrap;text-decoration:none;}
+.mn-navbtn-primary{background:var(--m);color:#fff;border-color:var(--m);box-shadow:0 4px 14px rgba(26,107,74,.3);}
+.mn-navbtn-primary:hover{background:var(--m-mid);transform:translateY(-1px);}
+.mn-navbtn-outline{background:var(--surface);border-color:var(--border);color:var(--text);}
+.mn-navbtn-outline:hover{border-color:var(--m);color:var(--m);}
+@media(max-width:820px){.mn-breadcrumb,.mn-navbtn{display:none;}}
 
 /* ── Hero ────────────────────────────────────────────────────*/
 .mn-hero{position:relative;overflow:hidden;min-height:480px;background:linear-gradient(148deg,#072a1b,#1A6B4A,#155a3f);display:flex;align-items:flex-end;padding-bottom:3rem}
-.mn-hero-photo{position:absolute;inset:0;background:url('https://picsum.photos/seed/health-kr/1600/700') center/cover no-repeat;opacity:.14;mix-blend-mode:luminosity}
+.mn-hero-photo{position:absolute;inset:0;background:url('{{ asset("images/health/hero.jpeg") }}') center/cover no-repeat;opacity:.14;mix-blend-mode:luminosity}
 /* gentle cross / medical grid pattern */
 .mn-hero-pattern{
   position:absolute;inset:0;pointer-events:none;
@@ -175,25 +186,35 @@ html.dark .mn-news-bg{background:var(--surface)}
 .mn-track-submit{padding:.7rem 1.4rem;border-radius:9px;background:#4ade80;color:#061912;border:none;font-size:.88rem;font-weight:700;cursor:pointer;transition:background .2s,transform .2s;white-space:nowrap}
 .mn-track-submit:hover{background:#22c55e;transform:translateY(-1px)}
 
-/* ── Contact ──────────────────────────────────────────────────*/
-.mn-contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:start;margin-top:2rem}
-@media(max-width:700px){.mn-contact-grid{grid-template-columns:1fr}}
-.mn-contact-card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:1.75rem;box-shadow:var(--shadow)}
-.mn-contact-row{display:flex;align-items:flex-start;gap:.85rem;padding:.8rem 0;border-bottom:1px solid var(--border)}
-.mn-contact-row:last-child{border-bottom:none}
-.mn-contact-ico{width:36px;height:36px;border-radius:8px;flex-shrink:0;background:var(--m-light);border:1px solid var(--m-border);display:flex;align-items:center;justify-content:center;font-size:.95rem}
-.mn-contact-lbl{font-size:.72rem;font-weight:600;color:var(--text-muted);letter-spacing:.04em;text-transform:uppercase;margin-bottom:.2rem}
-.mn-contact-val{font-size:.88rem;color:var(--text);line-height:1.5}
-.mn-map-placeholder{background:var(--surface2);border-radius:var(--radius);border:1px solid var(--border);aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;color:var(--text-muted);font-size:.88rem}
-.mn-map-placeholder-ico{font-size:2rem;opacity:.5}
+/* ── Contact / Offices ────────────────────────────────────────*/
+.mn-offices-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:2rem;}
+@media(max-width:820px){.mn-offices-grid{grid-template-columns:1fr;}}
+.mn-office-card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:1.5rem;box-shadow:var(--shadow);transition:box-shadow .3s,transform .28s;}
+.mn-office-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px)}
+.mn-office-head{display:flex;align-items:flex-start;justify-content:space-between;gap:.75rem;margin-bottom:1rem;}
+.mn-office-badge{font-size:10px;font-weight:700;padding:3px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:.04em;flex-shrink:0;white-space:nowrap;}
+.mn-office-hq{background:var(--m);color:#fff;}
+.mn-office-branch{background:var(--m-light);color:var(--m);border:1px solid var(--m-border);}
+.mn-office-row{display:flex;align-items:flex-start;gap:.7rem;padding:.55rem 0;border-bottom:1px solid var(--border);}
+.mn-office-row:last-child{border-bottom:none;}
+.mn-office-ico{width:30px;height:30px;border-radius:7px;flex-shrink:0;background:var(--m-light);border:1px solid var(--m-border);display:flex;align-items:center;justify-content:center;}
+.mn-office-lbl{font-size:.68rem;font-weight:600;color:var(--text-muted);letter-spacing:.04em;text-transform:uppercase;margin-bottom:.15rem;}
+.mn-office-val{font-size:.84rem;color:var(--text);line-height:1.45;}
+.mn-offices-note{margin-top:1.5rem;padding:1rem 1.25rem;background:var(--m-light);border:1px solid var(--m-border);border-radius:8px;font-size:.83rem;color:var(--text-sub);}
 
 /* ── Footer ───────────────────────────────────────────────────*/
-.mn-footer{background:var(--surface);border-top:1px solid var(--border);padding:1.75rem clamp(1.25rem,5vw,3rem);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem}
-.mn-footer-brand{font-size:.85rem;font-weight:700;color:var(--m)}
-.mn-footer-links{display:flex;flex-wrap:wrap;gap:1.25rem}
-.mn-footer-links a{font-size:.8rem;color:var(--text-muted);text-decoration:none;transition:color .2s}
-.mn-footer-links a:hover{color:var(--text)}
-.mn-footer-copy{font-size:.75rem;color:var(--text-muted);width:100%;text-align:center;padding-top:.75rem;border-top:1px solid var(--border)}
+.mn-footer{border-top:1px solid var(--border);padding:40px 0 28px;background:var(--surface);}
+.mn-foot-inner{max-width:1200px;margin:0 auto;padding:0 clamp(1.25rem,5vw,3rem);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;}
+.mn-foot-brand{display:flex;align-items:center;gap:10px;}
+.mn-foot-brand img{height:34px;}
+.mn-foot-brand-text strong{display:block;font-size:14px;font-weight:800;color:var(--text);}
+.mn-foot-brand-text small{font-size:11px;color:var(--text-muted);}
+.mn-foot-links{display:flex;gap:6px;flex-wrap:wrap;}
+.mn-foot-links a{font-size:13px;color:var(--text-muted);padding:4px 10px;border-radius:6px;transition:color .15s,background .15s;}
+.mn-foot-links a:hover{color:var(--m);background:var(--m-light);}
+.mn-foot-copy{width:100%;border-top:1px solid var(--border);margin-top:16px;padding-top:18px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.mn-foot-copy span{font-size:12px;color:var(--text-muted);}
+@media(max-width:600px){.mn-foot-inner{flex-direction:column;align-items:flex-start;}}
 
 *:focus-visible{outline:2px solid var(--m);outline-offset:3px;border-radius:4px}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
@@ -204,26 +225,44 @@ html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
 </head>
 <body>
 
-<nav class="mn-nav" aria-label="Site navigation">
-  <div class="mn-nav-left">
-    <a href="{{ url('/') }}" class="mn-nav-logo" aria-label="Halzanîn Portal Home">
-      <span data-en><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:inline-block;vertical-align:-.1em;margin-right:.25rem" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 10v11M12 10v11M16 10v11"/></svg>Halzanîn Portal</span><span data-ku class="ku"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:inline-block;vertical-align:-.1em;margin-right:.25rem" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 10v11M12 10v11M16 10v11"/></svg>دەرگای هەڵژانین</span>
+<header class="mn-bar" role="banner">
+  <div class="mn-nav">
+    <a href="{{ url('/') }}" class="mn-brand" aria-label="Halzanîn Portal Home">
+      <img src="{{ asset('images/halzanin-logo.png') }}" alt="Halzanîn Logo" width="44" height="44">
+      <div class="mn-brand-text">
+        <strong>Halzanîn</strong>
+        <small>Kurdistan Government Portal</small>
+      </div>
     </a>
-    <span class="mn-nav-sep">›</span>
     <nav class="mn-breadcrumb" aria-label="Breadcrumb">
       <a href="{{ url('/') }}"><span data-en>Home</span><span data-ku class="ku">سەرەکی</span></a>
-      <span>›</span>
-      <span class="mn-breadcrumb-cur"><span data-en>Ministry of Health</span><span data-ku class="ku">وەزارەتی تەندروستی</span></span>
+      <span class="mn-breadcrumb-sep">›</span>
+      <span class="mn-breadcrumb-current"><span data-en>Ministry of Health</span><span data-ku class="ku">وەزارەتی تەندروستی</span></span>
     </nav>
+    <div class="mn-nav-right">
+      <div class="mn-toggles">
+        <button class="mn-theme-btn" onclick="toggleDark()" aria-label="Toggle dark mode" id="theme-btn">
+          <svg class="icon-sun" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+          <svg class="icon-moon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        </button>
+        <span class="mn-divider" aria-hidden="true"></span>
+        <div class="mn-lang" role="group" aria-label="Language selector">
+          <button class="mn-lang-btn" id="lang-en-btn" onclick="setLang('en')" aria-label="English">EN</button>
+          <button class="mn-lang-btn" id="lang-ku-btn" onclick="setLang('ku')" aria-label="Kurdish">کوردی</button>
+        </div>
+      </div>
+      @auth
+        <a href="{{ route('dashboard') }}" class="mn-navbtn mn-navbtn-outline">
+          <span data-en>Dashboard</span><span data-ku class="ku">داشبۆرد</span>
+        </a>
+      @else
+        <a href="{{ route('login') }}" class="mn-navbtn mn-navbtn-primary">
+          <span data-en>Sign In</span><span data-ku class="ku">چوونەژوورەوە</span>
+        </a>
+      @endauth
+    </div>
   </div>
-  <div class="mn-nav-right">
-    <button class="mn-nav-btn" onclick="toggleLang()" id="lang-btn" aria-label="Toggle language">کوردی | EN</button>
-    <button class="mn-icon-btn" onclick="toggleDark()" id="theme-btn" aria-label="Toggle dark mode"><svg class="icon-sun" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg><svg class="icon-moon" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></button>
-    <a href="{{ route('login') }}" class="mn-nav-btn primary">
-      <span data-en>Sign In</span><span data-ku class="ku">چوونەژوورەوە</span>
-    </a>
-  </div>
-</nav>
+</header>
 
 <section class="mn-hero" aria-label="Ministry hero">
   <div class="mn-hero-photo" role="presentation" aria-hidden="true"></div>
@@ -293,7 +332,7 @@ html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
         </div>
       </div>
       <img
-        src="https://picsum.photos/seed/health-kr-about/800/600"
+        src="{{ asset('images/health/about.jpeg') }}"
         alt="Healthcare professionals at a Kurdistan Region hospital"
         class="mn-about-img" loading="lazy"
       />
@@ -310,7 +349,7 @@ html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
     </h2>
     <div class="mn-news-grid" role="list">
       <article class="mn-news-card" role="listitem">
-        <img src="https://picsum.photos/seed/health-news-1/600/300" alt="New hospital opening" class="mn-news-thumb" loading="lazy"/>
+        <img src="{{ asset('images/health/news-hospital.jpeg') }}" alt="New hospital opening" class="mn-news-thumb" loading="lazy"/>
         <div class="mn-news-content">
           <time class="mn-news-date" datetime="2026-05-22">22 May 2026</time>
           <h3>
@@ -325,7 +364,7 @@ html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
         </div>
       </article>
       <article class="mn-news-card" role="listitem">
-        <img src="https://picsum.photos/seed/health-news-2/600/300" alt="Vaccination campaign" class="mn-news-thumb" loading="lazy"/>
+        <img src="{{ asset('images/health/news-vaccine.jpeg') }}" alt="Vaccination campaign" class="mn-news-thumb" loading="lazy"/>
         <div class="mn-news-content">
           <time class="mn-news-date" datetime="2026-05-08">8 May 2026</time>
           <h3>
@@ -340,7 +379,7 @@ html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
         </div>
       </article>
       <article class="mn-news-card" role="listitem">
-        <img src="https://picsum.photos/seed/health-news-3/600/300" alt="Digital health records" class="mn-news-thumb" loading="lazy"/>
+        <img src="{{ asset('images/health/news-digital.jpeg') }}" alt="Digital health records" class="mn-news-thumb" loading="lazy"/>
         <div class="mn-news-content">
           <time class="mn-news-date" datetime="2026-04-18">18 April 2026</time>
           <h3>
@@ -510,67 +549,157 @@ html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
       <span data-en class="mn-section-title">Find us</span>
       <span data-ku class="mn-section-title-ku">بماندۆزەوە</span>
     </h2>
-    <div class="mn-contact-grid">
-      <div class="mn-contact-card" role="list" aria-label="Contact details">
-        <div class="mn-contact-row" role="listitem">
-          <div class="mn-contact-ico" aria-hidden="true"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div>
+    <div class="mn-offices-grid" role="list" aria-label="Ministry of Health offices across Kurdistan">
+
+      <!-- Erbil — Main HQ -->
+      <div class="mn-office-card" role="listitem">
+        <div class="mn-office-head">
+          <h3><span data-en>Erbil (Hewlêr)</span><span data-ku class="ku">هەولێر</span></h3>
+          <span class="mn-office-badge mn-office-hq"><span data-en>Main HQ</span><span data-ku class="ku">چەوارەی سەرەکی</span></span>
+        </div>
+        <div class="mn-office-row">
+          <div class="mn-office-ico" aria-hidden="true"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div>
           <div>
-            <p class="mn-contact-lbl"><span data-en>Address</span><span data-ku class="ku">ناونیشان</span></p>
-            <p class="mn-contact-val">
-              <span data-en>Ministry of Health HQ, Gulan Street, Erbil, Kurdistan Region</span>
-              <span data-ku class="ku">چەواری سەرەکیی وەزارەتی تەندروستی، شەقامی گولان، هەولێر، هەرێمی کوردستان</span>
-            </p>
+            <p class="mn-office-lbl"><span data-en>Address</span><span data-ku class="ku">ناونیشان</span></p>
+            <p class="mn-office-val"><span data-en>Gulan Street, Erbil</span><span data-ku class="ku">شەقامی گولان، هەولێر</span></p>
           </div>
         </div>
-        <div class="mn-contact-row" role="listitem">
-          <div class="mn-contact-ico" aria-hidden="true"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"/></svg></div>
+        <div class="mn-office-row">
+          <div class="mn-office-ico" aria-hidden="true"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg></div>
           <div>
-            <p class="mn-contact-lbl"><span data-en>Working hours</span><span data-ku class="ku">کاتی کار</span></p>
-            <p class="mn-contact-val">
-              <span data-en>Sunday – Thursday, 8:00 – 15:00</span>
-              <span data-ku class="ku">یەکشەممە – پێنجشەممە، ٨:٠٠ – ١٥:٠٠</span>
-            </p>
+            <p class="mn-office-lbl"><span data-en>Phone</span><span data-ku class="ku">تەلەفۆن</span></p>
+            <p class="mn-office-val" dir="ltr">+964 66 555 9012</p>
           </div>
         </div>
-        <div class="mn-contact-row" role="listitem">
-          <div class="mn-contact-ico" aria-hidden="true"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg></div>
+        <div class="mn-office-row">
+          <div class="mn-office-ico" aria-hidden="true"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"/></svg></div>
           <div>
-            <p class="mn-contact-lbl"><span data-en>Phone</span><span data-ku class="ku">تەلەفۆن</span></p>
-            <p class="mn-contact-val" dir="ltr">+964 66 555 9012</p>
-          </div>
-        </div>
-        <div class="mn-contact-row" role="listitem">
-          <div class="mn-contact-ico" aria-hidden="true"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
-          <div>
-            <p class="mn-contact-lbl"><span data-en>Medical emergency</span><span data-ku class="ku">بۆرای پزیشکی</span></p>
-            <p class="mn-contact-val" dir="ltr">115 (24/7)</p>
+            <p class="mn-office-lbl"><span data-en>Hours</span><span data-ku class="ku">کاتی کار</span></p>
+            <p class="mn-office-val"><span data-en>Sun – Thu, 8:00 – 15:00 · Emergency: 115 (24/7)</span><span data-ku class="ku">یەکشەممە – پێنجشەممە، ٨:٠٠ – ١٥:٠٠ · بۆرا: ١١٥</span></p>
           </div>
         </div>
       </div>
-      <div class="mn-map-placeholder" aria-label="Map placeholder — Ministry of Health, Gulan Street, Erbil">
-        <span class="mn-map-placeholder-ico" aria-hidden="true"><svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6-10l6-3m0 16l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4"/></svg></span>
-        <span data-en>Map — Gulan Street, Erbil</span>
-        <span data-ku class="ku">نەخشە — شەقامی گولان، هەولێر</span>
+
+      <!-- Sulaymaniyah -->
+      <div class="mn-office-card" role="listitem">
+        <div class="mn-office-head">
+          <h3><span data-en>Sulaymaniyah (Silêmanî)</span><span data-ku class="ku">سلێمانی</span></h3>
+          <span class="mn-office-badge mn-office-branch"><span data-en>Branch</span><span data-ku class="ku">لق</span></span>
+        </div>
+        <div class="mn-office-row">
+          <div class="mn-office-ico" aria-hidden="true"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div>
+          <div>
+            <p class="mn-office-lbl"><span data-en>Address</span><span data-ku class="ku">ناونیشان</span></p>
+            <p class="mn-office-val"><span data-en>Bakhtiari Street, Sulaymaniyah</span><span data-ku class="ku">شەقامی بەختیاری، سلێمانی</span></p>
+          </div>
+        </div>
+        <div class="mn-office-row">
+          <div class="mn-office-ico" aria-hidden="true"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg></div>
+          <div>
+            <p class="mn-office-lbl"><span data-en>Phone</span><span data-ku class="ku">تەلەفۆن</span></p>
+            <p class="mn-office-val" dir="ltr">+964 53 313 5678</p>
+          </div>
+        </div>
+        <div class="mn-office-row">
+          <div class="mn-office-ico" aria-hidden="true"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"/></svg></div>
+          <div>
+            <p class="mn-office-lbl"><span data-en>Hours</span><span data-ku class="ku">کاتی کار</span></p>
+            <p class="mn-office-val"><span data-en>Sun – Thu, 8:00 – 15:00</span><span data-ku class="ku">یەکشەممە – پێنجشەممە، ٨:٠٠ – ١٥:٠٠</span></p>
+          </div>
+        </div>
       </div>
+
+      <!-- Duhok -->
+      <div class="mn-office-card" role="listitem">
+        <div class="mn-office-head">
+          <h3><span data-en>Duhok</span><span data-ku class="ku">دهۆک</span></h3>
+          <span class="mn-office-badge mn-office-branch"><span data-en>Branch</span><span data-ku class="ku">لق</span></span>
+        </div>
+        <div class="mn-office-row">
+          <div class="mn-office-ico" aria-hidden="true"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div>
+          <div>
+            <p class="mn-office-lbl"><span data-en>Address</span><span data-ku class="ku">ناونیشان</span></p>
+            <p class="mn-office-val"><span data-en>Mazi Street, Duhok</span><span data-ku class="ku">شەقامی مازی، دهۆک</span></p>
+          </div>
+        </div>
+        <div class="mn-office-row">
+          <div class="mn-office-ico" aria-hidden="true"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg></div>
+          <div>
+            <p class="mn-office-lbl"><span data-en>Phone</span><span data-ku class="ku">تەلەفۆن</span></p>
+            <p class="mn-office-val" dir="ltr">+964 62 723 4567</p>
+          </div>
+        </div>
+        <div class="mn-office-row">
+          <div class="mn-office-ico" aria-hidden="true"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"/></svg></div>
+          <div>
+            <p class="mn-office-lbl"><span data-en>Hours</span><span data-ku class="ku">کاتی کار</span></p>
+            <p class="mn-office-val"><span data-en>Sun – Thu, 8:00 – 15:00</span><span data-ku class="ku">یەکشەممە – پێنجشەممە، ٨:٠٠ – ١٥:٠٠</span></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Halabja -->
+      <div class="mn-office-card" role="listitem">
+        <div class="mn-office-head">
+          <h3><span data-en>Halabja</span><span data-ku class="ku">هەڵەبجە</span></h3>
+          <span class="mn-office-badge mn-office-branch"><span data-en>Branch</span><span data-ku class="ku">لق</span></span>
+        </div>
+        <div class="mn-office-row">
+          <div class="mn-office-ico" aria-hidden="true"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div>
+          <div>
+            <p class="mn-office-lbl"><span data-en>Address</span><span data-ku class="ku">ناونیشان</span></p>
+            <p class="mn-office-val"><span data-en>Martyrs Square, Halabja</span><span data-ku class="ku">مەیدانی شەهیدان، هەڵەبجە</span></p>
+          </div>
+        </div>
+        <div class="mn-office-row">
+          <div class="mn-office-ico" aria-hidden="true"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg></div>
+          <div>
+            <p class="mn-office-lbl"><span data-en>Phone</span><span data-ku class="ku">تەلەفۆن</span></p>
+            <p class="mn-office-val" dir="ltr">+964 53 327 6789</p>
+          </div>
+        </div>
+        <div class="mn-office-row">
+          <div class="mn-office-ico" aria-hidden="true"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"/></svg></div>
+          <div>
+            <p class="mn-office-lbl"><span data-en>Hours</span><span data-ku class="ku">کاتی کار</span></p>
+            <p class="mn-office-val"><span data-en>Sun – Thu, 8:00 – 15:00</span><span data-ku class="ku">یەکشەممە – پێنجشەممە، ٨:٠٠ – ١٥:٠٠</span></p>
+          </div>
+        </div>
+      </div>
+
     </div>
+    <p class="mn-offices-note">
+      <span data-en>All offices are open Sunday to Thursday, 8:00 AM – 3:00 PM. For medical emergencies, dial 115 (available 24/7). The portal handles administrative services only.</span>
+      <span data-ku class="ku">هەموو ئۆفیسەکان لە یەکشەممە تا پێنجشەممە کاردەکەن. بۆ بۆرای پزیشکی، ١١٥ بکەرەوە (٢٤/٧). پۆرتاڵ تەنها خزمەتگوزارییە ئیداریی تەندروستییەکان بەڕێوەدەبات.</span>
+    </p>
   </div>
 </section>
 
 <footer class="mn-footer" role="contentinfo">
-  <span class="mn-footer-brand">
-    <span data-en>Ministry of Health — Halzanîn</span>
-    <span data-ku class="ku">وەزارەتی تەندروستی — هەڵژانین</span>
-  </span>
-  <nav class="mn-footer-links" aria-label="Footer navigation">
-    <a href="{{ url('/') }}"><span data-en>Home</span><span data-ku class="ku">سەرەکی</span></a>
-    <a href="{{ route('track') }}"><span data-en>Track Application</span><span data-ku class="ku">شوێنکەوتنەوەی داواکاری</span></a>
-    <a href="{{ route('login') }}"><span data-en>Sign In</span><span data-ku class="ku">چوونەژوورەوە</span></a>
-    <a href="{{ route('ministry.civil-registry') }}"><span data-en>Civil Registry</span><span data-ku class="ku">ثبتی نفوس</span></a>
-  </nav>
-  <p class="mn-footer-copy">
-    <span data-en>© 2026 Kurdistan Regional Government — Ministry of Health. All rights reserved.</span>
-    <span data-ku class="ku">© ٢٠٢٦ حکومەتی هەرێمی کوردستان — وەزارەتی تەندروستی. هەموو مافەکان پارێزراون.</span>
-  </p>
+  <div class="mn-foot-inner">
+    <div class="mn-foot-brand">
+      <img src="{{ asset('images/halzanin-logo.png') }}" alt="Halzanîn">
+      <div class="mn-foot-brand-text">
+        <strong>Halzanîn</strong>
+        <small>Kurdistan Government Portal</small>
+      </div>
+    </div>
+    <nav class="mn-foot-links" aria-label="Footer navigation">
+      <a href="{{ url('/') }}"><span data-en>Home</span><span data-ku class="ku">سەرەکی</span></a>
+      <a href="{{ url('/') }}#ministries"><span data-en>All Ministries</span><span data-ku class="ku">هەموو وەزارەتەکان</span></a>
+      <a href="{{ route('track') }}"><span data-en>Track Application</span><span data-ku class="ku">شوێنکەوتنەوەی داواکاری</span></a>
+      @auth
+        <a href="{{ route('dashboard') }}"><span data-en>Dashboard</span><span data-ku class="ku">داشبۆرد</span></a>
+      @else
+        <a href="{{ route('login') }}"><span data-en>Sign In</span><span data-ku class="ku">چوونەژوورەوە</span></a>
+        @if(Route::has('register'))<a href="{{ route('register') }}"><span data-en>Register</span><span data-ku class="ku">تۆمارکردن</span></a>@endif
+      @endauth
+    </nav>
+    <div class="mn-foot-copy">
+      <span><span data-en>&copy; {{ date('Y') }} Halzanîn — Kurdistan Government Services Portal</span><span data-ku class="ku">© {{ date('Y') }} هەڵژانین — پۆرتاڵی خزمەتگوزاریی حکومەتی کوردستان</span></span>
+      <span><span data-en>Ministry of Health — Kurdistan Region</span><span data-ku class="ku">وەزارەتی تەندروستی — هەرێمی کوردستان</span></span>
+    </div>
+  </div>
 </footer>
 
 <script>
@@ -580,10 +709,9 @@ html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
   const s=localStorage.getItem('halzanin-theme'),p=window.matchMedia('(prefers-color-scheme: dark)').matches;
   applyTheme(s?s==='dark':p);
   window.toggleDark=function(){const d=html.classList.toggle('dark');localStorage.setItem('halzanin-theme',d?'dark':'light')};
-  const langBtn=document.getElementById('lang-btn');
-  function setLang(l){document.body.classList.toggle('lang-ku',l==='ku');html.setAttribute('lang',l==='ku'?'ckb':'en');html.setAttribute('dir',l==='ku'?'rtl':'ltr');localStorage.setItem('halzanin-lang',l);if(langBtn)langBtn.textContent=l==='ku'?'کوردی | EN':'English | کوردی'}
+  const langKuBtn=document.getElementById('lang-ku-btn'),langEnBtn=document.getElementById('lang-en-btn');
+  window.setLang=function(l){document.body.classList.toggle('lang-ku',l==='ku');html.setAttribute('lang',l==='ku'?'ckb':'en');html.setAttribute('dir',l==='ku'?'rtl':'ltr');localStorage.setItem('halzanin-lang',l);if(langKuBtn)langKuBtn.classList.toggle('active',l==='ku');if(langEnBtn)langEnBtn.classList.toggle('active',l==='en')};
   setLang(localStorage.getItem('halzanin-lang')||'en');
-  window.toggleLang=function(){setLang(document.body.classList.contains('lang-ku')?'en':'ku')};
   window.handleTrack=function(e){e.preventDefault();const c=document.getElementById('track-code').value.trim();if(c)window.location.href='{{ url("/track") }}/'+encodeURIComponent(c)};
 })();
 </script>
