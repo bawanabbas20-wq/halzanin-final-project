@@ -250,14 +250,20 @@
                 .al-feat-title { display: block; color: #fff; font-size: 13.5px; font-weight: 600; margin-bottom: 2px; }
                 .al-feat-sub   { display: block; color: rgba(255,255,255,0.58); font-size: 11.5px; }
 
-                .al-passports { position: relative; height: 190px; margin-bottom: 24px; }
-                .al-pp { position: absolute; object-fit: contain; border-radius: 7px; box-shadow: 0 10px 36px rgba(0,0,0,0.35); transition: transform 0.4s ease; }
-                .al-pp-blue { width: 128px; height: 182px; top: 4px; left: 50%; transform: translateX(-50%); z-index: 3; }
-                .al-pp-dark { width: 96px; height: 138px; top: 26px; left: 14px; z-index: 2; transform: rotate(-10deg); opacity: 0.82; }
-                .al-pp-red  { width: 96px; height: 138px; top: 26px; right: 14px; z-index: 2; transform: rotate(10deg); opacity: 0.82; }
-                .al-passports:hover .al-pp-dark { transform: rotate(-14deg) translateX(-8px); }
-                .al-passports:hover .al-pp-red  { transform: rotate(14deg) translateX(8px); }
-                .al-passports:hover .al-pp-blue { transform: translateX(-50%) translateY(-5px); }
+                .al-ministry-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 24px; }
+                .al-min-tile {
+                    background: rgba(255,255,255,0.09);
+                    border: 1px solid rgba(255,255,255,0.13);
+                    border-radius: 11px;
+                    padding: 12px 6px 10px;
+                    display: flex; flex-direction: column; align-items: center; gap: 7px;
+                    text-align: center;
+                    transition: background 0.2s, border-color 0.2s;
+                    cursor: default;
+                }
+                .al-min-tile:hover { background: rgba(255,255,255,0.16); border-color: rgba(255,255,255,0.25); }
+                .al-min-tile svg { width: 20px; height: 20px; stroke: rgba(255,255,255,0.88); flex-shrink: 0; }
+                .al-min-name { font-size: 9px; font-weight: 700; color: rgba(255,255,255,0.65); letter-spacing: 0.03em; line-height: 1.35; text-transform: uppercase; }
 
                 .al-left-footer { border-top: 1px solid rgba(255,255,255,0.14); padding-top: 14px; text-align: center; color: rgba(255,255,255,0.38); font-size: 11px; }
 
@@ -353,8 +359,8 @@
             <div class="al-left-inner">
                 <div>
                     <img src="{{ asset('images/halzanin-logo.png') }}" alt="Halzanîn" class="al-logo">
-                    <p class="al-region">Kurdistan Region – Iraq</p>
-                    <h1 class="al-title">Passport &amp; Civil<br>Affairs Directorate</h1>
+                    <p class="al-region">حکومەتی هەرێمی کوردستان — Kurdistan Region</p>
+                    <h1 class="al-title">Kurdistan Government<br>Services Portal</h1>
                     <div class="al-divider"></div>
                 </div>
 
@@ -362,56 +368,78 @@
                     <div class="al-feat">
                         <div class="al-feat-icon">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                <path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 10v11M12 10v11M16 10v11"/>
                             </svg>
                         </div>
                         <div>
-                            <strong class="al-feat-title">Secure &amp; Official</strong>
-                            <span class="al-feat-sub">Government-grade authentication</span>
+                            <strong class="al-feat-title">6 Directorates</strong>
+                            <span class="al-feat-sub">One portal for all government services</span>
                         </div>
                     </div>
                     <div class="al-feat">
                         <div class="al-feat-icon">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                                <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
                             </svg>
                         </div>
                         <div>
-                            <strong class="al-feat-title">Digital Applications</strong>
-                            <span class="al-feat-sub">Apply for passports online</span>
+                            <strong class="al-feat-title">Online Applications</strong>
+                            <span class="al-feat-sub">Apply from anywhere, any device</span>
                         </div>
                     </div>
                     <div class="al-feat">
                         <div class="al-feat-icon">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+                                <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
                             </svg>
                         </div>
                         <div>
                             <strong class="al-feat-title">Real-Time Tracking</strong>
-                            <span class="al-feat-sub">Monitor application status live</span>
+                            <span class="al-feat-sub">Monitor your application status live</span>
                         </div>
                     </div>
                     <div class="al-feat">
                         <div class="al-feat-icon">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                                <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
                             </svg>
                         </div>
                         <div>
-                            <strong class="al-feat-title">Easy Scheduling</strong>
-                            <span class="al-feat-sub">Book appointments in minutes</span>
+                            <strong class="al-feat-title">Bilingual Support</strong>
+                            <span class="al-feat-sub">Kurdish (Sorani) &amp; English</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="al-passports">
-                    <img src="{{ asset('images/passport-dark.png') }}" class="al-pp al-pp-dark" alt="">
-                    <img src="{{ asset('images/passport-blue.png') }}" class="al-pp al-pp-blue" alt="">
-                    <img src="{{ asset('images/passport-red.png') }}" class="al-pp al-pp-red"  alt="">
+                <!-- Ministry grid -->
+                <div class="al-ministry-grid">
+                    <div class="al-min-tile">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M16 9a4 4 0 01-8 0"/></svg>
+                        <span class="al-min-name">Civil Registry</span>
+                    </div>
+                    <div class="al-min-tile">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 17H5a2 2 0 00-2 2"/><path d="M15 17h4a2 2 0 012 2"/><circle cx="12" cy="10" r="4"/><path d="M12 2v2M12 18v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41"/></svg>
+                        <span class="al-min-name">Traffic Police</span>
+                    </div>
+                    <div class="al-min-tile">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                        <span class="al-min-name">Electricity</span>
+                    </div>
+                    <div class="al-min-tile">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4 5-6 8-6 11a6 6 0 0012 0c0-3-2-6-6-11z"/></svg>
+                        <span class="al-min-name">Water</span>
+                    </div>
+                    <div class="al-min-tile">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                        <span class="al-min-name">Health</span>
+                    </div>
+                    <div class="al-min-tile">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7H4a2 2 0 00-2 2v6a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+                        <span class="al-min-name">Business</span>
+                    </div>
                 </div>
 
-                <div class="al-left-footer">© 2025 Halzanîn — Official Portal</div>
+                <div class="al-left-footer">© {{ date('Y') }} Halzanîn — Kurdistan Government Services Portal</div>
             </div>
         </div>
 
@@ -424,8 +452,8 @@
                 <div class="al-mobile-brand">
                     <img src="{{ asset('images/halzanin-logo.png') }}" alt="Halzanîn" class="al-mobile-logo">
                     <div>
-                        <p class="al-mobile-region">Kurdistan Region – Iraq</p>
-                        <h2 class="al-mobile-title">Passport &amp; Civil Affairs<br>Directorate</h2>
+                        <p class="al-mobile-region">حکومەتی هەرێمی کوردستان — Kurdistan Region</p>
+                        <h2 class="al-mobile-title">Kurdistan Government<br>Services Portal</h2>
                     </div>
                 </div>
 
