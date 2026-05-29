@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -11,54 +12,58 @@ use Illuminate\Validation\ValidationException;
 
 class LoginRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
-     */
     public function rules(): array
     {
         return [
-            // SECURITY: max:254 = RFC 5321 email length limit
-            'email'    => ['required', 'string', 'email', 'max:254'],
+            // Accepts either an email address or a KRG gov_id (e.g. KRG-ABCD1234-EF56)
+            'email'    => ['required', 'string', 'max:254'],
             // SECURITY: max:72 = bcrypt safe limit; bcrypt silently truncates at 72 bytes
             'password' => ['required', 'string', 'max:72'],
         ];
     }
 
-    /**
-     * Attempt to authenticate the request's credentials.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
-            RateLimiter::hit($this->throttleKey());
+        $login    = trim($this->string('email')->toString());
+        $password = $this->string('password')->toString();
+        $remember = $this->boolean('remember');
 
-            throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
-            ]);
+        // Detect gov_id: matches KRG-XXXXXXXX-XXXX (case-insensitive)
+        if (preg_match('/^KRG-[A-Z2-9]{8}-[A-Z2-9]{4}$/i', $login)) {
+            $user = User::where('gov_id', strtoupper($login))->first();
+
+            if (! $user || ! Auth::attempt(
+                ['email' => $user->email, 'password' => $password],
+                $remember
+            )) {
+                RateLimiter::hit($this->throttleKey());
+                throw ValidationException::withMessages([
+                    'email' => trans('auth.failed'),
+                ]);
+            }
+        } else {
+            // Standard email login
+            if (! Auth::attempt(
+                ['email' => $login, 'password' => $password],
+                $remember
+            )) {
+                RateLimiter::hit($this->throttleKey());
+                throw ValidationException::withMessages([
+                    'email' => trans('auth.failed'),
+                ]);
+            }
         }
 
         RateLimiter::clear($this->throttleKey());
     }
 
-    /**
-     * Ensure the login request is not rate limited.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
     public function ensureIsNotRateLimited(): void
     {
         if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
@@ -77,11 +82,8 @@ class LoginRequest extends FormRequest
         ]);
     }
 
-    /**
-     * Get the rate limiting throttle key for the request.
-     */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->string('email')) . '|' . $this->ip());
     }
 }

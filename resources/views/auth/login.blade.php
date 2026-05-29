@@ -6,7 +6,7 @@
     <div class="w-full">
         <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-brand/10 dark:bg-brand/10 rounded-full mb-4">
             <div class="w-1.5 h-1.5 rounded-full bg-accent pulse-dot"></div>
-            <span class="text-xs font-semibold text-brand dark:text-blue-400 uppercase tracking-wide" data-i18n="auth.secure_login">Secure Login</span>
+            <span class="text-xs font-semibold text-brand dark:text-blue-400 uppercase tracking-wide" data-i18n="auth.secure_login">Secure Portal Login</span>
         </div>
         <h2 class="text-[22px] font-bold text-charcoal dark:text-white mb-6 font-outfit tracking-tight" data-i18n="auth.welcome">Welcome back</h2>
 
@@ -18,8 +18,8 @@
                 <div class="absolute inset-y-0 ltr:left-0 rtl:right-0 flex items-center ltr:pl-4 rtl:pr-4 pointer-events-none">
                     <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                 </div>
-                <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username"
-                       placeholder="Email Address" data-i18n-placeholder="auth.email"
+                <input id="email" type="text" name="email" value="{{ old('email') }}" required autofocus autocomplete="username"
+                       placeholder="Email or Government ID (KRG-XXXXXX-XXXX)" data-i18n-placeholder="auth.email"
                        class="block w-full h-[48px] ltr:pl-11 rtl:pr-11 rtl:pl-4 ltr:pr-4 rounded-[10px] border-gray-300 dark:border-[#2E2E2E] dark:bg-[#141414] dark:text-white focus:border-brand focus:ring-0 focus:shadow-[0_0_0_3px_#D6E4F5] dark:focus:shadow-[0_0_0_3px_rgba(74,130,196,0.3)] transition-all duration-200">
                 <x-input-error :messages="$errors->get('email')" class="mt-1" />
             </div>
