@@ -12,7 +12,7 @@
 /* ── Reset & base ───────────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;font-size:16px}
-body{font-family:'Inter',system-ui,sans-serif;background:#faf8f4;color:#1c1408;line-height:1.6;min-height:100dvh}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100dvh}
 
 /* ── Ministry tokens ────────────────────────────────────────── */
 :root{

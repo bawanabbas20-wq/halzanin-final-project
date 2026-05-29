@@ -74,17 +74,9 @@ class ChatbotController extends Controller
             '  Process: Submitted → Docs Reviewed → Inspection Scheduled → Approved → Installation Scheduled → Connected.',
             '  Estimated time: 10–14 days. Free.',
             '',
-            'Meter Reading Request (slug: meter-reading) — ACTIVE:',
-            '  Required docs: Subscriber account number, National ID, Property address.',
-            '  Estimated time: 3–5 days. Free.',
-            '',
-            'Leak Report (slug: water-leak-report) — ACTIVE:',
-            '  Required: Address of leak, Description of the leak, Contact phone number.',
-            '  Estimated response time: Within 6 hours. Free. (For urgent leaks also call 116.)',
-            '',
-            'Water Quality Complaint (slug: water-quality-complaint) — ACTIVE:',
-            '  Required: Subscriber account number, Address and description of issue, Date and time issue first noticed.',
-            '  Estimated time: 1–3 days. Free.',
+            'Meter Reading Request (slug: meter-reading) — COMING SOON.',
+            'Leak Report (slug: water-leak-report) — COMING SOON. (For urgent leaks call 116 now.)',
+            'Water Quality Complaint (slug: water-quality-complaint) — COMING SOON.',
             '',
             '--- 5. MINISTRY OF HEALTH (وەزارەتی تەندروستی) ---',
             'Ministry page: /ministry/health',
@@ -193,14 +185,14 @@ class ChatbotController extends Controller
 
         if (Str::contains($text, ['leak', 'لیک', 'water quality', 'کوالێتی ئاو'])) {
             return $isKurdish
-                ? 'بۆ ڕاپۆرتکردنی لیک، ناونیشانی شوێن و ژمارەی تەلەفۆنی پێویستە. داواکاری لە /services/water-leak-report بکە. بۆ فریاگوزاری ١١٦ پەیوەندی بکە (٢٤/٧).'
-                : 'To report a water leak, you need the location address and your contact number. Apply at /services/water-leak-report. For emergencies call 116 (24/7).';
+                ? 'خزمەتگوزاری ڕاپۆرتی لیک و گیلۆپەی کوالێتی ئاو بەم زووانەی دێن. بۆ فریاگوزاری ئێستا ١١٦ پەیوەندی بکە (٢٤/٧).'
+                : 'Online leak reporting and water quality complaint services are coming soon. For emergencies call 116 (24/7).';
         }
 
         if (Str::contains($text, ['meter read', 'meter reading', 'خوێندنەوەی مێتەر', 'مێتەر'])) {
             return $isKurdish
-                ? 'بۆ داوای خوێندنەوەی مێتەر پێویستتە: ژمارەی حسابی بەشداربوو، ناسنامەی نەتەوەیی، و ناونیشانی موڵک. داواکاری لە /services/meter-reading بکە.'
-                : 'For a meter reading request you need: subscriber account number, national ID, and property address. Apply at /services/meter-reading.';
+                ? 'خزمەتگوزاری داوای خوێندنەوەی مێتەر بەم زووانەی دێت. بۆ ئێستا پەیوەندی بکە بە نزیکترین نوسینگەی دەزگای ئاو.'
+                : 'Meter reading request service is coming soon. For now please contact your nearest Water Authority office.';
         }
 
         if (Str::contains($text, ['water', 'ئاو', 'ئاوی'])) {
@@ -241,8 +233,8 @@ class ChatbotController extends Controller
 
         if (Str::contains($text, ['services', 'what services', 'available', 'خزمەتگوزاری', 'what can'])) {
             return $isKurdish
-                ? 'پۆرتاڵی هەڵژانین ٦ وەزارەت/بەرێوەبەرایەتی دەگرێتەوە: تۆماری مەدەنی، پۆلیسی ترافیک، کارەبا، ئاو، تەندروستی، و تۆماری بازرگانی. خزمەتگوزارییە بەردەستەکان: ناسنامە، بڕوانامەی لەدایکبوون، مۆڵەتی شۆفێری، پەیوەندی کارەبا، پەیوەندی ئاو، خوێندنەوەی مێتەر، ڕاپۆرتی لیک، گیلۆپەی کوالێتی ئاو، و مۆڵەتی بازرگانی.'
-                : 'Halzanîn covers 6 directorates: Civil Registry, Traffic Police, Electricity, Water, Health, and Business Registration. Active services include: National ID, Birth Certificate, Driving License, Electricity Connection, Water Connection, Meter Reading, Leak Report, Water Quality Complaint, and Business License.';
+                ? 'پۆرتاڵی هەڵژانین ٦ وەزارەت/بەرێوەبەرایەتی دەگرێتەوە: تۆماری مەدەنی، پۆلیسی ترافیک، کارەبا، ئاو، تەندروستی، و تۆماری بازرگانی. ٦ خزمەتگوزاری ئێستا چالاکن: ناسنامەی نەتەوەیی، بڕوانامەی لەدایکبوون، مۆڵەتی شۆفێری، پەیوەندی کارەبا، پەیوەندی ئاو، و مۆڵەتی بازرگانی.'
+                : 'Halzanîn covers 6 directorates: Civil Registry, Traffic Police, Electricity, Water, Health, and Business Registration. 6 services are currently active: National ID, Birth Certificate, Driving License, Electricity Connection, Water Connection, and Business License.';
         }
 
         if (Str::contains($text, ['speak in kurdish', 'kurdish', 'کوردی'])) {

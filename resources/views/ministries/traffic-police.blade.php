@@ -12,7 +12,7 @@
 /* ── Reset & base ───────────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;font-size:16px}
-body{font-family:'Inter',system-ui,sans-serif;background:#f4f5f7;color:#1a1a2e;line-height:1.6;min-height:100dvh}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100dvh}
 
 /* ── Ministry tokens ──────────────────────────────────────────
    --m       = primary brand colour
