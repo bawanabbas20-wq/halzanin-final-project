@@ -50,7 +50,11 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://127.0.0.1:8000/)",
       "Bash(dir \"d:/final project/resources/views/\")",
       "Bash(python3 -u -c ' *)",
-      "Bash(Get-ChildItem *)"
+      "Bash(Get-ChildItem *)",
+      "Bash(mkdir -p \"D:\\\\final project\\\\public\\\\images\\\\traffic-police\" \"D:\\\\final project\\\\public\\\\images\\\\electricity\" \"D:\\\\final project\\\\public\\\\images\\\\health\" \"D:\\\\final project\\\\public\\\\images\\\\water\")"
+    ],
+    "additionalDirectories": [
+      "D:\\final project\\public\\images"
     ]
   }
 }

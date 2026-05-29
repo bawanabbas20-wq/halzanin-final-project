@@ -93,20 +93,18 @@ html.dark{
   background:linear-gradient(148deg,#032a1e,#0E7C5A,#0a6a4d);
   display:flex;align-items:flex-end;padding-bottom:3rem;
 }
-.mn-hero-photo{
-  position:absolute;inset:0;
-  background:url('{{ asset("images/water/hero.jpeg") }}') center/cover no-repeat;
-  opacity:.15;mix-blend-mode:luminosity;
-}
+.mn-hero-photo{position:absolute;inset:0;z-index:1;}
+.mn-hero-photo img{width:100%;height:100%;object-fit:cover;opacity:.18;display:block;}
+html.dark .mn-hero-photo img{opacity:.11;}
 /* ripple / water-ring pattern */
 .mn-hero-pattern{
-  position:absolute;inset:0;pointer-events:none;
+  position:absolute;inset:0;z-index:2;pointer-events:none;
   background-image:
     radial-gradient(ellipse 80% 40% at 60% 110%,rgba(52,211,153,0.12) 0%,transparent 65%),
     radial-gradient(ellipse 50% 30% at 80% 120%,rgba(52,211,153,0.08) 0%,transparent 60%);
 }
 .mn-hero-fade{
-  position:absolute;bottom:0;left:0;right:0;height:220px;
+  position:absolute;bottom:0;left:0;right:0;height:220px;z-index:3;
   background:linear-gradient(to top,rgba(10,106,77,0.7) 0%,transparent 100%);
   pointer-events:none;
 }
@@ -114,7 +112,7 @@ html.dark .mn-hero-fade{
   background:linear-gradient(to top,rgba(4,15,12,0.88) 0%,transparent 100%);
 }
 .mn-hero-inner{
-  position:relative;z-index:2;
+  position:relative;z-index:4;
   width:100%;max-width:1200px;margin:0 auto;
   padding:0 clamp(1.25rem,5vw,3rem);
 }
@@ -308,7 +306,9 @@ html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
 </header>
 
 <section class="mn-hero" aria-label="Ministry hero">
-  <div class="mn-hero-photo" role="presentation" aria-hidden="true"></div>
+  <div class="mn-hero-photo" aria-hidden="true">
+    <img src="{{ asset('images/water/hero.jpeg') }}" alt="" loading="eager">
+  </div>
   <div class="mn-hero-pattern" aria-hidden="true"></div>
   <div class="mn-hero-fade" aria-hidden="true"></div>
   <div class="mn-hero-inner">

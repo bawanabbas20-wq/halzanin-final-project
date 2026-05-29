@@ -88,19 +88,21 @@ html.dark{
 
 /* ── Hero ────────────────────────────────────────────────────*/
 .mn-hero{position:relative;overflow:hidden;min-height:480px;background:linear-gradient(148deg,#072a1b,#1A6B4A,#155a3f);display:flex;align-items:flex-end;padding-bottom:3rem}
-.mn-hero-photo{position:absolute;inset:0;background:url('{{ asset("images/health/hero.jpeg") }}') center/cover no-repeat;opacity:.14;mix-blend-mode:luminosity}
+.mn-hero-photo{position:absolute;inset:0;z-index:1;}
+.mn-hero-photo img{width:100%;height:100%;object-fit:cover;opacity:.18;display:block;}
+html.dark .mn-hero-photo img{opacity:.11;}
 /* gentle cross / medical grid pattern */
 .mn-hero-pattern{
-  position:absolute;inset:0;pointer-events:none;
+  position:absolute;inset:0;z-index:2;pointer-events:none;
   background-image:
     linear-gradient(rgba(255,255,255,0.035) 1px,transparent 1px),
     linear-gradient(90deg,rgba(255,255,255,0.035) 1px,transparent 1px),
     radial-gradient(ellipse 55% 40% at 20% 115%,rgba(134,239,172,0.1) 0%,transparent 65%);
   background-size:32px 32px,32px 32px,auto;
 }
-.mn-hero-fade{position:absolute;bottom:0;left:0;right:0;height:220px;background:linear-gradient(to top,rgba(21,90,63,0.68) 0%,transparent 100%);pointer-events:none}
+.mn-hero-fade{position:absolute;bottom:0;left:0;right:0;height:220px;z-index:3;background:linear-gradient(to top,rgba(21,90,63,0.68) 0%,transparent 100%);pointer-events:none}
 html.dark .mn-hero-fade{background:linear-gradient(to top,rgba(3,14,9,0.88) 0%,transparent 100%)}
-.mn-hero-inner{position:relative;z-index:2;width:100%;max-width:1200px;margin:0 auto;padding:0 clamp(1.25rem,5vw,3rem)}
+.mn-hero-inner{position:relative;z-index:4;width:100%;max-width:1200px;margin:0 auto;padding:0 clamp(1.25rem,5vw,3rem)}
 .mn-hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(134,239,172,0.14);border:1px solid rgba(134,239,172,0.4);color:#86efac;border-radius:20px;padding:.3rem .9rem;font-size:.75rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1.1rem}
 .mn-hero-badge-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;animation:pulse-health 2.4s infinite}
 @keyframes pulse-health{0%,100%{box-shadow:0 0 0 3px rgba(74,222,128,0.25)}50%{box-shadow:0 0 0 7px rgba(74,222,128,0.08)}}
@@ -265,7 +267,9 @@ html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
 </header>
 
 <section class="mn-hero" aria-label="Ministry hero">
-  <div class="mn-hero-photo" role="presentation" aria-hidden="true"></div>
+  <div class="mn-hero-photo" aria-hidden="true">
+    <img src="{{ asset('images/health/hero.jpeg') }}" alt="" loading="eager">
+  </div>
   <div class="mn-hero-pattern" aria-hidden="true"></div>
   <div class="mn-hero-fade" aria-hidden="true"></div>
   <div class="mn-hero-inner">
