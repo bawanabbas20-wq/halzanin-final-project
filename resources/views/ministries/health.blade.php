@@ -435,7 +435,7 @@ html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
           </div>
           @php $svc = \App\Models\Service::where('slug','health-card')->where('is_active',true)->first(); @endphp
           @if($svc)
-            <a href="{{ url('/apply/health-card') }}" class="mn-svc-apply"><span data-en>Apply →</span><span data-ku class="ku">داوا بکە ←</span></a>
+            <a href="{{ url('/services/health-card') }}" class="mn-svc-apply"><span data-en>Apply →</span><span data-ku class="ku">داوا بکە ←</span></a>
           @else
             <span class="mn-svc-soon"><span data-en>Launching soon</span><span data-ku class="ku">بەزووی دەکرێتەوە</span></span>
           @endif
@@ -462,7 +462,7 @@ html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
           </div>
           @php $svc2 = \App\Models\Service::where('slug','medical-referral')->where('is_active',true)->first(); @endphp
           @if($svc2)
-            <a href="{{ url('/apply/medical-referral') }}" class="mn-svc-apply"><span data-en>Apply →</span><span data-ku class="ku">داوا بکە ←</span></a>
+            <a href="{{ url('/services/medical-referral') }}" class="mn-svc-apply"><span data-en>Apply →</span><span data-ku class="ku">داوا بکە ←</span></a>
           @else
             <span class="mn-svc-soon"><span data-en>Launching soon</span><span data-ku class="ku">بەزووی دەکرێتەوە</span></span>
           @endif
@@ -489,7 +489,7 @@ html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
           </div>
           @php $svc3 = \App\Models\Service::where('slug','birth-certificate-health')->where('is_active',true)->first(); @endphp
           @if($svc3)
-            <a href="{{ url('/apply/birth-certificate-health') }}" class="mn-svc-apply"><span data-en>Apply →</span><span data-ku class="ku">داوا بکە ←</span></a>
+            <a href="{{ url('/services/birth-certificate-health') }}" class="mn-svc-apply"><span data-en>Apply →</span><span data-ku class="ku">داوا بکە ←</span></a>
           @else
             <span class="mn-svc-soon"><span data-en>Launching soon</span><span data-ku class="ku">بەزووی دەکرێتەوە</span></span>
           @endif
@@ -516,7 +516,7 @@ html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
           </div>
           @php $svc4 = \App\Models\Service::where('slug','death-certificate')->where('is_active',true)->first(); @endphp
           @if($svc4)
-            <a href="{{ url('/apply/death-certificate') }}" class="mn-svc-apply"><span data-en>Apply →</span><span data-ku class="ku">داوا بکە ←</span></a>
+            <a href="{{ url('/services/death-certificate') }}" class="mn-svc-apply"><span data-en>Apply →</span><span data-ku class="ku">داوا بکە ←</span></a>
           @else
             <span class="mn-svc-soon"><span data-en>Launching soon</span><span data-ku class="ku">بەزووی دەکرێتەوە</span></span>
           @endif

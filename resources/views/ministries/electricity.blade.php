@@ -570,7 +570,7 @@ html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
           </div>
           @php $svc = \App\Models\Service::where('slug','new-electricity-connection')->where('is_active',true)->first(); @endphp
           @if($svc)
-            <a href="{{ url('/apply/new-electricity-connection') }}" class="mn-svc-apply">
+            <a href="{{ url('/services/new-electricity-connection') }}" class="mn-svc-apply">
               <span data-en>Apply →</span><span data-ku class="ku">داوا بکە ←</span>
             </a>
           @else
@@ -600,7 +600,7 @@ html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
           </div>
           @php $svc2 = \App\Models\Service::where('slug','meter-transfer')->where('is_active',true)->first(); @endphp
           @if($svc2)
-            <a href="{{ url('/apply/meter-transfer') }}" class="mn-svc-apply">
+            <a href="{{ url('/services/meter-transfer') }}" class="mn-svc-apply">
               <span data-en>Apply →</span><span data-ku class="ku">داوا بکە ←</span>
             </a>
           @else
@@ -629,7 +629,7 @@ html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
           </div>
           @php $svc3 = \App\Models\Service::where('slug','electricity-fault-report')->where('is_active',true)->first(); @endphp
           @if($svc3)
-            <a href="{{ url('/apply/electricity-fault-report') }}" class="mn-svc-apply">
+            <a href="{{ url('/services/electricity-fault-report') }}" class="mn-svc-apply">
               <span data-en>Apply →</span><span data-ku class="ku">داوا بکە ←</span>
             </a>
           @else
@@ -658,7 +658,7 @@ html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
           </div>
           @php $svc4 = \App\Models\Service::where('slug','billing-enquiry')->where('is_active',true)->first(); @endphp
           @if($svc4)
-            <a href="{{ url('/apply/billing-enquiry') }}" class="mn-svc-apply">
+            <a href="{{ url('/services/billing-enquiry') }}" class="mn-svc-apply">
               <span data-en>Apply →</span><span data-ku class="ku">داوا بکە ←</span>
             </a>
           @else

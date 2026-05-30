@@ -632,7 +632,7 @@ html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
           </div>
           @php $svc = \App\Models\Service::where('slug','driving-license')->where('is_active',true)->first(); @endphp
           @if($svc)
-            <a href="{{ url('/apply/driving-license') }}" class="mn-svc-apply" aria-label="Apply for Driving Licence">
+            <a href="{{ url('/services/driving-license') }}" class="mn-svc-apply" aria-label="Apply for Driving Licence">
               <span data-en>Apply →</span><span data-ku class="ku">داوا بکە ←</span>
             </a>
           @else
@@ -663,7 +663,7 @@ html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
           </div>
           @php $svc2 = \App\Models\Service::where('slug','vehicle-registration')->where('is_active',true)->first(); @endphp
           @if($svc2)
-            <a href="{{ url('/apply/vehicle-registration') }}" class="mn-svc-apply" aria-label="Apply for Vehicle Registration">
+            <a href="{{ url('/services/vehicle-registration') }}" class="mn-svc-apply" aria-label="Apply for Vehicle Registration">
               <span data-en>Apply →</span><span data-ku class="ku">داوا بکە ←</span>
             </a>
           @else
@@ -693,7 +693,7 @@ html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
           </div>
           @php $svc3 = \App\Models\Service::where('slug','traffic-fine-payment')->where('is_active',true)->first(); @endphp
           @if($svc3)
-            <a href="{{ url('/apply/traffic-fine-payment') }}" class="mn-svc-apply" aria-label="Apply for Traffic Fine Payment">
+            <a href="{{ url('/services/traffic-fine-payment') }}" class="mn-svc-apply" aria-label="Apply for Traffic Fine Payment">
               <span data-en>Apply →</span><span data-ku class="ku">داوا بکە ←</span>
             </a>
           @else
@@ -724,7 +724,7 @@ html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
           </div>
           @php $svc4 = \App\Models\Service::where('slug','road-permit')->where('is_active',true)->first(); @endphp
           @if($svc4)
-            <a href="{{ url('/apply/road-permit') }}" class="mn-svc-apply" aria-label="Apply for Special Road Permit">
+            <a href="{{ url('/services/road-permit') }}" class="mn-svc-apply" aria-label="Apply for Special Road Permit">
               <span data-en>Apply →</span><span data-ku class="ku">داوا بکە ←</span>
             </a>
           @else

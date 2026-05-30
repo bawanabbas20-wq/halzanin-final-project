@@ -474,7 +474,7 @@ html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
           </div>
           @php $svc = \App\Models\Service::where('slug','water-connection')->where('is_active',true)->first(); @endphp
           @if($svc)
-            <a href="{{ url('/apply/water-connection') }}" class="mn-svc-apply"><span data-en>Apply →</span><span data-ku class="ku">داوا بکە ←</span></a>
+            <a href="{{ url('/services/water-connection') }}" class="mn-svc-apply"><span data-en>Apply →</span><span data-ku class="ku">داوا بکە ←</span></a>
           @else
             <span class="mn-svc-soon"><span data-en>Launching soon</span><span data-ku class="ku">بەزووی دەکرێتەوە</span></span>
           @endif
@@ -501,7 +501,7 @@ html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
           </div>
           @php $svc2 = \App\Models\Service::where('slug','meter-reading')->where('is_active',true)->first(); @endphp
           @if($svc2)
-            <a href="{{ url('/apply/meter-reading') }}" class="mn-svc-apply"><span data-en>Apply →</span><span data-ku class="ku">داوا بکە ←</span></a>
+            <a href="{{ url('/services/meter-reading') }}" class="mn-svc-apply"><span data-en>Apply →</span><span data-ku class="ku">داوا بکە ←</span></a>
           @else
             <span class="mn-svc-soon"><span data-en>Launching soon</span><span data-ku class="ku">بەزووی دەکرێتەوە</span></span>
           @endif
@@ -528,7 +528,7 @@ html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
           </div>
           @php $svc3 = \App\Models\Service::where('slug','water-leak-report')->where('is_active',true)->first(); @endphp
           @if($svc3)
-            <a href="{{ url('/apply/water-leak-report') }}" class="mn-svc-apply"><span data-en>Apply →</span><span data-ku class="ku">داوا بکە ←</span></a>
+            <a href="{{ url('/services/water-leak-report') }}" class="mn-svc-apply"><span data-en>Apply →</span><span data-ku class="ku">داوا بکە ←</span></a>
           @else
             <span class="mn-svc-soon"><span data-en>Launching soon</span><span data-ku class="ku">بەزووی دەکرێتەوە</span></span>
           @endif
@@ -555,7 +555,7 @@ html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
           </div>
           @php $svc4 = \App\Models\Service::where('slug','water-quality-complaint')->where('is_active',true)->first(); @endphp
           @if($svc4)
-            <a href="{{ url('/apply/water-quality-complaint') }}" class="mn-svc-apply"><span data-en>Apply →</span><span data-ku class="ku">داوا بکە ←</span></a>
+            <a href="{{ url('/services/water-quality-complaint') }}" class="mn-svc-apply"><span data-en>Apply →</span><span data-ku class="ku">داوا بکە ←</span></a>
           @else
             <span class="mn-svc-soon"><span data-en>Launching soon</span><span data-ku class="ku">بەزووی دەکرێتەوە</span></span>
           @endif
