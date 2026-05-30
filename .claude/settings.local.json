@@ -51,7 +51,13 @@
       "Bash(dir \"d:/final project/resources/views/\")",
       "Bash(python3 -u -c ' *)",
       "Bash(Get-ChildItem *)",
-      "Bash(mkdir -p \"D:\\\\final project\\\\public\\\\images\\\\traffic-police\" \"D:\\\\final project\\\\public\\\\images\\\\electricity\" \"D:\\\\final project\\\\public\\\\images\\\\health\" \"D:\\\\final project\\\\public\\\\images\\\\water\")"
+      "Bash(mkdir -p \"D:\\\\final project\\\\public\\\\images\\\\traffic-police\" \"D:\\\\final project\\\\public\\\\images\\\\electricity\" \"D:\\\\final project\\\\public\\\\images\\\\health\" \"D:\\\\final project\\\\public\\\\images\\\\water\")",
+      "Bash(curl -s --max-time 3 -o /dev/null -w \"%{http_code}\" https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js)",
+      "Bash(curl -L --max-time 10 \"https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js\" -o public/js/qrcode.min.js)",
+      "Bash(grep -E \"\\\\.php$\")",
+      "Bash(xargs ls -1)",
+      "Bash(find resources/views/components -name \"halzanin-auth-layout*\")",
+      "Bash(find resources/views -name \"halzanin-auth-layout*\")"
     ],
     "additionalDirectories": [
       "D:\\final project\\public\\images"
