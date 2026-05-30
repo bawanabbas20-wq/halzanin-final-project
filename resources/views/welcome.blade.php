@@ -691,7 +691,7 @@
 
                             <h1 class="w-h1">
                                 <span data-i18n="All Your Government Services, Online">
-                                    All Your<br>Government<br><span class="accent">Services,</span> Online
+                                    All Your Government Services, Online
                                 </span>
                             </h1>
 

@@ -49,7 +49,7 @@
             <span data-i18n="dashboard.greeting">Hello,</span>
             <span dir="auto" style="unicode-bidi:isolate">{{ explode(' ', auth()->user()->name)[0] }}</span><span style="unicode-bidi:isolate">!</span>
         </h2>
-        <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">
+        <p class="text-gray-500 dark:text-gray-400 text-sm mt-1" data-i18n="dashboard.manage_applications">
             Manage your government service applications from one place.
         </p>
     </div>
@@ -62,20 +62,20 @@
 
         <div class="relative z-10 p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
             <div>
-                <p class="text-white/60 text-xs font-semibold uppercase tracking-widest mb-1">Kurdistan Region</p>
-                <h3 class="text-xl font-bold text-white mb-1.5">Apply for Government Services</h3>
-                <p class="text-sm text-white/70">ID cards, driving licences, utility connections, and more</p>
+                <p class="text-white/60 text-xs font-semibold uppercase tracking-widest mb-1" data-i18n="Kurdistan Region">Kurdistan Region</p>
+                <h3 class="text-xl font-bold text-white mb-1.5" data-i18n="dashboard.apply_services">Apply for Government Services</h3>
+                <p class="text-sm text-white/70" data-i18n="dashboard.services_hint">ID cards, driving licences, utility connections, and more</p>
             </div>
             <div class="flex flex-col sm:flex-row gap-2.5 shrink-0">
                 <a href="/"
                    class="inline-flex items-center gap-2 px-5 py-3 bg-white text-brand font-bold text-sm rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all whitespace-nowrap">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    Browse Services
+                    <span data-i18n="Browse Services">Browse Services</span>
                 </a>
                 <a href="{{ route('citizen.appointments.calendar') }}"
                    class="inline-flex items-center gap-2 px-4 py-3 bg-white/10 text-white font-semibold text-sm rounded-xl border border-white/20 hover:bg-white/20 transition-all whitespace-nowrap">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                    Book Appointment
+                    <span data-i18n="book.short_title">Book Appointment</span>
                 </a>
             </div>
         </div>
@@ -84,9 +84,9 @@
     {{-- ── Government Directorates ── --}}
     <div class="animate-fade-up" style="animation-delay: 60ms">
         <div class="flex items-center justify-between mb-4">
-            <h3 class="text-base font-bold text-brand dark:text-white font-outfit">Government Directorates</h3>
+            <h3 class="text-base font-bold text-brand dark:text-white font-outfit" data-i18n="dashboard.directorates">Government Directorates</h3>
             <a href="/" class="text-xs font-semibold text-brand dark:text-blue-400 hover:underline flex items-center gap-1">
-                All services
+                <span data-i18n="dashboard.all_services">All services</span>
                 <svg class="w-3.5 h-3.5 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
                 </svg>
@@ -111,12 +111,12 @@
                     <div class="flex-1">
                         <p class="text-sm font-bold text-gray-900 dark:text-white leading-snug">{{ $ministry->name }}</p>
                         <p class="text-xs mt-1 font-medium" style="color: {{ $ministry->color }}">
-                            {{ $activeCount }} active service{{ $activeCount !== 1 ? 's' : '' }}
+                            {{ $activeCount }} <span data-i18n="admin.active_services">active service{{ $activeCount !== 1 ? 's' : '' }}</span>
                         </p>
                     </div>
                     <span class="text-xs font-semibold flex items-center gap-1 opacity-60 group-hover:opacity-100 transition-opacity"
                           style="color: {{ $ministry->color }}">
-                        Apply
+                        <span data-i18n="Apply">Apply</span>
                         <svg class="w-3 h-3 group-hover:translate-x-0.5 transition-transform rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
                         </svg>
@@ -189,7 +189,7 @@
     <div class="animate-fade-up" style="animation-delay: 320ms">
         <div class="flex items-center justify-between mb-4">
             <div class="flex items-center gap-2">
-                <h3 class="text-base font-bold text-brand dark:text-white font-outfit">My Applications</h3>
+                <h3 class="text-base font-bold text-brand dark:text-white font-outfit" data-i18n="dashboard.my_applications">My Applications</h3>
                 @if($appStats['total'] > 0)
                     <span class="px-2 py-0.5 bg-brand/10 dark:bg-blue-900/30 text-brand dark:text-blue-400 text-xs font-bold rounded-full">
                         {{ $appStats['total'] }}
@@ -198,7 +198,7 @@
             </div>
             <a href="{{ route('citizen.applications.index') }}"
                class="text-xs font-semibold text-brand dark:text-blue-400 hover:underline flex items-center gap-1">
-                View all
+                <span data-i18n="View All">View all</span>
                 <svg class="w-3.5 h-3.5 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
                 </svg>
@@ -213,12 +213,12 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                         </svg>
                     </div>
-                    <h4 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">No applications yet</h4>
-                    <p class="text-xs text-gray-400 dark:text-gray-500 mb-5">Apply for a government service to get started.</p>
+                    <h4 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1" data-i18n="dashboard.no_applications">No applications yet</h4>
+                    <p class="text-xs text-gray-400 dark:text-gray-500 mb-5" data-i18n="dashboard.no_applications_desc">Apply for a government service to get started.</p>
                     <a href="/"
                        class="inline-flex items-center gap-1.5 px-4 py-2.5 bg-brand text-white text-sm font-semibold rounded-xl hover:bg-brand-light transition-colors shadow-sm">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        Browse Services
+                        <span data-i18n="Browse Services">Browse Services</span>
                     </a>
                 </div>
             </div>
@@ -250,7 +250,7 @@
                                 </div>
                             </div>
                             <span class="shrink-0 px-2.5 py-1 rounded-full text-xs font-bold {{ $sc['bg'] }} {{ $sc['text'] }}">
-                                {{ ucwords(str_replace('_', ' ', $app->current_status)) }}
+                                <span data-i18n="status.{{ $app->current_status }}">{{ ucwords(str_replace('_', ' ', $app->current_status)) }}</span>
                             </span>
                         </div>
                         <div class="px-4 sm:px-5 py-2 bg-gray-50/50 dark:bg-white/[0.02] border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
@@ -261,7 +261,7 @@
                             </span>
                             <a href="{{ route('track.show', $app->tracking_code) }}"
                                class="text-xs font-semibold text-brand dark:text-blue-400 hover:underline flex items-center gap-1 shrink-0 ml-3">
-                                View
+                                <span data-i18n="common.view">View</span>
                                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
                             </a>
                         </div>
@@ -276,14 +276,14 @@
     <div class="animate-fade-up" style="animation-delay: 480ms">
         <div class="flex items-center justify-between mb-4">
             <div class="flex items-center gap-2">
-                <h3 class="text-base font-bold text-brand dark:text-white font-outfit">My Appointments</h3>
+                <h3 class="text-base font-bold text-brand dark:text-white font-outfit" data-i18n="dashboard.my_appointments">My Appointments</h3>
                 <span class="px-2 py-0.5 bg-brand/10 dark:bg-amber-900/30 text-brand dark:text-amber-400 text-xs font-bold rounded-full">
                     {{ $total }}
                 </span>
             </div>
             <a href="{{ route('citizen.appointments.calendar') }}"
                class="text-xs font-semibold text-brand dark:text-amber-400 hover:underline flex items-center gap-1">
-                Manage
+                <span data-i18n="dashboard.manage">Manage</span>
                 <svg class="w-3.5 h-3.5 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
                 </svg>
@@ -333,7 +333,7 @@
                                     <p class="text-sm font-bold text-gray-900 dark:text-white truncate">{{ $apptSvcName }}</p>
                                 </div>
                                 <span class="shrink-0 px-2.5 py-0.5 text-[11px] font-bold rounded-full capitalize {{ $cfg['badge'] }}">
-                                    {{ ucfirst($appt->status) }}
+                                    <span data-i18n="status.{{ $appt->status }}">{{ ucfirst($appt->status) }}</span>
                                 </span>
                             </div>
                             <div class="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400 flex-wrap">
@@ -353,26 +353,26 @@
 
                     <div class="px-4 sm:px-5 py-2.5 bg-gray-50/50 dark:bg-white/[0.03] border-t border-gray-100 dark:border-gray-800 flex items-center justify-between gap-2">
                         <span class="text-[11px] text-gray-400 dark:text-gray-500 shrink-0">
-                            Booked {{ $appt->created_at->diffForHumans() }}
+                            <span data-i18n="dashboard.booked">Booked</span> {{ $appt->created_at->diffForHumans() }}
                         </span>
                         <div class="flex items-center gap-2.5 shrink-0">
                             @if($appt->application)
                                 <a href="{{ route('citizen.applications.receipt', $appt->application) }}"
                                    class="text-[11px] font-semibold text-brand dark:text-blue-400 hover:underline flex items-center gap-1">
                                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                                    Receipt
+                                    <span data-i18n="dashboard.receipt">Receipt</span>
                                 </a>
                             @endif
                             @if($appt->status === 'pending' || $appt->status === 'confirmed')
                                 <form method="POST"
                                       action="{{ route('citizen.appointments.cancel', $appt) }}"
-                                      onsubmit="return confirm('Cancel this appointment?')">
+                                      onsubmit="return confirm(window.i18n ? i18n('dashboard.cancel_appointment') : 'Cancel this appointment?')">
                                     @csrf
                                     @method('PATCH')
                                     <button type="submit"
                                             class="text-[11px] font-semibold text-red-400 hover:text-red-600 dark:hover:text-red-300 transition-colors flex items-center gap-1">
                                         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
-                                        Cancel
+                                        <span data-i18n="common.cancel">Cancel</span>
                                     </button>
                                 </form>
                             @endif

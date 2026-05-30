@@ -11,7 +11,7 @@
     <div class="animate-fade-in">
         <div class="flex items-center gap-3 flex-wrap mb-1">
             <h2 class="text-2xl font-bold font-outfit text-gradient">
-                Welcome, {{ explode(' ', auth()->user()->name)[0] }}!
+                <span data-i18n="staff.welcome">Welcome,</span> {{ explode(' ', auth()->user()->name)[0] }}!
             </h2>
             @if($ministry)
                 <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold"
@@ -76,7 +76,7 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">{!! $s['icon'] !!}</svg>
                 </div>
                 <p class="text-2xl font-extrabold text-brand dark:text-white font-outfit">{{ number_format($s['value']) }}</p>
-                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5 font-medium">{{ $s['label'] }}</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5 font-medium" data-i18n="{{ $s['label'] }}">{{ $s['label'] }}</p>
             </div>
         @endforeach
     </div>
@@ -94,15 +94,15 @@
                 </svg>
             </div>
             <div class="flex-1">
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">Application Queue</h3>
-                <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1" data-i18n="staff.application_queue">Application Queue</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed" data-i18n="staff.queue_desc_short">
                     Review, process, and update the status of submitted citizen applications.
                 </p>
                 @if($stats['pending'] > 0)
                     <div class="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold"
                          style="color: {{ $minColor }};">
                         <div class="w-1.5 h-1.5 rounded-full pulse-dot" style="background: {{ $minColor }};"></div>
-                        {{ $stats['pending'] }} application{{ $stats['pending'] !== 1 ? 's' : '' }} awaiting review
+                        {{ $stats['pending'] }} <span data-i18n="{{ $stats['pending'] !== 1 ? 'admin.applications' : 'admin.application' }}">application{{ $stats['pending'] !== 1 ? 's' : '' }}</span> <span data-i18n="staff.awaiting_review">awaiting review</span>
                     </div>
                 @endif
             </div>
@@ -112,7 +112,7 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
-                View Queue
+                <span data-i18n="staff.view_queue">View Queue</span>
             </a>
         </div>
     </div>
@@ -129,8 +129,8 @@
                 </svg>
             </div>
             <div>
-                <p class="font-semibold text-gray-900 dark:text-white text-sm">Appointments Calendar</p>
-                <p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5">View day-by-day schedule</p>
+                <p class="font-semibold text-gray-900 dark:text-white text-sm" data-i18n="staff.appointment_calendar">Appointments Calendar</p>
+                <p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5" data-i18n="staff.calendar_subtitle">View day-by-day schedule</p>
             </div>
             <svg class="w-4 h-4 text-gray-300 dark:text-gray-600 ltr:ml-auto rtl:mr-auto rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -145,8 +145,8 @@
                 </svg>
             </div>
             <div>
-                <p class="font-semibold text-gray-900 dark:text-white text-sm">My Profile</p>
-                <p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5">Update your account details</p>
+                <p class="font-semibold text-gray-900 dark:text-white text-sm" data-i18n="staff.profile_title">My Profile</p>
+                <p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5" data-i18n="staff.profile_subtitle">Update your account details</p>
             </div>
             <svg class="w-4 h-4 text-gray-300 dark:text-gray-600 ltr:ml-auto rtl:mr-auto rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>

@@ -1221,6 +1221,162 @@ Object.assign(window.translations.ku, {
   'FAQ': 'پرسیارە باوەکان',
 });
 
+Object.assign(window.translations.en, {
+  "You're logged in!": "You're logged in!",
+  'Digital Processing': 'Digital Processing',
+  'System Availability': 'System Availability',
+  'min.civil.desc': 'Passports, national ID cards, birth certificates, and marriage registration for all Kurdistan Region citizens.',
+  'min.traffic.desc': 'Driving licenses, vehicle registration, and traffic fine payments for motorists across the Kurdistan Region.',
+  'min.electricity.desc': 'New electricity connections, service complaints, and meter-related requests for homes and businesses.',
+  'min.water.desc': 'Water supply connections, maintenance requests, and complaint submissions for residential and commercial properties.',
+  'min.health.desc': 'Health cards, medical certificates, hospital referrals, and healthcare registrations for residents of the Kurdistan Region.',
+  'Water Authority': 'Water Authority',
+  'Health Ministry': 'Health Ministry',
+  'FAQ': 'FAQ',
+  'Kurdistan Region': 'Kurdistan Region',
+  'OTP-Secured': 'OTP-Secured',
+  'Accounts': 'Accounts',
+  'Official': 'Official',
+  'Government Portal': 'Government Portal',
+  'Available': 'Available',
+  'Free': 'Free',
+  'for All Citizens': 'for All Citizens',
+  'Passport': 'Passport',
+  'National ID': 'National ID',
+  'Vehicle Reg.': 'Vehicle Reg.',
+  'Traffic Fines': 'Traffic Fines',
+  'New Connection': 'New Connection',
+  'Complaints': 'Complaints',
+  'Maintenance': 'Maintenance',
+  'Certificates': 'Certificates',
+  'Referrals': 'Referrals',
+  '2 services': '2 services',
+  '3 services': '3 services',
+  '4 services': '4 services',
+  'Explore services': 'Explore services',
+  'Apply': 'Apply',
+  'track.checked_in': 'You have been checked in. Please take a seat and wait for your number to be called.',
+  'civil.hero.tagline': 'Apply online for passports, national ID cards, birth certificates, and marriage registration through the Kurdistan Region Civil Registry.',
+  'dashboard.manage_applications': 'Manage your government service applications from one place.',
+  'dashboard.apply_services': 'Apply for Government Services',
+  'dashboard.services_hint': 'ID cards, driving licences, utility connections, and more',
+  'dashboard.directorates': 'Government Directorates',
+  'dashboard.all_services': 'All services',
+  'dashboard.stat_total': 'Applications',
+  'dashboard.stat_active': 'In Progress',
+  'dashboard.stat_done': 'Completed',
+  'dashboard.my_applications': 'My Applications',
+  'dashboard.no_applications': 'No applications yet',
+  'dashboard.no_applications_desc': 'Apply for a government service to get started.',
+  'dashboard.my_appointments': 'My Appointments',
+  'dashboard.manage': 'Manage',
+  'dashboard.booked': 'Booked',
+  'dashboard.receipt': 'Receipt',
+  'dashboard.cancel_appointment': 'Cancel this appointment?',
+  'admin.ministry_overview': 'Ministry Overview',
+  'admin.manage_services': 'Manage Services',
+  'admin.active_services': 'active services',
+  'admin.applications': 'Applications',
+  'admin.application': 'application',
+  'admin.ministry': 'Ministry',
+  'admin.service': 'service',
+  'admin.services': 'services',
+  'staff.application_queue': 'Application Queue',
+  'staff.queue_desc_short': 'Review, process, and update the status of submitted citizen applications.',
+  'staff.awaiting_review': 'awaiting review',
+  'staff.appointment_calendar': 'Appointments Calendar',
+  'staff.profile_title': 'My Profile',
+  'staff.profile_subtitle': 'Update your account details',
+  'ministry_admin.subtitle': "Manage your ministry's staff and appointment availability.",
+  'ministry_admin.badge': 'Ministry Admin',
+  'ministry_admin.manage_staff': 'Manage Staff',
+  'ministry_admin.manage_staff_desc': 'Add staff, assign permissions',
+  'ministry_admin.appointment_availability': 'Appointment Availability',
+  'ministry_admin.appointment_availability_desc': 'Set off-days for your directorate',
+  'ministry_admin.staff': 'Staff',
+  'ministry_admin.total_apps': 'Total Apps',
+});
+
+Object.assign(window.translations.ku, {
+  "You're logged in!": 'چوویتە ژوورەوە!',
+  'upload.title': 'بارکردنی بەڵگەنامەکان',
+  'upload.checklist': 'لیستی پێداویستییەکان',
+  'upload.check_all': 'هەموو ٣ خانەکە دیاری بکە بۆ چالاککردنی ناردن.',
+  'upload.submit': 'ناردنی بەڵگەنامەکان',
+  'Digital Processing': 'پرۆسەکردنی دیجیتاڵ',
+  'System Availability': 'بەردەستبوونی سیستەم',
+  'min.civil.desc': 'پاسپۆرت، کارتی نیشتیمانی، بەڵگەنامەی لەدایکبوون، و تۆمارکردنی هاوسەرگیری بۆ هاووڵاتیانی هەرێمی کوردستان.',
+  'min.traffic.desc': 'مۆڵەتی شۆفێری، تۆمارکردنی ئۆتۆمبێل، و پارەدانی سزای ترافیک بۆ شۆفێران لە هەرێمی کوردستان.',
+  'min.electricity.desc': 'پەیوەندی نوێی کارەبا، گەلاڵەی خزمەتگوزاری، و داواکارییەکانی پەیوەست بە مێتەر بۆ ماڵ و بازرگانی.',
+  'min.water.desc': 'پەیوەندی ئاوی نوێ، داواکاری چاکسازی، و ناردنی گەلاڵە بۆ موڵکی نیشتەجێبوون و بازرگانی.',
+  'min.health.desc': 'کارتی تەندروستی، بەڵگەنامەی پزیشکی، ڕەوانەکردنی نەخۆشخانە، و تۆمارکردنی تەندروستی بۆ دانیشتووانی هەرێمی کوردستان.',
+  'Water Authority': 'بەرپرسایەتی ئاو',
+  'Health Ministry': 'وەزارەتی تەندروستی',
+  'FAQ': 'پرسیارە باوەکان',
+  'Kurdistan Region': 'هەرێمی کوردستان',
+  'OTP-Secured': 'پارێزراو بە OTP',
+  'Accounts': 'هەژمارەکان',
+  'Official': 'فەرمی',
+  'Government Portal': 'پۆرتاڵی حکومەت',
+  'Available': 'بەردەست',
+  'Free': 'بەخۆڕایی',
+  'for All Citizens': 'بۆ هەموو هاووڵاتیان',
+  'Passport': 'پاسپۆرت',
+  'National ID': 'ناسنامەی نەتەوەیی',
+  'Vehicle Reg.': 'تۆماری ئۆتۆمبێل',
+  'Traffic Fines': 'سزاکانی ترافیک',
+  'New Connection': 'پەیوەندی نوێ',
+  'Complaints': 'گەلاڵەکان',
+  'Maintenance': 'چاکسازی',
+  'Certificates': 'بەڵگەنامەکان',
+  'Referrals': 'ڕەوانەکردنەکان',
+  '2 services': '٢ خزمەتگوزاری',
+  '3 services': '٣ خزمەتگوزاری',
+  '4 services': '٤ خزمەتگوزاری',
+  'Explore services': 'خزمەتگوزارییەکان ببینە',
+  'Apply': 'داوا بکە',
+  'track.checked_in': 'تۆمارکراویت. تکایە دابنیشە و چاوەڕێ بکە تا ژمارەکەت بانگ بکرێت.',
+  'civil.hero.tagline': 'بە شێوەی ئۆنلاین داواکاری پاسپۆرت، کارتی نیشتیمانی، بەڵگەنامەی لەدایکبوون، و تۆمارکردنی هاوسەرگیری لە ڕێگەی تۆماری مەدەنی هەرێمی کوردستان بکە.',
+  'dashboard.manage_applications': 'داواکارییەکانی خزمەتگوزاری حکومیت لە یەک شوێن بەڕێوە ببە.',
+  'dashboard.apply_services': 'داواکاری بۆ خزمەتگوزارییە حکومییەکان',
+  'dashboard.services_hint': 'کارتی ناسنامە، مۆڵەتی شۆفێری، پەیوەندییەکانی خزمەتگوزاری، و زیاتر',
+  'dashboard.directorates': 'بەڕێوەبەرایەتییە حکومییەکان',
+  'dashboard.all_services': 'هەموو خزمەتگوزارییەکان',
+  'dashboard.stat_total': 'داواکارییەکان',
+  'dashboard.stat_active': 'لە پرۆسەدایە',
+  'dashboard.stat_done': 'تەواوبوو',
+  'dashboard.my_applications': 'داواکارییەکانم',
+  'dashboard.no_applications': 'هێشتا هیچ داواکارییەک نییە',
+  'dashboard.no_applications_desc': 'بۆ دەستپێکردن داواکاری خزمەتگوزارییەکی حکومی بکە.',
+  'dashboard.my_appointments': 'وەختەکانم',
+  'dashboard.manage': 'بەڕێوەبردن',
+  'dashboard.booked': 'حەجزکراو',
+  'dashboard.receipt': 'وەسڵ',
+  'dashboard.cancel_appointment': 'ئەم وەختە هەڵبوەشێنیتەوە؟',
+  'admin.ministry_overview': 'پوختەی وەزارەتەکان',
+  'admin.manage_services': 'بەڕێوەبردنی خزمەتگوزارییەکان',
+  'admin.active_services': 'خزمەتگوزاری چالاک',
+  'admin.applications': 'داواکارییەکان',
+  'admin.application': 'داواکاری',
+  'admin.ministry': 'وەزارەت',
+  'admin.service': 'خزمەتگوزاری',
+  'admin.services': 'خزمەتگوزاری',
+  'staff.application_queue': 'ڕیزی داواکارییەکان',
+  'staff.queue_desc_short': 'پێداچوونەوە، پرۆسەکردن، و نوێکردنەوەی دۆخی داواکارییە نێردراوەکانی هاووڵاتیان.',
+  'staff.awaiting_review': 'چاوەڕوانی پێداچوونەوە',
+  'staff.appointment_calendar': 'ساڵنامەی وەختەکان',
+  'staff.profile_title': 'پرۆفایلەکەم',
+  'staff.profile_subtitle': 'زانیارییەکانی هەژمارەکەت نوێ بکەرەوە',
+  'ministry_admin.subtitle': 'ستاف و بەردەستبوونی وەختەکانی وەزارەتەکەت بەڕێوە ببە.',
+  'ministry_admin.badge': 'بەڕێوەبەری وەزارەت',
+  'ministry_admin.manage_staff': 'بەڕێوەبردنی ستاف',
+  'ministry_admin.manage_staff_desc': 'ستاف زیاد بکە و مۆڵەتەکان دیاری بکە',
+  'ministry_admin.appointment_availability': 'بەردەستبوونی وەختەکان',
+  'ministry_admin.appointment_availability_desc': 'ڕۆژە پشووەکانی بەڕێوەبەرایەتییەکەت دیاری بکە',
+  'ministry_admin.staff': 'ستاف',
+  'ministry_admin.total_apps': 'کۆی داواکارییەکان',
+});
+
 const legacyTranslationKeys = {
   'Dashboard': 'nav.dashboard',
   'Home': 'nav.home',
@@ -1625,6 +1781,77 @@ function setTranslatedText(el, value) {
   el.textContent = value;
 }
 
+const autoTranslatedTextNodes = new WeakMap();
+const autoTranslatedAttributes = new WeakMap();
+
+function getAutoTranslationKey(text) {
+  const normalized = normalizeTranslationKey(text);
+  if (window.translations.en && Object.prototype.hasOwnProperty.call(window.translations.en, normalized)) {
+    return normalized;
+  }
+  if (window.translations.ku && Object.prototype.hasOwnProperty.call(window.translations.ku, normalized)) {
+    return normalized;
+  }
+  return null;
+}
+
+function translatePlainTextNode(node, lang) {
+  const original = autoTranslatedTextNodes.get(node) || node.textContent.trim();
+  const key = getAutoTranslationKey(original);
+  if (!key) return;
+
+  autoTranslatedTextNodes.set(node, original);
+  const value = window.translations[lang] && window.translations[lang][key];
+  if (!value) return;
+
+  const leading = (node.textContent.match(/^\s*/) || [''])[0];
+  const trailing = (node.textContent.match(/\s*$/) || [''])[0];
+  node.textContent = `${leading}${value}${trailing}`;
+}
+
+function translatePlainAttribute(el, attr, lang) {
+  if (!el.hasAttribute(attr)) return;
+  let originals = autoTranslatedAttributes.get(el);
+  if (!originals) {
+    originals = {};
+    autoTranslatedAttributes.set(el, originals);
+  }
+  const original = originals[attr] || el.getAttribute(attr).trim();
+  const key = getAutoTranslationKey(original);
+  if (!key) return;
+
+  originals[attr] = original;
+  const value = window.translations[lang] && window.translations[lang][key];
+  if (value) el.setAttribute(attr, value);
+}
+
+function applyPlainTextTranslations(lang) {
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      if (!node.textContent.trim()) return NodeFilter.FILTER_REJECT;
+      const parent = node.parentElement;
+      if (!parent) return NodeFilter.FILTER_REJECT;
+      if (parent.closest('script, style, noscript, [data-i18n], [data-i18n-placeholder], [data-i18n-title], [data-en], [data-ku]')) {
+        return NodeFilter.FILTER_REJECT;
+      }
+      return getAutoTranslationKey(autoTranslatedTextNodes.get(node) || node.textContent.trim())
+        ? NodeFilter.FILTER_ACCEPT
+        : NodeFilter.FILTER_REJECT;
+    },
+  });
+
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach((node) => translatePlainTextNode(node, lang));
+
+  document.querySelectorAll('[aria-label], [title], [placeholder]').forEach((el) => {
+    if (el.closest('[data-en], [data-ku]')) return;
+    if (!el.hasAttribute('data-i18n-title')) translatePlainAttribute(el, 'title', lang);
+    if (!el.hasAttribute('data-i18n-placeholder')) translatePlainAttribute(el, 'placeholder', lang);
+    translatePlainAttribute(el, 'aria-label', lang);
+  });
+}
+
 function applyLanguage(lang) {
   lang = lang === 'ku' ? 'ku' : 'en';
   document.documentElement.lang = lang;
@@ -1655,6 +1882,8 @@ function applyLanguage(lang) {
     if (value) el.title = value;
   });
 
+  applyPlainTextTranslations(lang);
+
   localStorage.setItem('lang', lang);
   syncHalzaninLanguageToggle(lang);
 
@@ -1667,8 +1896,8 @@ function applyLanguage(lang) {
 
 function syncHalzaninLanguageToggle(lang) {
   lang = lang === 'ku' ? 'ku' : 'en';
-  const enItems = document.querySelectorAll('#lang-en, [data-lang-en]');
-  const kuItems = document.querySelectorAll('#lang-ku, [data-lang-ku]');
+  const enItems = document.querySelectorAll('#lang-en, #lang-en-btn, [data-lang-en]');
+  const kuItems = document.querySelectorAll('#lang-ku, #lang-ku-btn, [data-lang-ku]');
 
   enItems.forEach((el) => {
     el.classList.toggle('bg-brand', lang === 'en');
@@ -1704,14 +1933,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const savedLang = localStorage.getItem('lang') || 'en';
   applyLanguage(savedLang);
 
-  document.querySelectorAll('#lang-en, [data-lang-en]').forEach((button) => {
+  document.querySelectorAll('#lang-en, #lang-en-btn, [data-lang-en]').forEach((button) => {
     button.addEventListener('click', (event) => {
       event.stopPropagation();
       applyLanguage('en');
     });
   });
 
-  document.querySelectorAll('#lang-ku, [data-lang-ku]').forEach((button) => {
+  document.querySelectorAll('#lang-ku, #lang-ku-btn, [data-lang-ku]').forEach((button) => {
     button.addEventListener('click', (event) => {
       event.stopPropagation();
       applyLanguage('ku');

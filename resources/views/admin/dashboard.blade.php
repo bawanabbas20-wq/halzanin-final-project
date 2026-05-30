@@ -45,14 +45,14 @@
         <div class="animate-fade-up" style="animation-delay: 480ms">
             <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center gap-2">
-                    <h3 class="text-base font-bold text-gray-900 dark:text-white font-outfit">Ministry Overview</h3>
+                    <h3 class="text-base font-bold text-gray-900 dark:text-white font-outfit" data-i18n="admin.ministry_overview">Ministry Overview</h3>
                     <span class="px-2 py-0.5 bg-brand/10 dark:bg-blue-900/30 text-brand dark:text-blue-400 text-xs font-bold rounded-full">
-                        {{ $stats['active_services'] }} active services
+                        {{ $stats['active_services'] }} <span data-i18n="admin.active_services">active services</span>
                     </span>
                 </div>
                 <a href="{{ route('admin.services') }}"
                    class="text-xs font-semibold text-brand dark:text-blue-400 hover:underline flex items-center gap-1">
-                    Manage Services
+                    <span data-i18n="admin.manage_services">Manage Services</span>
                     <svg class="w-3.5 h-3.5 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
                     </svg>
@@ -81,11 +81,11 @@
                         <div>
                             <p class="text-sm font-bold text-gray-900 dark:text-white leading-snug">{{ $m->name }}</p>
                             <p class="text-xs mt-1 font-medium" style="color: {{ $m->color }};">
-                                {{ $m->active_services }} service{{ $m->active_services !== 1 ? 's' : '' }}
+                                {{ $m->active_services }} <span data-i18n="{{ $m->active_services !== 1 ? 'admin.services' : 'admin.service' }}">service{{ $m->active_services !== 1 ? 's' : '' }}</span>
                             </p>
                         </div>
                         <div class="mt-auto pt-2 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
-                            <span class="text-xs text-gray-400 dark:text-gray-500">Applications</span>
+                            <span class="text-xs text-gray-400 dark:text-gray-500" data-i18n="admin.applications">Applications</span>
                             <span class="text-sm font-extrabold font-outfit" style="color: {{ $m->color }};">
                                 {{ number_format($m->app_count) }}
                             </span>
@@ -169,7 +169,7 @@
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                             </svg>
-                            Manage Services
+                            <span data-i18n="admin.manage_services">Manage Services</span>
                         </a>
                     </div>
 
@@ -209,7 +209,7 @@
                         <tr class="border-b border-gray-100 dark:border-slate-800 bg-white dark:bg-[#1F1F1F]">
                             <th class="px-6 py-3.5 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider" data-i18n="Applicant">Applicant</th>
                             <th class="px-6 py-3.5 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider" data-i18n="Tracking Code">Tracking Code</th>
-                            <th class="px-6 py-3.5 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Ministry</th>
+                            <th class="px-6 py-3.5 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider" data-i18n="admin.ministry">Ministry</th>
                             <th class="px-6 py-3.5 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider" data-i18n="Status">Status</th>
                             <th class="px-6 py-3.5 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider" data-i18n="Submitted">Submitted</th>
                         </tr>
@@ -249,7 +249,7 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     <span class="px-2.5 py-1 text-[11px] font-bold rounded-full capitalize {{ $badge }}">
-                                        {{ str_replace('_', ' ', $app->current_status) }}
+                                        <span data-i18n="status.{{ $app->current_status }}">{{ str_replace('_', ' ', $app->current_status) }}</span>
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">

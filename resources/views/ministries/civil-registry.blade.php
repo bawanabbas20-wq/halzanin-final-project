@@ -216,16 +216,16 @@
                 <img src="{{ asset('images/halzanin-logo.png') }}" alt="Halzanîn">
                 <span class="mn-brand-text">
                     <strong>Halzanîn</strong>
-                    <small>Kurdistan Government Portal</small>
+                    <small data-i18n="Kurdistan Government Portal">Kurdistan Government Portal</small>
                 </span>
             </a>
 
             <nav class="mn-breadcrumb" aria-label="Breadcrumb">
-                <a href="{{ url('/') }}">Home</a>
+                <a href="{{ url('/') }}" data-i18n="Home">Home</a>
                 <span class="mn-breadcrumb-sep" aria-hidden="true">›</span>
-                <a href="{{ url('/') }}#ministries">Ministries</a>
+                <a href="{{ url('/') }}#ministries" data-i18n="Ministries">Ministries</a>
                 <span class="mn-breadcrumb-sep" aria-hidden="true">›</span>
-                <span class="mn-breadcrumb-current">Civil Registry</span>
+                <span class="mn-breadcrumb-current" data-i18n="Civil Registry">Civil Registry</span>
             </nav>
 
             <div class="mn-nav-right">
@@ -241,9 +241,9 @@
                     </div>
                 </div>
                 @auth
-                    <a href="{{ url('/dashboard') }}" class="mn-btn mn-btn-outline">My Dashboard</a>
+                    <a href="{{ url('/dashboard') }}" class="mn-btn mn-btn-outline" data-i18n="My Dashboard">My Dashboard</a>
                 @else
-                    <a href="{{ route('login') }}" class="mn-btn mn-btn-primary">Sign In</a>
+                    <a href="{{ route('login') }}" class="mn-btn mn-btn-primary" data-i18n="Sign In">Sign In</a>
                 @endauth
             </div>
         </div>
@@ -262,7 +262,7 @@
             <div class="mn-hero-content">
                 <div class="mn-hero-badge">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1"/></svg>
-                    Kurdistan Region Government Portal
+                    <span data-i18n="Kurdistan Region e-Government Portal">Kurdistan Region Government Portal</span>
                 </div>
                 <h1>
                     <div class="mn-hero-ku" data-ku="تۆماری مەدەنی" data-en="Civil Registry">تۆماری مەدەنی</div>
@@ -274,17 +274,17 @@
                 <div class="mn-hero-ctas">
                     <a href="#services" class="mn-btn mn-btn-primary">
                         <svg style="width:15px;height:15px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        View Available Services
+                        <span data-i18n="civil.view_services">View Available Services</span>
                     </a>
                     <a href="#track" class="mn-btn" style="background:rgba(255,255,255,0.15);color:#fff;border-color:rgba(255,255,255,0.28);backdrop-filter:blur(4px);">
-                        Track My Application
+                        <span data-i18n="civil.track_my_application">Track My Application</span>
                     </a>
                 </div>
                 <div class="mn-hero-stat-row" aria-label="Ministry statistics">
-                    <div class="mn-hero-stat"><strong>4</strong><span>Services</span></div>
-                    <div class="mn-hero-stat"><strong>Sun–Thu</strong><span>Office Hours</span></div>
-                    <div class="mn-hero-stat"><strong>Free</strong><span>All Services</span></div>
-                    <div class="mn-hero-stat"><strong>7–21 days</strong><span>Avg. Processing</span></div>
+                    <div class="mn-hero-stat"><strong>4</strong><span data-i18n="Services">Services</span></div>
+                    <div class="mn-hero-stat"><strong>Sun–Thu</strong><span data-i18n="civil.office_hours">Office Hours</span></div>
+                    <div class="mn-hero-stat"><strong data-i18n="Free">Free</strong><span data-i18n="civil.all_services">All Services</span></div>
+                    <div class="mn-hero-stat"><strong>7–21 days</strong><span data-i18n="civil.avg_processing">Avg. Processing</span></div>
                 </div>
             </div>
         </section>
@@ -296,12 +296,12 @@
                     <div class="mn-about-body">
                         <div class="mn-kicker">
                             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            About this ministry
+                            <span data-i18n="civil.about_kicker">About this ministry</span>
                         </div>
-                        <h2 id="about-heading" class="mn-sh">Identity documentation for every citizen</h2>
-                        <p>The <strong>Civil Registry Directorate</strong> is the government body responsible for all official identity documentation in the Kurdistan Region. It maintains the civil records of all citizens and issues the documents that verify your identity, family status, and legal existence as a person.</p>
-                        <p>If you are a <strong>Kurdistan Region citizen turning 15</strong>, renewing an expired document, reporting a birth or marriage, or applying for a passport, this is the ministry you work with. Foreign nationals who have acquired residency and need civil registration also use this directorate.</p>
-                        <p>Through the Halzanîn portal, you can <strong>submit your application online</strong>, upload required documents digitally, and book a single appointment for final verification — instead of multiple in-person visits with no clear timeline.</p>
+                        <h2 id="about-heading" class="mn-sh" data-i18n="civil.about_title">Identity documentation for every citizen</h2>
+                        <p data-i18n="civil.about_p1">The Civil Registry Directorate is the government body responsible for all official identity documentation in the Kurdistan Region. It maintains the civil records of all citizens and issues the documents that verify your identity, family status, and legal existence as a person.</p>
+                        <p data-i18n="civil.about_p2">If you are a Kurdistan Region citizen turning 15, renewing an expired document, reporting a birth or marriage, or applying for a passport, this is the ministry you work with. Foreign nationals who have acquired residency and need civil registration also use this directorate.</p>
+                        <p data-i18n="civil.about_p3">Through the Halzanin portal, you can submit your application online, upload required documents digitally, and book a single appointment for final verification instead of multiple in-person visits with no clear timeline.</p>
                     </div>
                     <div class="mn-about-visual" aria-hidden="true">
                         <img src="{{ asset('images/civil-registry/about.jpeg') }}" alt="Civil Registry office" loading="lazy"
@@ -319,9 +319,9 @@
             <div class="mn-container">
                 <div class="mn-kicker">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
-                    Latest news
+                    <span data-i18n="civil.latest_news">Latest news</span>
                 </div>
-                <h2 id="news-heading" class="mn-sh">Announcements from Civil Registry</h2>
+                <h2 id="news-heading" class="mn-sh" data-i18n="civil.news_title">Announcements from Civil Registry</h2>
                 <div class="mn-news-grid">
 
                     <article class="mn-news-card">
@@ -330,9 +330,9 @@
                         </div>
                         <div class="mn-news-body">
                             <div class="mn-news-date">14 May 2025</div>
-                            <h3 class="mn-news-title">National ID renewal deadline extended to December 2025</h3>
-                            <p class="mn-news-excerpt">Citizens with ID cards issued before 2018 now have until 31 December 2025 to renew via the Halzanîn portal or at any Civil Registry office.</p>
-                            <span class="mn-news-link">Read more <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></span>
+                            <h3 class="mn-news-title" data-i18n="civil.news_id_title">National ID renewal deadline extended to December 2025</h3>
+                            <p class="mn-news-excerpt" data-i18n="civil.news_id_desc">Citizens with ID cards issued before 2018 now have until 31 December 2025 to renew via the Halzanin portal or at any Civil Registry office.</p>
+                            <span class="mn-news-link"><span data-i18n="civil.read_more">Read more</span> <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></span>
                         </div>
                     </article>
 
@@ -342,9 +342,9 @@
                         </div>
                         <div class="mn-news-body">
                             <div class="mn-news-date">2 Apr 2025</div>
-                            <h3 class="mn-news-title">Birth registration now fully available online</h3>
-                            <p class="mn-news-excerpt">Parents can now register a newborn's birth entirely online through the Halzanîn portal within 60 days of birth. Physical office visit remains required for the original certificate pickup.</p>
-                            <span class="mn-news-link">Read more <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></span>
+                            <h3 class="mn-news-title" data-i18n="civil.news_birth_title">Birth registration now fully available online</h3>
+                            <p class="mn-news-excerpt" data-i18n="civil.news_birth_desc">Parents can now register a newborn's birth entirely online through the Halzanin portal within 60 days of birth. Physical office visit remains required for the original certificate pickup.</p>
+                            <span class="mn-news-link"><span data-i18n="civil.read_more">Read more</span> <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></span>
                         </div>
                     </article>
 
@@ -354,9 +354,9 @@
                         </div>
                         <div class="mn-news-body">
                             <div class="mn-news-date">18 Mar 2025</div>
-                            <h3 class="mn-news-title">Passport processing time reduced to 14 working days</h3>
-                            <p class="mn-news-excerpt">Following investment in new biometric equipment, standard passport applications are now processed within 14 working days from the date of the appointment.</p>
-                            <span class="mn-news-link">Read more <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></span>
+                            <h3 class="mn-news-title" data-i18n="civil.news_passport_title">Passport processing time reduced to 14 working days</h3>
+                            <p class="mn-news-excerpt" data-i18n="civil.news_passport_desc">Following investment in new biometric equipment, standard passport applications are now processed within 14 working days from the date of the appointment.</p>
+                            <span class="mn-news-link"><span data-i18n="civil.read_more">Read more</span> <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></span>
                         </div>
                     </article>
 
@@ -369,10 +369,10 @@
             <div class="mn-container">
                 <div class="mn-kicker">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    Available services
+                    <span data-i18n="civil.available_services">Available services</span>
                 </div>
-                <h2 id="services-heading" class="mn-sh">Civil Registry services</h2>
-                <p class="mn-sub">Each service below can be applied for online. Click "Apply" to begin or view full requirements on the service detail page.</p>
+                <h2 id="services-heading" class="mn-sh" data-i18n="civil.services_title">Civil Registry services</h2>
+                <p class="mn-sub" data-i18n="civil.services_desc">Each service below can be applied for online. Click "Apply" to begin or view full requirements on the service detail page.</p>
 
                 <div class="mn-svc-grid">
 
@@ -383,33 +383,33 @@
                                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M16 10a2 2 0 11-4 0 2 2 0 014 0zm-6 5s.5-3 4-3 4 3 4 3"/></svg>
                             </div>
                             <div class="mn-svc-info">
-                                <h3>National ID Card</h3>
+                                <h3 data-i18n="National ID Card">National ID Card</h3>
                                 <div class="mn-svc-info-ku">کارتی ناسنامەی نیشتمانی</div>
                             </div>
                         </div>
                         <div class="mn-svc-body">
                             <div class="mn-svc-docs">
-                                <div class="mn-svc-doc">Existing ID card (if renewal) or birth certificate (if new)</div>
-                                <div class="mn-svc-doc">Recent passport-size photograph</div>
-                                <div class="mn-svc-doc">Proof of residence (utility bill or letter)</div>
-                                <div class="mn-svc-doc">Parent/guardian ID if applicant is under 18</div>
+                                <div class="mn-svc-doc" data-i18n="civil.doc.existing_id">Existing ID card (if renewal) or birth certificate (if new)</div>
+                                <div class="mn-svc-doc" data-i18n="civil.doc.photo">Recent passport-size photograph</div>
+                                <div class="mn-svc-doc" data-i18n="civil.doc.residence">Proof of residence (utility bill or letter)</div>
+                                <div class="mn-svc-doc" data-i18n="civil.doc.guardian">Parent/guardian ID if applicant is under 18</div>
                             </div>
                             <div class="mn-svc-meta">
                                 <span class="mn-svc-pill mn-svc-pill-days">
                                     <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 6v6l4 2"/></svg>
-                                    7–10 working days
+                                    <span data-i18n="civil.days_7_10">7-10 working days</span>
                                 </span>
-                                <span class="mn-svc-pill mn-svc-pill-free">Free</span>
+                                <span class="mn-svc-pill mn-svc-pill-free" data-i18n="Free">Free</span>
                             </div>
                         </div>
                         <div class="mn-svc-footer">
                             @if(!empty(\App\Models\Service::where('slug','national-id')->where('is_active',true)->first()))
                                 <a href="{{ route('services.show', 'national-id') }}" class="mn-apply-btn">
                                     <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-                                    Apply now
+                                    <span data-i18n="civil.apply_now">Apply now</span>
                                 </a>
                             @else
-                                <span class="mn-soon-label">Launching soon</span>
+                                <span class="mn-soon-label" data-i18n="Coming Soon">Launching soon</span>
                             @endif
                         </div>
                     </div>
@@ -421,27 +421,27 @@
                                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
                             </div>
                             <div class="mn-svc-info">
-                                <h3>Passport Application</h3>
+                                <h3 data-i18n="Passport Application">Passport Application</h3>
                                 <div class="mn-svc-info-ku">داواکاری پاسپۆرت</div>
                             </div>
                         </div>
                         <div class="mn-svc-body">
                             <div class="mn-svc-docs">
-                                <div class="mn-svc-doc">Valid National ID Card (original)</div>
-                                <div class="mn-svc-doc">Birth certificate (original and copy)</div>
-                                <div class="mn-svc-doc">Recent biometric passport photos (2)</div>
-                                <div class="mn-svc-doc">Previous passport if renewing</div>
+                                <div class="mn-svc-doc" data-i18n="civil.doc.valid_id">Valid National ID Card (original)</div>
+                                <div class="mn-svc-doc" data-i18n="civil.doc.birth_original">Birth certificate (original and copy)</div>
+                                <div class="mn-svc-doc" data-i18n="civil.doc.biometric_photos">Recent biometric passport photos (2)</div>
+                                <div class="mn-svc-doc" data-i18n="civil.doc.previous_passport">Previous passport if renewing</div>
                             </div>
                             <div class="mn-svc-meta">
                                 <span class="mn-svc-pill mn-svc-pill-days">
                                     <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 6v6l4 2"/></svg>
-                                    14–21 working days
+                                    <span data-i18n="civil.days_14_21">14-21 working days</span>
                                 </span>
-                                <span class="mn-svc-pill mn-svc-pill-free">Free</span>
+                                <span class="mn-svc-pill mn-svc-pill-free" data-i18n="Free">Free</span>
                             </div>
                         </div>
                         <div class="mn-svc-footer">
-                            <span class="mn-soon-label">Launching soon</span>
+                            <span class="mn-soon-label" data-i18n="Coming Soon">Launching soon</span>
                         </div>
                     </div>
 
@@ -452,32 +452,32 @@
                                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                             </div>
                             <div class="mn-svc-info">
-                                <h3>Birth Certificate</h3>
+                                <h3 data-i18n="Birth Certificate">Birth Certificate</h3>
                                 <div class="mn-svc-info-ku">بڕوانامەی لەدایکبوون</div>
                             </div>
                         </div>
                         <div class="mn-svc-body">
                             <div class="mn-svc-docs">
-                                <div class="mn-svc-doc">Hospital birth record or midwife letter</div>
-                                <div class="mn-svc-doc">Both parents' National ID cards</div>
-                                <div class="mn-svc-doc">Marriage certificate of parents</div>
+                                <div class="mn-svc-doc" data-i18n="civil.doc.hospital_record">Hospital birth record or midwife letter</div>
+                                <div class="mn-svc-doc" data-i18n="civil.doc.parent_ids">Both parents' National ID cards</div>
+                                <div class="mn-svc-doc" data-i18n="civil.doc.parents_marriage">Marriage certificate of parents</div>
                             </div>
                             <div class="mn-svc-meta">
                                 <span class="mn-svc-pill mn-svc-pill-days">
                                     <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 6v6l4 2"/></svg>
-                                    5–7 working days
+                                    <span data-i18n="civil.days_5_7">5-7 working days</span>
                                 </span>
-                                <span class="mn-svc-pill mn-svc-pill-free">Free</span>
+                                <span class="mn-svc-pill mn-svc-pill-free" data-i18n="Free">Free</span>
                             </div>
                         </div>
                         <div class="mn-svc-footer">
                             @if(!empty(\App\Models\Service::where('slug','birth-certificate')->where('is_active',true)->first()))
                                 <a href="{{ route('services.show', 'birth-certificate') }}" class="mn-apply-btn">
                                     <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-                                    Apply now
+                                    <span data-i18n="civil.apply_now">Apply now</span>
                                 </a>
                             @else
-                                <span class="mn-soon-label">Launching soon</span>
+                                <span class="mn-soon-label" data-i18n="Coming Soon">Launching soon</span>
                             @endif
                         </div>
                     </div>
@@ -489,27 +489,27 @@
                                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
                             </div>
                             <div class="mn-svc-info">
-                                <h3>Marriage Certificate</h3>
+                                <h3 data-i18n="Marriage Certificate">Marriage Certificate</h3>
                                 <div class="mn-svc-info-ku">بڕوانامەی زەوجیت</div>
                             </div>
                         </div>
                         <div class="mn-svc-body">
                             <div class="mn-svc-docs">
-                                <div class="mn-svc-doc">Both spouses' National ID cards</div>
-                                <div class="mn-svc-doc">Court or religious ceremony official record</div>
-                                <div class="mn-svc-doc">Witness IDs (2 witnesses required)</div>
-                                <div class="mn-svc-doc">Medical fitness certificates (both spouses)</div>
+                                <div class="mn-svc-doc" data-i18n="civil.doc.spouse_ids">Both spouses' National ID cards</div>
+                                <div class="mn-svc-doc" data-i18n="civil.doc.court_record">Court or religious ceremony official record</div>
+                                <div class="mn-svc-doc" data-i18n="civil.doc.witness_ids">Witness IDs (2 witnesses required)</div>
+                                <div class="mn-svc-doc" data-i18n="civil.doc.medical_fitness">Medical fitness certificates (both spouses)</div>
                             </div>
                             <div class="mn-svc-meta">
                                 <span class="mn-svc-pill mn-svc-pill-days">
                                     <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 6v6l4 2"/></svg>
-                                    7–14 working days
+                                    <span data-i18n="civil.days_7_14">7-14 working days</span>
                                 </span>
-                                <span class="mn-svc-pill mn-svc-pill-free">Free</span>
+                                <span class="mn-svc-pill mn-svc-pill-free" data-i18n="Free">Free</span>
                             </div>
                         </div>
                         <div class="mn-svc-footer">
-                            <span class="mn-soon-label">Launching soon</span>
+                            <span class="mn-soon-label" data-i18n="Coming Soon">Launching soon</span>
                         </div>
                     </div>
 
@@ -524,14 +524,14 @@
                     <div class="mn-track-icon" aria-hidden="true">
                         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                     </div>
-                    <h2 id="track-heading">Track your Civil Registry application</h2>
-                    <p>Enter the tracking code from your submission confirmation email to check your application status in real time.</p>
+                    <h2 id="track-heading" data-i18n="civil.track_title">Track your Civil Registry application</h2>
+                    <p data-i18n="civil.track_desc">Enter the tracking code from your submission confirmation email to check your application status in real time.</p>
                     <form class="mn-track-form" onsubmit="handleTrack(event)" role="search">
-                        <label for="track-input" class="sr-only">Tracking code</label>
-                        <input type="text" id="track-input" class="mn-track-input" placeholder="e.g. HZ-CR-XXXXXXXX" autocomplete="off" spellcheck="false" aria-label="Enter tracking code">
-                        <button type="submit" class="mn-track-btn">Track</button>
+                        <label for="track-input" class="sr-only" data-i18n="Tracking Code">Tracking code</label>
+                        <input type="text" id="track-input" class="mn-track-input" placeholder="e.g. HZ-CR-XXXXXXXX" autocomplete="off" spellcheck="false" aria-label="Enter tracking code" data-i18n-placeholder="civil.track_placeholder" data-i18n-title="civil.track_aria">
+                        <button type="submit" class="mn-track-btn" data-i18n="Track Now">Track</button>
                     </form>
-                    <p class="mn-track-note">Your code was sent by email when you submitted your application. <a href="{{ url('/') }}#track" style="color:var(--m);font-weight:600;">Use the main tracker</a> if you prefer.</p>
+                    <p class="mn-track-note"><span data-i18n="civil.track_note">Your code was sent by email when you submitted your application.</span> <a href="{{ url('/') }}#track" style="color:var(--m);font-weight:600;" data-i18n="civil.main_tracker">Use the main tracker</a> <span data-i18n="civil.if_prefer">if you prefer.</span></p>
                 </div>
             </div>
         </section>
@@ -541,10 +541,10 @@
             <div class="mn-container">
                 <div class="mn-kicker">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                    Visit us
+                    <span data-i18n="civil.visit_us">Visit us</span>
                 </div>
-                <h2 id="contact-heading" class="mn-sh" style="margin-bottom:8px;">Civil Registry offices across Kurdistan</h2>
-                <p class="mn-sub">Visit any of our offices across the Kurdistan Region. Physical visits are only required for biometric capture and final document pickup — all paperwork is submitted online first.</p>
+                <h2 id="contact-heading" class="mn-sh" style="margin-bottom:8px;" data-i18n="civil.offices_title">Civil Registry offices across Kurdistan</h2>
+                <p class="mn-sub" data-i18n="civil.offices_desc">Visit any of our offices across the Kurdistan Region. Physical visits are only required for biometric capture and final document pickup, all paperwork is submitted online first.</p>
                 <div class="mn-offices-grid">
 
                     {{-- Erbil --}}

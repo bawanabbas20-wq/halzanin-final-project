@@ -9,15 +9,15 @@
     <div class="animate-fade-in">
         <div class="flex items-center gap-3 flex-wrap mb-1">
             <h2 class="text-2xl font-bold font-outfit text-gradient">
-                Welcome, {{ explode(' ', auth()->user()->name)[0] }}!
+                <span data-i18n="staff.welcome">Welcome,</span> {{ explode(' ', auth()->user()->name)[0] }}!
             </h2>
             <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold"
                   style="background:{{ $color }}15; color:{{ $color }}; border:1px solid {{ $color }}30;">
                 <span class="w-1.5 h-1.5 rounded-full" style="background:{{ $color }};"></span>
-                {{ $ministry->name }} — Ministry Admin
+                {{ $ministry->name }} — <span data-i18n="ministry_admin.badge">Ministry Admin</span>
             </span>
         </div>
-        <p class="text-gray-500 dark:text-gray-400 text-sm">Manage your ministry's staff and appointment availability.</p>
+        <p class="text-gray-500 dark:text-gray-400 text-sm" data-i18n="ministry_admin.subtitle">Manage your ministry's staff and appointment availability.</p>
     </div>
 
     {{-- ── Stats ── --}}
@@ -38,7 +38,7 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">{!! $s['icon'] !!}</svg>
                 </div>
                 <p class="text-2xl font-extrabold text-brand dark:text-white font-outfit">{{ number_format($s['value']) }}</p>
-                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5 font-medium">{{ $s['label'] }}</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5 font-medium" data-i18n="{{ $s['label'] }}">{{ $s['label'] }}</p>
             </div>
         @endforeach
     </div>
@@ -55,8 +55,8 @@
                 </svg>
             </div>
             <div>
-                <p class="font-semibold text-gray-900 dark:text-white text-sm">Manage Staff</p>
-                <p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5">Add staff, assign permissions</p>
+                <p class="font-semibold text-gray-900 dark:text-white text-sm" data-i18n="ministry_admin.manage_staff">Manage Staff</p>
+                <p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5" data-i18n="ministry_admin.manage_staff_desc">Add staff, assign permissions</p>
             </div>
             <svg class="w-4 h-4 text-gray-300 dark:text-gray-600 ltr:ml-auto rtl:mr-auto rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         </a>
@@ -69,8 +69,8 @@
                 </svg>
             </div>
             <div>
-                <p class="font-semibold text-gray-900 dark:text-white text-sm">Appointment Availability</p>
-                <p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5">Set off-days for your directorate</p>
+                <p class="font-semibold text-gray-900 dark:text-white text-sm" data-i18n="ministry_admin.appointment_availability">Appointment Availability</p>
+                <p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5" data-i18n="ministry_admin.appointment_availability_desc">Set off-days for your directorate</p>
             </div>
             <svg class="w-4 h-4 text-gray-300 dark:text-gray-600 ltr:ml-auto rtl:mr-auto rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         </a>
@@ -81,7 +81,7 @@
     <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden animate-fade-up" style="animation-delay: 400ms">
         <div class="h-1" style="background: {{ $color }};"></div>
         <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between">
-            <h3 class="text-sm font-bold text-gray-900 dark:text-white">Recent Applications</h3>
+            <h3 class="text-sm font-bold text-gray-900 dark:text-white" data-i18n="Recent Applications">Recent Applications</h3>
             <span class="text-xs text-gray-400 dark:text-gray-500">{{ $ministry->name }}</span>
         </div>
         <div class="divide-y divide-gray-50 dark:divide-gray-800/60">
@@ -96,7 +96,7 @@
                         <p class="text-xs text-gray-400 truncate">{{ $app->service->name ?? '—' }}</p>
                     </div>
                     <span class="shrink-0 px-2.5 py-1 text-[11px] font-bold rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 capitalize">
-                        {{ str_replace('_', ' ', $app->current_status) }}
+                        <span data-i18n="status.{{ $app->current_status }}">{{ str_replace('_', ' ', $app->current_status) }}</span>
                     </span>
                 </div>
             @endforeach
