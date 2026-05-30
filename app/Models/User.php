@@ -109,7 +109,7 @@ class User extends Authenticatable
 
     public function hasPermission(string $permission): bool
     {
-        if ($this->role === 'admin') {
+        if (in_array($this->role, ['admin', 'ministry_admin'])) {
             return true;
         }
         if ($this->role === 'staff') {

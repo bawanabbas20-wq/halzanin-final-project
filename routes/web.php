@@ -12,6 +12,7 @@ use App\Http\Controllers\VaultController;
 use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\TrackController;
+use App\Http\Controllers\MinistryAdminController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 
@@ -50,13 +51,28 @@ Route::middleware('throttle:public')->group(function () {
 
 Route::get('/dashboard', function () {
     $role = auth()->user()->role ?? 'citizen';
-    if ($role === 'admin') {
-        return redirect()->route('admin.dashboard');
-    } elseif ($role === 'staff') {
-        return redirect()->route('staff.dashboard');
-    }
+    if ($role === 'admin')          return redirect()->route('admin.dashboard');
+    if ($role === 'ministry_admin') return redirect()->route('ministry_admin.dashboard');
+    if ($role === 'staff')          return redirect()->route('staff.dashboard');
     return redirect()->route('citizen.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+// Ministry Admin routes — scoped to one ministry, cannot see other ministries' data
+Route::middleware(['auth', 'verified.otp', 'role:ministry_admin', 'throttle:authenticated'])->group(function () {
+    Route::get('/ministry-admin/dashboard', [MinistryAdminController::class, 'dashboard'])->name('ministry_admin.dashboard');
+
+    // Staff management (scoped to own ministry)
+    Route::get('/ministry-admin/users',                                        [MinistryAdminController::class, 'users'])->name('ministry_admin.users');
+    Route::post('/ministry-admin/users/promote',                               [MinistryAdminController::class, 'promoteToStaff'])->name('ministry_admin.users.promote');
+    Route::delete('/ministry-admin/users/{user}/remove',                       [MinistryAdminController::class, 'removeStaff'])->name('ministry_admin.users.remove');
+    Route::post('/ministry-admin/users/{user}/sub-roles',                      [MinistryAdminController::class, 'assignSubRole'])->name('ministry_admin.users.assign-sub-role');
+    Route::delete('/ministry-admin/users/{user}/sub-roles/{subRoleId}',        [MinistryAdminController::class, 'removeSubRole'])->name('ministry_admin.users.remove-sub-role');
+
+    // Off-day management (scoped to own ministry)
+    Route::get('/ministry-admin/off-days',                                     [MinistryAdminController::class, 'offDays'])->name('ministry_admin.off_days');
+    Route::post('/ministry-admin/off-days',                                    [MinistryAdminController::class, 'storeOffDay'])->name('ministry_admin.off_days.store');
+    Route::delete('/ministry-admin/off-days/{offDay}',                        [MinistryAdminController::class, 'destroyOffDay'])->name('ministry_admin.off_days.destroy');
+});
 
 // Citizen routes
 Route::middleware(['auth', 'verified.otp', 'role:citizen', 'throttle:authenticated'])->group(function () {

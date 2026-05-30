@@ -62,9 +62,10 @@
                                 $isSelf = $user->id === auth()->id();
 
                                 $roleConfig = [
-                                    'citizen' => ['badge' => 'bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-gray-300', 'avatar' => 'bg-gray-400 dark:bg-slate-600'],
-                                    'staff'   => ['badge' => 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400', 'avatar' => 'bg-blue-500'],
-                                    'admin'   => ['badge' => 'bg-brand/5 text-brand dark:bg-brand/10 dark:text-blue-400', 'avatar' => 'bg-brand dark:bg-blue-600'],
+                                    'citizen'        => ['badge' => 'bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-gray-300',         'avatar' => 'bg-gray-400 dark:bg-slate-600'],
+                                    'staff'          => ['badge' => 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',       'avatar' => 'bg-blue-500'],
+                                    'admin'          => ['badge' => 'bg-brand/5 text-brand dark:bg-brand/10 dark:text-blue-400',              'avatar' => 'bg-brand dark:bg-blue-600'],
+                                    'ministry_admin' => ['badge' => 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400', 'avatar' => 'bg-purple-600'],
                                 ];
                                 $rc = $roleConfig[$user->role] ?? $roleConfig['citizen'];
                             @endphp
@@ -127,9 +128,10 @@
                                                 @method('PATCH')
                                                 <select name="role"
                                                         class="block w-28 h-[34px] text-xs font-semibold ltr:pl-3 ltr:pr-8 rtl:pr-3 rtl:pl-8 rounded-xl border-gray-200 dark:border-gray-700 dark:bg-[#141414] dark:text-white focus:border-brand focus:ring-0 transition-all">
-                                                    <option value="citizen" {{ $user->role === 'citizen' ? 'selected' : '' }}>Citizen</option>
-                                                    <option value="staff"   {{ $user->role === 'staff'   ? 'selected' : '' }}>Staff</option>
-                                                    <option value="admin"   {{ $user->role === 'admin'   ? 'selected' : '' }}>Admin</option>
+                                                    <option value="citizen"        {{ $user->role === 'citizen'        ? 'selected' : '' }}>Citizen</option>
+                                                    <option value="staff"          {{ $user->role === 'staff'          ? 'selected' : '' }}>Staff</option>
+                                                    <option value="ministry_admin" {{ $user->role === 'ministry_admin' ? 'selected' : '' }}>Ministry Admin</option>
+                                                    <option value="admin"          {{ $user->role === 'admin'          ? 'selected' : '' }}>Admin</option>
                                                 </select>
                                                 <button type="button"
                                                         x-on:click="
@@ -143,7 +145,7 @@
                                                 </button>
                                             </form>
 
-                                            @if($user->role === 'staff')
+                                            @if(in_array($user->role, ['staff', 'ministry_admin']))
                                             <form method="POST"
                                                   action="{{ route('admin.users.update-ministry', $user->id) }}"
                                                   class="inline-flex items-center gap-2">

@@ -82,7 +82,7 @@ class AdminController extends Controller
         }
 
         $request->validate([
-            'role' => 'required|in:citizen,staff,admin',
+            'role' => 'required|in:citizen,staff,ministry_admin,admin',
         ]);
 
         $user->update(['role' => $request->role]);
