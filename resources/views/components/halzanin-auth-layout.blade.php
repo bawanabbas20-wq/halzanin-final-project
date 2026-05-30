@@ -267,12 +267,18 @@
 
                 .al-left-footer { border-top: 1px solid rgba(255,255,255,0.14); padding-top: 14px; text-align: center; color: rgba(255,255,255,0.38); font-size: 11px; }
 
+                /* Back to portal link — light style on desktop */
+                .al-back-link { color: #1B4F8A !important; }
+                .al-back-link:hover { color: #163F6E !important; }
+                html.dark .al-back-link { color: #4A82C4 !important; }
+                html.dark .al-back-link:hover { color: #6B9FD6 !important; }
+
                 /* Top bar becomes a simple toggles row (no navy background) */
                 .al-top-bar {
                     background: transparent;
                     padding: 16px 24px;
                     flex-direction: row;
-                    justify-content: flex-end;
+                    justify-content: space-between;
                     align-items: center;
                     gap: 8px;
                     overflow: visible;
@@ -456,6 +462,15 @@
                         <h2 class="al-mobile-title">Kurdistan Government<br>Services Portal</h2>
                     </div>
                 </div>
+
+                <!-- Back to Portal -->
+                <a href="/" class="al-back-link"
+                   style="display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:rgba(255,255,255,0.8);text-decoration:none;transition:color 0.2s;position:relative;z-index:2;">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 12H5M12 5l-7 7 7 7"/>
+                    </svg>
+                    Back to Portal
+                </a>
 
                 <!-- Toggles (always present; styled per breakpoint) -->
                 <div class="al-toggles">
