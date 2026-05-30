@@ -24,10 +24,10 @@ class ServiceController extends Controller
     {
         $service = Service::with('ministry')->where('slug', $slug)->where('is_active', true)->firstOrFail();
 
-        $availableDates = $this->getAvailableDates();
-        $timeSlots      = Appointment::TIME_SLOTS;
-
-        return view('services.apply', compact('service', 'availableDates', 'timeSlots'));
+        return redirect()->route('citizen.appointments.book', [
+            'ministry' => $service->ministry->slug,
+            'service'  => $service->slug,
+        ]);
     }
 
     public function store(Request $request, string $slug)

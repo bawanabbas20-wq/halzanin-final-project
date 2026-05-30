@@ -2,7 +2,7 @@ window.translations = {
   en: {
     // Navigation
     'nav.home': 'Home',
-    'nav.book': 'Passport Booking',
+    'nav.book': 'Service Booking',
     'nav.book_short': 'Book',
     'nav.services_portal': 'Services Portal',
     'nav.vault': 'Document Vault',
@@ -489,7 +489,7 @@ window.translations = {
   ku: {
     // Navigation
     'nav.home': 'سەرەکی',
-    'nav.book': 'حەجزکردنی پاسپۆرت',
+    'nav.book': 'حەجزکردنی خزمەتگوزاری',
     'nav.book_short': 'حەجزکردن',
     'nav.services_portal': 'پۆرتاڵی خزمەتگوزاری',
     'nav.vault': 'خەزینەی بەلگەنامە',
