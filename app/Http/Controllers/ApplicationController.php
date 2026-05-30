@@ -52,16 +52,9 @@ class ApplicationController extends Controller
         $user  = Auth::user();
         $query = Application::with(['user', 'appointment', 'service.ministry']);
 
-        // Ministry-scoped staff only see their ministry's applications
+        // Ministry-scoped staff only see their own ministry's applications
         if ($user->role === 'staff' && $user->ministry_id) {
-            $query->whereHas('service', fn ($q) => $q->where('ministry_id', $user->ministry_id))
-                  ->orWhereHas('appointment', fn ($q) => $q->whereNull('service_id'));
-            // For backward-compat: show unassigned (passport) apps to all staff
-            $query = Application::with(['user', 'appointment', 'service.ministry'])
-                ->where(function ($q) use ($user) {
-                    $q->whereHas('service', fn ($sq) => $sq->where('ministry_id', $user->ministry_id))
-                      ->orWhereNull('service_id');
-                });
+            $query->whereHas('service', fn ($q) => $q->where('ministry_id', $user->ministry_id));
         }
 
         $applications = $query->latest()->paginate(15);
