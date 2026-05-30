@@ -23,7 +23,7 @@
         }
 
         // Initialize language
-        if (localStorage.lang === 'ku') {
+        if ((localStorage.lang || localStorage.getItem('halzanin-lang')) === 'ku') {
             document.documentElement.dir = 'rtl';
             document.documentElement.lang = 'ku';
             document.documentElement.classList.remove('font-outfit');
@@ -406,7 +406,7 @@
             }
         }
 
-        updateLangUI(localStorage.lang || 'en');
+        updateLangUI(localStorage.lang || localStorage.getItem('halzanin-lang') || 'en');
 
         langToggleBtn.addEventListener('click', function() {
             const currentLang = document.documentElement.lang;
@@ -416,6 +416,7 @@
                 document.documentElement.classList.remove('font-outfit');
                 document.documentElement.classList.add('font-arabic');
                 localStorage.setItem('lang', 'ku');
+                localStorage.setItem('halzanin-lang', 'ku');
                 updateLangUI('ku');
                 if (typeof applyTranslations === 'function') applyTranslations('ku');
             } else {
@@ -424,6 +425,7 @@
                 document.documentElement.classList.add('font-outfit');
                 document.documentElement.classList.remove('font-arabic');
                 localStorage.setItem('lang', 'en');
+                localStorage.setItem('halzanin-lang', 'en');
                 updateLangUI('en');
                 if (typeof applyTranslations === 'function') applyTranslations('en');
             }

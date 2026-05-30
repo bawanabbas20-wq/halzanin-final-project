@@ -25,7 +25,7 @@
             }
 
             // Initialize language
-            if (localStorage.lang === 'ku') {
+            if ((localStorage.lang || localStorage.getItem('halzanin-lang')) === 'ku') {
                 document.documentElement.dir = 'rtl';
                 document.documentElement.lang = 'ku';
                 document.documentElement.classList.remove('font-outfit');
@@ -502,7 +502,7 @@
                 }
             }
 
-            updateLangUI(localStorage.lang || 'en');
+            updateLangUI(localStorage.lang || localStorage.getItem('halzanin-lang') || 'en');
 
             langToggleBtn.addEventListener('click', function() {
                 const currentLang = document.documentElement.lang;
@@ -513,6 +513,7 @@
                     document.documentElement.classList.remove('font-outfit');
                     document.documentElement.classList.add('font-arabic');
                     localStorage.setItem('lang', 'ku');
+                    localStorage.setItem('halzanin-lang', 'ku');
                     updateLangUI('ku');
                     if (typeof applyTranslations === 'function') applyTranslations('ku');
                 } else {
@@ -522,6 +523,7 @@
                     document.documentElement.classList.add('font-outfit');
                     document.documentElement.classList.remove('font-arabic');
                     localStorage.setItem('lang', 'en');
+                    localStorage.setItem('halzanin-lang', 'en');
                     updateLangUI('en');
                     if (typeof applyTranslations === 'function') applyTranslations('en');
                 }
@@ -688,6 +690,15 @@
             #chatbot-messages::-webkit-scrollbar { width:4px; }
             #chatbot-messages::-webkit-scrollbar-track { background:transparent; }
             #chatbot-messages::-webkit-scrollbar-thumb { background:#cbd5e1; border-radius:4px; }
+            html[dir="rtl"] #chatbot-wrapper {
+                right: auto !important;
+                left: 20px !important;
+                align-items: flex-start !important;
+            }
+            html[dir="rtl"] #chatbot-badge {
+                right: auto !important;
+                left: -2px !important;
+            }
             @media (min-width:1024px) { #chatbot-wrapper { bottom:24px !important; } }
 
             .chat-msg-user {

@@ -14,7 +14,7 @@
             const t = localStorage.getItem('halzanin-theme');
             const p = window.matchMedia('(prefers-color-scheme: dark)').matches;
             if (t === 'dark' || (!t && p)) document.documentElement.classList.add('dark');
-            if (localStorage.getItem('halzanin-lang') === 'ku') {
+            if ((localStorage.getItem('halzanin-lang') || localStorage.getItem('lang')) === 'ku') {
                 document.documentElement.dir = 'rtl';
                 document.documentElement.lang = 'ckb';
             }
@@ -703,13 +703,14 @@
     // ── Language ───────────────────────────────────────
     function setLang(lang) {
         localStorage.setItem('halzanin-lang', lang);
+        localStorage.setItem('lang', lang);
         html.dir  = lang === 'ku' ? 'rtl' : 'ltr';
         html.lang = lang === 'ku' ? 'ckb' : 'en';
         document.getElementById('lang-en-btn').classList.toggle('active', lang === 'en');
         document.getElementById('lang-ku-btn').classList.toggle('active', lang === 'ku');
     }
     window.setLang = setLang;
-    const initLang = localStorage.getItem('halzanin-lang') || 'en';
+    const initLang = localStorage.getItem('halzanin-lang') || localStorage.getItem('lang') || 'en';
     document.getElementById('lang-en-btn').classList.toggle('active', initLang === 'en');
     document.getElementById('lang-ku-btn').classList.toggle('active', initLang === 'ku');
 

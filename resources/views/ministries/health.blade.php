@@ -714,8 +714,8 @@ html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
   applyTheme(s?s==='dark':p);
   window.toggleDark=function(){const d=html.classList.toggle('dark');localStorage.setItem('halzanin-theme',d?'dark':'light')};
   const langKuBtn=document.getElementById('lang-ku-btn'),langEnBtn=document.getElementById('lang-en-btn');
-  window.setLang=function(l){document.body.classList.toggle('lang-ku',l==='ku');html.setAttribute('lang',l==='ku'?'ckb':'en');html.setAttribute('dir',l==='ku'?'rtl':'ltr');localStorage.setItem('halzanin-lang',l);if(langKuBtn)langKuBtn.classList.toggle('active',l==='ku');if(langEnBtn)langEnBtn.classList.toggle('active',l==='en')};
-  setLang(localStorage.getItem('halzanin-lang')||'en');
+  window.setLang=function(l){document.body.classList.toggle('lang-ku',l==='ku');html.setAttribute('lang',l==='ku'?'ckb':'en');html.setAttribute('dir',l==='ku'?'rtl':'ltr');localStorage.setItem('halzanin-lang',l);localStorage.setItem('lang',l);if(langKuBtn)langKuBtn.classList.toggle('active',l==='ku');if(langEnBtn)langEnBtn.classList.toggle('active',l==='en')};
+  setLang(localStorage.getItem('halzanin-lang')||localStorage.getItem('lang')||'en');
   window.handleTrack=function(e){e.preventDefault();const c=document.getElementById('track-code').value.trim();if(c)window.location.href='{{ url("/track") }}/'+encodeURIComponent(c)};
 })();
 </script>

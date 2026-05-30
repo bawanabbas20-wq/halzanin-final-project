@@ -965,10 +965,11 @@ html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
     html.setAttribute('lang', lang === 'ku' ? 'ckb' : 'en');
     html.setAttribute('dir', lang === 'ku' ? 'rtl' : 'ltr');
     localStorage.setItem('halzanin-lang', lang);
+    localStorage.setItem('lang', lang);
     if(langKuBtn) langKuBtn.classList.toggle('active', lang === 'ku');
     if(langEnBtn) langEnBtn.classList.toggle('active', lang === 'en');
   };
-  const savedLang = localStorage.getItem('halzanin-lang') || 'en';
+  const savedLang = localStorage.getItem('halzanin-lang') || localStorage.getItem('lang') || 'en';
   setLang(savedLang);
 
   // ── Track ────────────────────────────────────────────

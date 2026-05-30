@@ -14,7 +14,7 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <script>
-            if (localStorage.lang === 'ku') {
+            if ((localStorage.lang || localStorage.getItem('halzanin-lang')) === 'ku') {
                 document.documentElement.dir = 'rtl';
                 document.documentElement.lang = 'ku';
             } else {

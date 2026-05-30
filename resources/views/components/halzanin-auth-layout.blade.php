@@ -20,7 +20,7 @@
             } else {
                 document.documentElement.classList.remove('dark');
             }
-            if (localStorage.lang === 'ku') {
+            if ((localStorage.lang || localStorage.getItem('halzanin-lang')) === 'ku') {
                 document.documentElement.dir = 'rtl';
                 document.documentElement.lang = 'ku';
                 document.documentElement.classList.remove('font-outfit');
@@ -536,6 +536,7 @@
                 document.documentElement.classList.remove('font-outfit');
                 document.documentElement.classList.add('font-arabic');
                 localStorage.setItem('lang', 'ku');
+                localStorage.setItem('halzanin-lang', 'ku');
                 kuBtn.classList.add('al-active');
                 enBtn.classList.remove('al-active');
             } else {
@@ -544,6 +545,7 @@
                 document.documentElement.classList.add('font-outfit');
                 document.documentElement.classList.remove('font-arabic');
                 localStorage.setItem('lang', 'en');
+                localStorage.setItem('halzanin-lang', 'en');
                 enBtn.classList.add('al-active');
                 kuBtn.classList.remove('al-active');
             }
@@ -551,7 +553,7 @@
         }
 
         (function() {
-            var lang = localStorage.lang || 'en';
+            var lang = localStorage.lang || localStorage.getItem('halzanin-lang') || 'en';
             var enBtn = document.getElementById('lang-en-btn');
             var kuBtn = document.getElementById('lang-ku-btn');
             if (lang === 'ku') { kuBtn.classList.add('al-active'); }

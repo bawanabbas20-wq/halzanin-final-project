@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>تۆماری مەدەنی — Civil Registry | Halzanîn Kurdistan Portal</title>
+    <title>تۆماری مەدەنی | Halzanîn Kurdistan Portal</title>
     <meta name="description" content="Apply online for passports, national ID cards, birth certificates, and marriage registration through the Kurdistan Region Civil Registry.">
     <link rel="icon" type="image/png" href="{{ asset('images/halzanin-logo.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,7 +12,8 @@
     <script>
         (function(){
             if(localStorage.theme==='dark'||(!('theme' in localStorage)&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark');}
-            if(localStorage.lang==='ku'){document.documentElement.dir='rtl';document.documentElement.lang='ku';}
+            var savedLang=localStorage.lang||localStorage.getItem('halzanin-lang');
+            if(savedLang==='ku'){document.documentElement.dir='rtl';document.documentElement.lang='ku';}
         })();
     </script>
     <style>
@@ -265,8 +266,8 @@
                     <span data-i18n="Kurdistan Region e-Government Portal">Kurdistan Region Government Portal</span>
                 </div>
                 <h1>
-                    <div class="mn-hero-ku" data-ku="تۆماری مەدەنی" data-en="Civil Registry">تۆماری مەدەنی</div>
-                    <div class="mn-hero-en" data-ku="Civil Registry" data-en="وەزارەتی ناوخۆ">Civil Registry Directorate</div>
+                    <div class="mn-hero-ku" data-ku="تۆماری مەدەنی" data-en="Civil Registry">Civil Registry</div>
+                    <div class="mn-hero-en" data-ku="بەڕێوەبەرایەتی تۆماری مەدەنی" data-en="Civil Registry Directorate">Civil Registry Directorate</div>
                 </h1>
                 <p class="mn-hero-tagline" data-i18n="civil.hero.tagline">
                     Your official source for national identity documents, birth records, marriage certificates, and passport services in the Kurdistan Region.
@@ -282,9 +283,9 @@
                 </div>
                 <div class="mn-hero-stat-row" aria-label="Ministry statistics">
                     <div class="mn-hero-stat"><strong>4</strong><span data-i18n="Services">Services</span></div>
-                    <div class="mn-hero-stat"><strong>Sun–Thu</strong><span data-i18n="civil.office_hours">Office Hours</span></div>
+                    <div class="mn-hero-stat"><strong data-i18n="civil.sun_thu">Sun-Thu</strong><span data-i18n="civil.office_hours">Office Hours</span></div>
                     <div class="mn-hero-stat"><strong data-i18n="Free">Free</strong><span data-i18n="civil.all_services">All Services</span></div>
-                    <div class="mn-hero-stat"><strong>7–21 days</strong><span data-i18n="civil.avg_processing">Avg. Processing</span></div>
+                    <div class="mn-hero-stat"><strong data-i18n="civil.days_7_21_short">7-21 days</strong><span data-i18n="civil.avg_processing">Avg. Processing</span></div>
                 </div>
             </div>
         </section>
@@ -329,7 +330,7 @@
                             <img src="{{ asset('images/civil-registry/news-id.jpeg') }}" alt="National ID renewal campaign" loading="lazy">
                         </div>
                         <div class="mn-news-body">
-                            <div class="mn-news-date">14 May 2025</div>
+                            <div class="mn-news-date" data-i18n="civil.date_may_14_2025">14 May 2025</div>
                             <h3 class="mn-news-title" data-i18n="civil.news_id_title">National ID renewal deadline extended to December 2025</h3>
                             <p class="mn-news-excerpt" data-i18n="civil.news_id_desc">Citizens with ID cards issued before 2018 now have until 31 December 2025 to renew via the Halzanin portal or at any Civil Registry office.</p>
                             <span class="mn-news-link"><span data-i18n="civil.read_more">Read more</span> <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></span>
@@ -341,7 +342,7 @@
                             <img src="{{ asset('images/civil-registry/news-birth.jpeg') }}" alt="Online birth registration" loading="lazy">
                         </div>
                         <div class="mn-news-body">
-                            <div class="mn-news-date">2 Apr 2025</div>
+                            <div class="mn-news-date" data-i18n="civil.date_apr_2_2025">2 Apr 2025</div>
                             <h3 class="mn-news-title" data-i18n="civil.news_birth_title">Birth registration now fully available online</h3>
                             <p class="mn-news-excerpt" data-i18n="civil.news_birth_desc">Parents can now register a newborn's birth entirely online through the Halzanin portal within 60 days of birth. Physical office visit remains required for the original certificate pickup.</p>
                             <span class="mn-news-link"><span data-i18n="civil.read_more">Read more</span> <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></span>
@@ -353,7 +354,7 @@
                             <img src="{{ asset('images/civil-registry/news-passport.jpeg') }}" alt="Passport processing update" loading="lazy">
                         </div>
                         <div class="mn-news-body">
-                            <div class="mn-news-date">18 Mar 2025</div>
+                            <div class="mn-news-date" data-i18n="civil.date_mar_18_2025">18 Mar 2025</div>
                             <h3 class="mn-news-title" data-i18n="civil.news_passport_title">Passport processing time reduced to 14 working days</h3>
                             <p class="mn-news-excerpt" data-i18n="civil.news_passport_desc">Following investment in new biometric equipment, standard passport applications are now processed within 14 working days from the date of the appointment.</p>
                             <span class="mn-news-link"><span data-i18n="civil.read_more">Read more</span> <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></span>
@@ -384,7 +385,7 @@
                             </div>
                             <div class="mn-svc-info">
                                 <h3 data-i18n="National ID Card">National ID Card</h3>
-                                <div class="mn-svc-info-ku">کارتی ناسنامەی نیشتمانی</div>
+                                <div class="mn-svc-info-ku">کارتی ناسنامەی نیشتیمانی</div>
                             </div>
                         </div>
                         <div class="mn-svc-body">
@@ -490,7 +491,7 @@
                             </div>
                             <div class="mn-svc-info">
                                 <h3 data-i18n="Marriage Certificate">Marriage Certificate</h3>
-                                <div class="mn-svc-info-ku">بڕوانامەی زەوجیت</div>
+                                <div class="mn-svc-info-ku">بڕوانامەی هاوسەرگیری</div>
                             </div>
                         </div>
                         <div class="mn-svc-body">
@@ -551,17 +552,17 @@
                     <div class="mn-contact-card">
                         <div class="mn-contact-header">
                             <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0H5m14 0h2M5 21H3m5-4h1m4 0h1M9 7h1m4 0h1"/></svg>
-                            <h3>Erbil — Hewlêr</h3>
-                            <span class="mn-office-badge mn-office-hq">Main Office</span>
+                            <h3 data-i18n="civil.office.erbil">Erbil — Hewlêr</h3>
+                            <span class="mn-office-badge mn-office-hq" data-i18n="civil.main_office">Main Office</span>
                         </div>
                         <div class="mn-contact-body">
                             <div class="mn-contact-row">
                                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                                <div class="mn-contact-text"><strong>Address</strong><span>Gulan Street, Civil Registry Directorate Building, Erbil</span></div>
+                                <div class="mn-contact-text"><strong data-i18n="offices.address">Address</strong><span data-i18n="civil.address.erbil">Gulan Street, Civil Registry Directorate Building, Erbil</span></div>
                             </div>
                             <div class="mn-contact-row">
                                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                                <div class="mn-contact-text"><strong>Phone</strong><span>+964 66 216 1234</span></div>
+                                <div class="mn-contact-text"><strong data-i18n="offices.phone">Phone</strong><span>+964 66 216 1234</span></div>
                             </div>
                         </div>
                     </div>
@@ -570,17 +571,17 @@
                     <div class="mn-contact-card">
                         <div class="mn-contact-header">
                             <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0H5m14 0h2M5 21H3m5-4h1m4 0h1M9 7h1m4 0h1"/></svg>
-                            <h3>Sulaymaniyah — Silêmanî</h3>
-                            <span class="mn-office-badge mn-office-branch">Branch</span>
+                            <h3 data-i18n="civil.office.sulaymaniyah">Sulaymaniyah — Silêmanî</h3>
+                            <span class="mn-office-badge mn-office-branch" data-i18n="civil.branch">Branch</span>
                         </div>
                         <div class="mn-contact-body">
                             <div class="mn-contact-row">
                                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                                <div class="mn-contact-text"><strong>Address</strong><span>Salim Street, Civil Registry Building, Sulaymaniyah</span></div>
+                                <div class="mn-contact-text"><strong data-i18n="offices.address">Address</strong><span data-i18n="civil.address.sulaymaniyah">Salim Street, Civil Registry Building, Sulaymaniyah</span></div>
                             </div>
                             <div class="mn-contact-row">
                                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                                <div class="mn-contact-text"><strong>Phone</strong><span>+964 53 311 2345</span></div>
+                                <div class="mn-contact-text"><strong data-i18n="offices.phone">Phone</strong><span>+964 53 311 2345</span></div>
                             </div>
                         </div>
                     </div>
@@ -589,17 +590,17 @@
                     <div class="mn-contact-card">
                         <div class="mn-contact-header">
                             <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0H5m14 0h2M5 21H3m5-4h1m4 0h1M9 7h1m4 0h1"/></svg>
-                            <h3>Duhok</h3>
-                            <span class="mn-office-badge mn-office-branch">Branch</span>
+                            <h3 data-i18n="civil.office.duhok">Duhok</h3>
+                            <span class="mn-office-badge mn-office-branch" data-i18n="civil.branch">Branch</span>
                         </div>
                         <div class="mn-contact-body">
                             <div class="mn-contact-row">
                                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                                <div class="mn-contact-text"><strong>Address</strong><span>Zakho Road, Civil Registry Building, Duhok</span></div>
+                                <div class="mn-contact-text"><strong data-i18n="offices.address">Address</strong><span data-i18n="civil.address.duhok">Zakho Road, Civil Registry Building, Duhok</span></div>
                             </div>
                             <div class="mn-contact-row">
                                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                                <div class="mn-contact-text"><strong>Phone</strong><span>+964 62 722 3456</span></div>
+                                <div class="mn-contact-text"><strong data-i18n="offices.phone">Phone</strong><span>+964 62 722 3456</span></div>
                             </div>
                         </div>
                     </div>
@@ -608,17 +609,17 @@
                     <div class="mn-contact-card">
                         <div class="mn-contact-header">
                             <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0H5m14 0h2M5 21H3m5-4h1m4 0h1M9 7h1m4 0h1"/></svg>
-                            <h3>Halabja</h3>
-                            <span class="mn-office-badge mn-office-branch">Branch</span>
+                            <h3 data-i18n="civil.office.halabja">Halabja</h3>
+                            <span class="mn-office-badge mn-office-branch" data-i18n="civil.branch">Branch</span>
                         </div>
                         <div class="mn-contact-body">
                             <div class="mn-contact-row">
                                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                                <div class="mn-contact-text"><strong>Address</strong><span>Freedom Square, Civil Registry Office, Halabja</span></div>
+                                <div class="mn-contact-text"><strong data-i18n="offices.address">Address</strong><span data-i18n="civil.address.halabja">Freedom Square, Civil Registry Office, Halabja</span></div>
                             </div>
                             <div class="mn-contact-row">
                                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                                <div class="mn-contact-text"><strong>Phone</strong><span>+964 53 325 4567</span></div>
+                                <div class="mn-contact-text"><strong data-i18n="offices.phone">Phone</strong><span>+964 53 325 4567</span></div>
                             </div>
                         </div>
                     </div>
@@ -626,7 +627,7 @@
                 </div>
                 <p class="mn-offices-note">
                     <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"/></svg>
-                    All offices are open Sunday – Thursday, 8:00 AM – 3:00 PM. Closed Friday, Saturday, and public holidays.
+                    <span data-i18n="civil.office_note">All offices are open Sunday - Thursday, 8:00 AM - 3:00 PM. Closed Friday, Saturday, and public holidays.</span>
                 </p>
             </div>
         </section>
@@ -640,21 +641,21 @@
                 <img src="{{ asset('images/halzanin-logo.png') }}" alt="Halzanîn">
                 <div class="mn-foot-brand-text">
                     <strong>Halzanîn</strong>
-                    <small>Kurdistan Government Portal</small>
+                    <small data-i18n="Kurdistan Government Portal">Kurdistan Government Portal</small>
                 </div>
             </div>
             <nav class="mn-foot-links" aria-label="Footer navigation">
-                <a href="{{ url('/') }}">Home</a>
-                <a href="{{ url('/') }}#ministries">All Ministries</a>
-                <a href="#services">Services</a>
-                <a href="#track">Track Application</a>
-                <a href="#contact">Contact</a>
-                @if(Route::has('login'))<a href="{{ route('login') }}">Sign In</a>@endif
-                @if(Route::has('register'))<a href="{{ route('register') }}">Register</a>@endif
+                <a href="{{ url('/') }}" data-i18n="Home">Home</a>
+                <a href="{{ url('/') }}#ministries" data-i18n="civil.all_ministries">All Ministries</a>
+                <a href="#services" data-i18n="Services">Services</a>
+                <a href="#track" data-i18n="Track Application">Track Application</a>
+                <a href="#contact" data-i18n="Contact">Contact</a>
+                @if(Route::has('login'))<a href="{{ route('login') }}" data-i18n="Sign In">Sign In</a>@endif
+                @if(Route::has('register'))<a href="{{ route('register') }}" data-i18n="Register">Register</a>@endif
             </nav>
             <div class="mn-foot-copy">
-                <span>&copy; {{ date('Y') }} Halzanîn — Kurdistan Government Services Portal</span>
-                <span>Civil Registry Directorate — Kurdistan Region</span>
+                <span data-i18n="civil.footer_copyright">&copy; {{ date('Y') }} Halzanîn — Kurdistan Government Services Portal</span>
+                <span data-i18n="civil.footer_directorate">Civil Registry Directorate — Kurdistan Region</span>
             </div>
         </div>
     </footer>
@@ -674,16 +675,20 @@
         function setLang(lang){
             document.documentElement.dir=lang==='ku'?'rtl':'ltr';
             document.documentElement.lang=lang;
-            localStorage.lang=lang;
+            localStorage.setItem('lang',lang);
+            localStorage.setItem('halzanin-lang',lang);
             document.getElementById('lang-en-btn').classList.toggle('active',lang==='en');
             document.getElementById('lang-ku-btn').classList.toggle('active',lang==='ku');
             document.querySelectorAll('[data-ku]').forEach(function(el){
                 if(lang==='ku'&&el.dataset.ku){el.textContent=el.dataset.ku;}
                 else if(lang==='en'&&el.dataset.en){el.textContent=el.dataset.en;}
             });
+            if(typeof applyTranslations==='function')applyTranslations(lang);
         }
         (function(){
-            var saved=localStorage.lang||'en';
+            var saved=localStorage.lang||localStorage.getItem('halzanin-lang')||'en';
+            document.documentElement.dir=saved==='ku'?'rtl':'ltr';
+            document.documentElement.lang=saved;
             document.getElementById('lang-en-btn').classList.toggle('active',saved==='en');
             document.getElementById('lang-ku-btn').classList.toggle('active',saved==='ku');
             if(saved==='ku'){

@@ -725,10 +725,11 @@ html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
     html.setAttribute('lang',l==='ku'?'ckb':'en');
     html.setAttribute('dir',l==='ku'?'rtl':'ltr');
     localStorage.setItem('halzanin-lang',l);
+    localStorage.setItem('lang',l);
     if(langKuBtn)langKuBtn.classList.toggle('active',l==='ku');
     if(langEnBtn)langEnBtn.classList.toggle('active',l==='en');
   };
-  setLang(localStorage.getItem('halzanin-lang')||'en');
+  setLang(localStorage.getItem('halzanin-lang')||localStorage.getItem('lang')||'en');
   window.handleTrack=function(e){e.preventDefault();const c=document.getElementById('track-code').value.trim();if(c)window.location.href='{{ url("/track") }}/'+encodeURIComponent(c)};
 })();
 </script>
