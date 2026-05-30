@@ -66,21 +66,27 @@ class ApplicationController extends Controller
 
         $applications = $query->latest()->paginate(15);
 
-        $year = (int) $request->get('year', now()->year);
-        $month = (int) $request->get('month', now()->month);
-        $current = Carbon::createFromDate($year, $month, 1);
+        $year     = (int) $request->get('year', now()->year);
+        $month    = (int) $request->get('month', now()->month);
+        $current  = Carbon::createFromDate($year, $month, 1);
         $viewMode = $request->get('view') === 'calendar' ? 'calendar' : 'queue';
+        $ministry = $user->ministry;
 
-        $counts = Appointment::where('date', 'like', $current->format('Y-m') . '-%')
-            ->whereNotIn('status', ['cancelled'])
-            ->selectRaw('date, COUNT(*) as count')
+        $countsQuery = Appointment::where('date', 'like', $current->format('Y-m') . '-%')
+            ->whereNotIn('status', ['cancelled']);
+
+        if ($ministry) {
+            $countsQuery->whereHas('service', fn ($q) => $q->where('ministry_id', $ministry->id));
+        }
+
+        $counts   = $countsQuery->selectRaw('date, COUNT(*) as count')
             ->groupBy('date')
             ->pluck('count', 'date')
             ->toArray();
 
-        $offDates = OffDay::offDatesForMonth($current->year, $current->month);
+        $offDates = OffDay::offDatesForMonth($current->year, $current->month, $ministry?->id);
 
-        return view('staff.queue', compact('applications', 'current', 'counts', 'offDates', 'viewMode'));
+        return view('staff.queue', compact('applications', 'current', 'counts', 'offDates', 'viewMode', 'ministry'));
     }
 
     public function show(Application $application)

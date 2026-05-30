@@ -63,13 +63,14 @@ Route::middleware(['auth', 'verified.otp', 'role:citizen', 'throttle:authenticat
     Route::get('/citizen/dashboard', [CitizenController::class, 'index'])->name('citizen.dashboard');
     Route::get('/citizen/applications', [ApplicationController::class, 'index'])->name('citizen.applications.index');
 
-    // Appointments / calendar
-    Route::get('/citizen/appointments', [AppointmentController::class, 'calendar'])->name('citizen.appointments.calendar');
+    // Appointments — picker is the entry point; specific named routes before wildcard
+    Route::get('/citizen/appointments', [AppointmentController::class, 'index'])->name('citizen.appointments.calendar');
     Route::get('/citizen/appointments/month-data', [AppointmentController::class, 'monthData'])->name('citizen.appointments.month-data');
     Route::get('/citizen/appointments/slots', [AppointmentController::class, 'slots'])->name('citizen.appointments.slots');
     Route::get('/citizen/appointments/vault-docs', [AppointmentController::class, 'vaultDocs'])->name('citizen.appointments.vault-docs');
     Route::post('/citizen/appointments', [AppointmentController::class, 'store'])->name('citizen.appointments.store');
     Route::patch('/citizen/appointments/{appointment}/cancel', [AppointmentController::class, 'cancel'])->name('citizen.appointments.cancel');
+    Route::get('/citizen/appointments/{ministry}/{service}', [AppointmentController::class, 'calendar'])->name('citizen.appointments.book');
     Route::get('/citizen/applications/{application}/receipt', [ApplicationController::class, 'showQrReceipt'])->name('citizen.applications.receipt');
     Route::get('/citizen/applications/{application}/receipt.pdf', [ApplicationController::class, 'downloadPdf'])->name('citizen.applications.receipt.pdf');
 

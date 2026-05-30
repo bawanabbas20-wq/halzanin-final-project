@@ -15,7 +15,7 @@
 
         {{-- Calendar Card --}}
         <div class="lg:col-span-2 bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-[#2E2E2E] overflow-hidden animate-fade-up" style="animation-delay: 100ms">
-            <div class="h-1 bg-gradient-to-r from-brand via-amber-500 to-accent"></div>
+            <div class="h-1" style="background: {{ $ministry?->color ?? '#1B4F8A' }};"></div>
             <div class="p-6">
 
                 {{-- Month navigation --}}
@@ -115,7 +115,7 @@
 
         {{-- Day panel --}}
         <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-[#2E2E2E] overflow-hidden animate-fade-up" style="animation-delay: 200ms">
-            <div class="h-1 bg-gradient-to-r from-amber-400 via-purple-500 to-brand"></div>
+            <div class="h-1" style="background: {{ $ministry?->color ?? '#1B4F8A' }};"></div>
             <div class="p-6">
                 <div id="panel-empty" class="text-center py-12 text-gray-400 dark:text-gray-500">
                     <div class="w-14 h-14 bg-gray-100 dark:bg-[#252525] rounded-full flex items-center justify-center mx-auto mb-3">
@@ -231,13 +231,21 @@ function renderAppointments(appointments) {
                 </div>
                </div>` : '';
 
+        const svcBadge = appt.service_name
+            ? `<span class="inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full mt-1"
+                    style="background:${appt.ministry_color}15; color:${appt.ministry_color}; border:1px solid ${appt.ministry_color}30;">
+                   <span style="width:6px;height:6px;border-radius:50%;background:${appt.ministry_color};display:inline-block;"></span>
+                   ${appt.service_name}
+               </span>`
+            : '';
+
         card.innerHTML = `
             <div class="flex items-start justify-between mb-2">
                 <div>
                     <p class="text-sm font-bold text-gray-800 dark:text-white">${timeLabels[appt.time_slot] || appt.time_slot}</p>
                     <p class="text-sm text-gray-600 dark:text-gray-300">${appt.full_name || appt.citizen}</p>
-                    ${appt.document_type ? `<p class="text-xs text-amber-600 dark:text-amber-400 font-medium mt-0.5">${trDoc(appt.document_type)}</p>` : ''}
-                    ${appt.notes ? `<p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5 italic">${appt.notes}</p>` : ''}
+                    ${svcBadge}
+                    ${appt.notes ? `<p class="text-xs text-gray-400 dark:text-gray-500 mt-1 italic">${appt.notes}</p>` : ''}
                 </div>
                 <span id="badge-${appt.id}" class="text-[10px] px-2.5 py-0.5 rounded-full font-bold ${s.cls}">${tr(s.key)}</span>
             </div>

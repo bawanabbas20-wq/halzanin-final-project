@@ -1,21 +1,44 @@
-﻿@extends('layouts.halzanin-app')
+@extends('layouts.halzanin-app')
 
 @section('content')
 
 <div class="max-w-xl mx-auto space-y-6 animate-fade-up">
 
-    {{-- Page Header --}}
+    {{-- Breadcrumb + Header --}}
     <div>
+        <div class="flex items-center gap-2 text-xs text-gray-400 dark:text-gray-500 mb-2 flex-wrap">
+            <a href="{{ route('citizen.dashboard') }}" class="hover:text-brand dark:hover:text-blue-400 transition-colors">Dashboard</a>
+            <svg class="w-3 h-3 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <a href="{{ route('citizen.appointments.calendar') }}" class="hover:text-brand dark:hover:text-blue-400 transition-colors">Appointments</a>
+            <svg class="w-3 h-3 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <span class="text-gray-600 dark:text-gray-300 font-medium">{{ $service->name }}</span>
+        </div>
+
+        {{-- Ministry + service context banner --}}
+        <div class="flex items-center gap-3 p-3.5 rounded-xl border mb-3"
+             style="background: {{ $ministry->color }}0a; border-color: {{ $ministry->color }}25;">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
+                 style="background: {{ $ministry->color }}20;">
+                <svg class="w-4 h-4" fill="none" stroke="{{ $ministry->color }}" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+            </div>
+            <div class="min-w-0">
+                <p class="text-xs font-semibold truncate" style="color: {{ $ministry->color }};">{{ $ministry->name }}</p>
+                <p class="text-sm font-bold text-gray-800 dark:text-white truncate">{{ $service->name }}</p>
+            </div>
+        </div>
+
         <h2 class="text-2xl font-bold font-outfit text-gradient" data-i18n="book.title">Book an Appointment</h2>
-        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1" data-i18n="book.subtitle">Complete the steps below to schedule your visit to the directorate.</p>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1" data-i18n="book.subtitle">Complete the steps below to schedule your visit.</p>
     </div>
 
     {{-- Step Indicator --}}
     <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 p-4">
         <div class="flex items-start">
             <div class="flex flex-col items-center shrink-0">
-                <div id="circle-1" class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold bg-brand text-white transition-all duration-300 shadow-brand-btn">1</div>
-                <span id="label-1" class="text-[11px] mt-1.5 font-semibold text-brand dark:text-amber-400 transition-colors text-center leading-tight" data-i18n="book.step1">Personal Info</span>
+                <div id="circle-1" class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white transition-all duration-300 shadow-brand-btn" style="background: {{ $ministry->color }};">1</div>
+                <span id="label-1" class="text-[11px] mt-1.5 font-semibold transition-colors text-center leading-tight" style="color: {{ $ministry->color }};" data-i18n="book.step1">Personal Info</span>
             </div>
             <div id="line-1-2" class="flex-1 h-0.5 bg-gray-200 dark:bg-gray-700 mx-3 mt-4 transition-colors duration-300"></div>
             <div class="flex flex-col items-center shrink-0">
@@ -33,12 +56,25 @@
     {{-- ═══ STEP 1: Personal Info ═══ --}}
     <div id="step-1" class="animate-fade-up">
         <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
-        <div class="h-1 bg-gradient-to-r from-brand via-amber-500 to-accent"></div>
+        <div class="h-1" style="background: linear-gradient(to right, {{ $ministry->color }}, {{ $ministry->color }}99);"></div>
         <div class="p-6 space-y-5">
+
+            {{-- Service display (read-only, replaces old dropdown) --}}
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">Service</label>
+                <div class="flex items-center gap-3 px-4 py-2.5 rounded-xl border bg-gray-50/60 dark:bg-white/[0.03]"
+                     style="border-color: {{ $ministry->color }}40;">
+                    <span class="w-2 h-2 rounded-full shrink-0" style="background: {{ $ministry->color }};"></span>
+                    <span class="text-sm font-semibold text-gray-800 dark:text-gray-100">{{ $service->name }}</span>
+                    <span class="ml-auto text-xs text-gray-400 dark:text-gray-500 shrink-0">{{ $ministry->name }}</span>
+                </div>
+            </div>
+
             <div>
                 <label for="inp-full-name" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5" data-i18n="book.full_name">Full Name</label>
                 <input type="text" id="inp-full-name"
-                    class="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#141414] text-gray-900 dark:text-gray-100 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand transition"
+                    class="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#141414] text-gray-900 dark:text-gray-100 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:border-brand transition"
+                    style="--tw-ring-color: {{ $ministry->color }}40;"
                     placeholder="Enter your full legal name"
                     data-i18n-placeholder="book.full_name_placeholder"
                     autocomplete="name"
@@ -49,30 +85,16 @@
             <div>
                 <label for="inp-national-id" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5" data-i18n="book.national_id">National ID Number</label>
                 <input type="text" id="inp-national-id"
-                    class="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#141414] text-gray-900 dark:text-gray-100 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand transition font-mono"
+                    class="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#141414] text-gray-900 dark:text-gray-100 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:border-brand transition font-mono"
                     placeholder="e.g. 1234567890"
                     autocomplete="off"
                     oninput="saveStep1()">
                 <p id="err-national-id" class="text-xs text-red-500 mt-1 hidden" data-i18n="book.id_required">National ID number is required.</p>
             </div>
 
-            <div>
-                <label for="inp-doc-type" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5" data-i18n="book.doc_type">Document Type</label>
-                <select id="inp-doc-type"
-                    class="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#141414] text-gray-900 dark:text-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand transition"
-                    onchange="saveStep1()">
-                    <option value="" data-i18n="book.select_doc_type">Select a document type...</option>
-                    <option value="Passport Renewal" data-i18n="doc.passport_renewal">Passport Renewal</option>
-                    <option value="New Passport" data-i18n="doc.new_passport">New Passport</option>
-                    <option value="ID Card" data-i18n="doc.id_card">ID Card</option>
-                    <option value="Birth Certificate" data-i18n="doc.birth_cert">Birth Certificate</option>
-                    <option value="Other" data-i18n="doc.other">Other</option>
-                </select>
-                <p id="err-doc-type" class="text-xs text-red-500 mt-1 hidden" data-i18n="book.doc_required">Please select a document type.</p>
-            </div>
-
             <button type="button" onclick="step1Continue()"
-                class="w-full py-3 bg-brand text-white font-semibold text-sm rounded-xl shadow-brand-btn hover:shadow-brand-btn-hover hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 mt-2">
+                class="w-full py-3 text-white font-semibold text-sm rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 mt-2"
+                style="background: {{ $ministry->color }};">
                 <span data-i18n="book.continue">Continue</span>
                 <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
             </button>
@@ -85,7 +107,7 @@
 
         {{-- Calendar Card --}}
         <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
-        <div class="h-1 bg-gradient-to-r from-brand via-amber-500 to-accent"></div>
+        <div class="h-1" style="background: linear-gradient(to right, {{ $ministry->color }}, {{ $ministry->color }}99);"></div>
         <div class="p-5">
 
             {{-- Month Navigation --}}
@@ -94,14 +116,14 @@
                     class="w-8 h-8 rounded-lg flex items-center justify-center text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-30 disabled:cursor-not-allowed transition">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
                 </button>
-                <h3 id="calLabel" class="font-bold text-brand dark:text-white font-outfit text-base"></h3>
+                <h3 id="calLabel" class="font-bold dark:text-white font-outfit text-base" style="color: {{ $ministry->color }};"></h3>
                 <button type="button" id="btnNext" onclick="navMonth(1)"
                     class="w-8 h-8 rounded-lg flex items-center justify-center text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-30 disabled:cursor-not-allowed transition">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                 </button>
             </div>
 
-            {{-- Day-of-week headers (Sun-start; Fri+Sat are off days) --}}
+            {{-- Day-of-week headers --}}
             <div class="grid grid-cols-7 gap-1 mb-1">
                 @foreach(['Sun','Mon','Tue','Wed','Thu','Fri','Sat'] as $dow)
                     <div class="text-center text-[10px] font-bold py-1 {{ in_array($dow, ['Fri','Sat']) ? 'text-red-400 dark:text-red-500' : 'text-gray-400 dark:text-gray-500' }}" data-i18n="calendar.{{ strtolower($dow) }}">{{ $dow }}</div>
@@ -115,14 +137,14 @@
             <div class="flex flex-wrap items-center gap-x-4 gap-y-1.5 mt-4 pt-3 border-t border-gray-100 dark:border-gray-800">
                 <span class="flex items-center gap-1.5 text-[11px] text-gray-400"><span class="w-3 h-3 rounded-sm bg-emerald-200 dark:bg-emerald-800/60 inline-block shrink-0"></span><span data-i18n="book.available">Available</span></span>
                 <span class="flex items-center gap-1.5 text-[11px] text-gray-400"><span class="w-3 h-3 rounded-sm bg-yellow-200 dark:bg-yellow-800/60 inline-block shrink-0"></span><span data-i18n="book.filling">Filling up</span></span>
-                <span class="flex items-center gap-1.5 text-[11px] text-gray-400"><span class="w-3 h-3 rounded-sm bg-orange-200 dark:bg-orange-800/60 inline-block shrink-0"></span><span data-i18n="book.almost_full">Almost full</span></span>
+                <span class="flex items-center gap-1.5 text-[11px] text-gray-400"><span class="w-3 h-3 rounded-sm bg-orange-200 dark:bg-orange-900/60 inline-block shrink-0"></span><span data-i18n="book.almost_full">Almost full</span></span>
                 <span class="flex items-center gap-1.5 text-[11px] text-gray-400"><span class="w-3 h-3 rounded-sm bg-red-200 dark:bg-red-900/60 inline-block shrink-0"></span><span data-i18n="book.full">Full</span></span>
                 <span class="flex items-center gap-1.5 text-[11px] text-gray-400"><span class="w-3 h-3 rounded-sm bg-gray-200 dark:bg-gray-700 inline-block shrink-0"></span><span data-i18n="book.off_day">Off day</span></span>
             </div>
         </div>
         </div>
 
-        {{-- Time Slot Panel (shown after date selection) --}}
+        {{-- Time Slot Panel --}}
         <div id="slotPanel" class="hidden bg-white dark:bg-[#1F1F1F] rounded-[16px] shadow-sm border border-gray-100 dark:border-gray-800 p-5">
             <p id="slotDate" class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-3"></p>
             <div id="slotContent"></div>
@@ -136,7 +158,8 @@
                 <span data-i18n="book.back">Back</span>
             </button>
             <button type="button" id="step2Btn" onclick="step2Continue()" disabled
-                class="flex-1 py-3 bg-brand text-white font-semibold text-sm rounded-[10px] hover:bg-brand/90 transition shadow-md disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+                class="flex-1 py-3 text-white font-semibold text-sm rounded-[10px] transition shadow-md disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                style="background: {{ $ministry->color }};">
                 <span data-i18n="book.continue">Continue</span>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
             </button>
@@ -148,10 +171,14 @@
 
         {{-- Summary Card --}}
         <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
-        <div class="h-1 bg-gradient-to-r from-emerald-400 via-brand to-indigo-500"></div>
+        <div class="h-1" style="background: linear-gradient(to right, {{ $ministry->color }}, {{ $ministry->color }}99);"></div>
         <div class="p-5">
-            <h4 class="font-bold text-brand dark:text-white font-outfit mb-4 text-sm uppercase tracking-wide" data-i18n="book.appointment_summary">Appointment Summary</h4>
+            <h4 class="font-bold dark:text-white font-outfit mb-4 text-sm uppercase tracking-wide" style="color: {{ $ministry->color }};" data-i18n="book.appointment_summary">Appointment Summary</h4>
             <dl class="space-y-3">
+                <div class="flex justify-between items-baseline gap-4">
+                    <dt class="text-xs font-semibold text-gray-400 uppercase tracking-wide shrink-0">Service</dt>
+                    <dd class="text-sm font-semibold text-right truncate max-w-[60%]" style="color: {{ $ministry->color }};">{{ $service->name }}</dd>
+                </div>
                 <div class="flex justify-between items-baseline gap-4">
                     <dt class="text-xs font-semibold text-gray-400 uppercase tracking-wide shrink-0" data-i18n="book.full_name">Full Name</dt>
                     <dd id="rev-name" class="text-sm font-semibold text-gray-800 dark:text-gray-100 text-right truncate max-w-[60%]"></dd>
@@ -160,18 +187,14 @@
                     <dt class="text-xs font-semibold text-gray-400 uppercase tracking-wide shrink-0" data-i18n="book.national_id_short">National ID</dt>
                     <dd id="rev-nid" class="text-sm font-semibold text-gray-800 dark:text-gray-100 text-right font-mono"></dd>
                 </div>
-                <div class="flex justify-between items-baseline gap-4">
-                    <dt class="text-xs font-semibold text-gray-400 uppercase tracking-wide shrink-0" data-i18n="book.document">Document</dt>
-                    <dd id="rev-doctype" class="text-sm font-semibold text-gray-800 dark:text-gray-100 text-right"></dd>
-                </div>
                 <div class="h-px bg-gray-100 dark:bg-gray-800"></div>
                 <div class="flex justify-between items-baseline gap-4">
                     <dt class="text-xs font-semibold text-gray-400 uppercase tracking-wide shrink-0" data-i18n="book.date">Date</dt>
-                    <dd id="rev-date" class="text-sm font-bold text-brand dark:text-amber-400 text-right"></dd>
+                    <dd id="rev-date" class="text-sm font-bold text-right" style="color: {{ $ministry->color }};"></dd>
                 </div>
                 <div class="flex justify-between items-baseline gap-4">
                     <dt class="text-xs font-semibold text-gray-400 uppercase tracking-wide shrink-0" data-i18n="book.time">Time</dt>
-                    <dd id="rev-slot" class="text-sm font-bold text-brand dark:text-amber-400 text-right"></dd>
+                    <dd id="rev-slot" class="text-sm font-bold text-right" style="color: {{ $ministry->color }};"></dd>
                 </div>
             </dl>
         </div>
@@ -179,9 +202,9 @@
 
         {{-- Required Documents --}}
         <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
-        <div class="h-1 bg-gradient-to-r from-amber-400 via-brand to-accent"></div>
+        <div class="h-1" style="background: linear-gradient(to right, {{ $ministry->color }}99, {{ $ministry->color }});"></div>
         <div class="p-5">
-            <h4 class="font-bold text-brand dark:text-white font-outfit mb-1 text-sm" data-i18n="book.required_documents">Required Documents</h4>
+            <h4 class="font-bold dark:text-white font-outfit mb-1 text-sm" style="color: {{ $ministry->color }};" data-i18n="book.required_documents">Required Documents</h4>
             <p class="text-xs text-gray-400 dark:text-gray-500 mb-4" data-i18n="book.required_documents_help">For each document, select from your vault, upload a file, or confirm you'll bring it.</p>
             <div id="docs-loading" class="flex items-center gap-2 text-sm text-gray-400 py-2">
                 <svg class="w-4 h-4 animate-spin shrink-0" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
@@ -210,7 +233,13 @@
 
 @push('scripts')
 <script>
-// ── Initial data from PHP ─────────────────────────
+// ── Service + calendar data from PHP ─────────────────
+const SERVICE_ID    = {{ $service->id }};
+const SERVICE_NAME  = @json($service->name);
+const SERVICE_DOCS  = @json($service->required_documents ?? []);
+const VAULT_MAP     = @json($vaultTypeMap);   // {docName: [vaultType, ...]}
+const MINISTRY_COLOR = @json($ministry->color);
+
 const CAL = {
     year:     {{ $year }},
     month:    {{ $month }},
@@ -220,6 +249,7 @@ const CAL = {
     canPrev:  {{ $canPrev ? 'true' : 'false' }},
     canNext:  {{ $canNext ? 'true' : 'false' }},
 };
+
 const MONTH_URL      = @json(route('citizen.appointments.month-data'));
 const SLOTS_URL      = @json(route('citizen.appointments.slots'));
 const CSRF_TOKEN     = @json(csrf_token());
@@ -230,80 +260,70 @@ function tr(key, replacements = {}) {
     return typeof window.i18n === 'function' ? window.i18n(key, replacements) : key;
 }
 
-function trDoc(label) {
-    return typeof window.i18nDocument === 'function' ? window.i18nDocument(label) : label;
-}
-
 const TIME_LABELS = {
     '09:00':'9:00 AM','10:00':'10:00 AM','11:00':'11:00 AM',
     '12:00':'12:00 PM','13:00':'1:00 PM',
 };
 
-const DOC_REQS = {
-    'Passport Renewal':  ['Original Passport','National ID Card','2 Passport-Size Photos','Fee Payment Receipt'],
-    'New Passport':      ['Birth Certificate','National ID Card','2 Passport-Size Photos'],
-    'ID Card':           ['Birth Certificate','2 Passport-Size Photos'],
-    'Birth Certificate': ['Hospital Birth Record','Parent National ID Cards'],
-    'Other':             ['Relevant supporting documents as required'],
-};
-
-const VAULT_TYPES = {
-    'Original Passport':       ['Passport'],
-    'National ID Card':        ['National ID'],
-    '2 Passport-Size Photos':  [],
-    'Fee Payment Receipt':     [],
-    'Birth Certificate':       [],
-    'Hospital Birth Record':   [],
-    'Parent National ID Cards':['National ID'],
-};
-
-// ── Wizard state ──────────────────────────────────
+// ── Wizard state ──────────────────────────────────────
 const ws = {
-    fullName:'', nationalId:'', docType:'',
+    fullName:'', nationalId:'',
     date:null, slot:null,
     cal: Object.assign({}, CAL),
     docCards: [],
 };
 
-// ── LocalStorage (Step 1 autosave) ────────────────
+// ── LocalStorage (Step 1 autosave, keyed by service) ─
+const LS_PREFIX = 'hz_wiz_' + SERVICE_ID + '_';
 function saveStep1() {
-    localStorage.setItem('hz_wiz_name',    document.getElementById('inp-full-name').value.trim());
-    localStorage.setItem('hz_wiz_nid',     document.getElementById('inp-national-id').value.trim());
-    localStorage.setItem('hz_wiz_doctype', document.getElementById('inp-doc-type').value);
+    localStorage.setItem(LS_PREFIX + 'name', document.getElementById('inp-full-name').value.trim());
+    localStorage.setItem(LS_PREFIX + 'nid',  document.getElementById('inp-national-id').value.trim());
 }
 function restoreStep1() {
-    document.getElementById('inp-full-name').value   = localStorage.getItem('hz_wiz_name') || '';
-    document.getElementById('inp-national-id').value = localStorage.getItem('hz_wiz_nid') || '';
-    document.getElementById('inp-doc-type').value    = localStorage.getItem('hz_wiz_doctype') || '';
+    document.getElementById('inp-full-name').value   = localStorage.getItem(LS_PREFIX + 'name') || '';
+    document.getElementById('inp-national-id').value = localStorage.getItem(LS_PREFIX + 'nid')  || '';
 }
 
-// ── Step Indicator ────────────────────────────────
+// ── Step Indicator ────────────────────────────────────
 function updateIndicator(n) {
     const TICK = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>';
     [1,2,3].forEach(i => {
         const c = document.getElementById('circle-' + i);
         const l = document.getElementById('label-' + i);
         if (i < n) {
-            c.className = 'w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold bg-brand text-white transition-all duration-300';
+            c.style.background = MINISTRY_COLOR;
+            c.style.color = '#fff';
+            c.className = 'w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300';
             c.innerHTML = TICK;
-            l.className = 'text-[11px] mt-1.5 font-semibold text-brand dark:text-amber-400 transition-colors text-center leading-tight';
+            l.style.color = MINISTRY_COLOR;
+            l.className = 'text-[11px] mt-1.5 font-semibold transition-colors text-center leading-tight';
         } else if (i === n) {
-            c.className = 'w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold bg-brand text-white transition-all duration-300';
+            c.style.background = MINISTRY_COLOR;
+            c.style.color = '#fff';
+            c.className = 'w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300';
             c.textContent = i;
-            l.className = 'text-[11px] mt-1.5 font-semibold text-brand dark:text-amber-400 transition-colors text-center leading-tight';
+            l.style.color = MINISTRY_COLOR;
+            l.className = 'text-[11px] mt-1.5 font-semibold transition-colors text-center leading-tight';
         } else {
+            c.style.background = '';
+            c.style.color = '';
             c.className = 'w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 transition-all duration-300';
             c.textContent = i;
+            l.style.color = '';
             l.className = 'text-[11px] mt-1.5 font-semibold text-gray-400 dark:text-gray-500 transition-colors text-center leading-tight';
         }
     });
-    const on  = 'flex-1 h-0.5 mx-3 mt-4 transition-colors duration-300 bg-brand';
-    const off = 'flex-1 h-0.5 mx-3 mt-4 transition-colors duration-300 bg-gray-200 dark:bg-gray-700';
-    document.getElementById('line-1-2').className = n > 1 ? on : off;
-    document.getElementById('line-2-3').className = n > 2 ? on : off;
+    const lineOn  = `flex-1 h-0.5 mx-3 mt-4 transition-colors duration-300`;
+    const lineOff = 'flex-1 h-0.5 mx-3 mt-4 transition-colors duration-300 bg-gray-200 dark:bg-gray-700';
+    const l12 = document.getElementById('line-1-2');
+    const l23 = document.getElementById('line-2-3');
+    if (n > 1) { l12.className = lineOn; l12.style.background = MINISTRY_COLOR; }
+    else       { l12.className = lineOff; l12.style.background = ''; }
+    if (n > 2) { l23.className = lineOn; l23.style.background = MINISTRY_COLOR; }
+    else       { l23.className = lineOff; l23.style.background = ''; }
 }
 
-// ── Step Navigation ───────────────────────────────
+// ── Step Navigation ───────────────────────────────────
 function goToStep(n) {
     document.getElementById('step-1').classList.toggle('hidden', n !== 1);
     document.getElementById('step-2').classList.toggle('hidden', n !== 2);
@@ -314,23 +334,20 @@ function goToStep(n) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// ── Step 1 ────────────────────────────────────────
+// ── Step 1 ────────────────────────────────────────────
 function step1Continue() {
     const name = document.getElementById('inp-full-name').value.trim();
     const nid  = document.getElementById('inp-national-id').value.trim();
-    const dt   = document.getElementById('inp-doc-type').value;
     let ok = true;
     document.getElementById('err-full-name').classList.toggle('hidden', !!name);  if (!name) ok = false;
     document.getElementById('err-national-id').classList.toggle('hidden', !!nid); if (!nid)  ok = false;
-    document.getElementById('err-doc-type').classList.toggle('hidden', !!dt);     if (!dt)   ok = false;
     if (!ok) return;
     ws.fullName   = name;
     ws.nationalId = nid;
-    ws.docType    = dt;
     goToStep(2);
 }
 
-// ── Calendar ──────────────────────────────────────
+// ── Calendar ──────────────────────────────────────────
 function renderCalendar() {
     const { year, month, label, counts, offDates, canPrev, canNext } = ws.cal;
     document.getElementById('calLabel').textContent = label;
@@ -340,7 +357,7 @@ function renderCalendar() {
     const today    = new Date(); today.setHours(0,0,0,0);
     const firstDay = new Date(year, month - 1, 1);
     const dim      = new Date(year, month, 0).getDate();
-    const startDow = firstDay.getDay(); // 0=Sun — correct for Sun-start
+    const startDow = firstDay.getDay();
 
     const grid = document.getElementById('calGrid');
     grid.innerHTML = '';
@@ -355,7 +372,7 @@ function renderCalendar() {
         const ds   = `${year}-${String(month).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
         const dObj = new Date(year, month - 1, d);
         const dow  = dObj.getDay();
-        const isOff  = dow === 5 || dow === 6 || offDates.includes(ds); // Fri=5, Sat=6
+        const isOff  = dow === 5 || dow === 6 || offDates.includes(ds);
         const isPast = dObj < today;
         const cnt    = counts[ds] || 0;
         const isFull = cnt >= 5;
@@ -374,7 +391,9 @@ function renderCalendar() {
             btn.className = `${base} bg-red-100 dark:bg-red-950/40 text-red-400 cursor-not-allowed`;
             btn.title     = tr('book.fully_booked');
         } else if (isSel) {
-            btn.className = `${base} bg-brand text-white ring-2 ring-brand ring-offset-1 dark:ring-offset-[#1F1F1F] scale-105 font-bold`;
+            btn.className = `${base} text-white ring-2 ring-offset-1 dark:ring-offset-[#1F1F1F] scale-105 font-bold`;
+            btn.style.background = MINISTRY_COLOR;
+            btn.style.ringColor  = MINISTRY_COLOR;
         } else {
             let clr;
             if (cnt === 0)     clr = 'bg-emerald-100 dark:bg-emerald-900/25 text-emerald-700 dark:text-emerald-400 hover:scale-105 hover:shadow-sm';
@@ -393,9 +412,11 @@ async function navMonth(dir) {
     if (month < 1)  { month = 12; year--; }
     if (month > 12) { month = 1;  year++; }
     try {
-        const r  = await fetch(`${MONTH_URL}?year=${year}&month=${month}`, { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
-        ws.cal   = await r.json();
-        ws.date  = null; ws.slot = null;
+        const r = await fetch(`${MONTH_URL}?year=${year}&month=${month}&service_id=${SERVICE_ID}`, {
+            headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        });
+        ws.cal  = await r.json();
+        ws.date = null; ws.slot = null;
         document.getElementById('slotPanel').classList.add('hidden');
         document.getElementById('step2Btn').disabled = true;
         renderCalendar();
@@ -422,10 +443,12 @@ async function selectDate(ds) {
         </svg>${tr('book.loading_slots')}</div>`;
 
     try {
-        const r    = await fetch(`${SLOTS_URL}?date=${ds}`, { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+        const r    = await fetch(`${SLOTS_URL}?date=${ds}&service_id=${SERVICE_ID}`, {
+            headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        });
         const data = await r.json();
         if (data.error) {
-            content.innerHTML = `<p class="text-sm text-red-500 dark:text-red-400">${window.i18nMessage ? i18nMessage(data.error) : data.error}</p>`;
+            content.innerHTML = `<p class="text-sm text-red-500 dark:text-red-400">${data.error}</p>`;
             return;
         }
         if (!data.slots?.length) {
@@ -456,14 +479,22 @@ function renderSlots(slots) {
 
 function slotCls(active) {
     return active
-        ? 'py-2.5 px-3 rounded-xl text-sm font-bold transition-all bg-brand text-white border-2 border-brand shadow-sm'
-        : 'py-2.5 px-3 rounded-xl text-sm font-medium transition-all bg-gray-50 dark:bg-[#141414] border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-brand hover:text-brand hover:bg-brand/5';
+        ? 'py-2.5 px-3 rounded-xl text-sm font-bold transition-all text-white border-2 shadow-sm'
+        : 'py-2.5 px-3 rounded-xl text-sm font-medium transition-all bg-gray-50 dark:bg-[#141414] border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300';
 }
 
 function selectSlot(s) {
     ws.slot = s;
     document.querySelectorAll('#slotContent button[data-slot]').forEach(btn => {
-        btn.className = slotCls(btn.dataset.slot === s);
+        const isActive = btn.dataset.slot === s;
+        btn.className = slotCls(isActive);
+        if (isActive) {
+            btn.style.background   = MINISTRY_COLOR;
+            btn.style.borderColor  = MINISTRY_COLOR;
+        } else {
+            btn.style.background  = '';
+            btn.style.borderColor = '';
+        }
     });
     document.getElementById('step2Btn').disabled = false;
 }
@@ -472,11 +503,10 @@ function step2Continue() {
     if (ws.date && ws.slot) goToStep(3);
 }
 
-// ── Step 3 ────────────────────────────────────────
+// ── Step 3 ────────────────────────────────────────────
 function renderReview() {
-    document.getElementById('rev-name').textContent    = ws.fullName;
-    document.getElementById('rev-nid').textContent     = ws.nationalId;
-    document.getElementById('rev-doctype').textContent = trDoc(ws.docType);
+    document.getElementById('rev-name').textContent = ws.fullName;
+    document.getElementById('rev-nid').textContent  = ws.nationalId;
 
     const dObj = new Date(ws.date + 'T00:00:00');
     document.getElementById('rev-date').textContent = dObj.toLocaleDateString('en-GB', { weekday:'short', year:'numeric', month:'short', day:'numeric' });
@@ -485,10 +515,9 @@ function renderReview() {
     loadDocCards();
 }
 
-// ── Step 3: Doc cards ─────────────────────────────
+// ── Step 3: Doc cards ─────────────────────────────────
 async function loadDocCards() {
-    const reqs = DOC_REQS[ws.docType] || DOC_REQS['Other'];
-    ws.docCards = reqs.map((name, i) => ({
+    ws.docCards = SERVICE_DOCS.map((name, i) => ({
         index: i, name, source: null, vaultDocId: null, file: null, fulfilled: false,
     }));
 
@@ -508,8 +537,11 @@ async function loadDocCards() {
     const container = document.getElementById('doc-cards');
     container.innerHTML = '';
 
-    reqs.forEach((name, i) => {
-        const matching = vaultDocs.filter(v => (VAULT_TYPES[name] || []).includes(v.type));
+    SERVICE_DOCS.forEach((name, i) => {
+        const allowedTypes = VAULT_MAP[name] || [];
+        const matching = allowedTypes.length
+            ? vaultDocs.filter(v => allowedTypes.includes(v.type))
+            : [];
         container.appendChild(buildDocCard(i, name, matching));
     });
     checkSubmit();
@@ -526,7 +558,7 @@ function buildDocCard(i, name, matchingVaultDocs) {
             <div class="space-y-1.5">
                 ${matchingVaultDocs.map(v => `
                     <button type="button" id="vault-btn-${i}-${v.id}"
-                        onclick="selectVault(${i}, ${v.id}, '${(v.name || v.type).replace(/'/g,"\\'")}' )"
+                        onclick="selectVault(${i}, ${v.id}, '${(v.name||v.type).replace(/'/g,"\\'")}' )"
                         class="w-full flex items-center justify-between px-3 py-2.5 rounded-lg border border-indigo-200 dark:border-amber-800 hover:border-brand hover:bg-brand/5 transition text-left group">
                         <div class="min-w-0">
                             <p class="text-xs font-semibold text-gray-800 dark:text-gray-200 group-hover:text-brand truncate">${v.name}</p>
@@ -567,7 +599,7 @@ function buildDocCard(i, name, matchingVaultDocs) {
 
     card.innerHTML = `
         <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-[#141414] border-b border-gray-100 dark:border-gray-800">
-            <span class="text-sm font-semibold text-gray-800 dark:text-gray-100">${trDoc(name)}</span>
+            <span class="text-sm font-semibold text-gray-800 dark:text-gray-100">${name}</span>
             <span id="card-badge-${i}" class="hidden text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
                 ${tr('book.fulfilled')}
@@ -579,14 +611,13 @@ function buildDocCard(i, name, matchingVaultDocs) {
 }
 
 function selectVault(ci, vaultDocId, label) {
-    const card = ws.docCards[ci];
+    const card   = ws.docCards[ci];
     const already = card.source === 'vault' && card.vaultDocId === vaultDocId;
     card.source     = already ? null : 'vault';
     card.vaultDocId = already ? null : vaultDocId;
     card.file       = null;
     card.fulfilled  = !already;
     if (!already) {
-        // Uncheck confirm
         const cb = document.getElementById(`confirm-cb-${ci}`);
         if (cb) cb.checked = false;
     }
@@ -602,9 +633,9 @@ function handleUpload(event, ci) {
         event.target.value = '';
         return;
     }
-    const card   = ws.docCards[ci];
-    card.source  = 'upload';
-    card.file    = file;
+    const card      = ws.docCards[ci];
+    card.source     = 'upload';
+    card.file       = file;
     card.vaultDocId = null;
     card.fulfilled  = true;
     document.getElementById(`upload-zone-${ci}`).classList.add('hidden');
@@ -626,10 +657,10 @@ function removeUpload(ci) {
 }
 
 function handleConfirm(event, ci) {
-    const card  = ws.docCards[ci];
-    card.source = event.target.checked ? 'confirmed' : null;
-    card.file   = null; card.vaultDocId = null;
-    card.fulfilled = event.target.checked;
+    const card      = ws.docCards[ci];
+    card.source     = event.target.checked ? 'confirmed' : null;
+    card.file       = null; card.vaultDocId = null;
+    card.fulfilled  = event.target.checked;
     updateCardUI(ci); checkSubmit();
 }
 
@@ -652,24 +683,25 @@ function checkSubmit() {
 }
 
 function fmtBytes(b) {
-    if (b < 1024) return b + ' B';
+    if (b < 1024)    return b + ' B';
     if (b < 1048576) return (b/1024).toFixed(1) + ' KB';
     return (b/1048576).toFixed(1) + ' MB';
 }
 
 async function submitWizard() {
-    const btn = document.getElementById('submitBtn');
+    const btn  = document.getElementById('submitBtn');
     btn.disabled = true;
     const orig = btn.innerHTML;
     btn.innerHTML = `<svg class="w-4 h-4 animate-spin inline mr-1.5" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>${tr('book.submitting')}`;
 
     const fd = new FormData();
-    fd.append('_token', CSRF_TOKEN);
-    fd.append('full_name',          ws.fullName);
-    fd.append('national_id_number', ws.nationalId);
-    fd.append('document_type',      ws.docType);
-    fd.append('date',               ws.date);
-    fd.append('time_slot',          ws.slot);
+    fd.append('_token',              CSRF_TOKEN);
+    fd.append('service_id',          SERVICE_ID);
+    fd.append('full_name',           ws.fullName);
+    fd.append('national_id_number',  ws.nationalId);
+    fd.append('document_type',       SERVICE_NAME);   // service name as document_type
+    fd.append('date',                ws.date);
+    fd.append('time_slot',           ws.slot);
 
     ws.docCards.forEach((c, i) => {
         fd.append(`docs[${i}][name]`,   c.name);
@@ -686,17 +718,15 @@ async function submitWizard() {
         });
         const data = await r.json().catch(() => ({}));
         if (r.ok && data.success) {
-            localStorage.removeItem('hz_wiz_name');
-            localStorage.removeItem('hz_wiz_nid');
-            localStorage.removeItem('hz_wiz_doctype');
+            localStorage.removeItem(LS_PREFIX + 'name');
+            localStorage.removeItem(LS_PREFIX + 'nid');
             window.location.href = data.redirect;
         } else {
             btn.disabled = false; btn.innerHTML = orig;
-            const validationMessages = data.errors
+            const msg = data.errors
                 ? Object.values(data.errors).flat().join(' ')
-                : '';
-            const message = validationMessages || data.message || tr('book.failed_submit');
-            if (window.showToast) showToast('error', tr('book.error_title'), window.i18nMessage ? i18nMessage(message) : message);
+                : (data.message || tr('book.failed_submit'));
+            if (window.showToast) showToast('error', tr('book.error_title'), msg);
         }
     } catch(e) {
         btn.disabled = false; btn.innerHTML = orig;
@@ -704,7 +734,7 @@ async function submitWizard() {
     }
 }
 
-// ── Init ──────────────────────────────────────────
+// ── Init ──────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
     restoreStep1();
     updateIndicator(1);

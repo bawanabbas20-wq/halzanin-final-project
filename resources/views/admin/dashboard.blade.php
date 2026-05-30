@@ -41,6 +41,60 @@
             @endforeach
         </div>
 
+        {{-- ── Ministry Overview ── --}}
+        <div class="animate-fade-up" style="animation-delay: 480ms">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-2">
+                    <h3 class="text-base font-bold text-gray-900 dark:text-white font-outfit">Ministry Overview</h3>
+                    <span class="px-2 py-0.5 bg-brand/10 dark:bg-blue-900/30 text-brand dark:text-blue-400 text-xs font-bold rounded-full">
+                        {{ $stats['active_services'] }} active services
+                    </span>
+                </div>
+                <a href="{{ route('admin.services') }}"
+                   class="text-xs font-semibold text-brand dark:text-blue-400 hover:underline flex items-center gap-1">
+                    Manage Services
+                    <svg class="w-3.5 h-3.5 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+                @php
+                    $ministryIcons = [
+                        'civil-registry'        => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/>',
+                        'traffic-police'        => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>',
+                        'electricity'           => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>',
+                        'water'                 => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3c-4.97 5.93-7 9.18-7 12a7 7 0 0014 0c0-2.82-2.03-6.07-7-12z"/>',
+                        'business-registration' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>',
+                    ];
+                @endphp
+
+                @foreach($ministryStats as $m)
+                    @php $iconPath = $ministryIcons[$m->slug] ?? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5"/>'; @endphp
+                    <div class="bg-white dark:bg-[#1F1F1F] rounded-xl p-4 shadow-sm border border-gray-100 dark:border-gray-800 hover-lift flex flex-col gap-3"
+                         style="border-top: 3px solid {{ $m->color }};">
+                        <div class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
+                             style="background: {{ $m->color }}18;">
+                            <svg class="w-5 h-5" fill="none" stroke="{{ $m->color }}" viewBox="0 0 24 24">{!! $iconPath !!}</svg>
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold text-gray-900 dark:text-white leading-snug">{{ $m->name }}</p>
+                            <p class="text-xs mt-1 font-medium" style="color: {{ $m->color }};">
+                                {{ $m->active_services }} service{{ $m->active_services !== 1 ? 's' : '' }}
+                            </p>
+                        </div>
+                        <div class="mt-auto pt-2 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
+                            <span class="text-xs text-gray-400 dark:text-gray-500">Applications</span>
+                            <span class="text-sm font-extrabold font-outfit" style="color: {{ $m->color }};">
+                                {{ number_format($m->app_count) }}
+                            </span>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
 
             {{-- Bar Chart --}}
@@ -110,6 +164,13 @@
                             </svg>
                             <span data-i18n="Manage Users">Manage Users</span>
                         </a>
+                        <a href="{{ route('admin.services') }}"
+                           class="w-full py-3.5 bg-white dark:bg-[#252525] text-brand dark:text-blue-400 border-2 border-brand/20 dark:border-brand/40 text-center rounded-xl font-semibold font-outfit hover:border-brand dark:hover:border-blue-500 hover:bg-brand/5 dark:hover:bg-slate-700 transition-all flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                            Manage Services
+                        </a>
                     </div>
 
                     {{-- Mini Stats --}}
@@ -148,6 +209,7 @@
                         <tr class="border-b border-gray-100 dark:border-slate-800 bg-white dark:bg-[#1F1F1F]">
                             <th class="px-6 py-3.5 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider" data-i18n="Applicant">Applicant</th>
                             <th class="px-6 py-3.5 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider" data-i18n="Tracking Code">Tracking Code</th>
+                            <th class="px-6 py-3.5 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Ministry</th>
                             <th class="px-6 py-3.5 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider" data-i18n="Status">Status</th>
                             <th class="px-6 py-3.5 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider" data-i18n="Submitted">Submitted</th>
                         </tr>
@@ -175,6 +237,17 @@
                                 </td>
                                 <td class="px-6 py-4 text-sm font-mono font-bold text-brand dark:text-blue-400">{{ $app->tracking_code }}</td>
                                 <td class="px-6 py-4">
+                                    @php $ministry = $app->service?->ministry; @endphp
+                                    @if($ministry)
+                                        <span class="inline-flex items-center gap-1.5 text-xs font-semibold">
+                                            <span class="w-2 h-2 rounded-full shrink-0" style="background: {{ $ministry->color }};"></span>
+                                            <span class="text-gray-700 dark:text-gray-300">{{ $ministry->name }}</span>
+                                        </span>
+                                    @else
+                                        <span class="text-xs text-gray-400 dark:text-gray-500">—</span>
+                                    @endif
+                                </td>
+                                <td class="px-6 py-4">
                                     <span class="px-2.5 py-1 text-[11px] font-bold rounded-full capitalize {{ $badge }}">
                                         {{ str_replace('_', ' ', $app->current_status) }}
                                     </span>
@@ -185,7 +258,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="px-6 py-10 text-center text-gray-500 dark:text-gray-400 text-sm" data-i18n="No recent applications.">No recent applications.</td>
+                                <td colspan="5" class="px-6 py-10 text-center text-gray-500 dark:text-gray-400 text-sm" data-i18n="No recent applications.">No recent applications.</td>
                             </tr>
                         @endforelse
                     </tbody>

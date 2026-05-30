@@ -16,22 +16,40 @@ class AdminController extends Controller
     public function index()
     {
         $stats = [
-            'total'        => Application::count(),
-            'submitted'    => Application::where('current_status', 'submitted')->count(),
-            'received'     => Application::where('current_status', 'received')->count(),
-            'under_review' => Application::where('current_status', 'under_review')->count(),
-            'approved'     => Application::where('current_status', 'approved')->count(),
-            'rejected'     => Application::where('current_status', 'rejected')->count(),
-            'citizens'     => User::where('role', 'citizen')->count(),
-            'today'        => Application::whereDate('created_at', today())->count(),
+            'total'           => Application::count(),
+            'submitted'       => Application::where('current_status', 'submitted')->count(),
+            'received'        => Application::where('current_status', 'received')->count(),
+            'under_review'    => Application::where('current_status', 'under_review')->count(),
+            'approved'        => Application::where('current_status', 'approved')->count(),
+            'rejected'        => Application::where('current_status', 'rejected')->count(),
+            'citizens'        => User::where('role', 'citizen')->count(),
+            'today'           => Application::whereDate('created_at', today())->count(),
+            'active_services' => Service::where('is_active', true)->count(),
         ];
 
-        $recent = Application::with(['appointment', 'user'])
+        $recent = Application::with(['appointment', 'user', 'service.ministry'])
             ->latest()
             ->limit(10)
             ->get();
 
-        return view('admin.dashboard', compact('stats', 'recent'));
+        // Per-ministry stats for the overview section (5 ministries — N is tiny)
+        $ministryStats = Ministry::withCount([
+            'services as active_services_count' => fn($q) => $q->where('is_active', true),
+        ])
+        ->orderBy('order')
+        ->get()
+        ->map(function ($ministry) {
+            return (object) [
+                'id'             => $ministry->id,
+                'name'           => $ministry->name,
+                'color'          => $ministry->color,
+                'slug'           => $ministry->slug,
+                'app_count'      => Application::whereHas('service', fn($q) => $q->where('ministry_id', $ministry->id))->count(),
+                'active_services'=> $ministry->active_services_count,
+            ];
+        });
+
+        return view('admin.dashboard', compact('stats', 'recent', 'ministryStats'));
     }
 
     public function offDays(Request $request)

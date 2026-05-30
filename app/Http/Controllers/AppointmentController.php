@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Appointment;
 use App\Models\Application;
 use App\Models\Document;
+use App\Models\Ministry;
 use App\Models\OffDay;
+use App\Models\Service;
 use App\Models\StatusLog;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -15,8 +17,22 @@ use Illuminate\Support\Str;
 
 class AppointmentController extends Controller
 {
-    public function calendar(Request $request)
+    // Entry point: ministry + service picker
+    public function index()
     {
+        $ministries = Ministry::with('services')->orderBy('order')->get();
+        return view('citizen.appointments.index', compact('ministries'));
+    }
+
+    // Per-service booking calendar
+    public function calendar(Request $request, string $ministrySlug, string $serviceSlug)
+    {
+        $ministry = Ministry::where('slug', $ministrySlug)->firstOrFail();
+        $service  = $ministry->services()
+                             ->where('slug', $serviceSlug)
+                             ->where('is_active', true)
+                             ->firstOrFail();
+
         $year  = (int) $request->get('year', now()->year);
         $month = (int) $request->get('month', now()->month);
 
@@ -34,26 +50,30 @@ class AppointmentController extends Controller
         $month = $current->month;
 
         $counts = Appointment::where('date', 'like', $current->format('Y-m') . '-%')
+            ->where('service_id', $service->id)
             ->whereNotIn('status', ['cancelled'])
             ->selectRaw('date, COUNT(*) as count')
             ->groupBy('date')
             ->pluck('count', 'date')
             ->toArray();
 
-        $offDates = OffDay::offDatesForMonth($year, $month);
-
-        $canPrev = $current->gt(now()->startOfMonth());
-        $canNext = $current->lt($maxDate->copy()->startOfMonth());
+        $offDates     = OffDay::offDatesForMonth($year, $month, $ministry->id);
+        $canPrev      = $current->gt(now()->startOfMonth());
+        $canNext      = $current->lt($maxDate->copy()->startOfMonth());
+        $vaultTypeMap = $this->buildVaultTypeMap($service->required_documents ?? []);
 
         return view('citizen.appointments.calendar', compact(
-            'year', 'month', 'current', 'counts', 'offDates', 'maxDate', 'canPrev', 'canNext'
+            'ministry', 'service', 'year', 'month', 'current',
+            'counts', 'offDates', 'maxDate', 'canPrev', 'canNext',
+            'vaultTypeMap'
         ));
     }
 
     public function monthData(Request $request)
     {
-        $year  = (int) $request->get('year', now()->year);
-        $month = (int) $request->get('month', now()->month);
+        $year      = (int) $request->get('year', now()->year);
+        $month     = (int) $request->get('month', now()->month);
+        $serviceId = $request->integer('service_id') ?: null;
 
         $current = Carbon::createFromDate($year, $month, 1);
         $maxDate = now()->addMonths(3)->endOfMonth();
@@ -68,14 +88,20 @@ class AppointmentController extends Controller
         $year  = $current->year;
         $month = $current->month;
 
-        $counts = Appointment::where('date', 'like', $current->format('Y-m') . '-%')
-            ->whereNotIn('status', ['cancelled'])
-            ->selectRaw('date, COUNT(*) as count')
+        $query = Appointment::where('date', 'like', $current->format('Y-m') . '-%')
+            ->whereNotIn('status', ['cancelled']);
+
+        if ($serviceId) {
+            $query->where('service_id', $serviceId);
+        }
+
+        $counts = $query->selectRaw('date, COUNT(*) as count')
             ->groupBy('date')
             ->pluck('count', 'date')
             ->toArray();
 
-        $offDates = OffDay::offDatesForMonth($year, $month);
+        $ministryId = $serviceId ? Service::find($serviceId)?->ministry_id : null;
+        $offDates   = OffDay::offDatesForMonth($year, $month, $ministryId);
 
         return response()->json([
             'year'     => $year,
@@ -90,14 +116,17 @@ class AppointmentController extends Controller
 
     public function slots(Request $request)
     {
-        $date = $request->get('date');
+        $date       = $request->get('date');
+        $serviceId  = $request->integer('service_id') ?: null;
+        $ministryId = $serviceId ? Service::find($serviceId)?->ministry_id : null;
 
-        if (!$date || OffDay::isOffDay($date) || Carbon::parse($date)->lt(now()->startOfDay())) {
+        if (!$date || OffDay::isOffDay($date, $ministryId) || Carbon::parse($date)->lt(now()->startOfDay())) {
             return response()->json(['slots' => [], 'error' => 'Date not available']);
         }
 
         $existing = Appointment::where('citizen_id', Auth::id())
             ->where('date', $date)
+            ->when($serviceId, fn($q) => $q->where('service_id', $serviceId))
             ->whereNotIn('status', ['cancelled'])
             ->first();
 
@@ -109,7 +138,7 @@ class AppointmentController extends Controller
             ]);
         }
 
-        return response()->json(['slots' => Appointment::availableSlotsForDate($date)]);
+        return response()->json(['slots' => Appointment::availableSlotsForDate($date, $serviceId)]);
     }
 
     public function vaultDocs()
@@ -131,30 +160,31 @@ class AppointmentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'service_id'         => 'required|exists:services,id',
             'full_name'          => 'required|string|min:2|max:255',
-            // SECURITY: tightened to realistic max lengths; Iraqi national IDs are ≤20 chars
             'national_id_number' => 'required|string|max:50',
             'document_type'      => 'required|string|max:100',
             'date'               => 'required|date|after_or_equal:today',
             'time_slot'          => 'required|in:09:00,10:00,11:00,12:00,13:00',
             'notes'              => 'nullable|string|max:500',
-            // SECURITY: max:10 prevents submitting hundreds of document entries in one request
             'docs'               => 'nullable|array|max:10',
             'docs.*.name'        => 'required_with:docs|string|max:255',
             'docs.*.source'      => 'required_with:docs|in:vault,upload,confirmed',
             'doc_files.*'        => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:5120',
         ]);
 
-        if (OffDay::isOffDay($request->date)) {
+        $service = Service::findOrFail($request->service_id);
+
+        if (OffDay::isOffDay($request->date, $service->ministry_id)) {
             if ($request->ajax()) {
                 return response()->json(['message' => 'That date is an off day. Please choose another.'], 422);
             }
-
             return back()->with('error', 'That date is an off day. Please choose another.');
         }
 
         $taken = Appointment::where('date', $request->date)
             ->where('time_slot', $request->time_slot)
+            ->where('service_id', $request->service_id)
             ->whereNotIn('status', ['cancelled'])
             ->exists();
 
@@ -162,26 +192,26 @@ class AppointmentController extends Controller
             if ($request->ajax()) {
                 return response()->json(['message' => 'That time slot was just taken. Please choose another.'], 422);
             }
-
             return back()->with('error', 'That time slot was just taken. Please choose another.');
         }
 
         $alreadyBooked = Appointment::where('citizen_id', Auth::id())
             ->where('date', $request->date)
+            ->where('service_id', $request->service_id)
             ->whereNotIn('status', ['cancelled'])
             ->exists();
 
         if ($alreadyBooked) {
             if ($request->ajax()) {
-                return response()->json(['message' => 'You already have an appointment on that day.'], 422);
+                return response()->json(['message' => 'You already have an appointment on that day for this service.'], 422);
             }
-
-            return back()->with('error', 'You already have an appointment on that day.');
+            return back()->with('error', 'You already have an appointment on that day for this service.');
         }
 
-        [$appointment, $application] = DB::transaction(function () use ($request) {
+        [, $application] = DB::transaction(function () use ($request, $service) {
             $appointment = Appointment::create([
                 'citizen_id'         => Auth::id(),
+                'service_id'         => $request->service_id,
                 'full_name'          => $request->full_name,
                 'national_id_number' => $request->national_id_number,
                 'document_type'      => $request->document_type,
@@ -192,6 +222,7 @@ class AppointmentController extends Controller
 
             $application = Application::create([
                 'user_id'        => Auth::id(),
+                'service_id'     => $request->service_id,
                 'appointment_id' => $appointment->id,
                 'tracking_code'  => $this->generateTrackingCode(),
                 'current_status' => 'submitted',
@@ -202,7 +233,7 @@ class AppointmentController extends Controller
                 'application_id' => $application->id,
                 'status'         => 'submitted',
                 'changed_by'     => Auth::id(),
-                'notes'          => 'Application submitted.',
+                'notes'          => 'Application submitted via ' . $service->name . ' appointment.',
             ]);
 
             $docInputs = $request->input('docs', []);
@@ -262,5 +293,34 @@ class AppointmentController extends Controller
         } while (Application::where('tracking_code', $code)->exists());
 
         return $code;
+    }
+
+    /**
+     * Build a map of required document names → matching vault document types.
+     * Enables the booking wizard to auto-match vault documents to requirements.
+     */
+    private function buildVaultTypeMap(array $requiredDocs): array
+    {
+        $keywords = [
+            'passport'    => 'Passport',
+            'national id' => 'National ID',
+            'birth cert'  => 'Birth Certificate',
+            'driving'     => 'Driving License',
+            'business'    => 'Business License',
+            'license'     => 'Driving License',
+        ];
+
+        $map = [];
+        foreach ($requiredDocs as $doc) {
+            $lower = strtolower($doc);
+            $types = [];
+            foreach ($keywords as $keyword => $vaultType) {
+                if (str_contains($lower, $keyword) && !in_array($vaultType, $types)) {
+                    $types[] = $vaultType;
+                }
+            }
+            $map[$doc] = $types;
+        }
+        return $map;
     }
 }

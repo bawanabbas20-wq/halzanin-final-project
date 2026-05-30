@@ -30,6 +30,15 @@
         'rejected'               => ['bg' => 'bg-red-100 dark:bg-red-900/30',          'text' => 'text-red-700 dark:text-red-300'],
         'checked_in'             => ['bg' => 'bg-purple-100 dark:bg-purple-900/30',    'text' => 'text-purple-700 dark:text-purple-300'],
     ];
+
+    // Ministry SVG icon paths keyed by slug
+    $ministryIcons = [
+        'civil-registry'       => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/>',
+        'traffic-police'       => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>',
+        'electricity'          => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>',
+        'water'                => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3c-4.97 5.93-7 9.18-7 12a7 7 0 0014 0c0-2.82-2.03-6.07-7-12z"/>',
+        'business-registration'=> '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>',
+    ];
 @endphp
 
 <div class="space-y-6 lg:space-y-8">
@@ -66,14 +75,59 @@
                 <a href="{{ route('citizen.appointments.calendar') }}"
                    class="inline-flex items-center gap-2 px-4 py-3 bg-white/10 text-white font-semibold text-sm rounded-xl border border-white/20 hover:bg-white/20 transition-all whitespace-nowrap">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                    Passport Booking
+                    Book Appointment
                 </a>
             </div>
         </div>
     </div>
 
+    {{-- ── Government Directorates ── --}}
+    <div class="animate-fade-up" style="animation-delay: 60ms">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-base font-bold text-brand dark:text-white font-outfit">Government Directorates</h3>
+            <a href="/" class="text-xs font-semibold text-brand dark:text-blue-400 hover:underline flex items-center gap-1">
+                All services
+                <svg class="w-3.5 h-3.5 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+            @foreach($ministries as $ministry)
+                @php
+                    $iconPath = $ministryIcons[$ministry->slug] ?? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>';
+                    $activeCount = $ministry->activeServices->count();
+                @endphp
+                <a href="{{ route('citizen.appointments.calendar') }}"
+                   class="group bg-white dark:bg-[#1F1F1F] rounded-xl p-4 border border-gray-100 dark:border-gray-800 shadow-sm hover-lift flex flex-col gap-3 transition-all"
+                   style="border-top: 3px solid {{ $ministry->color }}">
+                    <div class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
+                         style="background: {{ $ministry->color }}18;">
+                        <svg class="w-5 h-5" fill="none" stroke="{{ $ministry->color }}" viewBox="0 0 24 24">
+                            {!! $iconPath !!}
+                        </svg>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm font-bold text-gray-900 dark:text-white leading-snug">{{ $ministry->name }}</p>
+                        <p class="text-xs mt-1 font-medium" style="color: {{ $ministry->color }}">
+                            {{ $activeCount }} active service{{ $activeCount !== 1 ? 's' : '' }}
+                        </p>
+                    </div>
+                    <span class="text-xs font-semibold flex items-center gap-1 opacity-60 group-hover:opacity-100 transition-opacity"
+                          style="color: {{ $ministry->color }}">
+                        Apply
+                        <svg class="w-3 h-3 group-hover:translate-x-0.5 transition-transform rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </span>
+                </a>
+            @endforeach
+        </div>
+    </div>
+
     {{-- ── Application Stats ── --}}
-    <div class="grid grid-cols-3 gap-3 lg:gap-5">
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 lg:gap-5">
         @php
             $statItems = [
                 [
@@ -106,6 +160,16 @@
                     'icon_bg' => 'bg-green-50 dark:bg-green-900/30',
                     'icon_c'  => 'text-green-600 dark:text-green-400',
                 ],
+                [
+                    'value'   => $appStats['upcoming'],
+                    'label'   => 'Upcoming',
+                    'i18n'    => 'dashboard.stat_upcoming',
+                    'delay'   => 240,
+                    'icon'    => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>',
+                    'ring'    => 'ring-purple-100 dark:ring-purple-900/30',
+                    'icon_bg' => 'bg-purple-50 dark:bg-purple-900/30',
+                    'icon_c'  => 'text-purple-600 dark:text-purple-400',
+                ],
             ];
         @endphp
 
@@ -122,7 +186,7 @@
     </div>
 
     {{-- ── Recent Applications ── --}}
-    <div class="animate-fade-up" style="animation-delay: 240ms">
+    <div class="animate-fade-up" style="animation-delay: 320ms">
         <div class="flex items-center justify-between mb-4">
             <div class="flex items-center gap-2">
                 <h3 class="text-base font-bold text-brand dark:text-white font-outfit">My Applications</h3>
@@ -164,6 +228,7 @@
                     @php
                         $sc = $statusCfg[$app->current_status] ?? $statusCfg['submitted'];
                         $ministryColor = $app->service->ministry->color ?? '#1B4F8A';
+                        $ministryName  = $app->service->ministry->name ?? 'Government Service';
                         $delay = 50 + $index * 60;
                     @endphp
                     <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden hover-lift animate-fade-up"
@@ -189,8 +254,10 @@
                             </span>
                         </div>
                         <div class="px-4 sm:px-5 py-2 bg-gray-50/50 dark:bg-white/[0.02] border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
-                            <span class="text-xs text-gray-400 dark:text-gray-500 truncate">
-                                {{ $app->service->ministry->name ?? 'Government Service' }}
+                            {{-- Ministry badge --}}
+                            <span class="inline-flex items-center gap-1.5 text-xs font-medium">
+                                <span class="w-2 h-2 rounded-full shrink-0" style="background: {{ $ministryColor }}"></span>
+                                <span class="text-gray-500 dark:text-gray-400 truncate">{{ $ministryName }}</span>
                             </span>
                             <a href="{{ route('track.show', $app->tracking_code) }}"
                                class="text-xs font-semibold text-brand dark:text-blue-400 hover:underline flex items-center gap-1 shrink-0 ml-3">
@@ -204,12 +271,12 @@
         @endif
     </div>
 
-    {{-- ── Upcoming Passport Appointments (if any) ── --}}
+    {{-- ── My Appointments ── --}}
     @if($upcomingAppointments->isNotEmpty())
-    <div class="animate-fade-up" style="animation-delay: 400ms">
+    <div class="animate-fade-up" style="animation-delay: 480ms">
         <div class="flex items-center justify-between mb-4">
             <div class="flex items-center gap-2">
-                <h3 class="text-base font-bold text-brand dark:text-white font-outfit">Passport Appointments</h3>
+                <h3 class="text-base font-bold text-brand dark:text-white font-outfit">My Appointments</h3>
                 <span class="px-2 py-0.5 bg-brand/10 dark:bg-amber-900/30 text-brand dark:text-amber-400 text-xs font-bold rounded-full">
                     {{ $total }}
                 </span>
@@ -226,51 +293,64 @@
         <div class="space-y-3">
             @php
                 $apptStatusCfg = [
-                    'pending'   => ['border' => 'border-amber-400',   'badge' => 'bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',   'dot' => 'status-dot-yellow'],
+                    'pending'   => ['border' => 'border-amber-400',   'badge' => 'bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',       'dot' => 'status-dot-yellow'],
                     'confirmed' => ['border' => 'border-emerald-400', 'badge' => 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400', 'dot' => 'status-dot-green'],
-                    'completed' => ['border' => 'border-blue-400',    'badge' => 'bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',    'dot' => 'status-dot-blue'],
-                    'cancelled' => ['border' => 'border-red-400',     'badge' => 'bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-400',        'dot' => 'status-dot-red'],
+                    'completed' => ['border' => 'border-blue-400',    'badge' => 'bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',             'dot' => 'status-dot-blue'],
+                    'cancelled' => ['border' => 'border-red-400',     'badge' => 'bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-400',                 'dot' => 'status-dot-red'],
                 ];
                 $timeLabels = ['09:00' => '9:00 AM', '10:00' => '10:00 AM', '11:00' => '11:00 AM', '12:00' => '12:00 PM', '13:00' => '1:00 PM'];
             @endphp
 
             @foreach($upcomingAppointments as $index => $appt)
                 @php
-                    $cfg      = $apptStatusCfg[$appt->status] ?? $apptStatusCfg['pending'];
-                    $apptDate = \Carbon\Carbon::parse($appt->date);
-                    $delay    = 50 + $index * 60;
+                    $cfg           = $apptStatusCfg[$appt->status] ?? $apptStatusCfg['pending'];
+                    $apptDate      = \Carbon\Carbon::parse($appt->date);
+                    $apptMinColor  = $appt->service->ministry->color ?? '#1B4F8A';
+                    $apptMinName   = $appt->service->ministry->name  ?? 'Government Service';
+                    $apptSvcName   = $appt->service->name            ?? ($appt->document_type ?? 'Appointment');
+                    $delay         = 50 + $index * 60;
                 @endphp
                 <div class="bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800
                             ltr:border-l-4 rtl:border-r-4 {{ $cfg['border'] }} hover-lift overflow-hidden animate-fade-up"
                      style="animation-delay: {{ $delay }}ms">
                     <div class="p-4 sm:p-5 flex items-start gap-4">
-                        <div class="shrink-0 w-14 rounded-xl overflow-hidden border border-brand/15 dark:border-gray-700 shadow-sm">
-                            <div class="bg-brand px-1 py-1 text-center">
+                        {{-- Date card --}}
+                        <div class="shrink-0 w-14 rounded-xl overflow-hidden border dark:border-gray-700 shadow-sm"
+                             style="border-color: {{ $apptMinColor }}30;">
+                            <div class="px-1 py-1 text-center" style="background: {{ $apptMinColor }};">
                                 <p class="text-[10px] font-bold text-white/90 uppercase tracking-wider leading-none">{{ $apptDate->format('M') }}</p>
                             </div>
                             <div class="bg-white dark:bg-[#252525] px-1 py-1.5 text-center">
-                                <p class="text-[22px] font-extrabold text-brand dark:text-white leading-none font-outfit">{{ $apptDate->format('d') }}</p>
+                                <p class="text-[22px] font-extrabold leading-none font-outfit" style="color: {{ $apptMinColor }};">{{ $apptDate->format('d') }}</p>
                                 <p class="text-[10px] font-medium text-gray-400 dark:text-gray-500 mt-0.5">{{ $apptDate->format('D') }}</p>
                             </div>
                         </div>
+
                         <div class="flex-1 min-w-0">
                             <div class="flex items-start justify-between gap-2 mb-1.5">
                                 <div class="flex items-center gap-2 min-w-0">
                                     <div class="w-2 h-2 rounded-full shrink-0 {{ $cfg['dot'] }}"></div>
-                                    <p class="text-sm font-bold text-gray-900 dark:text-white truncate">{{ $appt->document_type ?? 'Passport' }}</p>
+                                    <p class="text-sm font-bold text-gray-900 dark:text-white truncate">{{ $apptSvcName }}</p>
                                 </div>
                                 <span class="shrink-0 px-2.5 py-0.5 text-[11px] font-bold rounded-full capitalize {{ $cfg['badge'] }}">
                                     {{ ucfirst($appt->status) }}
                                 </span>
                             </div>
-                            <div class="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
+                            <div class="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400 flex-wrap">
+                                {{-- Time --}}
                                 <span class="flex items-center gap-1">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                     {{ $timeLabels[$appt->time_slot] ?? $appt->time_slot }}
                                 </span>
+                                {{-- Ministry badge --}}
+                                <span class="inline-flex items-center gap-1">
+                                    <span class="w-2 h-2 rounded-full" style="background: {{ $apptMinColor }};"></span>
+                                    <span>{{ $apptMinName }}</span>
+                                </span>
                             </div>
                         </div>
                     </div>
+
                     <div class="px-4 sm:px-5 py-2.5 bg-gray-50/50 dark:bg-white/[0.03] border-t border-gray-100 dark:border-gray-800 flex items-center justify-between gap-2">
                         <span class="text-[11px] text-gray-400 dark:text-gray-500 shrink-0">
                             Booked {{ $appt->created_at->diffForHumans() }}

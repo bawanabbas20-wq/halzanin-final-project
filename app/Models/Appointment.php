@@ -48,24 +48,41 @@ class Appointment extends Model
         return $this->belongsTo(Service::class);
     }
 
-    public static function bookedSlotsForDate(string $date): array
+    /**
+     * Booked (non-cancelled) time slots for a date.
+     * When service_id is provided, scoped to that service only (Phase 3+).
+     */
+    public static function bookedSlotsForDate(string $date, ?int $serviceId = null): array
     {
-        return self::where('date', $date)
-            ->whereNotIn('status', ['cancelled'])
-            ->pluck('time_slot')
-            ->toArray();
+        $query = self::where('date', $date)->whereNotIn('status', ['cancelled']);
+
+        if ($serviceId !== null) {
+            $query->where('service_id', $serviceId);
+        }
+
+        return $query->pluck('time_slot')->toArray();
     }
 
-    public static function availableSlotsForDate(string $date): array
+    /**
+     * Available time slots for a date (complement of booked slots).
+     */
+    public static function availableSlotsForDate(string $date, ?int $serviceId = null): array
     {
-        $booked = self::bookedSlotsForDate($date);
+        $booked = self::bookedSlotsForDate($date, $serviceId);
         return array_values(array_diff(self::TIME_SLOTS, $booked));
     }
 
-    public static function bookingCountForDate(string $date): int
+    /**
+     * Count of non-cancelled bookings for a date.
+     */
+    public static function bookingCountForDate(string $date, ?int $serviceId = null): int
     {
-        return self::where('date', $date)
-            ->whereNotIn('status', ['cancelled'])
-            ->count();
+        $query = self::where('date', $date)->whereNotIn('status', ['cancelled']);
+
+        if ($serviceId !== null) {
+            $query->where('service_id', $serviceId);
+        }
+
+        return $query->count();
     }
 }
