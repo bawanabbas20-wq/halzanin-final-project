@@ -568,10 +568,11 @@ html.dark { --dark-card: #14151e; }
                 <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
                 Cancel
             </a>
-            <button type="submit" id="submit-btn" class="ap-submit" aria-label="Submit your application">
-                <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                Submit Application
-            </button>
+            <a href="{{ route('citizen.appointments.book', ['ministry' => $service->ministry->slug, 'service' => $service->slug]) }}"
+               class="ap-submit" aria-label="Book an appointment for this service">
+                <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                Book Appointment
+            </a>
         </div>
 
     </form>
