@@ -45,12 +45,14 @@ class Service extends Model
 
     public function allowedNextStatuses(string $current): array
     {
+        $statuses = $this->statuses ?? [];
         $next = $this->nextStatus($current);
         $result = [];
         if ($next) {
             $result[$next] = ucwords(str_replace('_', ' ', $next));
         }
-        if ($current !== 'rejected' && $current !== end($this->statuses)) {
+        $finalStatus = $statuses ? $statuses[array_key_last($statuses)] : null;
+        if ($current !== 'rejected' && $current !== $finalStatus) {
             $result['rejected'] = 'Reject';
         }
         return $result;
