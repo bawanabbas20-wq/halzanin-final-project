@@ -17,4 +17,9 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-/.claude/worktrees/
+
+# Claude Code / AI tooling (local only — not part of the project)
+/.claude/
+/.agents/
+/memory/
+/skills-lock.json
