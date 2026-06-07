@@ -15,6 +15,7 @@ class UserSeeder extends Seeder
         \App\Models\User::create([
             'name' => 'Citizen User',
             'email' => 'citizen@test.com',
+            'email_verified_at' => now(),
             'password' => \Illuminate\Support\Facades\Hash::make('password123'),
             'role' => 'citizen',
         ]);
@@ -25,6 +26,7 @@ class UserSeeder extends Seeder
         \App\Models\User::create([
             'name' => 'Staff User',
             'email' => 'staff@test.com',
+            'email_verified_at' => now(),
             'password' => \Illuminate\Support\Facades\Hash::make('password123'),
             'role' => 'staff',
             'ministry_id' => $ministryId,
@@ -33,6 +35,7 @@ class UserSeeder extends Seeder
         \App\Models\User::create([
             'name' => 'Ministry Admin User',
             'email' => 'ministry.admin@test.com',
+            'email_verified_at' => now(),
             'password' => \Illuminate\Support\Facades\Hash::make('password123'),
             'role' => 'ministry_admin',
             'ministry_id' => $ministryId,
@@ -41,6 +44,7 @@ class UserSeeder extends Seeder
         \App\Models\User::create([
             'name' => 'Admin User',
             'email' => 'admin@test.com',
+            'email_verified_at' => now(),
             'password' => \Illuminate\Support\Facades\Hash::make('password123'),
             'role' => 'admin',
         ]);
