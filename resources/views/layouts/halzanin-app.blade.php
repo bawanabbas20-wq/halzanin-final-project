@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="font-outfit">
     <head>
         <meta charset="utf-8">
@@ -38,12 +38,12 @@
             }
         </script>
     </head>
-    <body class="bg-[#EFEDE8] dark:bg-[#141414] text-charcoal dark:text-[#f1f5f9] antialiased transition-colors duration-200">
+    <body class="bg-[#EFEDE8] lg:bg-white dark:bg-[#141414] dark:lg:bg-[#161616] text-charcoal dark:text-[#f1f5f9] antialiased transition-colors duration-200">
         
-        <div class="flex h-screen overflow-hidden">
+        <div class="flex h-screen overflow-hidden lg:p-3 gap-3">
             
             <!-- Desktop Sidebar -->
-            <aside class="hidden lg:flex lg:flex-col w-56 bg-white dark:bg-[#1F1F1F] border-r border-stone-200 dark:border-slate-800 flex-shrink-0 relative z-30">
+            <aside class="hidden lg:flex lg:flex-col w-56 bg-white dark:bg-[#161616] flex-shrink-0 relative z-30">
                 <!-- Logo -->
                 <div class="flex items-center gap-3 px-5 py-4 border-b border-stone-100 dark:border-slate-800">
                     <a href="{{ url('/') }}" class="block focus:outline-none focus:ring-2 focus:ring-brand/40 rounded-lg">
@@ -179,7 +179,7 @@
             </aside>
 
             <!-- Main Content -->
-            <div class="flex-1 flex flex-col relative h-screen overflow-y-auto overflow-x-hidden">
+            <div class="flex-1 flex flex-col relative h-full overflow-y-auto overflow-x-hidden bg-[#EFEDE8] dark:bg-[#1A1A1A] lg:rounded-[28px] lg:border border-stone-200/80 dark:border-slate-800 lg:shadow-sm">
                 
                 <!-- Header (Toggles) -->
                 <header class="h-16 flex items-center justify-end px-4 lg:px-8 shrink-0 relative z-20">

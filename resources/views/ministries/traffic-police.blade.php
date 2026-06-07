@@ -390,6 +390,7 @@ html.dark .mn-badge-days{background:var(--m-light);color:#c084fc}
 .icon-sun{display:block}.icon-moon{display:none}
 html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
 </style>
+<script>if(localStorage.theme==='dark'||(!('theme' in localStorage)&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark');}</script>
 </head>
 <body>
 
@@ -949,12 +950,12 @@ html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
   function applyTheme(dark){
     html.classList.toggle('dark', dark);
   }
-  const saved = localStorage.getItem('halzanin-theme');
+  const saved = localStorage.theme || localStorage.getItem('halzanin-theme');
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   applyTheme(saved ? saved === 'dark' : prefersDark);
   window.toggleDark = function(){
     const isDark = html.classList.toggle('dark');
-    localStorage.setItem('halzanin-theme', isDark ? 'dark' : 'light');
+    localStorage.theme= isDark ? 'dark' : 'light';localStorage.setItem(\'halzanin-theme\', isDark ? 'dark' : 'light');
   };
 
   // ── Language ─────────────────────────────────────────

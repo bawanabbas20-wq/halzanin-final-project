@@ -261,6 +261,7 @@ html.dark .mn-office-branch{background:var(--surface2)}
 .icon-sun{display:block}.icon-moon{display:none}
 html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
 </style>
+<script>if(localStorage.theme==='dark'||(!('theme' in localStorage)&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark');}</script>
 </head>
 <body>
 
@@ -716,9 +717,9 @@ html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
 (function(){
   const html=document.getElementById('html-root'),themeBtn=document.getElementById('theme-btn');
   function applyTheme(d){html.classList.toggle('dark',d)}
-  const s=localStorage.getItem('halzanin-theme'),p=window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const s=localStorage.theme || localStorage.getItem('halzanin-theme'),p=window.matchMedia('(prefers-color-scheme: dark)').matches;
   applyTheme(s?s==='dark':p);
-  window.toggleDark=function(){const d=html.classList.toggle('dark');localStorage.setItem('halzanin-theme',d?'dark':'light')};
+  window.toggleDark=function(){const d=html.classList.toggle('dark');localStorage.theme=d?'dark':'light';localStorage.setItem(\'halzanin-theme\',d?'dark':'light')};
   const langKuBtn=document.getElementById('lang-ku-btn'),langEnBtn=document.getElementById('lang-en-btn');
   window.setLang=function(l){
     document.body.classList.toggle('lang-ku',l==='ku');
