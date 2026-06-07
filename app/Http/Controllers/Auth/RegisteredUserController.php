@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
@@ -55,10 +56,19 @@ class RegisteredUserController extends Controller
             'otp_expires_at' => now()->addMinutes(10),
         ])->save();
 
-        Mail::send('emails.otp', ['otp' => $otp, 'user' => $user], function ($message) use ($user) {
-            $message->to($user->email)
-                    ->subject('Your verification code — ' . config('app.name'));
-        });
+        // Send the OTP email, but never let a mail outage abort registration.
+        try {
+            Mail::send('emails.otp', ['otp' => $otp, 'user' => $user], function ($message) use ($user) {
+                $message->to($user->email)
+                        ->subject('Your verification code — ' . config('app.name'));
+            });
+        } catch (\Throwable $e) {
+            Log::error('Failed to send OTP email during registration', [
+                'user_id' => $user->id,
+                'error'   => $e->getMessage(),
+            ]);
+            session()->flash('status', 'We could not send your verification code by email. Please use the "Resend code" option on the next page.');
+        }
 
         Auth::login($user);
 

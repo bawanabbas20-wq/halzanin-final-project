@@ -19,11 +19,23 @@ class UserSeeder extends Seeder
             'role' => 'citizen',
         ]);
 
+        // Civil Registry is the default ministry for scoped demo accounts.
+        $ministryId = \App\Models\Ministry::where('slug', 'civil-registry')->value('id');
+
         \App\Models\User::create([
             'name' => 'Staff User',
             'email' => 'staff@test.com',
             'password' => \Illuminate\Support\Facades\Hash::make('password123'),
             'role' => 'staff',
+            'ministry_id' => $ministryId,
+        ]);
+
+        \App\Models\User::create([
+            'name' => 'Ministry Admin User',
+            'email' => 'ministry.admin@test.com',
+            'password' => \Illuminate\Support\Facades\Hash::make('password123'),
+            'role' => 'ministry_admin',
+            'ministry_id' => $ministryId,
         ]);
 
         \App\Models\User::create([

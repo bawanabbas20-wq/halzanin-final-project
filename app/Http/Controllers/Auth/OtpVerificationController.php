@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
@@ -63,10 +64,19 @@ class OtpVerificationController extends Controller
             'otp_expires_at' => now()->addMinutes(10),
         ])->save();
 
-        Mail::send('emails.otp', ['otp' => $otp, 'user' => $user], function ($message) use ($user) {
-            $message->to($user->email)
-                    ->subject('Your verification code — ' . config('app.name'));
-        });
+        try {
+            Mail::send('emails.otp', ['otp' => $otp, 'user' => $user], function ($message) use ($user) {
+                $message->to($user->email)
+                        ->subject('Your verification code — ' . config('app.name'));
+            });
+        } catch (\Throwable $e) {
+            Log::error('Failed to resend OTP email', [
+                'user_id' => $user->id,
+                'error'   => $e->getMessage(),
+            ]);
+
+            return back()->withErrors(['otp' => 'We could not send the verification code right now. Please try again in a moment.']);
+        }
 
         return back()->with('resent', true);
     }
