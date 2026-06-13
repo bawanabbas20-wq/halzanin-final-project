@@ -82,18 +82,35 @@
                        class="block w-full h-[42px] ltr:pl-10 rtl:pr-10 rtl:pl-3 ltr:pr-3 rounded-xl border-gray-200 dark:border-gray-700 dark:bg-[#141414] dark:text-white focus:border-brand focus:ring-0 text-sm transition-colors">
             </div>
 
-            {{-- Filter Chips --}}
-            <div class="flex gap-2 items-center overflow-x-auto pb-0.5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden [&>button]:shrink-0" id="filterChips">
-                <button data-filter="all"
-                        class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-brand text-white border border-brand shadow-sm"
-                        data-i18n="All">All</button>
-                {{-- Chips are built dynamically from the real per-service status flows
-                     so the queue filters always match the statuses applications can have. --}}
-                @foreach ($statusFilters as $key => $label)
-                <button data-filter="{{ $key }}"
-                        class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-[#252525] text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#2E2E2E]"
-                        data-i18n="status.{{ $key }}">{{ $label }}</button>
-                @endforeach
+            {{-- Status Filter (dropdown) — keeps the bar clean instead of a long
+                 scrolling row of chips. Options are still built dynamically from
+                 the real per-service status flows. --}}
+            <div class="relative shrink-0 w-full xl:w-auto" id="statusFilterMenu">
+                <button type="button" id="statusFilterTrigger"
+                        class="w-full xl:w-56 flex items-center justify-between gap-2 h-[42px] px-4 rounded-xl text-sm font-semibold bg-white dark:bg-[#252525] text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#2E2E2E] transition-colors">
+                    <span class="flex items-center gap-2 min-w-0">
+                        <svg class="w-4 h-4 shrink-0 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h18M6 8h12M10 12h4M9 16h6"/>
+                        </svg>
+                        <span class="text-gray-400 dark:text-gray-500 shrink-0" data-i18n="Status">Status</span>
+                        <span id="statusFilterLabel" class="text-brand dark:text-blue-400 truncate" data-i18n="All">All</span>
+                    </span>
+                    <svg id="statusFilterChevron" class="w-4 h-4 shrink-0 text-gray-400 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </button>
+
+                <div id="statusFilterPanel"
+                     class="hidden absolute z-30 mt-2 ltr:left-0 rtl:right-0 w-full xl:w-60 max-h-72 overflow-y-auto bg-white dark:bg-[#1F1F1F] rounded-xl shadow-xl border border-gray-100 dark:border-slate-700 p-1.5">
+                    <button type="button" data-filter="all"
+                            class="filter-opt w-full text-left px-3 py-2 rounded-lg text-sm font-semibold transition-colors bg-brand/10 text-brand dark:bg-brand/20 dark:text-blue-400"
+                            data-i18n="All">All</button>
+                    @foreach ($statusFilters as $key => $label)
+                    <button type="button" data-filter="{{ $key }}"
+                            class="filter-opt w-full text-left px-3 py-2 rounded-lg text-sm font-semibold transition-colors text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#2E2E2E]"
+                            data-i18n="status.{{ $key }}">{{ $label }}</button>
+                    @endforeach
+                </div>
             </div>
         </div>
 
@@ -528,7 +545,6 @@
             });
 
             const searchInput = document.getElementById('searchInput');
-            const filterBtns  = document.querySelectorAll('.filter-btn');
             const appItems    = document.querySelectorAll('.app-item');
 
             let currentFilter = 'all';
@@ -551,16 +567,47 @@
                 });
             }
 
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    filterBtns.forEach(b => {
-                        b.className = 'filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-[#252525] text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#2E2E2E]';
-                    });
-                    e.target.className = 'filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-brand text-white border border-brand shadow-sm';
-                    currentFilter = e.target.getAttribute('data-filter');
-                    applyFilters();
+            // ── Status filter dropdown ──────────────────────────
+            const sfMenu    = document.getElementById('statusFilterMenu');
+            const sfTrigger = document.getElementById('statusFilterTrigger');
+            const sfPanel   = document.getElementById('statusFilterPanel');
+            const sfLabel   = document.getElementById('statusFilterLabel');
+            const sfChevron = document.getElementById('statusFilterChevron');
+            const sfOptions = document.querySelectorAll('.filter-opt');
+
+            const SF_BASE     = 'filter-opt w-full text-left px-3 py-2 rounded-lg text-sm font-semibold transition-colors ';
+            const SF_ACTIVE   = 'bg-brand/10 text-brand dark:bg-brand/20 dark:text-blue-400';
+            const SF_INACTIVE = 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#2E2E2E]';
+
+            function closeStatusMenu() {
+                if (!sfPanel) return;
+                sfPanel.classList.add('hidden');
+                sfChevron.classList.remove('rotate-180');
+            }
+
+            if (sfTrigger) {
+                sfTrigger.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const willOpen = sfPanel.classList.contains('hidden');
+                    sfPanel.classList.toggle('hidden', !willOpen);
+                    sfChevron.classList.toggle('rotate-180', willOpen);
                 });
-            });
+
+                document.addEventListener('click', (e) => {
+                    if (sfMenu && !sfMenu.contains(e.target)) closeStatusMenu();
+                });
+
+                sfOptions.forEach(opt => {
+                    opt.addEventListener('click', () => {
+                        sfOptions.forEach(o => o.className = SF_BASE + SF_INACTIVE);
+                        opt.className = SF_BASE + SF_ACTIVE;
+                        currentFilter = opt.getAttribute('data-filter');
+                        sfLabel.textContent = opt.textContent.trim();
+                        closeStatusMenu();
+                        applyFilters();
+                    });
+                });
+            }
         });
     </script>
 @endsection
