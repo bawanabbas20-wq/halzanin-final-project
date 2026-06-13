@@ -68,7 +68,7 @@
         @endif
 
         {{-- Filter & Search Bar --}}
-        <div id="queueFilters" class="{{ $viewMode === 'calendar' ? 'hidden' : '' }} bg-white dark:bg-[#1F1F1F] p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 animate-fade-up flex flex-col xl:flex-row gap-4" style="animation-delay: 100ms">
+        <div id="queueFilters" class="{{ $viewMode === 'calendar' ? 'hidden' : '' }} relative z-30 bg-white dark:bg-[#1F1F1F] p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 animate-fade-up flex flex-col xl:flex-row gap-4" style="animation-delay: 100ms">
             {{-- Search --}}
             <div class="relative w-full xl:w-80 shrink-0">
                 <div class="absolute inset-y-0 ltr:left-0 rtl:right-0 ltr:pl-3.5 rtl:pr-3.5 flex items-center pointer-events-none">
@@ -101,7 +101,7 @@
                 </button>
 
                 <div id="statusFilterPanel"
-                     class="hidden absolute z-30 mt-2 ltr:left-0 rtl:right-0 w-full xl:w-60 max-h-72 overflow-y-auto bg-white dark:bg-[#1F1F1F] rounded-xl shadow-xl border border-gray-100 dark:border-slate-700 p-1.5">
+                     class="hidden absolute z-40 mt-2 ltr:left-0 rtl:right-0 w-full xl:w-60 max-h-72 overflow-y-auto bg-white dark:bg-[#1F1F1F] rounded-xl shadow-xl border border-gray-100 dark:border-slate-700 p-1.5">
                     <button type="button" data-filter="all"
                             class="filter-opt w-full text-left px-3 py-2 rounded-lg text-sm font-semibold transition-colors bg-brand/10 text-brand dark:bg-brand/20 dark:text-blue-400"
                             data-i18n="All">All</button>
