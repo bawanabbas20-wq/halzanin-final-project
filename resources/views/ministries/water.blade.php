@@ -719,7 +719,7 @@ html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
   function applyTheme(d){html.classList.toggle('dark',d)}
   const s=localStorage.theme || localStorage.getItem('halzanin-theme'),p=window.matchMedia('(prefers-color-scheme: dark)').matches;
   applyTheme(s?s==='dark':p);
-  window.toggleDark=function(){const d=html.classList.toggle('dark');localStorage.theme=d?'dark':'light';localStorage.setItem(\'halzanin-theme\',d?'dark':'light')};
+  window.toggleDark=function(){const d=html.classList.toggle('dark');localStorage.theme=d?'dark':'light';localStorage.setItem('halzanin-theme',d?'dark':'light')};
   const langKuBtn=document.getElementById('lang-ku-btn'),langEnBtn=document.getElementById('lang-en-btn');
   window.setLang=function(l){
     document.body.classList.toggle('lang-ku',l==='ku');

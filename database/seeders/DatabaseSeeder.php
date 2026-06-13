@@ -12,11 +12,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        // Order matters: ministries/services must exist before UserSeeder,
+        // which links the demo staff/ministry-admin accounts to a ministry.
+        $this->call([
+            MinistriesAndServicesSeeder::class,
+            UserSeeder::class,
+        ]);
     }
 }

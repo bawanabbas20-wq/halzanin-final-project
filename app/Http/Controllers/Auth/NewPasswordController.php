@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
@@ -35,6 +37,33 @@ class NewPasswordController extends Controller
             'email'    => ['required', 'email', 'max:254'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+
+        // SECURITY: Explicitly enforce token expiry.
+        // Laravel's broker treats a NULL/unreadable `created_at` as "now" (via
+        // Carbon::parse(null)), which makes a reset token live forever on some DB
+        // setups. We reject any token whose `created_at` is missing or older than
+        // the configured expiry window, so a stale link can never reset a password.
+        $record = DB::table('password_reset_tokens')
+            ->where('email', $request->input('email'))
+            ->first();
+
+        $expireMinutes = (int) config('auth.passwords.users.expire', 60);
+
+        $tokenExpired = ! $record
+            || empty($record->created_at)
+            || Carbon::parse($record->created_at)->addMinutes($expireMinutes)->isPast();
+
+        if ($tokenExpired) {
+            // Clean up the dead token so it cannot be retried.
+            if ($record) {
+                DB::table('password_reset_tokens')
+                    ->where('email', $request->input('email'))
+                    ->delete();
+            }
+
+            return back()->withInput($request->only('email'))
+                         ->withErrors(['email' => __(Password::INVALID_TOKEN)]);
+        }
 
         // Here we will attempt to reset the user's password. If it is successful we
         // will update the password on an actual user model and persist it to the

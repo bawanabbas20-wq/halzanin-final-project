@@ -955,7 +955,7 @@ html.dark .icon-sun{display:none}html.dark .icon-moon{display:block}
   applyTheme(saved ? saved === 'dark' : prefersDark);
   window.toggleDark = function(){
     const isDark = html.classList.toggle('dark');
-    localStorage.theme= isDark ? 'dark' : 'light';localStorage.setItem(\'halzanin-theme\', isDark ? 'dark' : 'light');
+    localStorage.theme= isDark ? 'dark' : 'light';localStorage.setItem('halzanin-theme', isDark ? 'dark' : 'light');
   };
 
   // ── Language ─────────────────────────────────────────

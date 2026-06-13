@@ -144,7 +144,7 @@
 
     {{-- Action Buttons --}}
     <div class="w-full flex flex-col space-y-3 mt-8 animate-fade-up print:hidden" style="animation-delay: 500ms;">
-        <a href="{{ route('citizen.applications.receipt.pdf', $application) }}"
+        <a href="{{ route('citizen.applications.receipt.pdf', $application) }}" download
             class="flex items-center justify-center w-full h-[52px] bg-brand text-white rounded-[10px] font-semibold font-outfit shadow-brand-btn hover:shadow-brand-btn-hover hover:-translate-y-[1px] transition-all">
             <svg class="w-5 h-5 ltr:mr-2 rtl:ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>

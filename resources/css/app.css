@@ -44,6 +44,27 @@ input:focus, select:focus, textarea:focus {
   outline: none;
 }
 
+/* ── Suppress browser-native input controls ──
+   Edge/IE inject their own reveal-password "eye" and clear "X" icons on the
+   right edge of inputs. These overlap our custom field icons and custom eye
+   toggles, so we hide them site-wide and rely on our own controls instead. */
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}
+/* Chrome/Safari: hide the native search-clear and the contacts/credentials
+   autofill buttons so they don't sit on top of our field icons. */
+input::-webkit-search-cancel-button,
+input::-webkit-credentials-auto-fill-button,
+input::-webkit-contacts-auto-fill-button {
+  visibility: hidden;
+  display: none !important;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+  margin: 0;
+}
+
 /* ── Stat card pulse dot ── */
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; transform: scale(1); }

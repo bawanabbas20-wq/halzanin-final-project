@@ -159,6 +159,20 @@ class ChatbotController extends Controller
         $isKurdish = preg_match('/[\p{Arabic}]/u', $message) === 1
             || Str::contains($text, ['kurdish', 'sorani', 'کوردی']);
 
+        // Greetings / small talk — respond warmly and offer guidance.
+        if (Str::contains($text, ['hi', 'hello', 'hey', 'hallo', 'salam', 'good morning', 'good evening', 'سڵاو', 'سلاو', 'چۆنی', 'بەخێربێیت'])) {
+            return $isKurdish
+                ? 'سڵاو! 👋 من یاریدەدەری هەڵژانینم. دەتوانم یارمەتیت بدەم لەسەر خزمەتگوزارییە حکومییەکان، بەڵگەنامە پێویستەکان، و شوێنکەوتنی داواکارییەکانت. چی پێویستتە؟'
+                : 'Hello! 👋 I\'m the Halzanîn Assistant. I can help you with government services, required documents, and tracking your applications. What would you like to know?';
+        }
+
+        // Thanks
+        if (Str::contains($text, ['thank', 'thanks', 'سوپاس', 'زۆر سوپاس'])) {
+            return $isKurdish
+                ? 'سەرچاوە! 😊 ئەگەر شتێکی تر پێویستت بوو، لێرەم.'
+                : 'You\'re welcome! 😊 If you need anything else, I\'m here to help.';
+        }
+
         if (Str::contains($text, ['national id', 'ناسنامە', 'هویت'])) {
             return $isKurdish
                 ? 'بۆ کارتی ناسنامەی نەتەوەیی پێویستتە: ناسنامەی کۆن، بڕوانامەی لەدایکبوون، دەفتەری خێزانی، و وێنەی ئەخیر. داواکاری لە /services/national-id بکە.'
@@ -242,8 +256,8 @@ class ChatbotController extends Controller
         }
 
         return $isKurdish
-            ? 'پەیوەندی هوشی دەستکرد کێشەی هەیە، بەڵام دەتوانم یارمەتیت بدەم لە زانیاری خزمەتگوزاریەکان، بەلگەنامە پێویستەکان، و شوێنکەوتنی داواکاری. چی پێویستتە؟'
-            : 'The AI connection is temporarily unavailable, but I can still help with service information, required documents, and application tracking. What do you need?';
+            ? 'دەتوانم یارمەتیت بدەم لەسەر خزمەتگوزارییە حکومییەکان وەک ناسنامەی نەتەوەیی، مۆڵەتی شۆفێری، پەیوەندی ئاو و کارەبا، و مۆڵەتی بازرگانی — هەروەها بەڵگەنامە پێویستەکان و شوێنکەوتنی داواکارییەکانت. تکایە ناوی خزمەتگوزارییەک بنووسە یان پرسیار بکە.'
+            : 'I can help with government services like National ID, Driving License, Water and Electricity connections, and Business License — plus the documents you\'ll need and how to track your applications. Try asking about a specific service, or type a service name.';
     }
 
     private function appendRulesToQuery(string $userQuery, string $rulesPrompt): string

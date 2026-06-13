@@ -223,7 +223,7 @@
 
                         {{-- Bell button --}}
                         <button type="button"
-                                x-on:click="open = !open; if(open) fetchNotifs()"
+                                x-on:click="open = !open; if(open) fetch()"
                                 class="relative p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -246,7 +246,7 @@
                              x-transition:leave-start="opacity-100 scale-100 translate-y-0"
                              x-transition:leave-end="opacity-0 scale-95 translate-y-1"
                              style="display:none"
-                             class="absolute ltr:right-0 rtl:left-0 top-full mt-2 w-80 bg-white dark:bg-[#1F1F1F] rounded-[14px] shadow-xl border border-gray-100 dark:border-slate-700 overflow-hidden z-50">
+                             class="fixed top-16 inset-x-3 w-auto mt-0 sm:absolute sm:top-full sm:inset-x-auto sm:ltr:right-0 sm:rtl:left-0 sm:mt-2 sm:w-80 bg-white dark:bg-[#1F1F1F] rounded-[14px] shadow-xl border border-gray-100 dark:border-slate-700 overflow-hidden z-50">
 
                             {{-- Dropdown header --}}
                             <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800/50">
@@ -539,15 +539,25 @@
                     var href = a.getAttribute('href');
                     if (!href || href === '#' || href[0] === '#' || href.startsWith('javascript') || href.startsWith('mailto') || href.startsWith('tel')) return;
                     if (a.getAttribute('target') === '_blank') return;
+                    // File downloads don't navigate the page, so showing the skeleton
+                    // would leave it stuck. Skip them (e.g. the PDF receipt).
+                    if (a.hasAttribute('download')) return;
+                    if (/\.(pdf|png|jpe?g|gif|svg|csv|xlsx?|docx?|zip|txt)(\?|$)/i.test(href)) return;
                     try {
                         var u = new URL(href, location.origin);
                         if (u.origin !== location.origin) return;
                     } catch (err) { return; }
                     sk.classList.remove('hidden');
+                    // Safety net: if no navigation happens within 10s, hide it again
+                    // so the user is never stranded on a frozen skeleton.
+                    clearTimeout(window.__navSkTimer);
+                    window.__navSkTimer = setTimeout(function() { sk.classList.add('hidden'); }, 10000);
                 });
-                // Reset skeleton if page is restored from bfcache
-                window.addEventListener('pageshow', function(e) {
-                    if (e.persisted) sk.classList.add('hidden');
+                // Always hide the skeleton when the page is shown (including bfcache
+                // back/forward restores), so it can never persist across views.
+                window.addEventListener('pageshow', function() {
+                    clearTimeout(window.__navSkTimer);
+                    sk.classList.add('hidden');
                 });
             })();
         </script>
