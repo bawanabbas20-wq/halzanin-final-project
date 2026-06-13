@@ -238,13 +238,19 @@
 
                             @if(count($nextStatuses) > 0)
                                 <form method="POST"
+                                      id="statusUpdateForm"
                                       action="{{ route('staff.applications.update-status', $application->id) }}"
                                       class="w-full"
-                                      x-data="{ status: '{{ old('new_status') }}', notes: `{{ old('notes') }}`, confirmed: false }"
+                                      x-data="{ status: '{{ old('new_status') }}', notes: `{{ old('notes') }}` }"
                                       @submit.prevent="
-                                          if (status === 'rejected' && !confirmed) { $dispatch('open-modal', 'confirm-rejection') }
-                                          else if (status === 'approved' && !confirmed) { $dispatch('open-modal', 'confirm-approval') }
-                                          else { $el.submit() }
+                                          if (status === 'rejected') {
+                                              if (notes.trim() === '') { $refs.notesField.focus(); return; }
+                                              $dispatch('open-modal', 'confirm-rejection');
+                                          } else if (status === 'approved') {
+                                              $dispatch('open-modal', 'confirm-approval');
+                                          } else {
+                                              $el.submit();
+                                          }
                                       ">
                                     @csrf
                                     @method('PATCH')
@@ -267,14 +273,17 @@
                                         </div>
                                     </div>
 
-                                    <div class="mb-5" x-show="status !== 'rejected'">
-                                        <label for="notes" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5" data-i18n="staff.notes_for_citizen">Notes for the citizen</label>
-                                        <textarea id="notes" name="notes" rows="3" x-model="notes"
+                                    <div class="mb-5">
+                                        <label for="notes" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">
+                                            <span x-show="status === 'rejected'" data-i18n="staff.rejection_reason">Rejection reason (required)</span>
+                                            <span x-show="status !== 'rejected'" data-i18n="staff.notes_for_citizen">Notes for the citizen</span>
+                                        </label>
+                                        <textarea id="notes" name="notes" rows="3" x-model="notes" x-ref="notesField" :required="status === 'rejected'"
                                                   class="block w-full p-3 rounded-xl border-gray-200 dark:border-gray-600 dark:bg-[#141414] dark:text-white focus:border-brand focus:ring-0 transition-all text-sm resize-none"></textarea>
                                         <p class="text-xs text-gray-400 dark:text-gray-500 mt-1" data-i18n="staff.notes_help">Visible on the citizen's public tracking page.</p>
                                     </div>
 
-                                    <button type="submit" x-ref="submitBtn"
+                                    <button type="submit"
                                             class="w-full h-[52px] bg-brand text-white rounded-xl font-semibold font-outfit shadow-brand-btn hover:shadow-brand-btn-hover hover:-translate-y-0.5 transition-all">
                                         <span data-i18n="staff.update_status">Update Status</span>
                                     </button>
@@ -298,7 +307,7 @@
                                                         class="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 dark:bg-[#2E2E2E] dark:hover:bg-[#3A3A3A] text-gray-700 dark:text-gray-200 rounded-xl font-semibold transition-colors text-sm">
                                                     <span data-i18n="common.cancel">Cancel</span>
                                                 </button>
-                                                <button type="button" x-on:click="confirmed = true; $refs.submitBtn.click()"
+                                                <button type="button" x-on:click="$dispatch('close'); document.getElementById('statusUpdateForm').submit()"
                                                         class="px-5 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-xl font-semibold shadow-md transition-colors text-sm flex items-center gap-2">
                                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
@@ -323,12 +332,9 @@
                                             <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
                                                 <span data-i18n="staff.confirm_rejection_body">Are you sure you want to reject this application? This cannot be undone.</span>
                                             </p>
-                                            <div class="mb-6">
-                                                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2" data-i18n="staff.rejection_reason">Rejection reason (required)</label>
-                                                <textarea rows="4" x-model="notes" required x-ref="rejectNotes"
-                                                          placeholder="Please explain why this application is being rejected..."
-                                                          data-i18n-placeholder="staff.rejection_placeholder"
-                                                          class="block w-full p-3 rounded-xl border-gray-200 dark:border-gray-600 dark:bg-[#141414] dark:text-white focus:border-red-500 focus:ring-0 transition-all text-sm resize-none"></textarea>
+                                            <div class="mb-6 rounded-xl bg-gray-50 dark:bg-white/[0.03] border border-gray-100 dark:border-[#2E2E2E] p-3">
+                                                <p class="text-[11px] font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-1" data-i18n="staff.rejection_reason">Rejection reason</p>
+                                                <p class="text-sm text-gray-700 dark:text-gray-200 whitespace-pre-line" x-text="notes"></p>
                                             </div>
                                             <div class="flex items-center justify-end gap-3">
                                                 <button type="button" x-on:click="$dispatch('close-modal', 'confirm-rejection')"
@@ -336,7 +342,7 @@
                                                     <span data-i18n="common.cancel">Cancel</span>
                                                 </button>
                                                 <button type="button"
-                                                        x-on:click="if(notes.trim() !== '') { confirmed = true; $refs.submitBtn.click(); } else { $refs.rejectNotes.focus(); }"
+                                                        x-on:click="$dispatch('close'); document.getElementById('statusUpdateForm').submit()"
                                                         class="px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl font-semibold shadow-md transition-colors text-sm">
                                                     <span data-i18n="staff.confirm_rejection">Confirm Rejection</span>
                                                 </button>
