@@ -64,6 +64,18 @@
                 </button>
             </form>
         </div>
+
+        <!-- Sign out (escape hatch if this isn't your account) -->
+        <div class="mt-4 pt-4 border-t border-gray-100 dark:border-slate-700 text-center text-sm text-gray-500 dark:text-gray-400">
+            Wrong account?
+            <form method="POST" action="{{ route('logout') }}" class="inline">
+                @csrf
+                <button type="submit"
+                        class="font-semibold text-gray-600 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 hover:underline transition-colors">
+                    Sign out
+                </button>
+            </form>
+        </div>
     </div>
 
     <script>

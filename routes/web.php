@@ -119,6 +119,7 @@ Route::middleware(['auth', 'verified.otp', 'role:admin', 'throttle:authenticated
     Route::patch('/admin/users/{user}/role', [AdminController::class, 'updateUserRole'])->name('admin.users.update-role');
     Route::patch('/admin/users/{user}/ministry', [AdminController::class, 'updateUserMinistry'])->name('admin.users.update-ministry');
     Route::patch('/admin/users/{user}/task-types', [AdminController::class, 'updateStaffTaskTypes'])->name('admin.users.update-task-types');
+    Route::delete('/admin/users/{user}', [AdminController::class, 'destroyUser'])->name('admin.users.destroy');
     Route::get('/admin/off-days', [AdminController::class, 'offDays'])->name('admin.offdays');
     Route::post('/admin/off-days', [AdminController::class, 'addOffDay'])->name('admin.offdays.store');
     Route::delete('/admin/off-days/{offDay}', [AdminController::class, 'removeOffDay'])->name('admin.offdays.destroy');

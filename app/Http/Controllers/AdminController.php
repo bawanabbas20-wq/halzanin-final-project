@@ -7,9 +7,11 @@ use App\Models\Ministry;
 use App\Models\OffDay;
 use App\Models\Service;
 use App\Models\TaskType;
+use App\Models\AccountDeletion;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -101,6 +103,49 @@ class AdminController extends Controller
 
         return redirect()->route('admin.users')
             ->with('success', 'Ministry assignment updated.');
+    }
+
+    /**
+     * Permanently delete a user account. Restricted to administrators
+     * (enforced by the route's role:admin middleware). A written reason is
+     * mandatory and the action is recorded to the account_deletions audit log.
+     */
+    public function destroyUser(Request $request, User $user)
+    {
+        // An administrator cannot delete their own account.
+        if ($user->is(Auth::user())) {
+            return redirect()->route('admin.users')
+                ->with('error', 'You cannot delete your own account.');
+        }
+
+        $validated = $request->validate([
+            // A clear, official reason is required for the permanent record.
+            'reason' => 'required|string|min:10|max:1000',
+        ], [
+            'reason.required' => 'A reason is required to delete an account.',
+            'reason.min'      => 'Please provide a clear reason (at least 10 characters).',
+        ]);
+
+        // Record the audit entry and delete the account atomically.
+        DB::transaction(function () use ($user, $validated) {
+            AccountDeletion::create([
+                'deleted_user_id' => $user->id,
+                'name'            => $user->name,
+                'email'           => $user->email,
+                'role'            => $user->role,
+                'gov_id'          => $user->gov_id,
+                'reason'          => $validated['reason'],
+                'deleted_by'      => Auth::id(),
+                'deleted_by_name' => Auth::user()->name,
+            ]);
+
+            // Related records (applications, appointments, vault documents,
+            // role assignments) are removed via cascading foreign keys.
+            $user->delete();
+        });
+
+        return redirect()->route('admin.users')
+            ->with('success', "{$user->name}'s account has been permanently deleted. The action and reason were recorded.");
     }
 
     public function addOffDay(Request $request)

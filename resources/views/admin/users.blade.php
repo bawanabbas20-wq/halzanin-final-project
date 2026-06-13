@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="max-w-6xl mx-auto pb-10"
-         x-data="{ pendingForm: null, pendingName: '', pendingRole: '', assignSubRoleUserId: null }">
+         x-data="{ pendingForm: null, pendingName: '', pendingRole: '', assignSubRoleUserId: null, deleteUserId: null, deleteUserName: '' }">
 
         {{-- Header --}}
         <div class="flex items-center justify-between mb-6 animate-fade-in">
@@ -39,6 +39,15 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                 </svg>
                 {{ session('error') }}
+            </div>
+        @endif
+
+        @if ($errors->any())
+            <div class="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 px-4 py-3 rounded-xl mb-6 animate-fade-in flex items-center gap-2">
+                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                </svg>
+                {{ $errors->first() }}
             </div>
         @endif
 
@@ -166,6 +175,15 @@
                                                 </button>
                                             </form>
                                             @endif
+
+                                            <button type="button"
+                                                    x-on:click="deleteUserId = {{ $user->id }}; deleteUserName = @js($user->name); $dispatch('open-modal', 'confirm-user-delete')"
+                                                    class="h-[30px] px-3 inline-flex items-center gap-1.5 text-[11px] font-semibold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-colors">
+                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                                </svg>
+                                                <span data-i18n="Delete Account">Delete Account</span>
+                                            </button>
                                         </div>
                                     @endif
                                 </td>
@@ -270,6 +288,55 @@
                     <button type="button" x-on:click="$dispatch('close')" class="w-full py-2.5 text-sm font-semibold text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors">Close</button>
                 @endif
             </div>
+        </x-modal>
+
+        {{-- Delete Account Confirmation Modal --}}
+        <x-modal name="confirm-user-delete" maxWidth="sm">
+            <form method="POST" :action="'/admin/users/' + deleteUserId" class="p-6 bg-white dark:bg-[#1F1F1F]">
+                @csrf
+                @method('DELETE')
+
+                <div class="flex items-center gap-4 mb-5">
+                    <div class="w-11 h-11 rounded-full bg-red-50 dark:bg-red-900/30 flex items-center justify-center shrink-0">
+                        <svg class="w-5 h-5 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="text-base font-bold text-gray-900 dark:text-white font-outfit" data-i18n="Delete User Account">Delete User Account</h2>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5" data-i18n="admin.delete_user_desc">This permanently removes the account and all associated records.</p>
+                    </div>
+                </div>
+
+                <div class="bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-800/50 rounded-xl px-4 py-3 mb-5 text-sm text-red-700 dark:text-red-300">
+                    You are about to permanently delete <span class="font-bold" x-text="deleteUserName"></span>'s account.
+                    This action cannot be undone and will be recorded in the audit log.
+                </div>
+
+                <div class="mb-5">
+                    <label for="delete-reason" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-1.5" data-i18n="admin.delete_reason_label">
+                        Reason for deletion <span class="text-red-500">*</span>
+                    </label>
+                    <textarea id="delete-reason" name="reason" rows="3" required minlength="10" maxlength="1000"
+                              placeholder="State the official reason for removing this account (e.g. duplicate registration, fraudulent account, citizen request)."
+                              data-i18n-placeholder="admin.delete_reason_placeholder"
+                              class="block w-full rounded-xl border-gray-300 dark:border-gray-600 dark:bg-[#141414] dark:text-white text-sm focus:border-red-500 focus:ring-0 focus:shadow-[0_0_0_3px_rgba(239,68,68,0.2)] transition-all"></textarea>
+                    <p class="mt-1.5 text-[11px] text-gray-400 dark:text-gray-500" data-i18n="admin.delete_reason_hint">
+                        Minimum 10 characters. This reason is stored permanently for accountability.
+                    </p>
+                </div>
+
+                <div class="flex justify-end gap-3">
+                    <button type="button" x-on:click="$dispatch('close')"
+                            class="px-5 py-2.5 text-sm font-semibold text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-xl transition-colors">
+                        <span data-i18n="Cancel">Cancel</span>
+                    </button>
+                    <button type="submit"
+                            class="px-5 py-2.5 text-sm font-semibold text-white bg-red-600 hover:bg-red-700 rounded-xl transition-all shadow-sm">
+                        <span data-i18n="admin.delete_permanently">Permanently Delete</span>
+                    </button>
+                </div>
+            </form>
         </x-modal>
 
     </div>
