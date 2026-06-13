@@ -37,6 +37,13 @@ Route::get('/ministry/health',         fn() => view('ministries.health'))->name(
 // Public service detail pages (no auth required)
 Route::get('/services/{slug}', [ServiceController::class, 'show'])->name('services.show');
 
+// Chatbot endpoints — public (the assistant only serves general portal info).
+// Throttled because each call may hit a paid AI API.
+Route::middleware('throttle:30,1')->group(function () {
+    Route::post('/chatbot/chat', [ChatbotController::class, 'chat'])->name('chatbot.chat');
+    Route::post('/chat', [ChatbotController::class, 'chat'])->name('chatbot.chat.legacy');
+});
+
 // Service apply form + submit (auth + citizen role required)
 Route::middleware(['auth', 'verified.otp', 'role:citizen', 'throttle:authenticated'])->group(function () {
     Route::get('/apply/{slug}', [ServiceController::class, 'applyForm'])->name('services.apply');
@@ -150,10 +157,6 @@ Route::middleware(['auth', 'verified.otp', 'throttle:authenticated'])->group(fun
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    // Chatbot endpoints
-    Route::post('/chatbot/chat', [ChatbotController::class, 'chat'])->name('chatbot.chat');
-    Route::post('/chat', [ChatbotController::class, 'chat'])->name('chatbot.chat.legacy');
 
     // Notifications endpoints
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');

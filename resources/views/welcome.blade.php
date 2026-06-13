@@ -1373,12 +1373,6 @@
         var IS_GUEST   = {{ auth()->check() ? 'false' : 'true' }};
 
         var WELCOME_MSG = function() {
-            var lang = document.documentElement.lang === 'ku' ? 'ku' : 'en';
-            if (IS_GUEST) {
-                return lang === 'ku'
-                    ? 'سڵاو! من یاریدەدەری هەڵزانینم. تکایە چوونەژوورەوە بکەرەوە بۆ ئەوەی پرسیارەکانت بدەیت.'
-                    : "Hello! I'm the Halzanîn Assistant. Please sign in to ask questions about your applications or the portal's services.";
-            }
             return window.i18n ? i18n('chat.welcome') : "Hello! I'm your Halzanîn Assistant. Ask me anything about government services, required documents, or how to use the portal!";
         };
 
@@ -1392,7 +1386,6 @@
         };
 
         function sendQuickQuestion(button) {
-            if (IS_GUEST) { appendMsg('ai', WELCOME_MSG()); return; }
             var lang = getCurrentUiLang();
             var q    = lang === 'ku' ? button.dataset.ku : button.dataset.en;
             if (!q) return;
@@ -1416,7 +1409,7 @@
                 var msgs = document.getElementById('chatbot-messages');
                 if (msgs.children.length === 0) appendMsg('ai', WELCOME_MSG());
                 window.updateChatQuickPrompts(getCurrentUiLang());
-                if (!IS_GUEST) setTimeout(function() { document.getElementById('chatbot-input').focus(); }, 100);
+                setTimeout(function() { document.getElementById('chatbot-input').focus(); }, 100);
             } else {
                 win.style.display = 'none';
                 iconO.style.display = 'block'; iconC.style.display = 'none';
@@ -1445,7 +1438,6 @@
         function removeTyping() { var el = document.getElementById('chatbot-typing'); if (el) el.remove(); }
 
         async function sendChatMessage() {
-            if (IS_GUEST) { appendMsg('ai', WELCOME_MSG()); return; }
             var input = document.getElementById('chatbot-input');
             var msg   = input.value.trim();
             if (!msg) return;
