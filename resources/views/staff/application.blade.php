@@ -121,7 +121,11 @@
                                                 </svg>
                                             </div>
                                             <div class="min-w-0">
-                                                @if($doc->source === 'upload' && $doc->file_path)
+                                                @php
+                                                    $hasFile = ($doc->source === 'upload' && $doc->file_path)
+                                                        || ($doc->source === 'vault' && $doc->vault_document_id);
+                                                @endphp
+                                                @if($hasFile)
                                                     <a href="{{ route('staff.documents.view', $doc->id) }}"
                                                        class="text-sm font-semibold text-brand dark:text-amber-400 hover:underline truncate block"
                                                        target="_blank">{{ $doc->original_name ?? $doc->document_name }}</a>
@@ -129,7 +133,13 @@
                                                     <p class="text-sm font-semibold text-gray-700 dark:text-gray-300 truncate">{{ $doc->original_name ?? $doc->document_name }}</p>
                                                 @endif
                                                 <p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
-                                                    {{ $doc->source === 'upload' ? number_format(($doc->file_size ?? 0) / 1024, 1) . ' KB' : ucfirst($doc->source) }}
+                                                    @if($doc->source === 'upload')
+                                                        {{ number_format(($doc->file_size ?? 0) / 1024, 1) }} KB · <span data-i18n="staff.doc_click_view">click to view</span>
+                                                    @elseif($doc->source === 'vault')
+                                                        <span data-i18n="staff.doc_from_vault">From Document Vault · click to view</span>
+                                                    @else
+                                                        <span data-i18n="staff.doc_in_person">To be presented in person</span>
+                                                    @endif
                                                 </p>
                                             </div>
                                         </div>

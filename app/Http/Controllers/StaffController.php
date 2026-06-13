@@ -7,6 +7,8 @@ use App\Models\Application;
 use App\Models\Document;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Storage;
 
 class StaffController extends Controller
 {
@@ -102,13 +104,40 @@ class StaffController extends Controller
         return response()->json(['success' => true, 'status' => $appointment->status]);
     }
 
-    public function viewDocument(Document $document)
+    public function viewDocument(Document $document, string $format = 'pdf')
     {
-        abort_if($document->source !== 'upload' || !$document->file_path, 404);
+        // Directly uploaded file — stream from storage.
+        if ($document->source === 'upload' && $document->file_path) {
+            $fullPath = storage_path('app/' . $document->file_path);
+            abort_unless(file_exists($fullPath), 404);
 
-        $fullPath = storage_path('app/' . $document->file_path);
-        abort_unless(file_exists($fullPath), 404);
+            return response()->file($fullPath);
+        }
 
-        return response()->file($fullPath);
+        // Vault document — the applicant linked an encrypted scan from their
+        // Document Vault. Staff with view_documents permission may review it.
+        if ($document->source === 'vault' && $document->vault_document_id) {
+            $vault = $document->vaultDocument;
+            abort_if(! $vault, 404);
+
+            $path = $format === 'image' ? $vault->encrypted_image_path : $vault->encrypted_pdf_path;
+            abort_if(! $path || ! Storage::exists($path), 404);
+
+            try {
+                $content = Crypt::decrypt(Storage::get($path));
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                abort(500, 'Could not decrypt file.');
+            }
+
+            $isPdf = $format !== 'image';
+
+            return response($content, 200, [
+                'Content-Type'        => $isPdf ? 'application/pdf' : 'image/jpeg',
+                'Content-Disposition' => 'inline; filename="' . ($vault->original_name ?? 'document') . '.' . ($isPdf ? 'pdf' : 'jpg') . '"',
+            ]);
+        }
+
+        // "Confirmed" documents have no digital file (brought in person).
+        abort(404);
     }
 }
