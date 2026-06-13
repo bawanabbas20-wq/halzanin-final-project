@@ -30,7 +30,10 @@ class StaffController extends Controller
         $stats = [
             'total'     => (clone $base)->count(),
             'pending'   => (clone $base)->whereIn('current_status', $pendingStatuses)->count(),
-            'reviewing' => (clone $base)->where('current_status', 'under_review')->count(),
+            // "Reviewing" = anything actively in progress (any status that is not a
+            // brand-new submission nor a finished outcome). This works across every
+            // per-service flow, not just the legacy "under_review" status.
+            'reviewing' => (clone $base)->whereNotIn('current_status', array_merge($pendingStatuses, $doneStatuses))->count(),
             'completed' => (clone $base)->whereIn('current_status', $doneStatuses)->count(),
         ];
 

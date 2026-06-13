@@ -1,6 +1,28 @@
 ﻿@extends('layouts.halzanin-app')
 
 @section('content')
+    @php
+        // Shared status -> colour mapping. Handles every per-service status
+        // (not just the old fixed set) by grouping them: final/positive = green,
+        // rejected = red, submitted = grey, early-review = blue, anything else
+        // in-progress = amber.
+        $statusColor = function (string $status): array {
+            $s = strtolower($status);
+            if (in_array($s, ['completed', 'collected', 'connected', 'approved', 'license_ready', 'ready_for_pickup', 'theory_test_passed'])) {
+                return ['border' => 'border-green-400', 'badge' => 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400', 'dot' => 'status-dot-green'];
+            }
+            if (str_contains($s, 'reject')) {
+                return ['border' => 'border-red-400', 'badge' => 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400', 'dot' => 'status-dot-red'];
+            }
+            if ($s === 'submitted') {
+                return ['border' => 'border-gray-400', 'badge' => 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300', 'dot' => 'status-dot-gray'];
+            }
+            if (in_array($s, ['received', 'documents_verified', 'documents_reviewed', 'checked_in', 'name_availability_check'])) {
+                return ['border' => 'border-blue-400', 'badge' => 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400', 'dot' => 'status-dot-blue'];
+            }
+            return ['border' => 'border-yellow-400', 'badge' => 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400', 'dot' => 'status-dot-yellow'];
+        };
+    @endphp
     <div class="space-y-6 max-w-7xl mx-auto">
 
         {{-- Header --}}
@@ -65,24 +87,13 @@
                 <button data-filter="all"
                         class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-brand text-white border border-brand shadow-sm"
                         data-i18n="All">All</button>
-                <button data-filter="submitted"
+                {{-- Chips are built dynamically from the real per-service status flows
+                     so the queue filters always match the statuses applications can have. --}}
+                @foreach ($statusFilters as $key => $label)
+                <button data-filter="{{ $key }}"
                         class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-[#252525] text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#2E2E2E]"
-                        data-i18n="Submitted">Submitted</button>
-                <button data-filter="received"
-                        class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-[#252525] text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#2E2E2E]"
-                        data-i18n="Received">Received</button>
-                <button data-filter="under_review"
-                        class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-[#252525] text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#2E2E2E]"
-                        data-i18n="Under Review">Under Review</button>
-                <button data-filter="approved"
-                        class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-[#252525] text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#2E2E2E]"
-                        data-i18n="Approved">Approved</button>
-                <button data-filter="checked_in"
-                        class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-[#252525] text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#2E2E2E]"
-                        data-i18n="Checked In">Checked In</button>
-                <button data-filter="rejected"
-                        class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-colors bg-white dark:bg-[#252525] text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#2E2E2E]"
-                        data-i18n="Rejected">Rejected</button>
+                        data-i18n="status.{{ $key }}">{{ $label }}</button>
+                @endforeach
             </div>
         </div>
 
@@ -93,15 +104,7 @@
             <div class="block lg:hidden space-y-3" id="mobileList">
                 @forelse ($applications as $app)
                     @php
-                        $colors = [
-                            'submitted'    => ['border' => 'border-gray-400',   'badge' => 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300',       'dot' => 'status-dot-gray'],
-                            'received'     => ['border' => 'border-blue-400',   'badge' => 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',    'dot' => 'status-dot-blue'],
-                            'under_review' => ['border' => 'border-yellow-400', 'badge' => 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400', 'dot' => 'status-dot-yellow'],
-                            'approved'     => ['border' => 'border-green-400',  'badge' => 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400', 'dot' => 'status-dot-green'],
-                            'checked_in'   => ['border' => 'border-purple-400', 'badge' => 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400', 'dot' => 'status-dot-purple'],
-                            'rejected'     => ['border' => 'border-red-400',    'badge' => 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',         'dot' => 'status-dot-red'],
-                        ];
-                        $color   = $colors[$app->current_status] ?? $colors['submitted'];
+                        $color   = $statusColor($app->current_status);
                         $appName = $app->appointment->full_name ?? $app->user->name;
                     @endphp
                     <div class="app-item bg-white dark:bg-[#1F1F1F] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden ltr:border-l-4 rtl:border-r-4 {{ $color['border'] }} hover-lift"
@@ -168,15 +171,7 @@
                         <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
                             @forelse ($applications as $index => $app)
                                 @php
-                                    $colors = [
-                                        'submitted'    => ['badge' => 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300',       'dot' => 'status-dot-gray'],
-                                        'received'     => ['badge' => 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',    'dot' => 'status-dot-blue'],
-                                        'under_review' => ['badge' => 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400', 'dot' => 'status-dot-yellow'],
-                                        'approved'     => ['badge' => 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400', 'dot' => 'status-dot-green'],
-                                        'checked_in'   => ['badge' => 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400', 'dot' => 'status-dot-purple'],
-                                        'rejected'     => ['badge' => 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',         'dot' => 'status-dot-red'],
-                                    ];
-                                    $color   = $colors[$app->current_status] ?? $colors['submitted'];
+                                    $color   = $statusColor($app->current_status);
                                     $appName = $app->appointment->full_name ?? $app->user->name;
                                 @endphp
                                 <tr class="app-item hover:bg-gray-50/70 dark:hover:bg-white/[0.04] transition-colors"

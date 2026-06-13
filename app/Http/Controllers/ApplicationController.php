@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Application;
 use App\Models\Appointment;
 use App\Models\OffDay;
+use App\Models\Service;
 use App\Models\StatusLog;
 use App\Notifications\ApplicationStatusChanged;
 use App\Services\WhatsAppService;
@@ -57,7 +58,30 @@ class ApplicationController extends Controller
             $query->whereHas('service', fn ($q) => $q->where('ministry_id', $user->ministry_id));
         }
 
+        // Statuses already present in the (scoped) data — covers legacy applications.
+        $presentStatuses = (clone $query)->distinct()->pluck('current_status')->filter();
+
         $applications = $query->latest()->paginate(15);
+
+        // Build the filter chips from the real per-service status flows (same source
+        // the application detail page uses), plus the universal submitted/rejected
+        // states and anything already present in the data. This keeps the queue
+        // filters in sync with the statuses applications can actually have.
+        $serviceQuery = Service::query();
+        if ($user->role === 'staff' && $user->ministry_id) {
+            $serviceQuery->where('ministry_id', $user->ministry_id);
+        }
+        $flowStatuses = $serviceQuery->pluck('statuses')->flatten()->filter();
+
+        $statusFilters = collect(['submitted'])
+            ->merge($flowStatuses)
+            ->merge($presentStatuses)
+            ->reject(fn ($s) => $s === 'rejected')
+            ->push('rejected')
+            ->unique()
+            ->values()
+            ->mapWithKeys(fn ($s) => [$s => \Illuminate\Support\Str::headline($s)])
+            ->all();
 
         $year     = (int) $request->get('year', now()->year);
         $month    = (int) $request->get('month', now()->month);
@@ -79,7 +103,7 @@ class ApplicationController extends Controller
 
         $offDates = OffDay::offDatesForMonth($current->year, $current->month, $ministry?->id);
 
-        return view('staff.queue', compact('applications', 'current', 'counts', 'offDates', 'viewMode', 'ministry'));
+        return view('staff.queue', compact('applications', 'current', 'counts', 'offDates', 'viewMode', 'ministry', 'statusFilters'));
     }
 
     public function show(Application $application)
