@@ -537,13 +537,21 @@ async function loadDocCards() {
     const container = document.getElementById('doc-cards');
     container.innerHTML = '';
 
-    SERVICE_DOCS.forEach((name, i) => {
-        const allowedTypes = VAULT_MAP[name] || [];
-        const matching = allowedTypes.length
-            ? vaultDocs.filter(v => allowedTypes.includes(v.type))
-            : [];
-        container.appendChild(buildDocCard(i, name, matching));
-    });
+    if (SERVICE_DOCS.length === 0) {
+        container.innerHTML = `
+            <div class="flex items-center gap-3 px-4 py-4 rounded-xl border border-dashed border-gray-200 dark:border-gray-700 text-sm text-gray-500 dark:text-gray-400">
+                <svg class="w-5 h-5 shrink-0 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span>${tr('book.no_documents_required')}</span>
+            </div>`;
+    } else {
+        SERVICE_DOCS.forEach((name, i) => {
+            const allowedTypes = VAULT_MAP[name] || [];
+            const matching = allowedTypes.length
+                ? vaultDocs.filter(v => allowedTypes.includes(v.type))
+                : [];
+            container.appendChild(buildDocCard(i, name, matching));
+        });
+    }
     checkSubmit();
 }
 
@@ -678,7 +686,9 @@ function updateCardUI(ci) {
 }
 
 function checkSubmit() {
-    const all = ws.docCards.length > 0 && ws.docCards.every(c => c.fulfilled);
+    // A service may legitimately require no documents — in that case there is
+    // nothing to fulfil and the appointment can be submitted directly.
+    const all = ws.docCards.every(c => c.fulfilled);
     document.getElementById('submitBtn').disabled = !all;
 }
 

@@ -64,9 +64,9 @@ class MinistriesAndServicesSeeder extends Seeder
                             ['name' => 'mother_name',   'label' => 'Mother\'s Full Name',     'label_ku' => 'ناوی تەوایی دایک',     'type' => 'text',     'required' => true],
                         ],
                     ],
-                    ['name' => 'Passport Application',   'name_ku' => 'داواکاری پاسپۆرت',   'slug' => 'passport',           'is_active' => false, 'estimated_days' => 21, 'statuses' => ['submitted', 'under_review', 'approved', 'rejected'], 'required_documents' => [], 'form_schema' => []],
-                    ['name' => 'Marriage Certificate',   'name_ku' => 'بەڵگەنامەی نکاح',    'slug' => 'marriage-certificate','is_active' => false, 'estimated_days' => 14, 'statuses' => ['submitted', 'under_review', 'approved', 'rejected'], 'required_documents' => [], 'form_schema' => []],
-                    ['name' => 'Death Certificate',      'name_ku' => 'بەڵگەنامەی مردن',    'slug' => 'death-certificate',  'is_active' => false, 'estimated_days' => 7,  'statuses' => ['submitted', 'under_review', 'approved', 'rejected'], 'required_documents' => [], 'form_schema' => []],
+                    ['name' => 'Passport Application',   'name_ku' => 'داواکاری پاسپۆرت',   'slug' => 'passport',           'is_active' => false, 'estimated_days' => 21, 'statuses' => ['submitted', 'under_review', 'approved', 'rejected'], 'required_documents' => ['Valid National ID card (original + scanned copy)', 'Birth certificate (original + scanned copy)', 'Two recent biometric passport photos', 'Previous passport (if renewing)'], 'form_schema' => []],
+                    ['name' => 'Marriage Certificate',   'name_ku' => 'بەڵگەنامەی نکاح',    'slug' => 'marriage-certificate','is_active' => false, 'estimated_days' => 14, 'statuses' => ['submitted', 'under_review', 'approved', 'rejected'], 'required_documents' => ['Both spouses\' National ID cards (scanned copies)', 'Court or religious ceremony official record', 'Two witnesses\' National IDs', 'Medical fitness certificates for both spouses'], 'form_schema' => []],
+                    ['name' => 'Death Certificate',      'name_ku' => 'بەڵگەنامەی مردن',    'slug' => 'death-certificate',  'is_active' => false, 'estimated_days' => 7,  'statuses' => ['submitted', 'under_review', 'approved', 'rejected'], 'required_documents' => ['Medical death notification from the hospital or clinic', 'Deceased person\'s National ID', 'Applicant\'s National ID (next of kin)', 'Family registry book (scanned copy)'], 'form_schema' => []],
                 ],
             ],
 
@@ -101,8 +101,8 @@ class MinistriesAndServicesSeeder extends Seeder
                             ['name' => 'emergency_contact',  'label' => 'Emergency Contact (Name & Phone)', 'label_ku' => 'پەیوەندی فریاکەوتن', 'type' => 'text', 'required' => true],
                         ],
                     ],
-                    ['name' => 'Vehicle Registration',   'name_ku' => 'تۆمارکردنی ئۆتۆمبێل', 'slug' => 'vehicle-registration', 'is_active' => false, 'estimated_days' => 14, 'statuses' => ['submitted', 'under_review', 'approved', 'rejected'], 'required_documents' => [], 'form_schema' => []],
-                    ['name' => 'Traffic Fine Payment',   'name_ku' => 'پارەدانی سزای ترافیک', 'slug' => 'traffic-fine',         'is_active' => false, 'estimated_days' => 3,  'statuses' => ['submitted', 'under_review', 'approved', 'rejected'], 'required_documents' => [], 'form_schema' => []],
+                    ['name' => 'Vehicle Registration',   'name_ku' => 'تۆمارکردنی ئۆتۆمبێل', 'slug' => 'vehicle-registration', 'is_active' => false, 'estimated_days' => 14, 'statuses' => ['submitted', 'under_review', 'approved', 'rejected'], 'required_documents' => ['Vehicle ownership document (original)', 'Customs clearance certificate', 'Valid insurance policy', 'National ID of the owner'], 'form_schema' => []],
+                    ['name' => 'Traffic Fine Payment',   'name_ku' => 'پارەدانی سزای ترافیک', 'slug' => 'traffic-fine',         'is_active' => false, 'estimated_days' => 3,  'statuses' => ['submitted', 'under_review', 'approved', 'rejected'], 'required_documents' => ['Vehicle plate number', 'National ID of the owner', 'Fine reference number (if known)'], 'form_schema' => []],
                 ],
             ],
 
@@ -137,8 +137,8 @@ class MinistriesAndServicesSeeder extends Seeder
                             ['name' => 'floor_apt',       'label' => 'Floor / Apartment Number',  'label_ku' => 'ژمارەی نهۆم / شووشە',   'type' => 'text',     'required' => false],
                         ],
                     ],
-                    ['name' => 'Service Complaint',    'name_ku' => 'گەلایی خزمەتگوزاری',  'slug' => 'electricity-complaint', 'is_active' => false, 'estimated_days' => 7,  'statuses' => ['submitted', 'under_review', 'approved', 'rejected'], 'required_documents' => [], 'form_schema' => []],
-                    ['name' => 'Meter Reading Issue',  'name_ku' => 'کێشەی خوێندنەوەی مەتر', 'slug' => 'electricity-meter',  'is_active' => false, 'estimated_days' => 7,  'statuses' => ['submitted', 'under_review', 'approved', 'rejected'], 'required_documents' => [], 'form_schema' => []],
+                    ['name' => 'Service Complaint',    'name_ku' => 'گەلایی خزمەتگوزاری',  'slug' => 'electricity-complaint', 'is_active' => false, 'estimated_days' => 7,  'statuses' => ['submitted', 'under_review', 'approved', 'rejected'], 'required_documents' => ['Subscriber account number', 'National ID', 'Description of the issue'], 'form_schema' => []],
+                    ['name' => 'Meter Reading Issue',  'name_ku' => 'کێشەی خوێندنەوەی مەتر', 'slug' => 'electricity-meter',  'is_active' => false, 'estimated_days' => 7,  'statuses' => ['submitted', 'under_review', 'approved', 'rejected'], 'required_documents' => ['Subscriber account number', 'National ID', 'Recent photo of the meter'], 'form_schema' => []],
                 ],
             ],
 
@@ -172,7 +172,7 @@ class MinistriesAndServicesSeeder extends Seeder
                             ['name' => 'distance_estimate', 'label' => 'Approx. Distance from Main Line (meters)', 'label_ku' => 'دانزایی خەتی سەرەکی (مەتر)', 'type' => 'number', 'required' => false],
                         ],
                     ],
-                    ['name' => 'Service Complaint', 'name_ku' => 'گەلایی خزمەتگوزاری', 'slug' => 'water-complaint', 'is_active' => false, 'estimated_days' => 7, 'statuses' => ['submitted', 'under_review', 'approved', 'rejected'], 'required_documents' => [], 'form_schema' => []],
+                    ['name' => 'Service Complaint', 'name_ku' => 'گەلایی خزمەتگوزاری', 'slug' => 'water-complaint', 'is_active' => false, 'estimated_days' => 7, 'statuses' => ['submitted', 'under_review', 'approved', 'rejected'], 'required_documents' => ['Subscriber account number', 'National ID', 'Address and description of the issue'], 'form_schema' => []],
                 ],
             ],
 
@@ -208,7 +208,7 @@ class MinistriesAndServicesSeeder extends Seeder
                             ['name' => 'owner_details',      'label' => 'All Owner Names & National ID Numbers', 'label_ku' => 'ناو و ناسنامەی هەموو خاوەنەکان', 'type' => 'textarea', 'required' => true],
                         ],
                     ],
-                    ['name' => 'Trade License Renewal', 'name_ku' => 'نوێکردنەوەی مۆڵەتی بازرگانی', 'slug' => 'trade-renewal', 'is_active' => false, 'estimated_days' => 14, 'statuses' => ['submitted', 'under_review', 'approved', 'rejected'], 'required_documents' => [], 'form_schema' => []],
+                    ['name' => 'Trade License Renewal', 'name_ku' => 'نوێکردنەوەی مۆڵەتی بازرگانی', 'slug' => 'trade-renewal', 'is_active' => false, 'estimated_days' => 14, 'statuses' => ['submitted', 'under_review', 'approved', 'rejected'], 'required_documents' => ['Current trade license', 'National ID of the owner', 'Tax clearance certificate'], 'form_schema' => []],
                 ],
             ],
         ];
@@ -223,10 +223,17 @@ class MinistriesAndServicesSeeder extends Seeder
             );
 
             foreach ($services as $serviceData) {
-                Service::firstOrCreate(
-                    ['slug' => $serviceData['slug']],
-                    array_merge($serviceData, ['ministry_id' => $ministry->id])
-                );
+                $payload  = array_merge($serviceData, ['ministry_id' => $ministry->id]);
+                $existing = Service::where('slug', $serviceData['slug'])->first();
+
+                if ($existing) {
+                    // Refresh the service definition (documents, statuses, etc.) on
+                    // re-seed, but preserve the admin's activation toggle.
+                    unset($payload['is_active']);
+                    $existing->update($payload);
+                } else {
+                    Service::create($payload);
+                }
             }
         }
     }
